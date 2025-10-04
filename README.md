@@ -3,7 +3,7 @@
   <h1>Digital Front-End (DFE) Filter Array</h1>
 </div>
 
-<h2>Team #8 for the SI Clash Digital Hackathon organized by IEEE SSCS AUSC.</h2>
+<h3>Team #8 for the SI Clash Digital Hackathon organized by IEEE SSCS AUSC.</h3>
 
 ***Notes***
 - Currently Working on the Python implementation.
