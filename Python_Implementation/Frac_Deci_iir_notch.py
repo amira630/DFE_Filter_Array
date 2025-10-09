@@ -24,9 +24,9 @@ x_int2 = A_i2 * np.cos(2 * np.pi * Fi2 * t)        # 5 MHz interference
 x = x_main + x_int1 + x_int2
 
 # --- Resampling using polyphase filtering (2/3 rate) ---
-x_fd = sig.resample_poly(x, up=2, down=3, window=('kaiser', 100.0))
+x_fd = sig.resample_poly(x, up=2, down=3, window=('kaiser', 13.0))
 
-fcB = 1e6  # 5 MHz alias -> 1 MHz at 6 MHz sampling
+fcB = 2e6  # 4 MHz alias at 9MHz -> 2 MHz at 6 MHz sampling
 
 # normalized frequencies
 wcA = 2 * Fi1 / Fs_new
@@ -51,30 +51,47 @@ x_filtered = sig.filtfilt(b_c, a_c, x_fd)
 # --- Compare Before/After (time domain) ---
 
 # Left plot: Before Decimation
-plt.figure(1)
-# plt.subplot(1, 3, 1)
-plt.plot(x[:1000])
-plt.title('Before Decimation')
-plt.xlabel('Sample Index')
-plt.ylabel('Amplitude')
-plt.grid(True)
+# plt.figure(1)
+# # plt.subplot(1, 3, 1)
+# plt.plot(x[:1000])
+# plt.title('Before Decimation')
+# plt.xlabel('Sample Index')
+# plt.ylabel('Amplitude')
+# plt.grid(True)
 
-# Middle plot: After Decimation
-plt.figure(2)
-# plt.subplot(1, 3, 2)
-plt.plot(x_fd[:1000])
-plt.title('After Decimation')
-plt.xlabel('Sample Index')
-plt.ylabel('Amplitude')
-plt.grid(True)
+# # Middle plot: After Decimation
+# plt.figure(2)
+# # plt.subplot(1, 3, 2)
+# plt.plot(x_fd[:1000])
+# plt.title('After Decimation')
+# plt.xlabel('Sample Index')
+# plt.ylabel('Amplitude')
+# plt.grid(True)
 
-# Right plot: After Notch Filter
-plt.figure(3)
-# plt.subplot(1, 3, 3)
-plt.plot(x_filtered[:1000])
-plt.title('After Notch Filter')
-plt.xlabel('Sample Index')
-plt.ylabel('Amplitude')
-plt.grid(True)
+# # Right plot: After Notch Filter
+# plt.figure(3)
+# # plt.subplot(1, 3, 3)
+# plt.plot(x_filtered[:1000])
+# plt.title('After Notch Filter')
+# plt.xlabel('Sample Index')
+# plt.ylabel('Amplitude')
+# plt.grid(True)
+
+# --- FFT helper ---
+def plot_fft(x, Fs):
+    N = len(x)
+    X = np.fft.fftshift(np.fft.fft(x)) / N
+    f = np.fft.fftshift(np.fft.fftfreq(N, 1/Fs))
+    plt.plot(f/1e6, 20*np.log10(np.abs(X)+1e-12))
+    plt.xlabel('Frequency (MHz)')
+    plt.ylabel('Magnitude (dB)')
+    plt.grid(True)
+
+# plt.figure(4)
+# plot_fft(x, Fs)
+plt.figure(5)
+plot_fft(x_fd, Fs_new)
+# plt.figure(6)
+# plot_fft(x_filtered, Fs_new)
 
 plt.show()

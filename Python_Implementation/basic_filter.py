@@ -100,34 +100,67 @@
 # print(f"Original Fs = {Fs_in/1e6:.1f} MHz")
 # print(f"New Fs = {Fs_out/1e6:.1f} MHz")
 
-# 
-
-
+from math import log
+import scipy.signal as sig
 import numpy as np
 import matplotlib.pyplot as plt
 
-# --- Make a small fake FFT ---
-x = np.zeros(16)
-x[1] = 1   # pretend a frequency spike at bin 1 (low freq)
-x[-2] = 1  # and one near the end (high freq / negative freq)
+# --- Signal Parameters ---
+Fs = 9e6
+Fs_new = 6e6
+Fc = 100e3
+duration = 2e-3
 
-# --- Do fftshift ---
-x_shifted = np.fft.fftshift(x)
+Fi1 = 2.4e6
+Fi2 = 5e6
+A_i1 = 0.5
+A_i2 = 0.3
 
-# --- Plot before and after ---
-plt.figure(figsize=(8,4))
+t = np.arange(0, duration, 1/Fs)
+x_main = np.cos(2*np.pi*Fc*t)
+x_int1 = A_i1*np.cos(2*np.pi*Fi1*t)
+x_int2 = A_i2*np.cos(2*np.pi*Fi2*t)
+x = x_main + x_int1 + x_int2
 
-plt.subplot(1,2,1)
-plt.stem(range(len(x)), x)
-plt.title("Before fftshift")
-plt.xlabel("Bin index")
-plt.ylabel("Amplitude")
+# --- FIR Filter Design ---
+f_pass = 2.8e6
+f_stop = 3.2e6
+ripple_db = 0.25
+atten_db = 80.0
+nyq = Fs / 2.0
+trans_width = (f_stop - f_pass) / nyq
 
-plt.subplot(1,2,2)
-plt.stem(range(len(x_shifted)), x_shifted)
-plt.title("After fftshift")
-plt.xlabel("Bin index")
-plt.ylabel("Amplitude")
+numtaps_est, beta = sig.kaiserord(atten_db, trans_width)
+numtaps = numtaps_est + 1 if numtaps_est % 2 == 0 else numtaps_est
+cutoff_hz = 0.5 * (f_pass + f_stop)
 
-plt.tight_layout()
+taps = sig.firwin(numtaps, cutoff_hz/nyq, window=('kaiser', beta))
+print(f"Filter length = {len(taps)} taps")
+
+# --- Filter + Fractional Resample ---
+x_fd = sig.upfirdn(taps, x, up=2, down=3)
+
+# Remove group delay (compensate)
+delay = (len(taps) - 1) // 2
+x_fd = x_fd[delay:-delay or None]
+
+# New sampling frequency
+Fs_fd = Fs * 2 / 3
+t_fd = np.arange(len(x_fd)) / Fs_fd
+
+# --- FFT plot function ---
+def plot_fft(x, Fs, label):
+    N = len(x)
+    X = np.fft.fftshift(np.fft.fft(x))
+    f = np.fft.fftshift(np.fft.fftfreq(N, 1/Fs))
+    plt.plot(f/1e6, 20*np.log10(np.abs(X)/N + 1e-12), label=label)
+
+plt.figure(figsize=(9,4))
+plot_fft(x, Fs, "Original 9 MHz")
+plot_fft(x_fd, Fs_fd, "After 2/3 Resample")
+plt.xlabel("Frequency (MHz)")
+plt.ylabel("Magnitude (dB)")
+plt.legend()
+plt.grid()
+plt.title("Spectrum Before / After Fractional Decimation")
 plt.show()

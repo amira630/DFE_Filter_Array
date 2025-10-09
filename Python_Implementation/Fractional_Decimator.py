@@ -24,17 +24,20 @@ x_int2 = A_i2 * np.cos(2 * np.pi * Fi2 * t)        # 5 MHz interference
 x = x_main + x_int1 + x_int2
 
 # --- Resample using polyphase filtering (2/3 rate) ---
-x_fd = sig.resample_poly(x, up=2, down=3, window=('kaiser', 100.0))
+x_fd = sig.resample_poly(x, up=2, down=3, window=('kaiser', 20.0))
 
 # Compute the new sampling frequency and time vector
 t_new = np.arange(0, len(x_fd)) / Fs_new
 
 # --- Plot both signals ---
 plt.figure(1)
+plt.subplot(1, 2, 1)
 plt.plot(t * 1e3, x, 'b', label='Original (9 MHz)')
+plt.title("100 KHz Cosine Wave - Original")
+plt.subplot(1, 2, 2)
 plt.plot(t_new * 1e3, x_fd, 'r--', label='Resampled (≈6 MHz)')
 
-plt.title("100 KHz Cosine Wave - Original vs Resampled (x2/3 Rate)")
+plt.title("Resampled (x2/3 Rate)")
 plt.xlabel("Time (ms)")
 plt.ylabel("Amplitude")
 plt.legend()

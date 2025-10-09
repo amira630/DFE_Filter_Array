@@ -5,14 +5,14 @@ import matplotlib.pyplot as plt
 Fs = 6_000_000  # 6 MHz
 
 fcA = 2_400_000  # 2.4 MHz (native)
-fcB = 1_000_000  # 5 MHz alias -> 1 MHz at 6 MHz sampling
+fcB = 2_000_000  # 5 MHz alias -> 1 MHz at 6 MHz sampling
 
 # normalized frequencies
 wcA = 2 * fcA / Fs
 wcB = 2 * fcB / Fs
 
 # desired 3dB bandwidths (Hz) 
-BW_A = 85_000.0
+BW_A = 500_000.0
 BW_B = 100_000.0
 
 Q_A = fcA/BW_A
@@ -46,7 +46,7 @@ Q_B = fcB/BW_B
 
 plt.figure(1)
 plt.plot(w_c, 20*np.log10(abs(h_c)))
-plt.title("Cascaded IIR Notches (1 MHz, 2.4 MHz)")
+plt.title("Cascaded IIR Notches (2 MHz, 2.4 MHz)")
 plt.xlabel("Frequency (Hz)")
 plt.ylabel("Magnitude (dB)")
 plt.grid()
