@@ -145,7 +145,7 @@ def FIRCombinedFilter(R, M, N, taps, wideband=False):
     combinedResponse = cicMagResponse * response
     return (20 * np.log10(abs(combinedResponse)))
 
-taps = CICResponse(R=16, M=2, N=3, cutOff=0.5, numTaps=12000)
+taps = CICResponse(R=16, M=2, N=3, cutOff=0.5, numTaps=120)
 buf = FIRCombinedFilter(R=16, M=2, N=3, taps = taps, wideband=False)
 buf[0] = 0
 final = x_filtered * buf
