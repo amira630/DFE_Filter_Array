@@ -68,23 +68,23 @@ Q_B = fcB/BW_B
 
 x_filtered = sig.filtfilt(b_c, a_c, x_fd)
 
-# --- Compare Before/After (time domain) ---
+# --- Compare Before/After (time domain) --- #
 
-# # Left plot: Before Decimation
-# plt.figure(1)
-# plt.plot(x[:1000])
-# plt.title('Before Decimation')
-# plt.xlabel('Sample Index')
-# plt.ylabel('Amplitude')
-# plt.grid(True)
+ # Left plot: Before Decimation
+plt.figure(1)
+plt.plot(x[:1000])
+plt.title('Before Decimation')
+plt.xlabel('Sample Index')
+plt.ylabel('Amplitude')
+plt.grid(True)
 
-# # Middle plot: After Decimation
-# plt.figure(2)
-# plt.plot(x_fd[:1000])
-# plt.title('After Decimation')
-# plt.xlabel('Sample Index')
-# plt.ylabel('Amplitude')
-# plt.grid(True)
+ # Middle plot: After Decimation
+plt.figure(2)
+plt.plot(x_fd[:1000])
+plt.title('After Decimation')
+plt.xlabel('Sample Index')
+plt.ylabel('Amplitude')
+plt.grid(True)
 
 # Right plot: After Notch Filter
 plt.figure(3)
@@ -109,39 +109,56 @@ plot_fft(x_filtered, Fs_new, 'After Cascaded IIR Notch Filter (Fs = 6 MHz)')
 
 x_filtered = np.fft.fftshift(np.fft.fft(x_filtered)) / len(x_filtered)
 np.seterr(divide='ignore', invalid='ignore')
+print("Shape of x_filtered:", len(x_filtered))
 
-# plt.figure(7)
-def CICResponse(R,M,N, widebandResponse=1, fftResolution=len(x_filtered)):
+#plt.figure(7)
+def CICResponse(R, M, N, cutOff, numTaps, calcRes = len(x_filtered)):
+    w = np.arange(calcRes) * np.pi / (calcRes - 1)
+    Hcomp = lambda w: ((M * R) ** N) * (np.abs((np.sin(w / (2. * R))) / (np.sin((w * M) / 2.))) ** N)
+    cicCompResponse = np.array(list(map(Hcomp, w)))
+    # Set DC response to 1 as it is calculated as 'nan' by Hcomp
+    cicCompResponse[0] = 1
 
-    Hfunc = lambda w : np.abs( (np.sin((w*M)/2.)) / (np.sin(w/(2.*R))) )**N
-        
-    if widebandResponse:
-        # 0 to R*pi
-        w = np.arange(fftResolution) * np.pi/fftResolution * R
+    # In getFIRCompensationFilter, add after setting stopband response:
+    if numTaps % 2 == 0:
+        cicCompResponse[-1] = 0
+    cicCompResponse[int(calcRes * cutOff * 2):] = 0
+    normFreq = np.arange(calcRes) / (calcRes - 1)
+    taps = sig.firwin2(numTaps, normFreq, cicCompResponse)
+    return taps
+
+def FIRCombinedFilter(R, M, N, taps, wideband=False):
+    if wideband:
+        interp = np.zeros(len(taps) * R)
+        interp[::R] = taps
+        freqs, response = sig.freqz(interp, worN=12000)
     else:
-        # 0 to pi
-        w = np.arange(fftResolution) * np.pi/fftResolution
+        freqs, response = sig.freqz(taps, worN=12000)
 
-    gain = (M*R)**N
-    xAxis = np.arange(fftResolution) / (fftResolution * 2) 
-    magResponse = np.array(list(map(Hfunc, w)))
-    magResponse[0] = 1
-    # plt.plot(xAxis, 20.0*np.log10(magResponse/gain), label="N = {}, M = {}".format(N,M))
-    return magResponse
+    if wideband:
+        w = np.arange(len(freqs)) * np.pi / len(freqs) * R
+    else:
+        w = np.arange(len(freqs)) * np.pi / len(freqs)
 
-def plotConfig(title):
-    axes = plt.gca(); axes.set_xlim([0,0.5]); axes.set_ylim([-140,1])
-    plt.grid(); plt.legend()
-    plt.title(title)
-    plt.xlabel('Normalised freq (2pi radians/sample)')
-    plt.ylabel('Normalised Filter Magnitude Response (dB)')
-    plt.show()
+    Hcic = lambda w: (1 / ((M * R) ** N)) * np.abs((np.sin((w * M) / 2.)) / (np.sin(w / (2. * R)))) ** N
+    cicMagResponse = np.array(list(map(Hcic, w)))
+    combinedResponse = cicMagResponse * response
+    return (20 * np.log10(abs(combinedResponse)))
 
-final = x_filtered * CICResponse(R=8, M=8, N=3, widebandResponse=0)
+taps = CICResponse(R=16, M=2, N=3, cutOff=0.5, numTaps=12000)
+buf = FIRCombinedFilter(R=16, M=2, N=3, taps = taps, wideband=False)
+buf[0] = 0
+final = x_filtered * buf
+
+#print("func = ", (buf))
 
 # --- Inverse FFT to recover time-domain signal ---
 x_reconstructed = np.fft.ifft(np.fft.ifftshift(final))
 x_reconstructed = np.real(x_reconstructed)  # remove small imaginary parts
+
+print("x = ", x)
+
+print("x_reconstructed = ", x_reconstructed)
 
 # --- Create corresponding time vector for the reconstructed signal ---
 t_new = np.arange(0, len(x_reconstructed)) / Fs_new
