@@ -183,8 +183,8 @@ atten = 80.0  # Desired attenuation in dB.
 N = (atten - 7.95) / (2.285 * (2 * np.pi * (fT / fS)))
 
 N = np.ceil(N)
-if N % 2 == 0:
-    N += 1  # Make sure that N is odd.
+# if N % 2 == 0:
+#     N += 1  # Make sure that N is odd.
 N = int(N)
 print("Filter length N =", N)
 
