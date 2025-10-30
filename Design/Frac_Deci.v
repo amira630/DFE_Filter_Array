@@ -1,5 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////
+// Author: Amira Atef
+// Design: Fractional Decimator
+// Date: 27-10-2025
+// Description: A Fractional Decimator module using a polphase FIR design to decimate
+// a signal's sampling by a factor of 2/3 from 9MHz fs to 6MHz using an 18MHz clock.
+////////////////////////////////////////////////////////////////////////////////
+
 module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
-    input wire clk, // 18MHz
+    input wire clk, // 18MHz, to avoid CDC
     input wire rst_n,
     input wire signed [DATA_WIDTH-1:0] x_in, // s16.15 format
     output reg signed [DATA_WIDTH-1:0] x_out // s16.15 format
@@ -10,7 +18,6 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
 
     wire signed [DATA_WIDTH-1:0] h_k [0:HALF_N-1]; // filter coefficients
     wire signed [DATA_WIDTH-1:0] h_k_reg [0:HALF_N-1]; // filter coefficients
-    reg signed [(DATA_WIDTH<<1)-1:0] x_temp [0:((HALF_N<<1)-1)];
     reg signed [(DATA_WIDTH<<1)-1:0] x_reg [0:((HALF_N<<1)-1)];
     reg signed [(DATA_WIDTH<<1)-1:0] x_sum;
     reg select;
@@ -142,7 +149,7 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     
-    genvar i, k, j, p;
+    genvar i, k;
 
     generate 
         k = 0;
@@ -154,35 +161,8 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
         end
     endgenerate
 
-    // generate 
-    //     k = HALF_N;
-    //     for (i = HALF_N - 2; i >= 0; i = i - 1) begin : gen_mux_1
-    //         if (i == 0)
-    //             MUX2x1 U_MUX_LAST (.sel(select), .in0(ROM[i]), .in1('0), .out(h_k[k]));
-    //         else
-    //         if (!i[0]) begin
-    //             MUX2x1 U_MUX_1 (.sel(select), .in0(ROM[i]), .in1(ROM[i-1]), .out(h_k[k]));
-    //             k = k + 1;
-    //         end
-    //     end
-    // endgenerate
+    reg [7:0] m, n, p;
 
-    generate
-        p = 0; 
-        for (j = 0; j < (HALF_N<<1)-1; j = j + 1) begin : gen_mult
-            if ((wr_ptr - j) >= 0) begin
-                MULT #(DATA_WIDTH) U_MULT (.a(x_buf[wr_ptr - j]), .b(h_k_reg[p]), .product(x_temp[j]));
-            end
-            if((p < HALF_N-1) && (j < HALF_N))
-                p = p + 1; // till 112
-            else if ((p == HALF_N-1) && (j == HALF_N-1))
-                p = p; // stay at 112 when j=113
-            else
-                p = p - 1; // decrease p
-        end
-    endgenerate
-
-    integer m, n;
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             wr_ptr <= 8'd0;
@@ -212,26 +192,33 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
             x_out <= 16'd0;
             x_sum <= 32'd0;
             for (n = 0; n < (HALF_N<<1) - 2; n = n + 1) begin
-                x_temp[n] <= 32'd0;
+                x_reg[n] <= 32'd0;
                 h_k_reg[n] <= 16'd0;
             end
             enable_M <= 1'b0;
             count_M <= 3'b0;
             select <= 1'b0;
+            p <= 0;
         end else if (enable_M) begin
             select <= ~select;
-            x_reg <= x_temp;
             h_k_reg <= h_k;
             h_k_reg[112] <= rom[112];
             for (n = 0; n < (HALF_N<<1) - 2; n = n + 1) begin
                 if ((wr_ptr - n) >= 0) begin
+                    x_reg[n] <= x_buf[wr_ptr - n] * h_k[p];
                     x_sum <= (x_reg[n] + x_sum) >> 1;
+                    if((p < HALF_N-1) && (n < HALF_N))
+                        p <= p + 1; // till 112
+                    else if ((p == HALF_N-1) && (n == HALF_N-1))
+                        p <= p; // stay at 112 when n=113
+                    else
+                        p <= p - 1; // decrease p
                 end
             end
             x_out <= x_sum[30:15]; // s16.15 format
             enable_M <= 1'b0;
         end
-        else (count_M[1] & 1)begin
+        else (count_M[1])begin
             enable_M <= 1'b1;
             count_M <= 3'b0;
         end
