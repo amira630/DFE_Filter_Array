@@ -16,7 +16,7 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
     reg [7:0] wr_ptr; // write pointer for the input buffer
 
     wire signed [DATA_WIDTH-1:0] h_k [0:HALF_N-1]; // filter coefficients
-    wire signed [DATA_WIDTH-1:0] h_k_reg [0:HALF_N-1]; // filter coefficients
+    reg signed [DATA_WIDTH-1:0] h_k_reg [0:HALF_N-1]; // filter coefficients
     reg signed [(DATA_WIDTH<<1)-1:0] x_temp [0:((HALF_N<<1)-1)];
     reg signed [(DATA_WIDTH<<1)-1:0] x_reg [0:((HALF_N<<1)-1)];
     reg signed [(DATA_WIDTH<<1)-1:0] x_sum;
@@ -25,6 +25,8 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
     reg enable_M, enable_L;
     reg [1:0] count_M;
     reg count_L;
+
+    reg [7:0] m, n;
 
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
@@ -149,15 +151,11 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     
-    genvar i, k, j, p;
+    genvar i, j, p;
 
     generate 
-        k = 0;
-        for (i = 0; i < HALF_N-1; i = i + 1) begin : gen_mux
-            if (!i[0]) begin
-                MUX2x1 U_MUX_0 (.sel(select), .in0(ROM[i]), .in1(ROM[i+1]), .out(h_k[k]));
-                k = k + 1;
-            end
+        for (i = 0; i < HALF_N-1; i = i + 2) begin : gen_mux
+            MUX2x1 U_MUX (.sel(select), .in0(ROM[i]), .in1(ROM[i+1]), .out(h_k[i>>1])); 
         end
     endgenerate
 
@@ -189,7 +187,6 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
         end
     endgenerate
 
-    reg [7:0] m, n;
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             wr_ptr <= 8'd0;
@@ -206,7 +203,7 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
                 wr_ptr <= wr_ptr + 1;
             enable_L <= 1'b0;
         end
-        else (count_L)begin
+        else if (count_L)begin
             enable_L <= 1'b1;
             count_L <= 1'b0;
         end
@@ -216,11 +213,13 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            x_out <= 16'd0;
-            x_sum <= 32'd0;
+            x_out <= 'd0;
+            x_sum <= 'd0;
             for (n = 0; n < (HALF_N<<1) - 2; n = n + 1) begin
-                x_temp[n] <= 32'd0;
-                h_k_reg[n] <= 16'd0;
+                x_temp[n] <= 'd0;
+            end
+            for (n = 0; n < HALF_N; n = n + 1) begin
+                h_k_reg[n] <= 'd0;
             end
             enable_M <= 1'b0;
             count_M <= 3'b0;
@@ -238,7 +237,7 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
             x_out <= x_sum[30:15]; // s16.15 format
             enable_M <= 1'b0;
         end
-        else (count_M[1])begin
+        else if (count_M[1])begin
             enable_M <= 1'b1;
             count_M <= 3'b0;
         end
