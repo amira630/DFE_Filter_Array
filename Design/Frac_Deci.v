@@ -153,7 +153,7 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
     genvar i, p;
 
     generate 
-        for (i = 0; i < HALF_N; i = i + 2) begin : gen_mux
+        for (i = 0; i < HALF_N-1; i = i + 2) begin : gen_mux
             MUX2x1 U_MUX (.sel(select), .in0(ROM[i]), .in1(ROM[i+1]), .out(h_k[i>>1])); 
         end
     endgenerate
