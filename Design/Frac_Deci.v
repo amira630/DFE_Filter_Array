@@ -13,25 +13,24 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
     output reg signed [DATA_WIDTH-1:0] x_out // s16.15 format
 );
 
-    reg signed [DATA_WIDTH-1:0] x_buf [0:((HALF_N<<1)-1)]; // a buffer to store input samples
+    reg signed [DATA_WIDTH-1:0] x_buf [0:HALF_N-1]; // a buffer to store input samples
     reg [7:0] wr_ptr; // write pointer for the input buffer
 
-    wire signed [DATA_WIDTH-1:0] h_k [0:HALF_N-1]; // filter coefficients
-    reg signed [DATA_WIDTH-1:0] h_k_reg [0:HALF_N-1]; // filter coefficients
-    reg signed [(DATA_WIDTH<<1)-1:0] x_reg [0:((HALF_N<<1)-1)];
-    reg signed [(DATA_WIDTH<<1)-1:0] x_sum;
+    wire signed [DATA_WIDTH-1:0] h_k [0:(HALF_N>>1)-1]; // filter coefficients
+    reg signed [DATA_WIDTH-1:0] h_k_reg [0:HALF_N>>1]; // filter coefficients
+    reg signed [(DATA_WIDTH<<1)-1:0] x_reg [0:HALF_N-1];
+    wire signed [(DATA_WIDTH<<1)-1:0] sum_out [0:HALF_N-2];
     reg select;
 
-    reg enable_M, enable_L;
     reg [1:0] count_M;
     reg count_L;
 
-    reg [7:0] m, n, p;
+    reg [7:0] m, n, k;
 
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
-    reg [15:0] ROM [0:HALF_N-1];
+    wire [15:0] ROM [0:HALF_N-1];
 
     assign ROM[0] = 16'h0000;
     assign ROM[1] = 16'h0000;
@@ -151,32 +150,35 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
     //////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////
     
-    genvar i;
+    genvar i, p;
 
     generate 
-        for (i = 0; i < HALF_N-1; i = i + 2) begin : gen_mux
+        for (i = 0; i < HALF_N; i = i + 2) begin : gen_mux
             MUX2x1 U_MUX (.sel(select), .in0(ROM[i]), .in1(ROM[i+1]), .out(h_k[i>>1])); 
+        end
+    endgenerate
+
+    SUM #(.DATA_WIDTH(DATA_WIDTH)) U_SUM_0 (.clk(clk), .rst_n(rst_n), .en(count_M[1]), .a(x_reg[0]), .b(x_reg[1]), .sum_out(sum_out[0])); 
+
+    generate 
+        for (p = 0; p < HALF_N-2; p = p + 1) begin : gen_sum
+            SUM #(.DATA_WIDTH(DATA_WIDTH)) U_SUM (.clk(clk), .rst_n(rst_n), .en(count_M[1]), .a(x_reg[p+2]), .b(sum_out[p]), .sum_out(sum_out[p+1])); 
         end
     endgenerate
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             wr_ptr <= 8'd0;
-            for (m = 0; m < ((HALF_N<<1)-2); m = m + 1) begin
+            for (m = 0; m < HALF_N; m = m + 1) begin
                 x_buf[m] <= 16'd0;
             end
-            enable_L <= 1'b0;
             count_L <= 1'b0;
-        end else if (enable_L) begin
+        end else if (count_L) begin
             x_buf[wr_ptr] <= x_in;
-            if (wr_ptr == (HALF_N<<1) - 2)
+            if (wr_ptr == HALF_N - 1)
                 wr_ptr <= 8'd0;
             else
                 wr_ptr <= wr_ptr + 1;
-            enable_L <= 1'b0;
-        end
-        else if (count_L)begin
-            enable_L <= 1'b1;
             count_L <= 1'b0;
         end
         else 
@@ -186,43 +188,58 @@ module Frac_Deci #(parameter HALF_N = 113, DATA_WIDTH = 16) (
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             x_out <= 'd0;
-            x_sum <= 'd0;
-            for (n = 0; n < (HALF_N<<1) - 2; n = n + 1) begin
+            // x_sum <= 'd0;
+            // x_sum_temp <= 'd0;
+            // k <= 8'd0;
+            for (n = 0; n < HALF_N; n = n + 1) begin
                 x_reg[n] <= 'd0;
             end
-            for (n = 0; n < HALF_N; n = n + 1) begin
+            for (n = 0; n <= (HALF_N >> 1); n = n + 1) begin
                 h_k_reg[n] <= 'd0;
             end
-            enable_M <= 1'b0;
-            count_M <= 3'b0;
+            count_M <= 2'b0;
             select <= 1'b0;
-            p <= 0;
-        end else if (enable_M) begin
+        end else if (count_M[1]) begin
             select <= ~select;
-            for (n = 0; n < HALF_N; n = n + 1) begin
+            for (n = 0; n < (HALF_N >> 1); n = n + 1) begin
                 h_k_reg[n] <= h_k[n];
             end
-            h_k_reg[112] <= ROM[112];
-            for (n = 0; n < (HALF_N<<1) - 2; n = n + 1) begin
-                if ((wr_ptr - n) >= 0) begin
-                    x_reg[n] <= x_buf[wr_ptr - n] * h_k[p];
-                    x_sum <= (x_reg[n] + x_sum) >> 1;
-                    if((p < HALF_N-1) && (n < HALF_N))
-                        p <= p + 1; // till 112
-                    else if ((p == HALF_N-1) && (n == HALF_N-1))
-                        p <= p; // stay at 112 when n=113
+            h_k_reg[HALF_N >> 1] <= ROM[HALF_N-1];
+            for (n = 0; n < HALF_N; n = n + 1) begin
+                if ((wr_ptr >= n)) begin
+                    if (n < HALF_N>>1)
+                        x_reg[n] <= x_buf[wr_ptr - n] * h_k_reg[n];
                     else
-                        p <= p - 1; // decrease p
+                        x_reg[n] <= x_buf[wr_ptr - n] * h_k_reg[(HALF_N-1)-n];
+                end
+                else begin
+                    if (n < HALF_N>>1)
+                        x_reg[n] <= x_buf[(HALF_N + wr_ptr) - n] * h_k_reg[n];
+                    else
+                        x_reg[n] <= x_buf[(HALF_N + wr_ptr) - n] * h_k_reg[(HALF_N-1)-n];
                 end
             end
-            x_out <= x_sum[30:15]; // s16.15 format
-            enable_M <= 1'b0;
-        end
-        else if (count_M[1])begin
-            enable_M <= 1'b1;
-            count_M <= 3'b0;
+            // x_sum_temp <= (x_reg[k] + x_sum_temp) >> 1;
+            // if (k == HALF_N - 1) begin
+            //     k <= 8'd0;
+            // end
+            // else begin
+            //     k <= k + 1;
+            // end
+            // x_sum <= x_sum_temp;
+            x_out <= sum_out[HALF_N-2][30:15]; // s16.15 format
+            count_M <= 2'b0;
         end
         else 
             count_M <= count_M + 1'b1;
     end
+
+    // // Combinational logic for summation
+    // always @(*) begin
+    //     if (!rst_n)
+    //         x_sum = 0;
+    //     for (k = 0; k < HALF_N; k = k + 1) begin
+    //         x_sum = (x_sum + x_reg[k]) << 1;
+    //     end
+    // end
 endmodule
