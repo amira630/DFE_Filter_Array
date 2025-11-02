@@ -1,8 +1,17 @@
+////////////////////////////////////////////////////////////////////////////////
+// Author: Amira Atef
+// Design: Cascaded Integrator-Comb (CIC) Filter Decimator
+// Date: 02-11-2025
+// Description: A CIC module using an integrator-comb structure to decimate
+// a signal's fs from 6MHz using an 18MHz clock. This design is for a CIC where D=R,
+// and D can be 1,2,4,8,16.
+////////////////////////////////////////////////////////////////////////////////
+
 module CIC #(parameter DATA_WIDTH = 16, Q = 3, D = 1) (
     input wire clk, // 18MHz, to avoid CDC
     input wire rst_n,
     input wire signed [DATA_WIDTH-1:0] x_in,
-    output wire signed [DATA_WIDTH-1:0] x_out
+    output reg signed [DATA_WIDTH-1:0] x_out
 );
     genvar i;
     local parameter LOG2_D = (D == 1) ? 0 :
@@ -21,13 +30,13 @@ module CIC #(parameter DATA_WIDTH = 16, Q = 3, D = 1) (
     reg en_d;
     integer m, k, j;
 
-    Integrator #(.DATA_WIDTH(DATA_WIDTH + Q*LOG2_D)) U_INTEG_0 (.clk(clk), .rst_n(rst_n), .en(count_og[1]), .in(x_in), .out(integrator_out[0]));
+    INTEG #(.DATA_WIDTH(DATA_WIDTH + Q*LOG2_D)) U_INTEG_0 (.clk(clk), .rst_n(rst_n), .en(count_og[1]), .in(x_in), .out(integrator_out[0]));
 
-    Comb #(.DATA_WIDTH(DATA_WIDTH + Q*LOG2_D)) U_COMB_0 (.clk(clk), .rst_n(rst_n), .en(en_d), .in(downsampler_out), .out(comb_out[0]));
+    COMB #(.DATA_WIDTH(DATA_WIDTH + Q*LOG2_D)) U_COMB_0 (.clk(clk), .rst_n(rst_n), .en(en_d), .in(downsampler_out), .out(comb_out[0]));
     generate
         for (i = 1; i < Q; i = i + 1) begin : gen_integ_comb
-            Integrator #(.DATA_WIDTH(DATA_WIDTH)) U_INTEG (.clk(clk), .rst_n(rst_n), .en(count_og[1]), .in(integrator_out[i-1]), .out(integrator_out[i]));
-            Comb #(.DATA_WIDTH(DATA_WIDTH)) U_COMB (.clk(clk), .rst_n(rst_n), .en(en_d), .in(comb_out[i-1]), .out(comb_out[i]));
+            INTEG #(.DATA_WIDTH(DATA_WIDTH)) U_INTEG (.clk(clk), .rst_n(rst_n), .en(count_og[1]), .in(integrator_out[i-1]), .out(integrator_out[i]));
+            COMB #(.DATA_WIDTH(DATA_WIDTH)) U_COMB (.clk(clk), .rst_n(rst_n), .en(en_d), .in(comb_out[i-1]), .out(comb_out[i]));
         end
     endgenerate
 
@@ -66,6 +75,7 @@ module CIC #(parameter DATA_WIDTH = 16, Q = 3, D = 1) (
                     j <= j + 1;
                 else
                     j <= 0;
+                x_out <= comb_out[Q-1]>>(Q*LOG2_D); // divide by D^Q
             end
             else begin // downsampler enable logic
                 if (count_down < (3 << LOG2_D)) begin
@@ -79,5 +89,5 @@ module CIC #(parameter DATA_WIDTH = 16, Q = 3, D = 1) (
         end
     end   
 
-    assign x_out = comb_out[Q-1];
+    // assign x_out = comb_out[Q-1];
 endmodule
