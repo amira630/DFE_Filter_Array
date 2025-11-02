@@ -1,4 +1,11 @@
-module Integrator #(parameter DATA_WIDTH = 16) (
+////////////////////////////////////////////////////////////////////////////////
+// Author: Amira Atef
+// Design: A comb module.
+// Date: 02-11-2025
+// Description: A comb stage for CIC filter
+////////////////////////////////////////////////////////////////////////////////
+
+module COMB #(parameter DATA_WIDTH = 16) (
     input wire clk,
     input wire rst_n,
     input wire en,
