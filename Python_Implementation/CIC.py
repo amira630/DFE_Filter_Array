@@ -21,9 +21,9 @@ def cic_decimator(x, R=8, D=1, Q=3):
 # Configuration
 # -------------------------------------------------
 fs_in = 6e6    # Input rate
-R = 8         # Decimation factor
-Q = 7          # CIC order
-N = 2          # Number of sections
+R = 16         # Decimation factor
+Q = 3          # CIC order
+N = 3          # Number of sections
 D = N*R        # Differential delay
 
 # -------------------------------------------------
@@ -98,7 +98,7 @@ def getFIRCompensationFilter(R, N, Q, cutOff, numTaps, calcRes=1024):
     taps = firwin2(numTaps, normFreq, cicCompResponse)
     return taps
 
-taps = getFIRCompensationFilter(R=R, N=N, Q=Q, cutOff=1/(2*R), numTaps=99)
+taps = getFIRCompensationFilter(R=R, N=N, Q=Q, cutOff=1/(2*R), numTaps=65)
 
 # -------------------------------------------------
 # Apply FIR filter to CIC output
