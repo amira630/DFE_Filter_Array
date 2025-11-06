@@ -5,7 +5,7 @@
 // Description: A comb stage for CIC filter
 ////////////////////////////////////////////////////////////////////////////////
 
-module COMB #(parameter DATA_WIDTH = 16) (
+module COMB #(parameter DATA_WIDTH = 16, N = 1) (
     input wire clk,
     input wire rst_n,
     input wire en,
@@ -13,15 +13,20 @@ module COMB #(parameter DATA_WIDTH = 16) (
     output reg signed [DATA_WIDTH-1:0] out
 );
 
-    reg signed [DATA_WIDTH-1:0] in_reg;
+    reg signed [DATA_WIDTH-1:0] in_reg [0: N-1];
+    
+    integer i;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            in_reg <= 'd0;
+            for (i = 0; i < N; i = i+1)
+                in_reg[i] <= 'd0;
             out <= 'd0;
         end else if (en) begin
-            in_reg <= in;
-            out <= (in - in_reg) >> 1; // Simple averaging differentiator
+            in_reg[0] <= in;
+            for(i = 1; i < N; i = i+1)
+                in_reg[i] <= in_reg[i-1] 
+            out <= (in - in_reg[N-1]) >> 1; // Simple averaging differentiator
         end
     end
 endmodule

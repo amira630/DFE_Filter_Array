@@ -3,22 +3,34 @@
 // Design: Cascaded Integrator-Comb (CIC) Filter Decimator
 // Date: 02-11-2025
 // Description: A CIC module using an integrator-comb structure to decimate
-// a signal's fs from 6MHz using an 18MHz clock. This design is for a CIC where D=R,
-// and D can be 1,2,4,8,16.
+// a signal's fs from 6MHz using an 18MHz clock. This design is for a CIC where D is the Delay, 
+// Q is the order, R is the decimation factor and R can be 1,2,4,8,16.
 ////////////////////////////////////////////////////////////////////////////////
 
-module CIC #(parameter DATA_WIDTH = 16, Q = 3, D = 1) (
+module CIC #(parameter DATA_WIDTH = 16, R = 1) (
     input wire clk, // 18MHz, to avoid CDC
     input wire rst_n,
     input wire signed [DATA_WIDTH-1:0] x_in,
     output reg signed [DATA_WIDTH-1:0] x_out
 );
     genvar i;
-    local parameter LOG2_D = (D == 1) ? 0 :
-                             (D == 2) ? 1 :
-                             (D == 4) ? 2 :
-                             (D == 8) ? 3 :
-                             (D == 16) ? 4 : 0;
+    local parameter LOG2_D = (R == 1) ? 0 :
+                             (R == 2) ? 2 :
+                             (R == 4) ? 4 :
+                             (R == 8) ? 5 :
+                             (R == 16) ? 7 : 0;
+
+    local parameter Q = (R == 1) ? 1 :
+                        (R == 2) ? 4 :
+                        (R == 4) ? 3 :
+                        (R == 8) ? 5 :
+                        (R == 16) ? 5 : 1;
+
+    local parameter N = (R == 1) ? 1 :
+                        (R == 2) ? 2 :
+                        (R == 4) ? 4 :
+                        (R == 8) ? 5 :
+                        (R == 16) ? 7 : 1;                    
 
     wire signed [(DATA_WIDTH + Q*LOG2_D)-1:0] integrator_out [0:Q-1];
     wire signed [(DATA_WIDTH + Q*LOG2_D)-1:0] comb_out [0:Q-1];
@@ -32,11 +44,11 @@ module CIC #(parameter DATA_WIDTH = 16, Q = 3, D = 1) (
 
     INTEG #(.DATA_WIDTH(DATA_WIDTH + Q*LOG2_D)) U_INTEG_0 (.clk(clk), .rst_n(rst_n), .en(count_og[1]), .in(x_in), .out(integrator_out[0]));
 
-    COMB #(.DATA_WIDTH(DATA_WIDTH + Q*LOG2_D)) U_COMB_0 (.clk(clk), .rst_n(rst_n), .en(en_d), .in(downsampler_out), .out(comb_out[0]));
+    COMB #(.DATA_WIDTH(DATA_WIDTH + Q*LOG2_D), .N(N)) U_COMB_0 (.clk(clk), .rst_n(rst_n), .en(en_d), .in(downsampler_out), .out(comb_out[0]));
     generate
         for (i = 1; i < Q; i = i + 1) begin : gen_integ_comb
             INTEG #(.DATA_WIDTH(DATA_WIDTH)) U_INTEG (.clk(clk), .rst_n(rst_n), .en(count_og[1]), .in(integrator_out[i-1]), .out(integrator_out[i]));
-            COMB #(.DATA_WIDTH(DATA_WIDTH)) U_COMB (.clk(clk), .rst_n(rst_n), .en(en_d), .in(comb_out[i-1]), .out(comb_out[i]));
+            COMB #(.DATA_WIDTH(DATA_WIDTH), .N(N)) U_COMB (.clk(clk), .rst_n(rst_n), .en(en_d), .in(comb_out[i-1]), .out(comb_out[i]));
         end
     endgenerate
 
@@ -62,7 +74,7 @@ module CIC #(parameter DATA_WIDTH = 16, Q = 3, D = 1) (
                     else
                         k <= 0;
                 end
-                if (sample_count < D-1) 
+                if (sample_count < R-1) 
                     sample_count <= sample_count + 1;
                 else 
                     sample_count <= 8'd0;

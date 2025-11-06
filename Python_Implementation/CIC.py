@@ -21,9 +21,9 @@ def cic_decimator(x, R=8, D=1, Q=3):
 # Configuration
 # -------------------------------------------------
 fs_in = 6e6    # Input rate
-R = 16         # Decimation factor
-Q = 3          # CIC order
-N = 3          # Number of sections
+R = 8         # Decimation factor
+Q = 5          # CIC order
+N = 5          # Number of sections
 D = N*R        # Differential delay
 
 # -------------------------------------------------
@@ -52,34 +52,35 @@ H_db = 20 * np.log10(np.abs(H) + 1e-12)
 # ------------------------------------------------- 
 # Plot Results 
 # ------------------------------------------------- 
-plt.figure(figsize=(10,6)) 
-plt.plot(f * fs_in / 1e6, H_db) 
-plt.title(f'CIC Decimator Frequency Response (R={R}, D={D}, Q={Q})') 
-plt.xlabel('Frequency [MHz]') 
-plt.ylabel('Magnitude [dB]') 
-plt.grid(True) 
-# ------------------------------------------------- 
-# Time-domain plots for input and output 
-# ------------------------------------------------- 
-# Time vectors (in microseconds for readability) 
-t_in = np.arange(len(x)) / fs_in * 1e6 
-t_out = np.arange(len(y)) / (fs_in / R) * 1e6 
-plt.figure(figsize=(12, 6)) 
-# Plot input # plt.subplot(2, 1, 1) 
-plt.plot(t_in, x, label='Input (6 MHz)') 
-plt.title('CIC Input Signal') 
-plt.xlabel('Time [µs]') 
-plt.ylabel('Amplitude') 
-plt.grid(True) 
-# Plot output 
-plt.subplot(2, 1, 2) 
-plt.plot(t_out, y, label=f'Output ({fs_in/R/1e6:.3f} MHz)', color='orange') 
-plt.title(f'CIC Output Signal (Decimated by R={R})') 
-plt.xlabel('Time [µs]') 
-plt.ylabel('Amplitude') 
-plt.grid(True) 
-plt.tight_layout() 
-plt.show()
+# plt.figure(figsize=(10,6)) 
+# plt.plot(f * fs_in / 1e6, H_db) 
+# plt.title(f'CIC Decimator Frequency Response (R={R}, D={D}, Q={Q})') 
+# plt.xlabel('Frequency [MHz]') 
+# plt.ylabel('Magnitude [dB]') 
+# plt.grid(True) 
+# # ------------------------------------------------- 
+# # Time-domain plots for input and output 
+# # ------------------------------------------------- 
+# # Time vectors (in microseconds for readability) 
+# t_in = np.arange(len(x)) / fs_in * 1e6 
+# t_out = np.arange(len(y)) / (fs_in / R) * 1e6 
+# plt.figure(figsize=(12, 6)) 
+# # Plot input 
+# plt.subplot(2, 1, 1) 
+# plt.plot(t_in, x, label='Input (6 MHz)') 
+# plt.title('CIC Input Signal') 
+# plt.xlabel('Time [µs]') 
+# plt.ylabel('Amplitude') 
+# plt.grid(True) 
+# # Plot output 
+# plt.subplot(2, 1, 2) 
+# plt.plot(t_out, y, label=f'Output ({fs_in/R/1e6:.3f} MHz)', color='orange') 
+# plt.title(f'CIC Output Signal (Decimated by R={R})') 
+# plt.xlabel('Time [µs]') 
+# plt.ylabel('Amplitude') 
+# plt.grid(True) 
+# plt.tight_layout() 
+# plt.show()
 
 # -------------------------------------------------
 # FIR Compensation Filter
@@ -103,7 +104,7 @@ taps = getFIRCompensationFilter(R=R, N=N, Q=Q, cutOff=1/(2*R), numTaps=65)
 # -------------------------------------------------
 # Apply FIR filter to CIC output
 # -------------------------------------------------
-y_comp = lfilter(taps, 1.0, y)
+# y_comp = lfilter(taps, 1.0, y)
 
 # -------------------------------------------------
 # Frequency Response comparison
@@ -138,20 +139,20 @@ plotFIRCompFilter(R=R, N=N, Q=Q, cutOff=1/(2*R), taps=taps, xMin=0, xMax=0.2, yM
 # -------------------------------------------------
 # Time-domain comparison
 # -------------------------------------------------
-t_out = np.arange(len(y)) / fs_out * 1e6
-plt.figure(figsize=(12,6))
-plt.subplot(2,1,1)
-plt.plot(t_out, y, label='CIC Output', color='orange')
-plt.title('CIC Output (Before Compensation)')
-plt.xlabel('Time [µs]')
-plt.ylabel('Amplitude')
-plt.grid(True)
+# t_out = np.arange(len(y)) / fs_out * 1e6
+# plt.figure(figsize=(12,6))
+# plt.subplot(2,1,1)
+# plt.plot(t_out, y, label='CIC Output', color='orange')
+# plt.title('CIC Output (Before Compensation)')
+# plt.xlabel('Time [µs]')
+# plt.ylabel('Amplitude')
+# plt.grid(True)
 
-plt.subplot(2,1,2)
-plt.plot(t_out, y_comp, label='After FIR Compensation', color='green')
-plt.title('CIC Output After FIR Compensation')
-plt.xlabel('Time [µs]')
-plt.ylabel('Amplitude')
-plt.grid(True)
-plt.tight_layout()
+# plt.subplot(2,1,2)
+# plt.plot(t_out, y_comp, label='After FIR Compensation', color='green')
+# plt.title('CIC Output After FIR Compensation')
+# plt.xlabel('Time [µs]')
+# plt.ylabel('Amplitude')
+# plt.grid(True)
+# plt.tight_layout()
 plt.show()
