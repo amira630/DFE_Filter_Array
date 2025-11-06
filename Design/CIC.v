@@ -7,30 +7,26 @@
 // Q is the order, N is D/R ratio and R is the decimation factor and R can be 1,2,4,8,16.
 ////////////////////////////////////////////////////////////////////////////////
 
-module CIC #(parameter DATA_WIDTH = 16, R = 1) (
+module CIC #(parameter DATA_WIDTH = 16) (
     input wire clk, // 18MHz, to avoid CDC
     input wire rst_n,
+    input wire [4:0] R,
     input wire signed [DATA_WIDTH-1:0] x_in,
     output reg signed [DATA_WIDTH-1:0] x_out
 );
     genvar i;
-    local parameter LOG2_D = (R == 1) ? 0 :
-                             (R == 2) ? 2 :
-                             (R == 4) ? 4 :
-                             (R == 8) ? 5 :
-                             (R == 16) ? 7 : 0;
 
-    local parameter Q = (R == 1) ? 1 :
-                        (R == 2) ? 4 :
-                        (R == 4) ? 3 :
-                        (R == 8) ? 5 :
-                        (R == 16) ? 5 : 1;
-
-    local parameter N = (R == 1) ? 1 :
-                        (R == 2) ? 2 :
-                        (R == 4) ? 4 :
-                        (R == 8) ? 5 :
-                        (R == 16) ? 7 : 1;                    
+    reg [3:0] LOG2_D, Q, N;
+    always @(*) begin
+        case (R)
+            1:  begin LOG2_D = 0; Q = 1; N = 1; end
+            2:  begin LOG2_D = 2; Q = 4; N = 2; end
+            4:  begin LOG2_D = 4; Q = 3; N = 4; end
+            8:  begin LOG2_D = 5; Q = 5; N = 5; end
+            16: begin LOG2_D = 7; Q = 5; N = 7; end
+            default: begin LOG2_D = 0; Q = 1; N = 1; end
+        endcase
+    end                   
 
     wire signed [(DATA_WIDTH + Q*LOG2_D)-1:0] integrator_out [0:Q-1];
     wire signed [(DATA_WIDTH + Q*LOG2_D)-1:0] comb_out [0:Q-1];
