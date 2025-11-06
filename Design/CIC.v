@@ -4,7 +4,7 @@
 // Date: 02-11-2025
 // Description: A CIC module using an integrator-comb structure to decimate
 // a signal's fs from 6MHz using an 18MHz clock. This design is for a CIC where D is the Delay, 
-// Q is the order, R is the decimation factor and R can be 1,2,4,8,16.
+// Q is the order, N is D/R ratio and R is the decimation factor and R can be 1,2,4,8,16.
 ////////////////////////////////////////////////////////////////////////////////
 
 module CIC #(parameter DATA_WIDTH = 16, R = 1) (
