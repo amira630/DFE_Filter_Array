@@ -1,12 +1,11 @@
 `timescale 1ns/1fs
-module Frac_Deci_tb();
+module CIC_tb();
 
     /////////////////////////////////////////////////////////
     ///////////////////// Parameters ////////////////////////
     /////////////////////////////////////////////////////////
 
     parameter CLOCK_PERIOD = 55.555556;
-    parameter HALF_N = 113;
     parameter DATA_WIDTH = 16;
 
     /////////////////////////////////////////////////////////
@@ -14,6 +13,7 @@ module Frac_Deci_tb();
     /////////////////////////////////////////////////////////
 
     reg clk_tb, rst_n_tb;
+    reg [4:0] R_tb;
     reg signed [DATA_WIDTH-1:0] x_in_tb; // s16.15 format
     wire signed [DATA_WIDTH-1:0] x_out_tb; // s16.15 format
 
@@ -25,8 +25,8 @@ module Frac_Deci_tb();
     /////////////////// DUT Instantation ///////////////////
     ////////////////////////////////////////////////////////
 
-    Frac_Deci #(.HALF_N(HALF_N), .DATA_WIDTH(DATA_WIDTH)) DUT (.clk(clk_tb), .rst_n(rst_n_tb), .x_in(x_in_tb), .x_out(x_out_tb));
-    
+    CIC DUT #(.DATA_WIDTH(DATA_WIDTH)) (.clk(clk_tb), .rst_n(rst_n_tb), .R(R_tb),.x_in(x_in_tb), .x_out(x_out_tb));
+
     ////////////////////////////////////////////////////////
     ////////////////// Clock Generator  ////////////////////
     ////////////////////////////////////////////////////////
@@ -36,13 +36,13 @@ module Frac_Deci_tb();
     ////////////////////////////////////////////////////////
     /////////// Applying Stimulus on Inputs //////////////// 
     ////////////////////////////////////////////////////////
-    
+
     initial begin
         // System Functions
-        $dumpfile("Fractional_Decimator.vcd");
+        $dumpfile("CIC.vcd");
         $dumpvars;
         // Load input samples from file
-        $readmemh("inputs_F_D.txt", mem_in);
+        $readmemh("inputs_CIC.txt", mem_in);
 
         // initialization
         initialize();
@@ -83,4 +83,5 @@ module Frac_Deci_tb();
     endtask
 
     ////////////////// Check Out Response  ////////////////////
+
 endmodule
