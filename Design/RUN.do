@@ -1,5 +1,5 @@
 vlib work
-vlog MUX2x1.v  SUM.v Frac_Deci.v Frac_Deci_tb.v
+vlog MUX2x1.v SUM.v Frac_Deci.v Frac_Deci_tb.v
 vsim -voptargs=+acc work.Frac_Deci_tb
 add wave *
 add wave -position insertpoint  \

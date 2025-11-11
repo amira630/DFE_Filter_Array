@@ -5,23 +5,19 @@
 // Description: An integration stage for CIC filter
 ////////////////////////////////////////////////////////////////////////////////
 
-module INTEG #(parameter DATA_WIDTH = 16) (
+module INTEG #(parameter DATA_WIDTH_IN = 16, DATA_WIDTH_OUT = 16) (
     input wire clk,
     input wire rst_n,
     input wire en,
-    input wire signed [DATA_WIDTH-1:0] in,
-    output reg signed [DATA_WIDTH-1:0] out
+    input wire signed [DATA_WIDTH_IN-1:0] in,
+    output reg signed [DATA_WIDTH_OUT-1:0] out
 );
-
-    reg signed [DATA_WIDTH-1:0] in_reg;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            in_reg <= 'd0;
             out <= 'd0;
         end else if (en) begin
-            in_reg <= in;
-            out <= (in + in_reg) >> 1; // Simple averaging integrator
+            out <= in + out; // Simple averaging integrator
         end
     end
 endmodule
