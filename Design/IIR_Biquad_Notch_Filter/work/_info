@@ -1,0 +1,122 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+!s11f vlog 2021.1 2021.01, Jan 19 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dE:/Digital Track/SI-Clash Hackathon/DFE_Filter_Array/Design/CIC
+T_opt
+!s110 1762985396
+V>jQ`>l6UiJ2a<m@U<]MPc2
+04 15 4 work Cascaded_IIR_tb fast 0
+=1-e454e81f9a45-691505b3-2c0-4db0
+!s124 OEM100
+o-quiet -auto_acc_if_foreign -work work +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;2021.1;73
+vCascaded_IIR
+Z2 !s110 1762985389
+!i10b 1
+!s100 ]S@;X7eTKTh``gU6B2UMI0
+ILz:XJzPS6fgdzN[g<DH_N1
+Z3 dE:/Digital Track/SI-Clash Hackathon/DFE_Filter_Array/Design/IIR_Biquad_Notch_Filter
+w1762981575
+8Cascaded_IIR.v
+FCascaded_IIR.v
+!i122 38
+L0 1 34
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z5 OL;L;2021.1;73
+r1
+!s85 0
+31
+Z6 !s108 1762985389.000000
+Z7 !s107 Cascaded_IIR_tb.v|Cascaded_IIR.v|IIR.v|
+Z8 !s90 -reportprogress|300|IIR.v|Cascaded_IIR.v|Cascaded_IIR_tb.v|
+!i113 0
+Z9 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+n@cascaded_@i@i@r
+vCascaded_IIR_tb
+R2
+!i10b 1
+!s100 Xg]0VO]IlOiHIhQ__]O9A1
+I=77ZHj;K904XnS3<7B01i0
+R3
+w1762984965
+8Cascaded_IIR_tb.v
+FCascaded_IIR_tb.v
+!i122 38
+L0 2 102
+R4
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R1
+n@cascaded_@i@i@r_tb
+vIIR
+R2
+!i10b 1
+!s100 8?l1DJVZg30FN1?UC>iIF0
+If=R3DDba`dKm2VQmF@ejR3
+R3
+w1762985376
+8IIR.v
+FIIR.v
+!i122 38
+L0 9 110
+R4
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R1
+n@i@i@r

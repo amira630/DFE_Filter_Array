@@ -1,0 +1,114 @@
+m255
+K4
+z2
+!s99 nomlopt
+!s11f vlog 2021.1 2021.01, Jan 19 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dD:/qsim_2021_1/examples
+T_opt
+!s110 1762953834
+Vc>i4oQ?@J@Lz@9bFVVemP3
+04 6 4 work CIC_tb fast 0
+=1-e454e81f9a45-69148a67-327-1cf8
+!s124 OEM100
+o-quiet -auto_acc_if_foreign -work work +acc
+Z0 tCvgOpt 0
+n@_opt
+OL;O;2021.1;73
+vCIC
+Z1 !s110 1762953829
+!i10b 1
+!s100 ^fCBI@ddT1eX?[Ib7JhO10
+IRk=SR=DMPUzb>=8?YNfg83
+Z2 dE:/Digital Track/SI-Clash Hackathon/DFE_Filter_Array/Design/CIC
+w1762952512
+8CIC.v
+FCIC.v
+!i122 0
+L0 10 93
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z4 OL;L;2021.1;73
+r1
+!s85 0
+31
+Z5 !s108 1762953828.000000
+Z6 !s107 CIC_tb.v|CIC.v|COMB.v|INTEG.v|
+Z7 !s90 -reportprogress|300|INTEG.v|COMB.v|CIC.v|CIC_tb.v|
+!i113 0
+Z8 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R0
+n@c@i@c
+vCIC_tb
+R1
+!i10b 1
+!s100 6R94JFKeR@O89j4e6S>I70
+I5CMJCK3lDO?8R5_W3TbZ80
+R2
+w1762859582
+8CIC_tb.v
+FCIC_tb.v
+!i122 0
+L0 2 96
+R3
+R4
+r1
+!s85 0
+31
+R5
+R6
+R7
+!i113 0
+R8
+R0
+n@c@i@c_tb
+vCOMB
+R1
+!i10b 1
+!s100 W:77MQHef9LOGc85mz>O=2
+IUYgYFE4nU;ZR<H>Jb2?lF0
+R2
+w1762829279
+8COMB.v
+FCOMB.v
+!i122 0
+L0 8 25
+R3
+R4
+r1
+!s85 0
+31
+R5
+R6
+R7
+!i113 0
+R8
+R0
+n@c@o@m@b
+vINTEG
+R1
+!i10b 1
+!s100 3UKQfF9JeR7d0GcPba;D;1
+IU5iIgk@?]?H6NB1FWMfS;1
+R2
+w1762829272
+8INTEG.v
+FINTEG.v
+!i122 0
+L0 8 16
+R3
+R4
+r1
+!s85 0
+31
+R5
+R6
+R7
+!i113 0
+R8
+R0
+n@i@n@t@e@g
