@@ -99,15 +99,13 @@ module APB_Bridge #(
         PADDR = MADDR;
         PSELx = 'b0;
         PWDATA = MWDATA;
-        MRDATA = PRDATA;
+        MRDATA = 'b0;
         case (current_state)
             SETUP: begin
                 PWRITE = MWRITE;
                 PSELx = MSELx;
                 if (MWRITE)
                     PWDATA = MWDATA;
-                else
-                    MRDATA = PRDATA;
             end
             ACCESS: begin
                 PENABLE = 1'b1;
@@ -116,8 +114,9 @@ module APB_Bridge #(
                 PADDR = ADDR_reg;
                 if (PWRITE)
                     PWDATA = WDATA_reg;
+                if (PREADY)
+                    MRDATA = PRDATA;
             end
-
         endcase
     end
 endmodule
