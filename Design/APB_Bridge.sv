@@ -94,12 +94,12 @@ module APB_Bridge #(
 
     // Output logic 
     always @(*) begin
-            PENABLE = 1'b0;
-            PWRITE = 1'b0;
-            PADDR = MADDR;
-            PSELx = 'b0;
-            PWDATA = MWDATA;
-            MRDATA = PRDATA;
+        PENABLE = 1'b0;
+        PWRITE = 1'b0;
+        PADDR = MADDR;
+        PSELx = 'b0;
+        PWDATA = MWDATA;
+        MRDATA = PRDATA;
         case (current_state)
             SETUP: begin
                 PWRITE = MWRITE;
