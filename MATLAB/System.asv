@@ -1,0 +1,422 @@
+clear
+clc
+
+%% ======================= SECTION 1: INITIALIZATION =======================
+% This section sets up the basic simulation parameters including sampling
+% frequency, number of samples, and generates the original test signal.
+% The signal is a 100 kHz sine wave that will be used to test the filter
+% performance. We also perform initial frequency analysis to establish
+% a baseline for comparison.
+
+Fs = 9e6;              % Sampling frequency (Hz)
+N  = 48000;            % Number of samples
+
+% === 1. Generate sine-wave input (ADC-like signal) ===
+f_sig = 1e5;                               % Signal frequency (100 kHz tone)
+t = (0 : N - 1)' / Fs;                     % Time vector
+x_real_clean = 0.5 * sin(2 * pi * f_sig * t);    % Amplitude < 1 to avoid clipping in fixed-point
+
+% Plot original signal in time and frequency domains
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t, x_real_clean);
+title('Original Signal (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+% Compute frequency content of the original signal
+x_real_fft = fft(x_real_clean);
+f_x_real = linspace(-Fs/2, Fs/2, length(x_real_fft));    % Frequency axis for plotting
+x_real_fft_shifted = fftshift(x_real_fft);               % Shift DC to center
+
+% Plot frequency spectrum
+subplot(1, 2, 2);
+plot(f_x_real, abs(x_real_fft_shifted),'Color','red');
+title('Original Signal (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+
+%% ======================= SECTION 2: INTERFERENCE GENERATION =======================
+% This section creates and adds interference signals at 2.4 MHz and 5 MHz
+% to simulate real-world RF interference. These interference tones will
+% be the targets for our notch filters. The amplitudes are carefully chosen
+% to avoid saturation in the fixed-point representation while providing
+% measurable interference.
+
+% Define interference tones to be filtered out
+f_intf_2_4 = 2.4e6;     % 2.4 MHz interference tone
+f_intf_5 = 5e6;         % 5 MHz interference tone
+
+% Interference amplitudes (adjusted to avoid saturation in fixed-point)
+A_intf_2_4 = 0.2;
+A_intf_5 = 0.3;
+
+% Generate and add the interference signals
+intf1 = (A_intf_2_4 * sin(2 * pi * f_intf_2_4 * t));
+intf2 = (A_intf_5 * sin(2 * pi * f_intf_5 * t));
+interference = intf1 + intf2;
+x_real_noisy = x_real_clean + interference;  % Combine desired signal with interference
+
+
+%% ======================= SECTION 3: FIXED-POINT COMPATIBILITY CHECK =======================
+% This section verifies that all signals remain within the s16.15 fixed-point
+% range (±1.0). This is critical for hardware implementation where signals
+% must not exceed the digital representation limits to avoid clipping and
+% distortion.
+
+max_pos = 0.999969482421875;
+max_neg = -1;
+
+% Check if signals exceed s16.15 fixed-point range (±1.0 represents full scale)
+fprintf('\n=== FIXED-POINT COMPATIBILITY CHECK ===\n');
+
+if max(x_real_noisy) > max_pos 
+    fprintf('WARNING: x_real_noisy exceeds s16.15 range! (max value = %.4f)\n', max(x_real_noisy));
+elseif min(x_real_noisy) < max_neg
+    fprintf('WARNING: x_real_noisy exceeds s16.15 range! (min value = %.4f)\n', min(x_real_noisy));
+else
+    fprintf('x_real_noisy is within s16.15 range ✓\n');
+end
+
+if max(intf1) > max_pos
+    fprintf('WARNING: intf1 exceeds s16.15 range! (max value = %.4f)\n', max(intf1));
+elseif min(intf1) < max_neg
+    fprintf('WARNING: intf1 exceeds s16.15 range! (min value = %.4f)\n', min(intf1));
+else
+    fprintf('intf1 is within s16.15 range ✓\n');
+end
+
+if max(intf2) > max_pos
+    fprintf('WARNING: intf2 exceeds s16.15 range! (max value = %.4f)\n', max(intf2));
+elseif min(intf2) < max_neg
+    fprintf('WARNING: intf2 exceeds s16.15 range! (min value = %.4f)\n', min(intf2));
+else
+    fprintf('intf2 is within s16.15 range ✓\n');
+end
+
+x_quantized_clean = fi(x_real_clean, 1, 16, 15);
+x_quantized_noisy = fi(x_real_noisy, 1, 16, 15);
+
+% Plot interference signals separately
+figure('Position', [100, 100, 1800, 600]);
+plot(t, x_quantized_clean, 'r');
+title('Quantized Clean Signal (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+% Plot combined noisy signal
+figure('Position', [100, 100, 1800, 600]);
+plot(t, x_quantized_noisy);
+title('Quantized Noisy Signal (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+%% ======================= SECTION 4: PRE-FILTERING SIR CALCULATION =======================
+% This section calculates the Signal-to-Interference Ratio (SIR) before
+% any filtering is applied. This establishes the baseline performance
+% and provides a reference point for measuring filter improvement.
+
+% Calculate Signal-to-Interference Ratio (SIR) before filtering
+signal_power_before = rms(x_real_clean)^2;          % Calculate power of desired signal
+intf = x_real_noisy - x_real_clean;                 % Extract just the interference component
+interference_power_before = rms(intf)^2;      % Calculate power of interference
+
+if interference_power_before == 0
+    SIR_dB_before = Inf;
+    fprintf('SIR Before filters: Infinite (no interference)\n');
+else
+    SIR_dB_before = 10 * log10(signal_power_before / interference_power_before);
+    fprintf('SIR Before filters = %.2f dB\n', SIR_dB_before);
+end
+
+
+%% ======================= SECTION 5: FRACTIONAL DECIMATION =======================
+% This section performs sample rate conversion using a fractional decimator.
+% Rate conversion is often used in multi-rate signal processing chains to
+% optimize computational efficiency and match system requirements.
+
+% Instantiate the fractional rate converter (sample rate change)
+Hd_Fractional_Decimator = Fractional_Decimator();
+
+% Process both noisy and clean signals through fractional decimator
+% Output uses fixed-point s16.15 format as defined in the filter object
+y_frac_noisy = step(Hd_Fractional_Decimator, x_quantized_noisy);
+y_frac_clean = step(Hd_Fractional_Decimator, x_real_clean);
+
+% Calculate new sampling rate after fractional decimation
+Fs_frac_dec = Fs * Hd_Fractional_Decimator.InterpolationFactor / Hd_Fractional_Decimator.DecimationFactor;
+N_frac_dec  = length(y_frac_noisy);
+t_frac_dec  = (0: N_frac_dec -1)' / Fs_frac_dec;
+
+% Plot signal after fractional decimation
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_frac_dec, y_frac_noisy);
+title('Noisy Signal After Fractional Decimator (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+% Compute frequency spectrum after fractional decimation
+y_frac_noisy_fft = fft(double(y_frac_noisy));
+f_y_frac = linspace(-Fs_frac_dec/2, Fs_frac_dec/2, length(y_frac_noisy_fft));
+y_frac_noisy_fft_shifted = fftshift(y_frac_noisy_fft);
+
+% Plot frequency spectrum after fractional decimation
+subplot(1, 2, 2);
+plot(f_y_frac, abs(y_frac_noisy_fft_shifted),'r');
+title('Noisy Signal After Fractional Decimator (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+% Plot clean signal after fractional decimation for comparison
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_frac_dec, y_frac_clean);
+title('Clean Signal After Fractional Decimator (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+y_frac_clean_fft = fft(double(y_frac_clean));
+y_frac_clean_fft_shifted = fftshift(y_frac_clean_fft);
+
+subplot(1, 2, 2);
+plot(f_y_frac, abs(y_frac_clean_fft_shifted),'Color','red');
+title('Clean Signal After Fractional Decimator (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+
+%% ======================= SECTION 6: 2.4 MHz NOTCH FILTERING =======================
+% This section applies an IIR notch filter to remove the 2.4 MHz interference.
+% Notch filters are designed to attenuate specific frequency components
+% while minimally affecting other frequencies.
+
+% === Create IIR notch filter for 2.4 MHz interference ===
+Hd_iir2_4_final = IIR2_4_Final();
+
+% === Apply the 2.4 MHz notch filter ===
+y_2_4_noisy = filter(Hd_iir2_4_final, y_frac_noisy);  % Filter noisy signal
+y_2_4_clean = filter(Hd_iir2_4_final, y_frac_clean);  % Filter clean signal for reference
+
+% Plot signal after 2.4 MHz notch filtering (now only 5 MHz interference remains)
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_frac_dec, y_2_4_noisy);
+title('Signal After 2.4 MHz Notch Filter (5 MHz Interference Remains)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+% Compute frequency spectrum after 2.4 MHz notch filtering
+y_2_4_noisy_fft = fft(double(y_2_4_noisy));
+y_2_4_noisy_fft_shifted = fftshift(y_2_4_noisy_fft);
+
+subplot(1, 2, 2);
+plot(f_y_frac, abs(y_2_4_noisy_fft_shifted),'Color','red');
+title('Signal After 2.4 MHz Notch Filter (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+% Plot clean reference after 2.4 MHz notch filtering
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_frac_dec, y_2_4_clean);
+title('Clean Signal After 2.4 MHz Notch Filter (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+y_2_4_clean_fft = fft(double(y_2_4_clean));
+y_2_4_clean_fft_shifted = fftshift(y_2_4_clean_fft);
+
+subplot(1, 2, 2);
+plot(f_y_frac, abs(y_2_4_clean_fft_shifted),'Color','red');
+title('Clean Signal After 2.4 MHz Notch Filter (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+
+%% ======================= SECTION 7: 5 MHz NOTCH FILTERING (CASCADED) =======================
+% This section applies two cascaded IIR notch filters to remove the 5 MHz interference.
+% Cascading filters provides steeper roll-off and better rejection at the
+% target frequency, though it may introduce additional phase distortion.
+
+% === Create IIR notch filters for 5 MHz interference ===
+Hd_iir5_final = IIR5_Final();        % First 5 MHz notch filter
+Hd_iir5__2_final = IIR5__2_Final();  % Second 5 MHz notch filter (cascaded)
+
+% === Apply the 5 MHz notch filters in cascade ===
+y_filtered_1 = filter(Hd_iir5_final, y_2_4_noisy);          % First stage
+y_filtered_clean_1 = filter(Hd_iir5_final, y_2_4_clean);    % First stage (clean reference)
+
+y_filtered = filter(Hd_iir5__2_final, y_filtered_1);        % Second stage (cascaded)
+y_filtered_clean = filter(Hd_iir5__2_final, y_filtered_clean_1);  % Second stage (clean reference)
+
+% Plot final filtered signal
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_frac_dec, y_filtered);
+title('Final Filtered Signal (Both Interferences Removed)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+% Compute frequency spectrum of final filtered signal
+y_filtered_fft = fft(double(y_filtered));
+y_filtered_fft_shifted = fftshift(y_filtered_fft);
+
+subplot(1, 2, 2);
+plot(f_y_frac, abs(y_filtered_fft_shifted),'Color','red');
+title('Final Filtered Signal (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+% Plot clean reference after all filtering
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_frac_dec, y_filtered_clean);
+title('Clean Reference After All Filtering (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+y_filtered_clean_fft = fft(double(y_filtered_clean));
+y_filtered_clean_fft_shifted = fftshift(y_filtered_clean_fft);
+
+subplot(1, 2, 2);
+plot(f_y_frac, abs(y_filtered_clean_fft_shifted),'Color','red');
+title('Clean Reference After All Filtering (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+
+%% ======================= SECTION 8: POST-FILTERING SIR ANALYSIS =======================
+% This section performs detailed Signal-to-Interference Ratio analysis
+% after all filtering stages. It uses advanced signal processing techniques
+% including Hilbert transforms and complex least-squares fitting to
+% accurately separate the remaining interference from the desired signal.
+% This provides a precise measurement of filter performance.
+
+% === Calculate SIR after filtering using signal alignment ===
+idx0 = 61;  % Start index to avoid transient effects from filter settling
+y1 = double(y_filtered);        % Final filtered noisy signal (with potential residual interference)
+y2 = double(y_filtered_clean);  % Final filtered clean reference (ideal signal without interference)
+
+% Align the signals to account for any filter delays or phase shifts
+[y1a,y2a] = alignsignals(y1, y2);
+
+% Use Hilbert transform for complex envelope analysis and optimal alignment
+a1 = hilbert(y1a);  % Convert signal to analytic form (complex signal)
+a2 = hilbert(y2a);  % Convert reference to analytic form (complex signal)
+
+% Compute complex scaling factor for optimal alignment using least-squares
+% This finds the complex coefficient 'c' that minimizes |a1 - c*a2|^2
+c = sum(a1 .* conj(a2)) / sum(abs(a2).^2);
+
+% Apply the optimal scaling to align the reference signal
+y2_aligned = real(a2 * c);  % Scale and convert back to real signal
+
+% Calculate remaining interference by subtracting aligned clean signal
+% This isolates any residual interference that the filters didn't remove
+remaining_intf = y1a - y2_aligned;
+
+% Calculate power metrics for SIR calculation
+% Use only the stable portion of the signal (after transient settling)
+signal_power_after = rms(y1a(idx0 : end))^2;                    % Power of filtered signal
+interference_power_after = rms(remaining_intf(idx0 : end))^2;   % Power of residual interference
+
+% Display power measurements for verification
+fprintf('signal_power_after = %.14f (linear power)\n', signal_power_after);
+fprintf('interference_power_after = %.14f (linear power)\n', interference_power_after);
+
+% Plot the remaining interference to visualize filter performance
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_frac_dec, remaining_intf);
+title('Remaining Interference After Filtering (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+% Compute frequency spectrum of remaining interference to identify
+% any specific frequency components that weren't adequately filtered
+remaining_intf_fft = fft(double(remaining_intf));
+remaining_intf_fft_shifted = fftshift(remaining_intf_fft);
+
+subplot(1, 2, 2);
+plot(f_y_frac, abs(remaining_intf_fft),'Color','red');
+title('Remaining Interference After Filtering (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+% Calculate final SIR and display performance improvement
+if interference_power_after == 0
+    SIR_dB_after = Inf;
+    fprintf('SIR After filters: Infinite (no interference)\n');
+else
+    SIR_dB_after = 10 * log10(signal_power_after / interference_power_after);
+    fprintf('SIR After filters = %.2f dB\n', SIR_dB_after);
+end
+
+% Calculate and display the SIR improvement achieved by the filters
+if ~isinf(SIR_dB_before) && ~isinf(SIR_dB_after)
+    SIR_improvement = SIR_dB_after - SIR_dB_before;
+    fprintf('SIR Improvement = %.2f dB\n', SIR_improvement);
+end
+
+
+%%
+%
+% 2. Apply CIC decimation
+%
+% Hd_cic = CIC();                    % your CIC filter
+% y_cic = step(Hd_cic, y_filtered);  % apply CIC
+% 
+% % === 3. Inject interference noise AFTER fractional decimation ===
+% Fs_cic = Fs_frac_dec / Hd_cic.DecimationFactor;  % new sampling rate after CIC
+% N_cic  = length(y_cic);
+% t_cic  = (0:N_cic-1)' / Fs_cic;
+% 
+% disp(['CIC output Fs = ', num2str(Fs_cic/1e6), ' MHz']);
+% 
+% figure('Position', [100, 100, 1800, 600]);
+% subplot(1, 2, 1);
+% plot(t_cic, y_cic);
+% title('Filtered Signal After CIC (Time Domain)');
+% xlabel('Time (s)');
+% ylabel('Amplitude');
+% 
+% % Compute frequency content of the original signal
+% y_cic_fft = fft(double(y_cic));
+% f_y_cic = linspace(-Fs_cic/2, Fs_cic/2, length(y_cic_fft)); % Shift frequency axis
+% y_cic_fft_shifted = fftshift(y_cic_fft); % Shift the spectrum
+% 
+% % Plot frequency content
+% subplot(1, 2, 2);
+% plot(f_y_cic, abs(y_cic_fft_shifted),'Color','red');
+% title('Filtered Signal After CIC (Frequency Domain)');
+% xlabel('Frequency (Hz)');
+% ylabel('Magnitude');
+% 
+
+%%
+% 
+% % === Create your IIR notch filter ===
+% Hd_fir_comp = FIR_comp();
+% 
+% % === Apply the filter ===
+% y_comp = filter(Hd_fir_comp, y_cic);
+% 
+% figure('Position', [100, 100, 1800, 600]);
+% subplot(1, 2, 1);
+% plot(t_cic, y_comp);
+% title('Signal After Compensation (Time Domain)');
+% xlabel('Time (s)');
+% ylabel('Amplitude');
+% 
+% % Compute frequency content of the original signal
+% y_comp_fft = fft(double(y_comp));
+% y_comp_fft_shifted = fftshift(y_comp_fft); % Shift the spectrum
+% 
+% % Plot frequency content
+% subplot(1, 2, 2);
+% plot(f_y_cic, abs(y_comp_fft_shifted),'Color','red');
+% title('Signal After Compensation (Frequency Domain)');
+% xlabel('Frequency (Hz)');
+% ylabel('Magnitude');
