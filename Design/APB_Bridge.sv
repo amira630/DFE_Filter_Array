@@ -1,9 +1,9 @@
 module APB_Bridge #(
     parameter ADDR_WIDTH = 32,      // Max number of addres bits
               DATA_WIDTH = 32,      // Can be 8, 16, or 32 bits
-              USER_REQ_WIDTH = 128, // Max number of user attribute bits
-              USER_DATA_WIDTH = 16, // DATA_WIDTH/2 max
-              USER_RESP_WIDTH = 16, // DATA_WIDTH/2 max
+            //   USER_REQ_WIDTH = 128, // Max number of user attribute bits
+            //   USER_DATA_WIDTH = 16, // DATA_WIDTH/2 max
+            //   USER_RESP_WIDTH = 16, // DATA_WIDTH/2 max
               COMP = 4              // Total number of Completers (aka APB Peripherals)
 )(
     input logic                        PCLK,
@@ -26,7 +26,7 @@ module APB_Bridge #(
     // output logic [2:0]                 PPROT,   // OPTIONAL
     output logic [COMP-1:0]            PSELx,
     output logic [DATA_WIDTH-1:0]      PWDATA,
-    output logic [DATA_WIDTH-1:0]      MRDATA,     // Data requested to be read by the Master/TB
+    output logic [DATA_WIDTH-1:0]      MRDATA     // Data requested to be read by the Master/TB
     // output logic [(DATA_WIDTH>>3)-1:0] PSTRB,   // OPTIONAL
     // output logic [USER_REQ_WIDTH-1:0]  PAUSER,  // User request attribute. (OPTIONAL)
     // output logic [USER_DATA_WIDTH-1:0] PWUSER   // User write data attribute. (OPTIONAL)
@@ -43,18 +43,24 @@ module APB_Bridge #(
     reg [COMP-1:0] SELx_reg;
     reg [ADDR_WIDTH-1:0] ADDR_reg;
     reg [DATA_WIDTH-1:0] WDATA_reg;
-    reg WRITE_reg;
+    reg WRITE_reg, READY_reg;
 
     always @(posedge PCLK or negedge PRESETn) begin
         if (!PRESETn) begin
             SELx_reg <= 'b0;
             WRITE_reg <= 1'b0;
+            READY_reg <= 1'b0;
             ADDR_reg <= 'b0;
+            WDATA_reg <= 'b0;
         end
-        else if (current_state == SETUP) begin
-            SELx_reg <= MSELx;
-            WRITE_reg <= MWRITE;
-            ADDR_reg <= PADDR;
+        else begin
+            if ((current_state == IDLE)|| current_state == ACCESS && READY_reg && MTRANS) begin
+                WRITE_reg <= MWRITE;
+                SELx_reg <= MSELx;
+                ADDR_reg <= MADDR;
+                WDATA_reg <= MWDATA;
+            end
+            READY_reg <= PREADY;
         end
     end
 
@@ -81,7 +87,7 @@ module APB_Bridge #(
                 next_state = ACCESS;
             end
             ACCESS: begin
-                if (!PREADY) 
+                if (!READY_reg) 
                     next_state = ACCESS;
                 else if (MTRANS)
                     next_state = SETUP;
@@ -95,17 +101,18 @@ module APB_Bridge #(
     // Output logic 
     always @(*) begin
         PENABLE = 1'b0;
-        PWRITE = 1'b0;
+        PWRITE = MWRITE;
         PADDR = MADDR;
-        PSELx = 'b0;
         PWDATA = MWDATA;
         MRDATA = 'b0;
+        PSELx = 'b0;
         case (current_state)
             SETUP: begin
-                PWRITE = MWRITE;
-                PSELx = MSELx;
-                if (MWRITE)
-                    PWDATA = MWDATA;
+                PWRITE = WRITE_reg;
+                PSELx = SELx_reg;
+                PADDR = ADDR_reg;
+                if (PWRITE)
+                    PWDATA = WDATA_reg;
             end
             ACCESS: begin
                 PENABLE = 1'b1;
@@ -114,7 +121,7 @@ module APB_Bridge #(
                 PADDR = ADDR_reg;
                 if (PWRITE)
                     PWDATA = WDATA_reg;
-                if (PREADY)
+                if (READY_reg)
                     MRDATA = PRDATA;
             end
         endcase
