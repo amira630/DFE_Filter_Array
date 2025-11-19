@@ -144,9 +144,6 @@ Hd_Fractional_Decimator = Fractional_Decimator();
 y_frac_noisy = step(Hd_Fractional_Decimator, x_quantized_noisy);
 y_frac_clean = step(Hd_Fractional_Decimator, x_quantized_clean);
 
-fprintf('Max = %f\n', max(y_frac_noisy));
-fprintf('Min = %f\n', min(y_frac_noisy));
-
 % Calculate new sampling rate after fractional decimation
 Fs_frac_dec = Fs * Hd_Fractional_Decimator.InterpolationFactor / Hd_Fractional_Decimator.DecimationFactor;
 N_frac_dec  = length(y_frac_noisy);
@@ -368,50 +365,91 @@ end
 
 
 %%
-%
-% 2. Apply CIC decimation
-%
-% Hd_cic = CIC();                    % your CIC filter
-% y_cic = step(Hd_cic, y_filtered);  % apply CIC
-% 
-% % === 3. Inject interference noise AFTER fractional decimation ===
-% Fs_cic = Fs_frac_dec / Hd_cic.DecimationFactor;  % new sampling rate after CIC
-% N_cic  = length(y_cic);
-% t_cic  = (0:N_cic-1)' / Fs_cic;
-% 
-% disp(['CIC output Fs = ', num2str(Fs_cic/1e6), ' MHz']);
-% 
-% figure('Position', [100, 100, 1800, 600]);
-% subplot(1, 2, 1);
-% plot(t_cic, y_cic);
-% title('Filtered Signal After CIC (Time Domain)');
-% xlabel('Time (s)');
-% ylabel('Amplitude');
-% 
-% % Compute frequency content of the original signal
-% y_cic_fft = fft(double(y_cic));
-% f_y_cic = linspace(-Fs_cic/2, Fs_cic/2, length(y_cic_fft)); % Shift frequency axis
-% y_cic_fft_shifted = fftshift(y_cic_fft); % Shift the spectrum
-% 
-% % Plot frequency content
-% subplot(1, 2, 2);
-% plot(f_y_cic, abs(y_cic_fft_shifted),'Color','red');
-% title('Filtered Signal After CIC (Frequency Domain)');
-% xlabel('Frequency (Hz)');
-% ylabel('Magnitude');
-% 
+
+Hd_cic = CIC();                    % your CIC filter
+
+y_cic = step(Hd_cic, y_filtered);  % apply CIC
+y_cic_clean = step(Hd_cic, y_filtered_clean);
+
+y_cic_quantized = fi(y_cic, 1, 16, 15);
+
+% === 3. Inject interference noise AFTER fractional decimation ===
+Fs_cic = Fs_frac_dec / Hd_cic.DecimationFactor;  % new sampling rate after CIC
+N_cic  = length(y_cic);
+t_cic  = (0:N_cic-1)' / Fs_cic;
+
+plot(y_cic_quantized(:,end),'DisplayName','y_cic_quantized(:,end)',YDataSource = 'y_cic_quantized(:,end)');
+linkdata on;
+ylabel("y_cic_quantized(:,end)");
+title("y_cic_quantized(:,end)");
+legend("show");
+
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_cic, y_cic);
+title('Filtered Signal After CIC (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+% Compute frequency content of the original signal
+y_cic_fft = fft(double(y_cic));
+f_cic = linspace(-Fs_cic/2, Fs_cic/2, length(y_cic_fft));
+y_cic_fft_shifted = fftshift(y_cic_fft);
+
+% Plot frequency content
+subplot(1, 2, 2);
+plot(f_cic, abs(y_cic_fft_shifted),'Color','red');
+title('Filtered Signal After CIC (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+figure('Position', [100, 100, 1800, 600]);
+subplot(1, 2, 1);
+plot(t_cic, y_cic_clean);
+title('Clean Signal After CIC (Time Domain)');
+xlabel('Time (s)');
+ylabel('Amplitude');
+
+y_cic_clean_fft = fft(double(y_cic_clean));
+y_cic_clean_fft_shifted = fftshift(y_cic_clean_fft);
+
+subplot(1, 2, 2);
+plot(f_cic, abs(y_cic_clean_fft_shifted),'Color','red');
+title('Clean Signal After CIC (Frequency Domain)');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
 
 %%
-% 
+
 % % === Create your IIR notch filter ===
-% Hd_fir_comp = FIR_comp();
+% Hd_FIR_comp_8 = FIR_comp_8();
 % 
 % % === Apply the filter ===
-% y_comp = filter(Hd_fir_comp, y_cic);
+% y_comp = filter(Hd_FIR_comp_8, y_cic);
+% y_comp_clean = filter(Hd_FIR_comp_8, y_cic_clean);
 % 
 % figure('Position', [100, 100, 1800, 600]);
 % subplot(1, 2, 1);
 % plot(t_cic, y_comp);
+% title('Signal After Compensation (Time Domain)');
+% xlabel('Time (s)');
+% ylabel('Amplitude');
+% 
+% % Compute frequency content of the original signal
+% y_comp_fft = fft(double(y_comp));
+% y_comp_fft_shifted = fftshift(y_comp_fft); % Shift the spectrum
+% 
+% % Plot frequency content
+% subplot(1, 2, 2);
+% plot(f_y_cic, abs(y_comp_fft_shifted),'Color','red');
+% title('Signal After Compensation (Frequency Domain)');
+% xlabel('Frequency (Hz)');
+% ylabel('Magnitude');
+% 
+% figure('Position', [100, 100, 1800, 600]);
+% subplot(1, 2, 1);
+% plot(t_cic, y_comp_clean);
 % title('Signal After Compensation (Time Domain)');
 % xlabel('Time (s)');
 % ylabel('Amplitude');

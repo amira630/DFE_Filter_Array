@@ -1,0 +1,41 @@
+do refs
+# Cannot open macro file: refs
+do run.do
+# Cannot open macro file: run.do
+# reading C:/questasim64_2021.1/win64/../modelsim.ini
+# Loading project cla_q
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 23:11:31 on Nov 16,2025
+# vlog -reportprogress 300 -f src_files.list "+cover" -covercells 
+# -- Compiling module gp_gen
+# -- Compiling module Sum_blk
+# -- Compiling module cla_4bit
+# -- Compiling module CLA_top
+# ** Error: CLA_top.sv(28): (vlog-2730) Undefined variable: 'NUM_GROUPS'.
+# -- Compiling module top_tb
+# End time: 23:11:31 on Nov 16,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# ** Error: C:/questasim64_2021.1/win64/vlog failed.
+# Error in macro ./run.do line 3
+# C:/questasim64_2021.1/win64/vlog failed.
+#     while executing
+# "vlog -f src_files.list +cover -covercells"
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 23:12:01 on Nov 16,2025
+# vlog -reportprogress 300 -f src_files.list "+cover" -covercells 
+# -- Compiling module gp_gen
+# -- Compiling module Sum_blk
+# -- Compiling module cla_4bit
+# -- Compiling module CLA_top
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 23:12:01 on Nov 16,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

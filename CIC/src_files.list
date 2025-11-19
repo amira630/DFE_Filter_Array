@@ -1,7 +1,5 @@
-clk_converter.sv
+comb.sv
+integrator.sv
 rounding_overflow_handling.sv
-iir_submodule.sv
-IIR.sv
-fractional_decimator.sv
-top_PH1.sv
-top_PH1_tb.sv
+cic.sv
+cic_tb.sv
