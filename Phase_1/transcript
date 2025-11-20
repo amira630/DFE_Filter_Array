@@ -1,41 +1,36 @@
-do refs
-# Cannot open macro file: refs
-do run.do
-# Cannot open macro file: run.do
-# reading C:/questasim64_2021.1/win64/../modelsim.ini
-# Loading project cla_q
 do run.do
 # ** Warning: (vlib-34) Library already exists at "work".
 # Errors: 0, Warnings: 1
 # QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
-# Start time: 23:11:31 on Nov 16,2025
+# Start time: 07:23:27 on Nov 20,2025
 # vlog -reportprogress 300 -f src_files.list "+cover" -covercells 
-# -- Compiling module gp_gen
-# -- Compiling module Sum_blk
-# -- Compiling module cla_4bit
-# -- Compiling module CLA_top
-# ** Error: CLA_top.sv(28): (vlog-2730) Undefined variable: 'NUM_GROUPS'.
-# -- Compiling module top_tb
-# End time: 23:11:31 on Nov 16,2025, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# ** Error: C:/questasim64_2021.1/win64/vlog failed.
-# Error in macro ./run.do line 3
-# C:/questasim64_2021.1/win64/vlog failed.
-#     while executing
-# "vlog -f src_files.list +cover -covercells"
-do run.do
-# ** Warning: (vlib-34) Library already exists at "work".
-# Errors: 0, Warnings: 1
-# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
-# Start time: 23:12:01 on Nov 16,2025
-# vlog -reportprogress 300 -f src_files.list "+cover" -covercells 
-# -- Compiling module gp_gen
-# -- Compiling module Sum_blk
-# -- Compiling module cla_4bit
-# -- Compiling module CLA_top
+# -- Compiling module FIFO
+# -- Compiling module clk_converter
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module IIR
+# ** Warning: iir_submodule.sv(22): (vlog-13314) Defaulting port 'num_coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_submodule.sv(23): (vlog-13314) Defaulting port 'den_coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: IIR.sv(22): (vlog-13314) Defaulting port 'num_coeff_2_4_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: IIR.sv(23): (vlog-13314) Defaulting port 'den_coeff_2_4_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: IIR.sv(27): (vlog-13314) Defaulting port 'num_coeff_2_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: IIR.sv(28): (vlog-13314) Defaulting port 'den_coeff_2_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: IIR.sv(32): (vlog-13314) Defaulting port 'num_coeff_1_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: IIR.sv(33): (vlog-13314) Defaulting port 'den_coeff_1_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module FRAC_DEC_in_IIR_out
+# ** Warning: top_PH1.sv(18): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_PH1.sv(26): (vlog-13314) Defaulting port 'iir_num_coeff_2_4_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_PH1.sv(27): (vlog-13314) Defaulting port 'iir_den_coeff_2_4_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_PH1.sv(31): (vlog-13314) Defaulting port 'iir_num_coeff_2_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_PH1.sv(32): (vlog-13314) Defaulting port 'iir_den_coeff_2_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_PH1.sv(36): (vlog-13314) Defaulting port 'iir_num_coeff_1_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_PH1.sv(37): (vlog-13314) Defaulting port 'iir_den_coeff_1_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
 # -- Compiling module top_tb
 # 
 # Top level modules:
+# 	clk_converter
 # 	top_tb
-# End time: 23:12:01 on Nov 16,2025, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
+# End time: 07:23:28 on Nov 20,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 16

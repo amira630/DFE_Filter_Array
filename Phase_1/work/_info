@@ -3,6 +3,22 @@ K4
 z2
 Z0 !s99 nomlopt
 R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
+R0
 !s11f vlog 2021.1 2021.01, Jan 19 2021
 13
 !s112 1.1
@@ -12,10 +28,10 @@ R0
 cModel Technology
 dD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/CIC
 T_opt
-!s110 1763303660
-Va>=hzZY^Td9]D9abI;VXl1
+!s110 1763619861
+Va2EQ6fbG:T6fE5W8?CafC1
 04 6 4 work top_tb fast 0
-=1-aac1887c0c94-6919e0ec-24e-6ef8
+=2-3e02adab69cc-691eb414-30c-2d20
 !s124 OEM100
 o-quiet -auto_acc_if_foreign -work work +acc
 Z1 tCvgOpt 0
@@ -23,7 +39,7 @@ n@_opt
 OL;O;2021.1;73
 vclk_converter
 Z2 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-Z3 !s110 1763303654
+Z3 !s110 1763619860
 !i10b 1
 !s100 P613VMA@mTD?<9EkaDOPZ0
 I<cloDzX<NbgdRLabbHP1@2
@@ -32,20 +48,46 @@ Z4 dD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/Phase_
 Z5 w1763243157
 8clk_converter.sv
 Fclk_converter.sv
-!i122 1
+!i122 21
 L0 1 38
 Z6 VDg1SIo80bB@j0V0VzS_@n1
 Z7 OL;L;2021.1;73
 r1
 !s85 0
 31
-Z8 !s108 1763303654.000000
-Z9 !s107 top_PH1_tb.sv|top_PH1.sv|fractional_decimator.sv|IIR.sv|iir_submodule.sv|rounding_overflow_handling.sv|clk_converter.sv|
+Z8 !s108 1763619860.000000
+Z9 !s107 top_PH1_tb.sv|top_PH1.sv|fractional_decimator.sv|IIR.sv|iir_submodule.sv|rounding_overflow_handling.sv|clk_converter.sv|FIFO.sv|
 Z10 !s90 -reportprogress|300|-f|src_files.list|+cover|-covercells|
 !i113 0
 Z11 !s102 +cover -covercells
 Z12 o+cover -covercells -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 R1
+vFIFO
+R2
+R3
+!i10b 1
+!s100 [jEL:UUPoFIcMAEzKHCUe1
+ISGfDFW?YSI2I3SLbJeNMD2
+S1
+R4
+w1763619336
+8FIFO.sv
+FFIFO.sv
+!i122 21
+L0 1 77
+R6
+R7
+r1
+!s85 0
+31
+R8
+R9
+R10
+!i113 0
+R11
+R12
+R1
+n@f@i@f@o
 vFRAC_DEC_in_IIR_out
 R2
 R3
@@ -54,10 +96,10 @@ R3
 II4cfnbM]@ZH3A@2Nja3U41
 S1
 R4
-R5
+w1763619827
 8top_PH1.sv
 Ftop_PH1.sv
-!i122 1
+!i122 21
 L0 1 115
 R6
 R7
@@ -80,10 +122,10 @@ R3
 IBkbNH<Faha<E_UiWE;35n2
 S1
 R4
-R5
+w1763619450
 8fractional_decimator.sv
 Ffractional_decimator.sv
-!i122 1
+!i122 21
 L0 1 190
 R6
 R7
@@ -108,7 +150,7 @@ R4
 R5
 8iir_submodule.sv
 Fiir_submodule.sv
-!i122 1
+!i122 21
 L0 1 208
 R6
 R7
@@ -134,7 +176,7 @@ R4
 R5
 8IIR.sv
 FIIR.sv
-!i122 1
+!i122 21
 L0 1 125
 R6
 R7
@@ -160,7 +202,7 @@ R4
 R5
 8rounding_overflow_handling.sv
 Frounding_overflow_handling.sv
-!i122 1
+!i122 21
 L0 1 81
 R6
 R7
@@ -182,10 +224,10 @@ R3
 IX0EW6ii5LYVD^?7`e>2bC0
 S1
 R4
-w1763303649
+w1763619854
 8top_PH1_tb.sv
 Ftop_PH1_tb.sv
-!i122 1
+!i122 21
 L0 1 226
 R6
 R7

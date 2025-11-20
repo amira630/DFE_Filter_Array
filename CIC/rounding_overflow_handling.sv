@@ -76,7 +76,7 @@ module rounding_overflow_arith #(
 
     // ---------- main rounding & saturation logic (kept from your original) ----------
     always_comb begin
-        data_out    = {OUT_WIDTH{1'sb0}};
+        //data_out    = {OUT_WIDTH{1'sb0}};
         overflow    = 1'b0 ;
         underflow   = 1'b0 ;
         valid_out   = 1'b0 ;
@@ -105,10 +105,10 @@ module rounding_overflow_arith #(
             end
 
         end else begin
-            data_out    = {OUT_WIDTH{1'sb0}}  ;
+            //data_out    = {OUT_WIDTH{1'sb0}}  ;
             overflow    = 1'b0                ;
             underflow   = 1'b0                ;
-            valid_out   = 1'b0                ;
+            //valid_out   = 1'b0                ;
         end
     end
 
