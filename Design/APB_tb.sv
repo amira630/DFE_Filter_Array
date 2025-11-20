@@ -19,28 +19,32 @@ module APB_tb();
     /////////// Testbench Signal Declaration ////////////////
     /////////////////////////////////////////////////////////
 
-    logic                          clk_tb                      ;
-    logic                          rst_n_tb                    ;
-    logic                          MTRANS_tb                   ; 
-    logic                          MWRITE_tb                   ;
-    logic        [COMP-1:0]        MSELx_tb                    ;
-    logic        [ADDR_WIDTH-1:0]  MADDR_tb                    ;
-    logic signed [COEFF_WIDTH-1:0] MWDATA_tb                   ; 
-    logic        [PDATA_WIDTH-1:0] MRDATA_tb                   ;
-    logic                          FRAC_DECI_VLD_tb            ;
-    logic signed [COEFF_WIDTH-1:0] FRAC_DECI_OUT_tb [N_TAP-1:0];
-    logic                          IIR_VLD_tb                  ;
-    logic signed [COEFF_WIDTH-1:0] IIR_OUT_tb [NUM_DENUM-1:0]  ;
-    logic                          CTRL_OUT_tb [4:0]           ;
-    logic                          CIC_R_VLD_tb                ;
-    logic        [4:0]             CIC_R_OUT_tb                ;
-    logic        [1:0]             OUT_SEL_tb                  ;
-    logic                          FRAC_DECI_STATUS_tb [1:0]   ;
-    logic                          IIR_24_STATUS_tb [1:0]      ;
-    logic                          IIR_5_1_STATUS_tb [1:0]     ;
-    logic                          IIR_5_2_STATUS_tb [1:0]     ;
-    logic                          CIC_STATUS_tb [1:0]         ;
-    logic                          FIR_STATUS_tb [1:0]         ;
+    logic                          clk_tb                          ;
+    logic                          rst_n_tb                        ;
+    logic                          MTRANS_tb                       ; 
+    logic                          MWRITE_tb                       ;
+    logic        [COMP-1:0]        MSELx_tb                        ;
+    logic        [ADDR_WIDTH-1:0]  MADDR_tb                        ;
+    logic signed [COEFF_WIDTH-1:0] MWDATA_tb                       ; 
+    logic        [PDATA_WIDTH-1:0] MRDATA_tb                       ;
+    logic                          FRAC_DECI_VLD_tb                ;
+    logic signed [COEFF_WIDTH-1:0] FRAC_DECI_OUT_tb [N_TAP-1:0]    ;
+    logic                          IIR_24_VLD_tb                   ;
+    logic signed [COEFF_WIDTH-1:0] IIR_24_OUT_tb [NUM_DENUM-1:0]   ;
+    logic                          IIR_5_1_VLD_tb                  ;
+    logic signed [COEFF_WIDTH-1:0] IIR_5_1_OUT_tb [NUM_DENUM-1:0]  ;
+    logic                          IIR_5_2_VLD_tb                  ;
+    logic signed [COEFF_WIDTH-1:0] IIR_5_2_OUT_tb [NUM_DENUM-1:0]  ;
+    logic                          CTRL_OUT_tb [4:0]               ;
+    logic                          CIC_R_VLD_tb                    ;
+    logic        [4:0]             CIC_R_OUT_tb                    ;
+    logic        [1:0]             OUT_SEL_tb                      ;
+    logic                          FRAC_DECI_STATUS_tb [1:0]       ;
+    logic                          IIR_24_STATUS_tb [1:0]          ;
+    logic                          IIR_5_1_STATUS_tb [1:0]         ;
+    logic                          IIR_5_2_STATUS_tb [1:0]         ;
+    logic                          CIC_STATUS_tb [1:0]             ;
+    logic                          FIR_STATUS_tb [1:0]             ;
 
     ////////////////////////////////////////////////////////
     /////////////////// DUT Instantation ///////////////////
@@ -64,8 +68,12 @@ module APB_tb();
         .MRDATA          (MRDATA_tb),
         .FRAC_DECI_VLD   (FRAC_DECI_VLD_tb),
         .FRAC_DECI_OUT   (FRAC_DECI_OUT_tb),
-        .IIR_VLD         (IIR_VLD_tb),
-        .IIR_OUT         (IIR_OUT_tb),
+        .IIR_24_VLD      (IIR_24_VLD_tb),
+        .IIR_24_OUT      (IIR_24_OUT_tb),
+        .IIR_5_1_VLD     (IIR_5_1_VLD_tb),
+        .IIR_5_1_OUT     (IIR_5_1_OUT_tb),
+        .IIR_5_2_VLD     (IIR_5_2_VLD_tb),
+        .IIR_5_2_OUT     (IIR_5_2_OUT_tb),
         .CTRL_OUT        (CTRL_OUT_tb),
         .CIC_R_VLD       (CIC_R_VLD_tb),
         .CIC_R_OUT       (CIC_R_OUT_tb),
@@ -105,43 +113,54 @@ module APB_tb();
         // RW(1, 1, i,'b1, $random()); // Write
         
         for (i = N_TAP; i < N_TAP + NUM_DENUM; i = i + 1) begin
-            RW(1, 0, i,'b10, $random()); // Write IIR Coeff
+            RW(1, 0, i,'b10, $random()); // Write IIR 2.4 Coeff
         end
+
+        for (i = N_TAP + NUM_DENUM; i < N_TAP + 2*NUM_DENUM; i = i + 1) begin
+            RW(1, 0, i,'b10, $random()); // Write IIR 5_1 Coeff
+        end
+
+        for (i = N_TAP + 2*NUM_DENUM; i < N_TAP + 3*NUM_DENUM; i = i + 1) begin
+            RW(1, 0, i,'b10, $random()); // Write IIR 5_2 Coeff
+        end
+
         // RW(1, 1, i,'b10, $random()); // Write
 
-        RW(1, 0, N_TAP + NUM_DENUM,'b100, $random()); // Write CIC_R
+        RW(1, 0, N_TAP + 3*NUM_DENUM,'b100, $random()); // Write CIC_R
 
         RW(0, 0, N_TAP-1,'b1, $random()); // READ Final Frac coeff
 
-        for (i = N_TAP + NUM_DENUM +1; i < N_TAP + NUM_DENUM + 6; i = i + 1) begin
+        for (i = N_TAP + 3*NUM_DENUM +1; i < N_TAP + 3*NUM_DENUM + 6; i = i + 1) begin
             RW(1, 0, i,'b1000, $random()); // Write CTRLs
         end
 
-        RW(1, 1, N_TAP + NUM_DENUM + 6,'b1000, $random()); // Write OUT_SEL
+        RW(1, 1, N_TAP + 3*NUM_DENUM + 6,'b1000, $random()); // Write OUT_SEL
 
-        for (i = N_TAP + NUM_DENUM +7; i < N_TAP + NUM_DENUM + 7 + 2; i = i + 1) begin
+        for (i = N_TAP + 3*NUM_DENUM +7; i < N_TAP + 3*NUM_DENUM + 7 + 2; i = i + 1) begin
             RW(1, 0, i,'b1, $random()); // Write Frac_Deci Overflow, Underflow
         end
 
-        for (i = N_TAP + NUM_DENUM +7+2; i < N_TAP + NUM_DENUM + 7 +2+2; i = i + 1) begin
+        for (i = N_TAP + 3*NUM_DENUM +7+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2; i = i + 1) begin
             RW(1, 0, i,'b10, $random()); // Write IIR_24 Overflow, Underflow
         end
 
-        for (i = N_TAP + NUM_DENUM +7+2+2; i < N_TAP + NUM_DENUM + 7 +2+2+2; i = i + 1) begin
+        for (i = N_TAP + 3*NUM_DENUM +7+2+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2+2; i = i + 1) begin
             RW(1, 0, i,'b10, $random()); // Write IIR_5_1 Overflow, Underflow
         end
 
-        for (i = N_TAP + NUM_DENUM +7+2+2+2; i < N_TAP + NUM_DENUM + 7 +2+2+2+2; i = i + 1) begin
+        for (i = N_TAP + 3*NUM_DENUM +7+2+2+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2+2+2; i = i + 1) begin
             RW(1, 0, i,'b10, $random()); // Write IIR_5_2 Overflow, Underflow
         end
 
-        for (i = N_TAP + NUM_DENUM +7+2+2+2+2; i < N_TAP + NUM_DENUM + 7 +2+2+2+2+2; i = i + 1) begin
+        for (i = N_TAP + 3*NUM_DENUM +7+2+2+2+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2+2+2+2; i = i + 1) begin
             RW(1, 0, i,'b100, $random()); // Write CIC Overflow, Underflow
         end
 
-        for (i = N_TAP + NUM_DENUM +7+2+2+2+2+2; i < N_TAP + NUM_DENUM + 7 +2+2+2+2+2+2; i = i + 1) begin
+        for (i = N_TAP + 3*NUM_DENUM +7+2+2+2+2+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2+2+2+2+2; i = i + 1) begin
             RW(1, 0, i,'b10000, $random()); // Write FIR Overflow, Underflow
         end
+
+        RW(0, 1, N_TAP + 2*NUM_DENUM -1,'b1, $random()); // READ Final IIR 5_1 coeff
 
         #(5*CLOCK_PERIOD)
         $stop;

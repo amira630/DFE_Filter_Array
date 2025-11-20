@@ -13,8 +13,12 @@ sim:/APB_tb/MWDATA_tb \
 sim:/APB_tb/MRDATA_tb \
 sim:/APB_tb/FRAC_DECI_OUT_tb \
 sim:/APB_tb/FRAC_DECI_VLD_tb  \
-sim:/APB_tb/IIR_OUT_tb \
-sim:/APB_tb/IIR_VLD_tb \
+sim:/APB_tb/IIR_24_OUT_tb \
+sim:/APB_tb/IIR_24_VLD_tb \
+sim:/APB_tb/IIR_5_1_OUT_tb \
+sim:/APB_tb/IIR_5_1_VLD_tb \
+sim:/APB_tb/IIR_5_2_OUT_tb \
+sim:/APB_tb/IIR_5_2_VLD_tb \
 sim:/APB_tb/CTRL_OUT_tb \
 sim:/APB_tb/CIC_R_OUT_tb \
 sim:/APB_tb/CIC_R_VLD_tb \

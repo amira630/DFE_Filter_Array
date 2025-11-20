@@ -53,7 +53,7 @@ module APB_Bridge #(
             WDATA_reg <= 'b0;
         end
         else begin
-            if ((current_state == IDLE)|| current_state == ACCESS && PREADY && MTRANS) begin
+            if ((current_state == IDLE)|| (current_state == ACCESS && PREADY && MTRANS)) begin
                 WRITE_reg <= MWRITE;
                 SELx_reg <= MSELx;
                 ADDR_reg <= MADDR;
