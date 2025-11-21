@@ -1,4 +1,3 @@
 rounding_overflow_handling.sv
 iir.sv
-iir_chain.sv
 iir_tb.sv

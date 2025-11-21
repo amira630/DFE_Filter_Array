@@ -3,7 +3,7 @@ module IIR #(
     parameter   DATA_FRAC       = 15                                    ,
     parameter   COEFF_WIDTH     = 20                                    ,
     parameter   COEFF_FRAC      = 18                                    ,
-    parameter   IIR_NOTCH_FREQ  = 2                                     ,// 0: 1MHz, 1: 2MHz, 2:2.4MHz
+    parameter   IIR_NOTCH_FREQ  = 2                                   // 0: 1MHz, 1: 2MHz, 2:2.4MHz
     // Coefficient depths
     localparam NUM_COEFF_DEPTH = 3                                      ,
     localparam DEN_COEFF_DEPTH = 2                                      ,

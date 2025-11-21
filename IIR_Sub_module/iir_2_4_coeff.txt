@@ -1,0 +1,8 @@
+Numerator:                                
+37061                                     
+5907c                                     
+37061                                     
+Denominator:                              
+40000                                     
+5907c                                     
+2e0c3  
