@@ -24,9 +24,9 @@ module COMB #(
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             for (int i = 0 ; i < N ; i++) begin
-                delay_reg[i] <= {ACC_WIDTH{'sb0}};
+                delay_reg[i] <= {ACC_WIDTH{1'sb0}};
             end
-            comb_out <= {ACC_WIDTH{'sb0}};
+            comb_out <= {ACC_WIDTH{1'sb0}};
         end else if (valid_in) begin
             
             delay_reg[0] <= comb_in;

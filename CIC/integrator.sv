@@ -18,9 +18,9 @@ module INTEG #(
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            intg_out <= {ACC_WIDTH{'sb0}};
+            intg_out <= {ACC_WIDTH{1'sb0}};
         end else if (valid_in) begin
-            intg_out <= intg_in + intg_out;
+            intg_out <= $signed({{(ACC_WIDTH - DATA_WIDTH){intg_in[DATA_WIDTH - 1]}}, intg_in}) + intg_out;
         end
     end
 endmodule

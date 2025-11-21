@@ -19,8 +19,8 @@ module rounding_overflow_arith #(
     localparam int      OUT_MAX_INT = (1 << (OUT_WIDTH - 1)) - 1;     // 32767 for 16-bit signed
     localparam int      OUT_MIN_INT = - (1 << (OUT_WIDTH - 1))  ;     // -32768 for 16-bit signed
 
-    localparam signed   MAX_VAL     = OUT_MAX_INT               ;
-    localparam signed   MIN_VAL     = OUT_MIN_INT               ;
+    localparam signed [OUT_WIDTH - 1 : 0]   MAX_VAL     = OUT_MAX_INT[OUT_WIDTH - 1 : 0];
+    localparam signed [OUT_WIDTH - 1 : 0]   MIN_VAL     = OUT_MIN_INT[OUT_WIDTH - 1 : 0];
 
     localparam int      FRAC_DIFF   = ACC_FRAC - OUT_FRAC       ;
 
@@ -38,8 +38,9 @@ module rounding_overflow_arith #(
     logic                               increment   ;
 
     logic signed [OUT_WIDTH - 1 : 0]    result      ;
+    logic signed [RAW_WIDTH : 0]        result_interm ;
 
-    assign acc_in = data_in / SCALE;
+    assign acc_in = data_in >>> $clog2(SCALE);
 
     // ---------- safe compile-time branching to avoid illegal bit-slices ----------
     generate
@@ -76,7 +77,6 @@ module rounding_overflow_arith #(
 
     // ---------- main rounding & saturation logic (kept from your original) ----------
     always_comb begin
-        //data_out    = {OUT_WIDTH{1'sb0}};
         overflow    = 1'b0 ;
         underflow   = 1'b0 ;
         valid_out   = 1'b0 ;
@@ -89,7 +89,8 @@ module rounding_overflow_arith #(
 
             // raw + increment
             // Note: raw may be wider than OUT_WIDTH; result is declared as OUT_WIDTH signed
-            result      = raw + increment;
+            result_interm = raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment});
+            result      = result_interm[OUT_WIDTH - 1 : 0];
 
             // saturation / clipping
             if (result > MAX_VAL) begin
@@ -101,14 +102,17 @@ module rounding_overflow_arith #(
                 underflow   = 1'b1;
                 overflow    = 1'b0;
             end else begin
-                data_out    = result[OUT_WIDTH - 1 : 0];
+                data_out    = result;
             end
 
         end else begin
-            //data_out    = {OUT_WIDTH{1'sb0}}  ;
+            data_out    = {OUT_WIDTH{1'sb0}}  ;
             overflow    = 1'b0                ;
             underflow   = 1'b0                ;
-            //valid_out   = 1'b0                ;
+            valid_out   = 1'b0                ;
+            increment   = 1'b0 ;
+            result_interm = {RAW_WIDTH{1'sb0}} ;
+            result       = {OUT_WIDTH{1'sb0}} ;
         end
     end
 

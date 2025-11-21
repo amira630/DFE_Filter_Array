@@ -1,10 +1,16 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Author: Amira Atef
+// Design Author: Amira Atef
+// Verified by Mustaf EL-Sherif
+// --> Linting check
+// --> Synthesis
+// --> Functional Simulation
 // Design: Cascaded Integrator-Comb (CIC) Filter Decimator
 // Date: 02-11-2025
 // Description: A CIC module using an integrator-comb structure to decimate
-// a signal's fs from 6MHz using an 18MHz clock. This design is for a CIC where D is the Delay, 
-// Q is the order, N is the differential delay (D/dec_factor) and dec_factor is the decimation factor and dec_factor can be 1,2,4,8,16.
+// a signal's Fs from 6 MHz to (6 / dec_factor) MHz. 
+// This design is for a CIC where D is the Delay, 
+// Q is the order, N is the differential delay (D / dec_factor).
+// dec_factor can take inputs of {1, 2, 4, 8, 16}.
 ////////////////////////////////////////////////////////////////////////////////
 
 module CIC #(
@@ -37,6 +43,7 @@ module CIC #(
     logic                                           dec_in_enable                   ;
 
     logic signed [DATA_WIDTH - 1 : 0]               rounded_out                     ;
+    logic                                           valid_out_reg                   ;
 
     logic                                           trig                            ;
 
@@ -136,13 +143,25 @@ module CIC #(
         .data_out  (rounded_out)        ,
         .overflow  (overflow)           ,
         .underflow (underflow)          ,
-        .valid_out (valid_out)  
+        .valid_out (valid_out_reg)  
     );
 
-    always_comb begin
-        if (valid_out) begin
-            cic_out = rounded_out;
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            valid_out <= 1'b0;
+            cic_out   <= {DATA_WIDTH{1'sb0}};
+        end else if (valid_in) begin
+            valid_out <= valid_out_reg;
+            if (valid_out_reg) begin
+                cic_out <= rounded_out;
+            end
+        end else begin
+            valid_out <= 1'b0;
         end
     end
 
 endmodule
+
+
+
+
