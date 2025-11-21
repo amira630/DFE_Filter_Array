@@ -27,6 +27,7 @@ module CIC #(
     input  logic                                                    clk         ,
     input  logic                                                    rst_n       ,
     input  logic                                                    valid_in    ,
+    input  logic                                                    bypass    ,
     input  logic        [DEC_WIDTH : 0]                             dec_factor  ,  // Decimation factor
     input  logic signed [DATA_WIDTH-1:0]                            cic_in      ,
     output logic signed [DATA_WIDTH-1:0]                            cic_out     ,
@@ -150,6 +151,9 @@ module CIC #(
         if (!rst_n) begin
             valid_out <= 1'b0;
             cic_out   <= {DATA_WIDTH{1'sb0}};
+        end else if (bypass) begin
+            valid_out <= valid_in;
+            cic_out <= cic_in;
         end else if (valid_in) begin
             valid_out <= valid_out_reg;
             if (valid_out_reg) begin
@@ -163,5 +167,6 @@ module CIC #(
 endmodule
 
 
-
+
+
 
