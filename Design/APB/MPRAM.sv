@@ -32,16 +32,15 @@ module MPRAM #(
     output logic                          IIR_5_2_VLD                         ,      // IIR 2MHz Notch Coefficients Valid
     output logic signed [COEFF_WIDTH-1:0] IIR_5_2_OUT      [NUM_DENUM-1:0]    ,      // IIR 2MHz Notch Coefficients
 
-    output logic                          CIC_R_VLD                           ,      // CIC Decimation Factor Valid
     output logic signed [4:0]             CIC_R_OUT                           ,      // CIC Decimation Factor
 
     output logic                          CTRL             [4:0]              ,      // [0]Frac_Deci, [1] IIR_Notch_2.4, [2] IIR_Notch_5, [3] CIC, [4] FIR, ON/OFF
     
     output logic        [1:0]             OUT_SEL                             ,      // Allow the output of a certain block 
 
-    output logic        [2:0]             COEFF_SEL                           ,      // Allow the output of a certain block's coefficients can be 0 to 6
+    output logic        [2:0]             COEFF_SEL                           ,      // Allow the output of a certain block's coefficients can be 0 to 4
 
-    output logic        [2:0]             STATUS                                     // Show Overflow, Underflow, Ready and valid_out for a certain block can be 0 to 7
+    output logic        [2:0]             STATUS                                     // Show Overflow, Underflow, Ready and valid_out for a certain block can be 0 to 5
 );
 
     // Default Coefficient Values (S20.18 format)
@@ -65,6 +64,31 @@ module MPRAM #(
     localparam COEFF16  = 20'sh0071e  ;    localparam COEFF34  = 20'sh00d5d  ;
     localparam COEFF17  = 20'sh00246  ;    localparam COEFF35  = 20'sh22d87  ;
 
+
+    // Coefficients 1 MHz Notch Filter
+    localparam B0_1 = 20'sh37061;
+    localparam B1_1 = 20'shc8f9f;
+    localparam B2_1 = 20'sh37061;
+
+    localparam A1_1 = 20'shc8f9f;
+    localparam A2_1 = 20'sh2e0c3;
+
+    // Coefficients 2 MHz Notch Filter
+    localparam B0_2 = 20'sh37061;
+    localparam B1_2 = 20'sh37061;
+    localparam B2_2 = 20'sh37061;
+
+    localparam A1_2 = 20'sh37061;
+    localparam A2_2 = 20'sh2e0c3;
+
+    // Coefficients 2.4 MHz Notch Filter
+    localparam B0_2_4 = 20'sh37061;
+    localparam B1_2_4 = 20'sh5907c;
+    localparam B2_2_4 = 20'sh37061;
+
+    localparam A1_2_4 = 20'sh5907c;
+    localparam A2_2_4 = 20'sh2e0c3;
+
     int i;
 
     logic [COMP-1:0] ENABLES;
@@ -77,8 +101,7 @@ module MPRAM #(
             IIR_24_VLD    <= 1'b0;
             IIR_5_1_VLD   <= 1'b0;
             IIR_5_2_VLD   <= 1'b0;
-            CIC_R_VLD     <= 1'b0;
-            CIC_R_OUT     <= 5'b0;
+            CIC_R_OUT     <= 5'd1;
             OUT_SEL       <= 2'b0;
             STATUS        <= 3'b0; 
             COEFF_SEL     <= 3'b0; 
@@ -122,11 +145,19 @@ module MPRAM #(
             FRAC_DECI_OUT [34] <= COEFF34;      FRAC_DECI_OUT [70] <= COEFF1;
             FRAC_DECI_OUT [35] <= COEFF35;      FRAC_DECI_OUT [71] <= COEFF0;
             
-            for (i = 0; i < NUM_DENUM; i++) begin
-                IIR_24_OUT [i] <= 'b0;
-                IIR_5_1_OUT [i] <= 'b0;
-                IIR_5_2_OUT [i] <= 'b0;
-            end
+            
+            IIR_5_1_OUT [0] <= B0_1;      IIR_5_1_OUT [3] <= A1_1;
+            IIR_5_1_OUT [1] <= B1_1;      IIR_5_1_OUT [4] <= A2_1;
+            IIR_5_1_OUT [2] <= B2_1;
+
+            IIR_5_2_OUT [0] <= B0_2;      IIR_5_2_OUT [3] <= A1_2;
+            IIR_5_2_OUT [1] <= B1_2;      IIR_5_2_OUT [4] <= A2_2;
+            IIR_5_2_OUT [2] <= B2_2;
+            
+            IIR_24_OUT [0] <= B0_2_4;      IIR_24_OUT [3] <= A1_2_4;
+            IIR_24_OUT [1] <= B1_2_4;      IIR_24_OUT [4] <= A2_2_4;
+            IIR_24_OUT [2] <= B2_2_4;
+
             for (i = 0; i < 5; i++)
                 CTRL [i] <= 'b0;
         end
@@ -136,7 +167,6 @@ module MPRAM #(
             else 
                 PREADY <= 1'b0;
             FRAC_DECI_VLD <= 1'b0;
-            CIC_R_VLD     <= 1'b0;
             IIR_24_VLD    <= 1'b0;
             IIR_5_1_VLD   <= 1'b0;
             IIR_5_2_VLD   <= 1'b0;
@@ -161,7 +191,6 @@ module MPRAM #(
                     4'b0010: begin
                         if (DATA_ADDR == (TAPS + 3*NUM_DENUM)) begin
                             CIC_R_OUT <= DATA_IN;
-                            CIC_R_VLD <= 1'b1;
                         end
                     end
                     4'b0001: begin
@@ -177,7 +206,6 @@ module MPRAM #(
             end
         end else begin
             FRAC_DECI_VLD <= 1'b0;
-            CIC_R_VLD     <= 1'b0;
             IIR_24_VLD    <= 1'b0;
             IIR_5_1_VLD   <= 1'b0;
             IIR_5_2_VLD   <= 1'b0;

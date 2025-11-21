@@ -21,7 +21,6 @@ sim:/APB_tb/IIR_5_2_OUT_tb \
 sim:/APB_tb/IIR_5_2_VLD_tb \
 sim:/APB_tb/CTRL_tb \
 sim:/APB_tb/CIC_R_OUT_tb \
-sim:/APB_tb/CIC_R_VLD_tb \
 sim:/APB_tb/OUT_SEL_tb          \
 sim:/APB_tb/COEFF_SEL_tb \
 sim:/APB_tb/STATUS_tb \

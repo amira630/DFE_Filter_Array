@@ -36,7 +36,6 @@ module APB_tb();
     logic                          IIR_5_2_VLD_tb                  ;
     logic signed [COEFF_WIDTH-1:0] IIR_5_2_OUT_tb [NUM_DENUM-1:0]  ;
     logic                          CTRL_tb        [4:0]            ;
-    logic                          CIC_R_VLD_tb                    ;
     logic        [4:0]             CIC_R_OUT_tb                    ;
     logic        [1:0]             OUT_SEL_tb                      ;
     logic        [2:0]             COEFF_SEL_tb                    ;
@@ -51,7 +50,6 @@ module APB_tb();
         .PDATA_WIDTH (PDATA_WIDTH),
         .COEFF_WIDTH (COEFF_WIDTH),
         .N_TAP       (N_TAP),
-        .NUM_DENUM   (NUM_DENUM),
         .COMP        (COMP)    
     ) DUT (
         .clk             (clk_tb),
@@ -71,7 +69,6 @@ module APB_tb();
         .IIR_5_2_VLD     (IIR_5_2_VLD_tb),
         .IIR_5_2_OUT     (IIR_5_2_OUT_tb),
         .CTRL            (CTRL_tb),
-        .CIC_R_VLD       (CIC_R_VLD_tb),
         .CIC_R_OUT       (CIC_R_OUT_tb),
         .OUT_SEL         (OUT_SEL_tb),         
         .COEFF_SEL       (COEFF_SEL_tb),

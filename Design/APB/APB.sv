@@ -4,7 +4,7 @@ module APB #(
     parameter DATA_WIDTH  = 16 ,
     parameter COEFF_WIDTH = 20 ,
     parameter N_TAP       = 72 ,
-    parameter NUM_DENUM   = 5  ,
+    localparam NUM_DENUM   = 5 ,
     parameter COMP        = 4  
 )(
     input logic                              clk                               ,
@@ -27,7 +27,6 @@ module APB #(
     output logic                          IIR_5_2_VLD                         , 
     output logic signed [COEFF_WIDTH-1:0] IIR_5_2_OUT      [NUM_DENUM-1:0]    , 
 
-    output logic                          CIC_R_VLD                           ,
     output logic signed [4:0]             CIC_R_OUT                           ,
 
     output logic                          CTRL             [4:0]              ,
@@ -60,7 +59,7 @@ module APB #(
         .MSELx  (MSELx),
         .MADDR  (MADDR),
         .PRDATA (PRDATA),
-        .MWDATA (MWDATA), 
+        .MWDATA ({12'b0, MWDATA}), 
         .PENABLE(PENABLE),
         .PWRITE (PWRITE),
         .PADDR  (PADDR),
@@ -97,7 +96,6 @@ module APB #(
         .IIR_5_1_OUT(IIR_5_1_OUT),
         .IIR_5_2_VLD(IIR_5_2_VLD),
         .IIR_5_2_OUT(IIR_5_2_OUT),
-        .CIC_R_VLD(CIC_R_VLD),
         .CIC_R_OUT(CIC_R_OUT), 
         .CTRL(CTRL),
         .OUT_SEL(OUT_SEL),         
