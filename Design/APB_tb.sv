@@ -11,7 +11,7 @@ module APB_tb();
     parameter COEFF_WIDTH  = 20        ;
     parameter N_TAP        = 72        ;
     parameter NUM_DENUM    = 5         ;
-    parameter COMP         = 5         ;
+    parameter COMP         = 4         ;
 
     int i, n;
 
@@ -35,16 +35,12 @@ module APB_tb();
     logic signed [COEFF_WIDTH-1:0] IIR_5_1_OUT_tb [NUM_DENUM-1:0]  ;
     logic                          IIR_5_2_VLD_tb                  ;
     logic signed [COEFF_WIDTH-1:0] IIR_5_2_OUT_tb [NUM_DENUM-1:0]  ;
-    logic                          CTRL_OUT_tb [4:0]               ;
+    logic                          CTRL_tb        [4:0]            ;
     logic                          CIC_R_VLD_tb                    ;
     logic        [4:0]             CIC_R_OUT_tb                    ;
     logic        [1:0]             OUT_SEL_tb                      ;
-    logic                          FRAC_DECI_STATUS_tb [1:0]       ;
-    logic                          IIR_24_STATUS_tb [1:0]          ;
-    logic                          IIR_5_1_STATUS_tb [1:0]         ;
-    logic                          IIR_5_2_STATUS_tb [1:0]         ;
-    logic                          CIC_STATUS_tb [1:0]             ;
-    logic                          FIR_STATUS_tb [1:0]             ;
+    logic        [2:0]             COEFF_SEL_tb                    ;
+    logic        [2:0]             STATUS_tb                       ;
 
     ////////////////////////////////////////////////////////
     /////////////////// DUT Instantation ///////////////////
@@ -74,16 +70,12 @@ module APB_tb();
         .IIR_5_1_OUT     (IIR_5_1_OUT_tb),
         .IIR_5_2_VLD     (IIR_5_2_VLD_tb),
         .IIR_5_2_OUT     (IIR_5_2_OUT_tb),
-        .CTRL_OUT        (CTRL_OUT_tb),
+        .CTRL            (CTRL_tb),
         .CIC_R_VLD       (CIC_R_VLD_tb),
         .CIC_R_OUT       (CIC_R_OUT_tb),
         .OUT_SEL         (OUT_SEL_tb),         
-        .FRAC_DECI_STATUS(FRAC_DECI_STATUS_tb),
-        .IIR_24_STATUS   (IIR_24_STATUS_tb),
-        .IIR_5_1_STATUS  (IIR_5_1_STATUS_tb),
-        .IIR_5_2_STATUS  (IIR_5_2_STATUS_tb),
-        .CIC_STATUS      (CIC_STATUS_tb),
-        .FIR_STATUS      (FIR_STATUS_tb)
+        .COEFF_SEL       (COEFF_SEL_tb),
+        .STATUS          (STATUS_tb)
     );
 
     ////////////////////////////////////////////////////////
@@ -134,31 +126,11 @@ module APB_tb();
             RW(1, 0, i,'b1000, $random()); // Write CTRLs
         end
 
-        RW(1, 1, N_TAP + 3*NUM_DENUM + 6,'b1000, $random()); // Write OUT_SEL
+        RW(1, 0, N_TAP + 3*NUM_DENUM + 6,'b1000, $random()); // Write OUT_SEL
 
-        for (i = N_TAP + 3*NUM_DENUM +7; i < N_TAP + 3*NUM_DENUM + 7 + 2; i = i + 1) begin
-            RW(1, 0, i,'b1, $random()); // Write Frac_Deci Overflow, Underflow
-        end
+        RW(1, 0, N_TAP + 3*NUM_DENUM + 7,'b1000, $random()); // Write COEFF_SEL
 
-        for (i = N_TAP + 3*NUM_DENUM +7+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2; i = i + 1) begin
-            RW(1, 0, i,'b10, $random()); // Write IIR_24 Overflow, Underflow
-        end
-
-        for (i = N_TAP + 3*NUM_DENUM +7+2+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2+2; i = i + 1) begin
-            RW(1, 0, i,'b10, $random()); // Write IIR_5_1 Overflow, Underflow
-        end
-
-        for (i = N_TAP + 3*NUM_DENUM +7+2+2+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2+2+2; i = i + 1) begin
-            RW(1, 0, i,'b10, $random()); // Write IIR_5_2 Overflow, Underflow
-        end
-
-        for (i = N_TAP + 3*NUM_DENUM +7+2+2+2+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2+2+2+2; i = i + 1) begin
-            RW(1, 0, i,'b100, $random()); // Write CIC Overflow, Underflow
-        end
-
-        for (i = N_TAP + 3*NUM_DENUM +7+2+2+2+2+2; i < N_TAP + 3*NUM_DENUM + 7 +2+2+2+2+2+2; i = i + 1) begin
-            RW(1, 0, i,'b10000, $random()); // Write FIR Overflow, Underflow
-        end
+        RW(1, 1, N_TAP + 3*NUM_DENUM + 8,'b1000, $random()); // Write STATUS
 
         RW(0, 1, N_TAP + 2*NUM_DENUM -1,'b1, $random()); // READ Final IIR 5_1 coeff
 

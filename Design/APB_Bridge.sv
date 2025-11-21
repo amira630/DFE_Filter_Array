@@ -8,28 +8,23 @@ module APB_Bridge #(
 )(
     input logic                        PCLK,
     input logic                        PRESETn,
-    // input logic                        PSLVRR,  // OPTIONAL
+
     input logic                        PREADY,
     input logic                        MTRANS,     // Signal from Master or TB requesting the start of a transaction
     input logic                        MWRITE,
     input logic [COMP-1:0]             MSELx,
     input logic [ADDR_WIDTH-1:0]       MADDR,
-    input logic [DATA_WIDTH-1:0]       PRDATA,
+    input logic [DATA_WIDTH-1:0]       PRDATA,     // Data read by the master/TB
     input logic [DATA_WIDTH-1:0]       MWDATA,     // Data requested to be written by the Master/TB
-    // input logic [USER_DATA_WIDTH-1:0]  PRUSER,  // User read data attribute. (OPTIONAL)
-    // input logic [USER_RESP_WIDTH-1:0]  PBUSER,  // User response attribute. (OPTIONAL)
 
-    // output logic                       PWAKEUP, // OPTIONAL
+
     output logic                       PENABLE,
     output logic                       PWRITE,  // WRITE_REQ (=1), READ_REQ (=0)
     output logic [ADDR_WIDTH-1:0]      PADDR,
-    // output logic [2:0]                 PPROT,   // OPTIONAL
+  
     output logic [COMP-1:0]            PSELx,
     output logic [DATA_WIDTH-1:0]      PWDATA,
     output logic [DATA_WIDTH-1:0]      MRDATA     // Data requested to be read by the Master/TB
-    // output logic [(DATA_WIDTH>>3)-1:0] PSTRB,   // OPTIONAL
-    // output logic [USER_REQ_WIDTH-1:0]  PAUSER,  // User request attribute. (OPTIONAL)
-    // output logic [USER_DATA_WIDTH-1:0] PWUSER   // User write data attribute. (OPTIONAL)
 );
 
     // Moore FSM

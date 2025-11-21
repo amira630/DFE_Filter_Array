@@ -5,9 +5,7 @@ module APB #(
     parameter COEFF_WIDTH = 20 ,
     parameter N_TAP       = 72 ,
     parameter NUM_DENUM   = 5  ,
-    parameter COMP        = 5  ,
-    parameter L           = 2  ,
-    parameter M           = 3       
+    parameter COMP        = 4  
 )(
     input logic                              clk                               ,
     input logic                              rst_n                             ,   
@@ -18,14 +16,7 @@ module APB #(
     input logic        [ADDR_WIDTH-1:0]      MADDR                             ,
     input logic signed [COEFF_WIDTH-1:0]     MWDATA                            , 
     output logic       [PDATA_WIDTH-1:0]     MRDATA                            ,
-    // input logic                              clk_enable,
-    // input logic signed [DATA_WIDTH - 1 : 0]  filter_in ,
 
-    // output logic signed [DATA_WIDTH - 1 : 0] filter_out,
-    // output logic                             overflow  ,
-    // output logic                             underflow ,
-    // output logic                             ce_in     ,
-    // output logic                             ce_out
     output logic                          FRAC_DECI_VLD                       ,
     output logic signed [COEFF_WIDTH-1:0] FRAC_DECI_OUT    [N_TAP-1:0]        ,
 
@@ -39,16 +30,13 @@ module APB #(
     output logic                          CIC_R_VLD                           ,
     output logic signed [4:0]             CIC_R_OUT                           ,
 
-    output logic                          CTRL_OUT         [4:0]              ,
+    output logic                          CTRL             [4:0]              ,
 
     output logic        [1:0]             OUT_SEL                             ,
 
-    output logic                          FRAC_DECI_STATUS [1:0]              ,
-    output logic                          IIR_24_STATUS    [1:0]              ,
-    output logic                          IIR_5_1_STATUS   [1:0]              ,
-    output logic                          IIR_5_2_STATUS   [1:0]              ,
-    output logic                          CIC_STATUS       [1:0]              ,
-    output logic                          FIR_STATUS       [1:0]               
+    output logic        [2:0]             COEFF_SEL                           ,
+
+    output logic        [2:0]             STATUS                
 );
 
     logic                   PREADY;
@@ -58,27 +46,6 @@ module APB #(
     logic [COMP-1:0]        PSELx;
     logic [PDATA_WIDTH-1:0] PWDATA; 
     logic [PDATA_WIDTH-1:0] PRDATA;      
-
-    // logic signed [DATA_WIDTH-1:0]      CTRL           [5:0];
-
-    // fractional_decimator #(
-    //     .DATA_WIDTH (DATA_WIDTH),
-    //     .COEFF_WIDTH(COEFF_WIDTH),
-    //     .L          (L),
-    //     .M          (M)             
-    // ) U_FRAC_DECI (
-    //     .clk          (clk),
-    //     .clk_enable   (CTRL[0][0]),
-    //     .rst_n        (rst_n),   
-    //     .coeff_wr_en  (coeff_wr_en),
-    //     .coeff_data_in(coeff_data_in), 
-    //     .filter_in    (filter_in),
-    //     .filter_out   (filter_out),
-    //     .overflow     (overflow),
-    //     .underflow    (underflow),
-    //     .ce_in        (ce_in),
-    //     .ce_out       (ce_out)
-    // );
 
     APB_Bridge #(
         .ADDR_WIDTH(ADDR_WIDTH),     
@@ -116,7 +83,6 @@ module APB #(
         .IIR_EN(PSELx[1]),
         .CTRL_EN(PSELx[2]),
         .CIC_EN(PSELx[3]),
-        .FIR_EN(PSELx[4]),
         .PWRITE(PWRITE),
         .PENABLE(PENABLE),
         .DATA_ADDR(PADDR),
@@ -133,13 +99,9 @@ module APB #(
         .IIR_5_2_OUT(IIR_5_2_OUT),
         .CIC_R_VLD(CIC_R_VLD),
         .CIC_R_OUT(CIC_R_OUT), 
-        .CTRL_OUT(CTRL_OUT),
+        .CTRL(CTRL),
         .OUT_SEL(OUT_SEL),         
-        .FRAC_DECI_STATUS(FRAC_DECI_STATUS),
-        .IIR_24_STATUS(IIR_24_STATUS),
-        .IIR_5_1_STATUS(IIR_5_1_STATUS),
-        .IIR_5_2_STATUS(IIR_5_2_STATUS),
-        .CIC_STATUS(CIC_STATUS),
-        .FIR_STATUS(FIR_STATUS)
+        .COEFF_SEL(COEFF_SEL),
+        .STATUS(STATUS)
     );
 endmodule
