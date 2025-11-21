@@ -66,6 +66,7 @@ x_real_noisy = x_real_clean + interference;  % Combine desired signal with inter
 % distortion.
 
 max_pos = 0.999969482421875;
+%max_pos = 0.9921875;
 max_neg = -1;
 
 % Check if signals exceed s16.15 fixed-point range (±1.0 represents full scale)

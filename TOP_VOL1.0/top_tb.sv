@@ -13,7 +13,7 @@ module top_tb ();
     parameter  IIR_USED     = 3                         ;
 
     parameter N_SAMPLES_I   = 48000                     ;
-    parameter FREQ_CLK      = 6_000_000                 ;
+    parameter FREQ_CLK      = 9_000_000                 ;
     parameter T_CLK         = 1_000_000_000 / FREQ_CLK  ;
 
     // Signals for monitoring output

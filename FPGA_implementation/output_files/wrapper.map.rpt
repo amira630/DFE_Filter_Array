@@ -1,0 +1,803 @@
+Analysis & Synthesis report for wrapper
+Thu Nov 20 11:33:37 2025
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Messages
+  6. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++--------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                         ;
++------------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status        ; Failed - Thu Nov 20 11:33:37 2025               ;
+; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
+; Revision Name                      ; wrapper                                         ;
+; Top-level Entity Name              ; wrapper                                         ;
+; Family                             ; Cyclone II                                      ;
+; Total logic elements               ; N/A until Partition Merge                       ;
+;     Total combinational functions  ; N/A until Partition Merge                       ;
+;     Dedicated logic registers      ; N/A until Partition Merge                       ;
+; Total registers                    ; N/A until Partition Merge                       ;
+; Total pins                         ; N/A until Partition Merge                       ;
+; Total virtual pins                 ; N/A until Partition Merge                       ;
+; Total memory bits                  ; N/A until Partition Merge                       ;
+; Embedded Multiplier 9-bit elements ; N/A until Partition Merge                       ;
+; Total PLLs                         ; N/A until Partition Merge                       ;
++------------------------------------+-------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP2C8Q208C8        ;                    ;
+; Top-level entity name                                                      ; wrapper            ; wrapper            ;
+; Family name                                                                ; Cyclone II         ; Cyclone IV GX      ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; Off                ; Off                ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization                                               ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 16     ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Analysis & Synthesis
+    Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+    Info: Processing started: Thu Nov 20 11:32:11 2025
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off wrapper -c wrapper
+Warning (20028): Parallel compilation is not licensed and has been disabled
+Info (12021): Found 1 design units, including 1 entities, in source file wrapper.sv
+    Info (12023): Found entity 1: wrapper
+Info (12021): Found 1 design units, including 1 entities, in source file top.sv
+    Info (12023): Found entity 1: Design_top
+Info (12021): Found 1 design units, including 1 entities, in source file rounding_overflow_handling.sv
+    Info (12023): Found entity 1: rounding_overflow_arith
+Info (12021): Found 1 design units, including 1 entities, in source file integrator.sv
+    Info (12023): Found entity 1: INTEG
+Info (12021): Found 1 design units, including 1 entities, in source file iir_submodule.sv
+    Info (12023): Found entity 1: IIR
+Info (12021): Found 1 design units, including 1 entities, in source file iir.sv
+    Info (12023): Found entity 1: IIR_chain
+Info (12021): Found 1 design units, including 1 entities, in source file fractional_decimator.sv
+    Info (12023): Found entity 1: fractional_decimator
+Info (12021): Found 1 design units, including 1 entities, in source file comb.sv
+    Info (12023): Found entity 1: COMB
+Info (12021): Found 1 design units, including 1 entities, in source file cic.sv
+    Info (12023): Found entity 1: CIC
+Warning (10236): Verilog HDL Implicit Net warning at top.sv(78): created implicit net for "iir_bypass_2_4"
+Warning (10236): Verilog HDL Implicit Net warning at top.sv(79): created implicit net for "iir_bypass_2"
+Warning (10236): Verilog HDL Implicit Net warning at top.sv(80): created implicit net for "iir_bypass_1"
+Info (12127): Elaborating entity "wrapper" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at wrapper.sv(7): object "top_in_mem" assigned a value but never read
+Info (12128): Elaborating entity "Design_top" for hierarchy "Design_top:TOP"
+Warning (10030): Net "iir_bypass_2_4" at top.sv(78) has no driver or initial value, using a default initial value '0'
+Warning (10030): Net "iir_bypass_2" at top.sv(79) has no driver or initial value, using a default initial value '0'
+Warning (10030): Net "iir_bypass_1" at top.sv(80) has no driver or initial value, using a default initial value '0'
+Info (12128): Elaborating entity "fractional_decimator" for hierarchy "Design_top:TOP|fractional_decimator:FRAC_DEC_STAGE"
+Error (10200): Verilog HDL Conditional Statement error at fractional_decimator.sv(81): cannot match operand(s) in the condition to the corresponding edges in the enclosing event control of the always construct File: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/FPGA_implementation/fractional_decimator.sv Line: 81
+Warning (10240): Verilog HDL Always Construct warning at fractional_decimator.sv(80): inferring latch(es) for variable "cur_count", which holds its previous value in one or more paths through the always construct
+Error (10200): Verilog HDL Conditional Statement error at fractional_decimator.sv(89): cannot match operand(s) in the condition to the corresponding edges in the enclosing event control of the always construct File: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/FPGA_implementation/fractional_decimator.sv Line: 89
+Error (10200): Verilog HDL Conditional Statement error at fractional_decimator.sv(102): cannot match operand(s) in the condition to the corresponding edges in the enclosing event control of the always construct File: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/FPGA_implementation/fractional_decimator.sv Line: 102
+Warning (10240): Verilog HDL Always Construct warning at fractional_decimator.sv(101): inferring latch(es) for variable "filter_out", which holds its previous value in one or more paths through the always construct
+Info (10041): Inferred latch for "filter_out[0]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[1]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[2]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[3]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[4]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[5]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[6]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[7]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[8]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[9]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[10]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[11]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[12]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[13]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[14]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "filter_out[15]" at fractional_decimator.sv(101)
+Info (10041): Inferred latch for "delayline[0][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[0][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[1][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[2][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[3][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[4][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[5][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[6][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[7][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[8][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[9][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[10][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[11][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[12][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[13][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[14][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[15][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[16][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[17][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[18][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[19][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[20][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[21][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[22][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[23][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[24][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[25][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[26][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[27][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[28][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[29][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[30][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[31][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[32][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[33][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[34][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][0]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][1]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][2]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][3]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][4]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][5]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][6]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][7]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][8]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][9]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][10]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][11]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][12]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][13]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][14]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "delayline[35][15]" at fractional_decimator.sv(88)
+Info (10041): Inferred latch for "cur_count[0]" at fractional_decimator.sv(80)
+Info (10041): Inferred latch for "cur_count[1]" at fractional_decimator.sv(80)
+Error (12152): Can't elaborate user hierarchy "Design_top:TOP|fractional_decimator:FRAC_DEC_STAGE" File: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/FPGA_implementation/top.sv Line: 66
+Info (144001): Generated suppressed messages file D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/FPGA_implementation/output_files/wrapper.map.smsg
+Error: Quartus II 64-Bit Analysis & Synthesis was unsuccessful. 4 errors, 10 warnings
+    Error: Peak virtual memory: 4654 megabytes
+    Error: Processing ended: Thu Nov 20 11:33:38 2025
+    Error: Elapsed time: 00:01:27
+    Error: Total CPU time (on all processors): 00:01:25
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/FPGA_implementation/output_files/wrapper.map.smsg.
+
+

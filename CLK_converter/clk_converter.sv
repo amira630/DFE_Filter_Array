@@ -1,37 +1,35 @@
-module clk_converter #(
-    parameter INPUT_CYCLES = 3,                                  // 3 input cycles
-    parameter OUTPUT_PULSES = 2,                                 // 2 output pulses
-    localparam COUNTER_WIDTH = $clog2(INPUT_CYCLES),
-    localparam OUTPUT_COUNTER_WIDTH = $clog2(OUTPUT_PULSES + 1)
-)(
-    input   logic clk,                                           // 9MHz clock
-    input   logic rst_n,
-    output  logic clk_enable                                     // Enable signal at 6MHz effective rate
+module dual_modulus_divider (
+    input  clk_9MHz,
+    input  rst_n,
+    output reg clk_6MHz
 );
-    logic [COUNTER_WIDTH - 1 : 0]           counter;             // Counts 0 to INPUT_CYCLES-1
-    logic [OUTPUT_COUNTER_WIDTH - 1 : 0]    output_counter;      // Tracks output pulses
 
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            counter <= '0;
-            output_counter <= '0;
-            clk_enable <= 1'b0;
+reg [2:0] counter;
+reg toggle;
+
+// Divide by 1.5 pattern: 2 cycles, then 1 cycle alternately
+always @(posedge clk_9MHz or negedge rst_n) begin
+    if (!rst_n) begin
+        counter <= 3'd0;
+        toggle <= 1'b0;
+        clk_6MHz <= 1'b0;
+    end else begin
+        counter <= counter + 1'b1;
+        
+        if (toggle) begin
+            // Divide by 2 pattern
+            if (counter == 3'd1) begin
+                counter <= 3'd0;
+                toggle <= ~toggle;
+                clk_6MHz <= ~clk_6MHz;
+            end
         end else begin
-            clk_enable <= 1'b0;  // Default to low
-            
-            if (counter == (INPUT_CYCLES - 1)) begin
-                counter <= '0;
-                output_counter <= '0;
-            end else begin
-                counter <= counter + 1'd1;
-    
-                if (output_counter < OUTPUT_PULSES) begin
-                    if ((counter == '0) || (counter == 'd1)) begin
-                        clk_enable <= 1'b1;
-                        output_counter <= output_counter + 1'd1;
-                    end
-                end
+            // Divide by 1 pattern  
+            if (counter == 3'd0) begin
+                toggle <= ~toggle;
+                clk_6MHz <= ~clk_6MHz;
             end
         end
     end
+end
 endmodule
