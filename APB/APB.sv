@@ -20,12 +20,12 @@ module APB #(
     output logic                          FRAC_DECI_VLD                       ,
     output logic signed [COEFF_WIDTH-1:0] FRAC_DECI_OUT    [N_TAP-1:0]        ,
 
-    output logic                          IIR_24_VLD                          , 
-    output logic signed [COEFF_WIDTH-1:0] IIR_24_OUT       [NUM_DENUM-1:0]    , 
-    output logic                          IIR_5_1_VLD                         , 
-    output logic signed [COEFF_WIDTH-1:0] IIR_5_1_OUT      [NUM_DENUM-1:0]    , 
-    output logic                          IIR_5_2_VLD                         , 
-    output logic signed [COEFF_WIDTH-1:0] IIR_5_2_OUT      [NUM_DENUM-1:0]    , 
+    output logic                          IIR_24_VLD                          ,
+    output logic signed [COEFF_WIDTH-1:0] IIR_24_OUT       [NUM_DENUM-1:0]    ,
+    output logic                          IIR_5_1_VLD                         ,
+    output logic signed [COEFF_WIDTH-1:0] IIR_5_1_OUT      [NUM_DENUM-1:0]    ,
+    output logic                          IIR_5_2_VLD                         ,
+    output logic signed [COEFF_WIDTH-1:0] IIR_5_2_OUT      [NUM_DENUM-1:0]    ,
 
     output logic signed [4:0]             CIC_R_OUT                           ,
 
