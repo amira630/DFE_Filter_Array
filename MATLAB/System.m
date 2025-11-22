@@ -14,7 +14,7 @@ N  = 48000;            % Number of samples
 % === 1. Generate sine-wave input (ADC-like signal) ===
 f_sig = 1e5;                               % Signal frequency (100 kHz tone)
 t = (0 : N - 1)' / Fs;                     % Time vector
-x_real_clean = 0.5 * sin(2 * pi * f_sig * t);    % Amplitude < 1 to avoid clipping in fixed-point
+x_real_clean = 0.25 * sin(2 * pi * f_sig * t);    % Amplitude < 1 to avoid clipping in fixed-point
 
 % % Plot original signal in time and frequency domains
 % figure('Position', [100, 100, 1800, 600]);
@@ -50,7 +50,7 @@ f_intf_5 = 5e6;         % 5 MHz interference tone
 
 % Interference amplitudes (adjusted to avoid saturation in fixed-point)
 A_intf_2_4 = 0.2;
-A_intf_5 = 0.3;
+A_intf_5 = 0.2;
 
 % Generate and add the interference signals
 intf1 = (A_intf_2_4 * sin(2 * pi * f_intf_2_4 * t));
@@ -298,71 +298,71 @@ y_filtered_clean_fft_shifted = fftshift(y_filtered_clean_fft);
 % accurately separate the remaining interference from the desired signal.
 % This provides a precise measurement of filter performance.
 
-% === Calculate SIR after filtering using signal alignment ===
-idx0 = 80;  % Start index to avoid transient effects from filter settling
-y1 = double(y_filtered);        % Final filtered noisy signal (with potential residual interference)
-y2 = double(y_filtered_clean);  % Final filtered clean reference (ideal signal without interference)
-
-% Align the signals to account for any filter delays or phase shifts
-[y1a,y2a] = alignsignals(y1, y2);
-
-% Use Hilbert transform for complex envelope analysis and optimal alignment
-a1 = hilbert(y1a);  % Convert signal to analytic form (complex signal)
-a2 = hilbert(y2a);  % Convert reference to analytic form (complex signal)
-
-% Compute complex scaling factor for optimal alignment using least-squares
-% This finds the complex coefficient 'c' that minimizes |a1 - c*a2|^2
-c = sum(a1 .* conj(a2)) / sum(abs(a2).^2);
-
-% Apply the optimal scaling to align the reference signal
-y2_aligned = real(a2 * c);  % Scale and convert back to real signal
-
-% Calculate remaining interference by subtracting aligned clean signal
-% This isolates any residual interference that the filters didn't remove
-remaining_intf = y1a - y2_aligned;
-
-% Calculate power metrics for SIR calculation
-% Use only the stable portion of the signal (after transient settling)
-signal_power_after = rms(y1a(idx0 : end))^2;                    % Power of filtered signal
-interference_power_after = rms(remaining_intf(idx0 : end))^2;   % Power of residual interference
-
-% Display power measurements for verification
-fprintf('signal_power_after = %.14f (linear power)\n', signal_power_after);
-fprintf('interference_power_after = %.14f (linear power)\n', interference_power_after);
-
-% % Plot the remaining interference to visualize filter performance
-% figure('Position', [100, 100, 1800, 600]);
-% subplot(1, 2, 1);
-% plot(t_frac_dec, remaining_intf);
-% title('Remaining Interference After Filtering (Time Domain)');
-% xlabel('Time (s)');
-% ylabel('Amplitude');
-
-% Compute frequency spectrum of remaining interference to identify
-% any specific frequency components that weren't adequately filtered
-remaining_intf_fft = fft(double(remaining_intf));
-remaining_intf_fft_shifted = fftshift(remaining_intf_fft);
-
-% subplot(1, 2, 2);
-% plot(f_y_frac, abs(remaining_intf_fft),'Color','red');
-% title('Remaining Interference After Filtering (Frequency Domain)');
-% xlabel('Frequency (Hz)');
-% ylabel('Magnitude');
-
-% Calculate final SIR and display performance improvement
-if interference_power_after == 0
-    SIR_dB_after = Inf;
-    fprintf('SIR After filters: Infinite (no interference)\n');
-else
-    SIR_dB_after = 10 * log10(signal_power_after / interference_power_after);
-    fprintf('SIR After filters = %.2f dB\n', SIR_dB_after);
-end
-
-% Calculate and display the SIR improvement achieved by the filters
-if ~isinf(SIR_dB_before) && ~isinf(SIR_dB_after)
-    SIR_improvement = SIR_dB_after - SIR_dB_before;
-    fprintf('SIR Improvement = %.2f dB\n', SIR_improvement);
-end
+% % === Calculate SIR after filtering using signal alignment ===
+% idx0 = 80;  % Start index to avoid transient effects from filter settling
+% y1 = double(y_filtered);        % Final filtered noisy signal (with potential residual interference)
+% y2 = double(y_filtered_clean);  % Final filtered clean reference (ideal signal without interference)
+% 
+% % Align the signals to account for any filter delays or phase shifts
+% [y1a,y2a] = alignsignals(y1, y2);
+% 
+% % Use Hilbert transform for complex envelope analysis and optimal alignment
+% a1 = hilbert(y1a);  % Convert signal to analytic form (complex signal)
+% a2 = hilbert(y2a);  % Convert reference to analytic form (complex signal)
+% 
+% % Compute complex scaling factor for optimal alignment using least-squares
+% % This finds the complex coefficient 'c' that minimizes |a1 - c*a2|^2
+% c = sum(a1 .* conj(a2)) / sum(abs(a2).^2);
+% 
+% % Apply the optimal scaling to align the reference signal
+% y2_aligned = real(a2 * c);  % Scale and convert back to real signal
+% 
+% % Calculate remaining interference by subtracting aligned clean signal
+% % This isolates any residual interference that the filters didn't remove
+% remaining_intf = y1a - y2_aligned;
+% 
+% % Calculate power metrics for SIR calculation
+% % Use only the stable portion of the signal (after transient settling)
+% signal_power_after = rms(y1a(idx0 : end))^2;                    % Power of filtered signal
+% interference_power_after = rms(remaining_intf(idx0 : end))^2;   % Power of residual interference
+% 
+% % Display power measurements for verification
+% fprintf('signal_power_after = %.14f (linear power)\n', signal_power_after);
+% fprintf('interference_power_after = %.14f (linear power)\n', interference_power_after);
+% 
+% % % Plot the remaining interference to visualize filter performance
+% % figure('Position', [100, 100, 1800, 600]);
+% % subplot(1, 2, 1);
+% % plot(t_frac_dec, remaining_intf);
+% % title('Remaining Interference After Filtering (Time Domain)');
+% % xlabel('Time (s)');
+% % ylabel('Amplitude');
+% 
+% % Compute frequency spectrum of remaining interference to identify
+% % any specific frequency components that weren't adequately filtered
+% remaining_intf_fft = fft(double(remaining_intf));
+% remaining_intf_fft_shifted = fftshift(remaining_intf_fft);
+% 
+% % subplot(1, 2, 2);
+% % plot(f_y_frac, abs(remaining_intf_fft),'Color','red');
+% % title('Remaining Interference After Filtering (Frequency Domain)');
+% % xlabel('Frequency (Hz)');
+% % ylabel('Magnitude');
+% 
+% % Calculate final SIR and display performance improvement
+% if interference_power_after == 0
+%     SIR_dB_after = Inf;
+%     fprintf('SIR After filters: Infinite (no interference)\n');
+% else
+%     SIR_dB_after = 10 * log10(signal_power_after / interference_power_after);
+%     fprintf('SIR After filters = %.2f dB\n', SIR_dB_after);
+% end
+% 
+% % Calculate and display the SIR improvement achieved by the filters
+% if ~isinf(SIR_dB_before) && ~isinf(SIR_dB_after)
+%     SIR_improvement = SIR_dB_after - SIR_dB_before;
+%     fprintf('SIR Improvement = %.2f dB\n', SIR_improvement);
+% end
 
 
 %%
@@ -370,65 +370,69 @@ end
 Hd_cic = CIC();                    % your CIC filter
 
 y_cic = step(Hd_cic, (y_filtered));  % apply CIC
-y_cic_clean = step(Hd_cic, y_filtered_clean);
+% Before calling step with a different-sized vector:
+% release(Hd_cic);                         % unlock the object
+% % (optionally) reset internal states if you want a fresh filter:
+% reset(Hd_cic);
+% y_cic_clean = step(Hd_cic, y_filtered_clean);
+% 
+% y_cic_quantized = fi(y_cic, 1, 16, 15);
 
-y_cic_quantized = fi(y_cic, 1, 16, 15);
-
-% === 3. Inject interference noise AFTER fractional decimation ===
-Fs_cic = Fs_frac_dec / Hd_cic.DecimationFactor;  % new sampling rate after CIC
-N_cic  = length(y_cic);
-t_cic  = (0:N_cic-1)' / Fs_cic;
-
-plot(y_cic_quantized(:,end),'DisplayName','y_cic_quantized(:,end)',YDataSource = 'y_cic_quantized(:,end)');
-linkdata on;
-ylabel("y_cic_quantized(:,end)");
-title("y_cic_quantized(:,end)");
-legend("show");
-
-figure('Position', [100, 100, 1800, 600]);
-subplot(1, 2, 1);
-plot(t_cic, y_cic);
-title('Filtered Signal After CIC (Time Domain)');
-xlabel('Time (s)');
-ylabel('Amplitude');
-
-% Compute frequency content of the original signal
-y_cic_fft = fft(double(y_cic));
-f_cic = linspace(-Fs_cic/2, Fs_cic/2, length(y_cic_fft));
-y_cic_fft_shifted = fftshift(y_cic_fft);
-
-% Plot frequency content
-subplot(1, 2, 2);
-plot(f_cic, abs(y_cic_fft_shifted),'Color','red');
-title('Filtered Signal After CIC (Frequency Domain)');
-xlabel('Frequency (Hz)');
-ylabel('Magnitude');
-
-figure('Position', [100, 100, 1800, 600]);
-subplot(1, 2, 1);
-plot(t_cic, y_cic_clean);
-title('Clean Signal After CIC (Time Domain)');
-xlabel('Time (s)');
-ylabel('Amplitude');
-
-y_cic_clean_fft = fft(double(y_cic_clean));
-y_cic_clean_fft_shifted = fftshift(y_cic_clean_fft);
-
-subplot(1, 2, 2);
-plot(f_cic, abs(y_cic_clean_fft_shifted),'Color','red');
-title('Clean Signal After CIC (Frequency Domain)');
-xlabel('Frequency (Hz)');
-ylabel('Magnitude');
-
-
-%%
-
+% % === 3. Inject interference noise AFTER fractional decimation ===
+% Fs_cic = Fs_frac_dec / Hd_cic.DecimationFactor;  % new sampling rate after CIC
+% N_cic  = length(y_cic);
+% t_cic  = (0:N_cic-1)' / Fs_cic;
+% 
+% plot(y_cic_quantized(:,end),'DisplayName','y_cic_quantized(:,end)',YDataSource = 'y_cic_quantized(:,end)');
+% linkdata on;
+% ylabel("y_cic_quantized(:,end)");
+% title("y_cic_quantized(:,end)");
+% legend("show");
+% 
+% figure('Position', [100, 100, 1800, 600]);
+% subplot(1, 2, 1);
+% plot(t_cic, y_cic);
+% title('Filtered Signal After CIC (Time Domain)');
+% xlabel('Time (s)');
+% ylabel('Amplitude');
+% 
+% % Compute frequency content of the original signal
+% y_cic_fft = fft(double(y_cic));
+% f_cic = linspace(-Fs_cic/2, Fs_cic/2, length(y_cic_fft));
+% y_cic_fft_shifted = fftshift(y_cic_fft);
+% 
+% % Plot frequency content
+% subplot(1, 2, 2);
+% plot(f_cic, abs(y_cic_fft_shifted),'Color','red');
+% title('Filtered Signal After CIC (Frequency Domain)');
+% xlabel('Frequency (Hz)');
+% ylabel('Magnitude');
+% 
+% figure('Position', [100, 100, 1800, 600]);
+% subplot(1, 2, 1);
+% plot(t_cic, y_cic_clean);
+% title('Clean Signal After CIC (Time Domain)');
+% xlabel('Time (s)');
+% ylabel('Amplitude');
+% 
+% y_cic_clean_fft = fft(double(y_cic_clean));
+% y_cic_clean_fft_shifted = fftshift(y_cic_clean_fft);
+% 
+% subplot(1, 2, 2);
+% plot(f_cic, abs(y_cic_clean_fft_shifted),'Color','red');
+% title('Clean Signal After CIC (Frequency Domain)');
+% xlabel('Frequency (Hz)');
+% ylabel('Magnitude');
+% 
+% 
+% %%
+% 
 % % === Create your IIR notch filter ===
-% Hd_FIR_comp_16 = FIR_comp_16();
+% Hd_FIR_comp = FIR_comp();
 % 
 % % === Apply the filter ===
-% y_comp = filter(Hd_FIR_comp_16, y_cic);
-% y_comp_clean = filter(Hd_FIR_comp_16, y_cic_clean);
+% y_comp = filter(Hd_FIR_comp, y_cic);
+% y_comp_clean = filter(Hd_FIR_comp, y_cic_clean);
 % 
 % figure('Position', [100, 100, 1800, 600]);
 % subplot(1, 2, 1);

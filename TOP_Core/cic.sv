@@ -27,6 +27,7 @@ module CIC #(
     input  logic                                                    clk         ,
     input  logic                                                    rst_n       ,
     input  logic                                                    valid_in    ,
+    input  logic                                                    bypass    ,
     input  logic        [DEC_WIDTH : 0]                             dec_factor  ,  // Decimation factor
     input  logic signed [DATA_WIDTH-1:0]                            cic_in      ,
     output logic signed [DATA_WIDTH-1:0]                            cic_out     ,
@@ -45,8 +46,9 @@ module CIC #(
     logic signed [DATA_WIDTH - 1 : 0]               rounded_out                     ;
     logic                                           valid_out_reg                   ;
 
-    logic                                           trig                            ;
+    logic                                           valid_comb_in                  ;
 
+    
     assign dec_in_enable = (counter == 0) ? 1'b1 : 1'b0; 
   
     INTEG #(
@@ -101,13 +103,21 @@ module CIC #(
         end
     end   
 
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            valid_comb_in    <= 1'b0;
+        end else begin
+            valid_comb_in    <= valid_in && dec_in_enable;
+        end
+    end
+
     COMB #(
         .ACC_WIDTH  (ACC_WIDTH)    , 
         .N          (N)              
     ) COMB_INST_0 (
         .clk      (clk)             ,
         .rst_n    (rst_n)           ,
-        .valid_in (dec_in_enable)                ,
+        .valid_in (valid_comb_in)   ,
         .comb_in  (decimator_out)   ,   
         .comb_out (comb_out[0])
     );
@@ -121,12 +131,14 @@ module CIC #(
             ) COMB_INST (
                 .clk      (clk)             ,
                 .rst_n    (rst_n)           ,
-                .valid_in (dec_in_enable)    ,
+                .valid_in (valid_comb_in)    ,
                 .comb_in  (comb_out[j - 1])   ,   
                 .comb_out (comb_out[j])
             );
         end
     endgenerate
+
+
 
     rounding_overflow_arith #(
         .ACC_WIDTH (ACC_WIDTH) ,
@@ -139,7 +151,7 @@ module CIC #(
 
     ) ARITH_HANDLER (
         .data_in   (comb_out[Q - 1])    ,
-        .valid_in  (dec_in_enable)      ,   
+        .valid_in  (valid_comb_in)      ,
         .data_out  (rounded_out)        ,
         .overflow  (overflow)           ,
         .underflow (underflow)          ,
@@ -150,18 +162,20 @@ module CIC #(
         if (!rst_n) begin
             valid_out <= 1'b0;
             cic_out   <= {DATA_WIDTH{1'sb0}};
-        end else if (valid_in) begin
+        end else if (bypass) begin
+            valid_out <= valid_in;
+            cic_out <= cic_in;
+        end else begin
             valid_out <= valid_out_reg;
             if (valid_out_reg) begin
                 cic_out <= rounded_out;
             end
-        end else begin
-            valid_out <= 1'b0;
         end
     end
 
 endmodule
 
 
-
+
+
 

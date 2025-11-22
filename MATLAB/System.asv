@@ -9,12 +9,12 @@ clc
 % a baseline for comparison.
 
 Fs = 9e6;              % Sampling frequency (Hz)
-N  = 4800000;            % Number of samples
+N  = 48000;            % Number of samples
 
 % === 1. Generate sine-wave input (ADC-like signal) ===
 f_sig = 1e5;                               % Signal frequency (100 kHz tone)
 t = (0 : N - 1)' / Fs;                     % Time vector
-x_real_clean = 0.5 * sin(2 * pi * f_sig * t);    % Amplitude < 1 to avoid clipping in fixed-point
+x_real_clean = 0.1 * sin(2 * pi * f_sig * t);    % Amplitude < 1 to avoid clipping in fixed-point
 
 % % Plot original signal in time and frequency domains
 % figure('Position', [100, 100, 1800, 600]);
@@ -49,8 +49,8 @@ f_intf_2_4 = 2.4e6;     % 2.4 MHz interference tone
 f_intf_5 = 5e6;         % 5 MHz interference tone
 
 % Interference amplitudes (adjusted to avoid saturation in fixed-point)
-A_intf_2_4 = 0.2;
-A_intf_5 = 0.3;
+A_intf_2_4 = 0.04;
+A_intf_5 = 0.05;
 
 % Generate and add the interference signals
 intf1 = (A_intf_2_4 * sin(2 * pi * f_intf_2_4 * t));
@@ -65,8 +65,8 @@ x_real_noisy = x_real_clean + interference;  % Combine desired signal with inter
 % must not exceed the digital representation limits to avoid clipping and
 % distortion.
 
-%max_pos = 0.999969482421875;
-max_pos = 0.9921875;
+max_pos = 0.999969482421875;
+%max_pos = 0.9921875;
 max_neg = -1;
 
 % Check if signals exceed s16.15 fixed-point range (±1.0 represents full scale)
@@ -424,11 +424,11 @@ ylabel('Magnitude');
 %%
 
 % === Create your IIR notch filter ===
-Hd_FIR_comp_16 = FIR_comp_16();
+Hd_FIR_comp = FIR_comp();
 
 % === Apply the filter ===
-y_comp = filter(Hd_FIR_comp_16, y_cic);
-y_comp_clean = filter(Hd_FIR_comp_16, y_cic_clean);
+y_comp = filter(Hd_FIR_comp, y_cic);
+y_comp_clean = filter(Hd_FIR_comp, y_cic_clean);
 
 figure('Position', [100, 100, 1800, 600]);
 subplot(1, 2, 1);

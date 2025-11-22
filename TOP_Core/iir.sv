@@ -157,18 +157,28 @@ module IIR #(
             valid_out  <= 1'b0;
             overflow   <= 1'b0;
             underflow  <= 1'b0;
+        end else if (bypass) begin
+            valid_out  <= valid_in;
+            overflow   <= 1'b0;
+            underflow  <= 1'b0;
         end else if (valid_in) begin
-            valid_out <= valid_out_reg;
+            valid_out <= valid_in;
             overflow   <= overflow_reg;
             underflow  <= underflow_reg;
+        end else begin
+            valid_out  <= 1'b0;
+            overflow   <= 1'b0;
+            underflow  <= 1'b0;
         end
     end
 
-    always_comb begin 
-        if (bypass) begin
-            iir_out = iir_in;
-        end else begin
-            iir_out = y_delay[0];
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            iir_out <= {DATA_WIDTH{1'sb0}};
+        end else if (bypass) begin
+            iir_out <= iir_in;
+        end else if (valid_out_reg) begin
+            iir_out <= rounded_result;
         end
     end
 

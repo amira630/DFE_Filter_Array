@@ -157,6 +157,10 @@ module IIR #(
             valid_out  <= 1'b0;
             overflow   <= 1'b0;
             underflow  <= 1'b0;
+        end else if (bypass) begin
+            valid_out  <= valid_in;
+            overflow   <= 1'b0;
+            underflow  <= 1'b0;
         end else if (valid_in) begin
             valid_out <= valid_out_reg;
             overflow   <= overflow_reg;

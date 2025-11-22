@@ -160,7 +160,7 @@ module fractional_decimator #(
                 filter_out  <= filter_in            ;
                 overflow    <= 1'b0                 ;
                 underflow   <= 1'b0                 ;
-                valid_out   <= 1'b1                 ;
+                valid_out   <= valid_in             ;
             end else if (phase_enable) begin
                 filter_out  <= result               ;
                 overflow    <= result_overflow      ;

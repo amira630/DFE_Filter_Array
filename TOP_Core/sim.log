@@ -1,0 +1,1815 @@
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 16:45:48 on Nov 22,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: fractional_decimator.sv(21): (vopt-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: cic.sv(117): (vopt-2685) [TFMPC] - Too few port connections for 'COMB_INST_0'.  Expected 6, found 5.
+# ** Warning: cic.sv(117): (vopt-2718) [TFMPC] - Missing connection for port 'valid_out'.
+# ** Warning: top_core.sv(36): (vopt-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vopt-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vopt-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vopt-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(26): (vopt-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vopt-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vopt-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=13.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlft9z641i".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft9z641i
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(293)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(295)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(297)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(299)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(301)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(303)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(305)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(307)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(287)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 287
+add wave -position insertpoint  \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/DATA_WIDTH \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/DATA_FRAC \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/COEFF_WIDTH \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/COEFF_FRAC \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/IIR_NOTCH_FREQ \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/NUM_COEFF_DEPTH \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/DEN_COEFF_DEPTH \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/COEFF_DEPTH \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/PROD_WIDTH \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/PROD_FRAC \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/ACC_WIDTH \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/ACC_FRAC \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/SCALE \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B0_1 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B1_1 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B2_1 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/A1_1 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/A2_1 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B0_2 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B1_2 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B2_2 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/A1_2 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/A2_2 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B0_2_4 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B1_2_4 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B2_2_4 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/A1_2_4 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/A2_2_4 \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B0_INIT \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B1_INIT \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/B2_INIT \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/A1_INIT \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/A2_INIT \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/clk \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/rst_n \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/valid_in \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/bypass \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/coeff_wr_en \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/coeff_in \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/iir_in \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/iir_out \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/coeff_out \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/overflow \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/underflow \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/valid_out \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/num_coeff \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/den_coeff \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/x_delay \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/y_delay \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/num_products \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/den_products \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/result_acc \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/rounded_result \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/overflow_reg \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/underflow_reg \
+sim:/top_tb/CORE_DUT/IIR/IIR_2MHZ_NOTCH/valid_out_reg
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=13.
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+run -all
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(293)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(295)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(297)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(299)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(301)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(303)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(305)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(307)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(287)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 287
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:09:37 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:09:37 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:09:39 on Nov 22,2025, Elapsed time: 0:23:51
+# Errors: 3, Warnings: 22
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:09:39 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftbss3xm".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftbss3xm
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(293)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(295)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(297)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(299)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(301)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(303)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(305)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(307)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(287)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 287
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:12:45 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:12:45 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:12:49 on Nov 22,2025, Elapsed time: 0:03:10
+# Errors: 3, Warnings: 14
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:12:49 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftcmijw6".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftcmijw6
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:13:55 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:13:55 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:14:00 on Nov 22,2025, Elapsed time: 0:01:11
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:14:00 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftiqadqh".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftiqadqh
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:16:36 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:16:36 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:16:37 on Nov 22,2025, Elapsed time: 0:02:37
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:16:37 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftg0025i".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftg0025i
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+add wave -position insertpoint  \
+sim:/top_tb/CORE_DUT/IIR/iir_out \
+sim:/top_tb/CORE_DUT/IIR/valid_out \
+sim:/top_tb/CORE_DUT/IIR/iir_out_1MHz \
+sim:/top_tb/CORE_DUT/IIR/iir_out_2_4MHz \
+sim:/top_tb/CORE_DUT/IIR/valid_1MHz_out \
+sim:/top_tb/CORE_DUT/IIR/valid_2_4MHz_out
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+run -all
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:19:38 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:19:38 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:19:39 on Nov 22,2025, Elapsed time: 0:03:02
+# Errors: 3, Warnings: 12
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:19:39 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlfty8ra00".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlfty8ra00
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:20:27 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:20:27 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:20:29 on Nov 22,2025, Elapsed time: 0:00:50
+# Errors: 3, Warnings: 14
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:20:29 on Nov 22,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftx3g5yw".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftx3g5yw
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:22:18 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:22:18 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:22:19 on Nov 22,2025, Elapsed time: 0:01:50
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:22:19 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlft60w371".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft60w371
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:23:50 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:23:50 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:23:51 on Nov 22,2025, Elapsed time: 0:01:32
+# Errors: 3, Warnings: 14
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:23:51 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftnchwv5".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftnchwv5
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:28:11 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:28:11 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:28:13 on Nov 22,2025, Elapsed time: 0:04:22
+# Errors: 3, Warnings: 14
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:28:13 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftbki8na".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftbki8na
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:29:04 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:29:04 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:29:07 on Nov 22,2025, Elapsed time: 0:00:54
+# Errors: 3, Warnings: 14
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:29:07 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftw6tb8e".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftw6tb8e
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+add wave -position insertpoint  \
+sim:/top_tb/CORE_DUT/IIR/iir_in
+add wave -position insertpoint  \
+sim:/top_tb/CORE_DUT/IIR/iir_out_2_4MHz
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+run -all
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:33:43 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:33:43 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:33:44 on Nov 22,2025, Elapsed time: 0:04:37
+# Errors: 3, Warnings: 9
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:33:44 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftr5xv0v".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftr5xv0v
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:34:45 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:34:45 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:34:48 on Nov 22,2025, Elapsed time: 0:01:04
+# Errors: 3, Warnings: 14
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:34:48 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftgtznjq".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftgtznjq
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:35:32 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:35:32 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:35:35 on Nov 22,2025, Elapsed time: 0:00:47
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:35:35 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlft7ghrmt".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft7ghrmt
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:36:16 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:36:16 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:36:18 on Nov 22,2025, Elapsed time: 0:00:43
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:36:18 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlft6y9d6r".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft6y9d6r
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(296)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(298)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(300)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(302)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(290)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 290
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:38:27 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:38:27 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:38:30 on Nov 22,2025, Elapsed time: 0:02:12
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:38:30 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftnsv677".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftnsv677
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(304)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(306)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(308)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(310)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(312)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(314)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(316)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(318)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(298)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 298
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:47:18 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:47:18 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:47:21 on Nov 22,2025, Elapsed time: 0:08:51
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:47:21 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir.sv(24): (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=3.
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftgyi7ez".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftgyi7ez
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(311)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(313)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(315)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(317)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(319)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(321)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(323)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(325)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(305)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 305
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 17:55:09 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 17:55:09 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 17:55:10 on Nov 22,2025, Elapsed time: 0:07:49
+# Errors: 3, Warnings: 14
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 17:55:10 on Nov 22,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlft5r92f6".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft5r92f6
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(311)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(313)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(315)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(317)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(319)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(321)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(323)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(325)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(305)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 305
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 18:03:26 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 18:03:26 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 18:03:27 on Nov 22,2025, Elapsed time: 0:08:17
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 18:03:27 on Nov 22,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt1
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlft71mxrh".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft71mxrh
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(311)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(313)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(315)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(317)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(319)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(321)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(323)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(325)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(305)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 305
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 18:20:57 on Nov 22,2025
+# vlog -reportprogress 300 -f src_files.list 
+# -- Compiling module rounding_overflow_arith
+# -- Compiling module INTEG
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module IIR
+# ** Warning: iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module core
+# ** Warning: top_core.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: top_core.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module top_tb
+# 
+# Top level modules:
+# 	top_tb
+# End time: 18:20:57 on Nov 22,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 9
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 18:20:59 on Nov 22,2025, Elapsed time: 0:17:32
+# Errors: 3, Warnings: 11
+# vsim -voptargs="+acc" work.top_tb -l sim.log 
+# Start time: 18:20:59 on Nov 22,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# Loading sv_std.std
+# Loading work.top_tb(fast)
+# Loading work.core(fast)
+# Loading work.fractional_decimator(fast)
+# Loading work.rounding_overflow_arith(fast)
+# Loading work.IIR_chain(fast)
+# Loading work.IIR(fast)
+# Loading work.rounding_overflow_arith(fast__1)
+# Loading work.IIR(fast__1)
+# Loading work.IIR(fast__2)
+# Loading work.CIC(fast)
+# Loading work.INTEG(fast)
+# Loading work.COMB(fast)
+# Loading work.rounding_overflow_arith(fast__2)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Mustafa  Hostname: DESKTOP-KPUS47E  ProcessID: 9832
+#           Attempting to use alternate WLF file "./wlftgt15ea".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftgt15ea
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0001_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(311)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 16001 of file "output_0011_D2_exp.txt". (Current address [16000], address range [0:15999])    : top_core_tb.sv(313)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0101_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(315)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 8001 of file "output_0111_D4_exp.txt". (Current address [8000], address range [0:7999])    : top_core_tb.sv(317)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1001_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(319)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 6001 of file "output_1011_D8_exp.txt". (Current address [6000], address range [0:5999])    : top_core_tb.sv(321)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1101_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(323)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Warning: (vsim-PLI-3407) Too many data words read on line 3001 of file "output_1111_D16_exp.txt". (Current address [3000], address range [0:2999])    : top_core_tb.sv(325)
+#    Time: 0 ns  Iteration: 0  Instance: /top_tb
+# ** Note: $stop    : top_core_tb.sv(305)
+#    Time: 5281210 ns  Iteration: 1  Instance: /top_tb
+# Break in Module top_tb at top_core_tb.sv line 305
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/TOP_Core/core_q.mpf).  File can not be renamed.
+# End time: 19:16:14 on Nov 22,2025, Elapsed time: 0:55:15
+# Errors: 3, Warnings: 11
