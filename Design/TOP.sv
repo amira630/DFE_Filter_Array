@@ -251,8 +251,4 @@ always_comb begin
         end
     endcase
 end
-
-    assign overflow = (frac_dec_overflow | iir_overflow_1MHz | iir_overflow_2MHz | iir_overflow_2MHz | iir_overflow_2_4MHz | cic_overflow);
-
-    assign underflow = (frac_dec_underflow | iir_underflow_1MHz | iir_underflow_2MHz | iir_underflow_2MHz | iir_underflow_2_4MHz | cic_underflow);
 endmodule
