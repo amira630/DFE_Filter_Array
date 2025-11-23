@@ -1,0 +1,1833 @@
+
+*** Running vivado
+    with args -log TOP.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source TOP.tcl
+
+
+****** Vivado v2018.2 (64-bit)
+  **** SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+  **** IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source TOP.tcl -notrace
+Command: synth_design -top TOP -part xc7a200tffg1156-3
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a200t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a200t'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 21416 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 355.957 ; gain = 98.855
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'TOP' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv:1]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_FRAC bound to: 15 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter COEFF_FRAC bound to: 18 - type: integer 
+	Parameter N_TAP bound to: 72 - type: integer 
+	Parameter NUM_DENUM bound to: 5 - type: integer 
+	Parameter Q bound to: 1 - type: integer 
+	Parameter N bound to: 1 - type: integer 
+	Parameter ADDR_WIDTH bound to: 7 - type: integer 
+	Parameter PDATA_WIDTH bound to: 32 - type: integer 
+	Parameter COMP bound to: 4 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'CORE' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv:1]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_FRAC bound to: 15 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter COEFF_FRAC bound to: 18 - type: integer 
+	Parameter N_TAP bound to: 72 - type: integer 
+	Parameter NUM_COEFF_DEPTH bound to: 3 - type: integer 
+	Parameter DEN_COEFF_DEPTH bound to: 2 - type: integer 
+	Parameter COEFF_DEPTH bound to: 5 - type: integer 
+	Parameter Q bound to: 1 - type: integer 
+	Parameter N bound to: 1 - type: integer 
+	Parameter MAX_DEC_FACTOR bound to: 16 - type: integer 
+	Parameter DEC_WIDTH bound to: 4 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'fractional_decimator' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:1]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_FRAC bound to: 15 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter COEFF_FRAC bound to: 18 - type: integer 
+	Parameter N_TAP bound to: 72 - type: integer 
+	Parameter M bound to: 3 - type: integer 
+	Parameter PHASE_N_TAP bound to: 36 - type: integer 
+	Parameter PROD_WIDTH bound to: 36 - type: integer 
+	Parameter PROD_FRAC bound to: 33 - type: integer 
+	Parameter ACC_WIDTH bound to: 42 - type: integer 
+	Parameter ACC_FRAC bound to: 33 - type: integer 
+	Parameter COUNTER_WIDTH bound to: 2 - type: integer 
+	Parameter SCALE bound to: 1 - type: integer 
+	Parameter COEFF0 bound to: 20'sb11111111111101110110 
+	Parameter COEFF18 bound to: 20'sb11111111010011000100 
+	Parameter COEFF1 bound to: 20'sb11111111110010101100 
+	Parameter COEFF19 bound to: 20'sb00000000100010011000 
+	Parameter COEFF2 bound to: 20'sb11111111101011011010 
+	Parameter COEFF20 bound to: 20'sb00000000010101001011 
+	Parameter COEFF3 bound to: 20'sb11111111111101111101 
+	Parameter COEFF21 bound to: 20'sb11111110111111001100 
+	Parameter COEFF4 bound to: 20'sb00000000001100001001 
+	Parameter COEFF22 bound to: 20'sb00000000101000000001 
+	Parameter COEFF5 bound to: 20'sb11111111111001111011 
+	Parameter COEFF23 bound to: 20'sb00000000101000011100 
+	Parameter COEFF6 bound to: 20'sb11111111111001010000 
+	Parameter COEFF24 bound to: 20'sb11111110100011010100 
+	Parameter COEFF7 bound to: 20'sb00000000001101000001 
+	Parameter COEFF25 bound to: 20'sb00000000101101000010 
+	Parameter COEFF8 bound to: 20'sb11111111111011011110 
+	Parameter COEFF26 bound to: 20'sb00000001001000010100 
+	Parameter COEFF9 bound to: 20'sb11111111110100011001 
+	Parameter COEFF27 bound to: 20'sb11111101111000011001 
+	Parameter COEFF10 bound to: 20'sb00000000010001001111 
+	Parameter COEFF28 bound to: 20'sb00000000110001000110 
+	Parameter COEFF11 bound to: 20'sb11111111111101011110 
+	Parameter COEFF29 bound to: 20'sb00000010000100000001 
+	Parameter COEFF12 bound to: 20'sb11111111101100101011 
+	Parameter COEFF30 bound to: 20'sb11111100100111010100 
+	Parameter COEFF13 bound to: 20'sb00000000010110100111 
+	Parameter COEFF31 bound to: 20'sb00000000110011111110 
+	Parameter COEFF14 bound to: 20'sb00000000000001101011 
+	Parameter COEFF32 bound to: 20'sb00000100011111001000 
+	Parameter COEFF15 bound to: 20'sb11111111100001110011 
+	Parameter COEFF33 bound to: 20'sb11111000101000011000 
+	Parameter COEFF16 bound to: 20'sb00000000011100011110 
+	Parameter COEFF34 bound to: 20'sb00000000110101011101 
+	Parameter COEFF17 bound to: 20'sb00000000001001000110 
+	Parameter COEFF35 bound to: 20'sb00100010110110000111 
+INFO: [Synth 8-6157] synthesizing module 'rounding_overflow_arith' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv:1]
+	Parameter ACC_WIDTH bound to: 42 - type: integer 
+	Parameter ACC_FRAC bound to: 33 - type: integer 
+	Parameter OUT_WIDTH bound to: 16 - type: integer 
+	Parameter OUT_FRAC bound to: 15 - type: integer 
+	Parameter PROD_WIDTH bound to: 35 - type: integer 
+	Parameter PROD_FRAC bound to: 32 - type: integer 
+	Parameter SCALE bound to: 1 - type: integer 
+	Parameter OUT_MAX_INT bound to: 32'sb00000000000000000111111111111111 
+	Parameter OUT_MIN_INT bound to: 32'sb11111111111111111000000000000000 
+	Parameter MAX_VAL bound to: 16'sb0111111111111111 
+	Parameter MIN_VAL bound to: 16'sb1000000000000000 
+	Parameter FRAC_DIFF bound to: 32'sb00000000000000000000000000010010 
+	Parameter RAW_WIDTH bound to: 32'sb00000000000000000000000000011000 
+INFO: [Synth 8-6155] done synthesizing module 'rounding_overflow_arith' (1#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'fractional_decimator' (2#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'IIR_chain' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv:1]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_FRAC bound to: 15 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter COEFF_FRAC bound to: 18 - type: integer 
+	Parameter NUM_COEFF_DEPTH bound to: 3 - type: integer 
+	Parameter DEN_COEFF_DEPTH bound to: 2 - type: integer 
+	Parameter COEFF_DEPTH bound to: 5 - type: integer 
+	Parameter NOTCH_1MHZ bound to: 0 - type: integer 
+	Parameter NOTCH_2MHZ bound to: 1 - type: integer 
+	Parameter NOTCH_2_4MHZ bound to: 2 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'IIR' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:1]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_FRAC bound to: 15 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter COEFF_FRAC bound to: 18 - type: integer 
+	Parameter IIR_NOTCH_FREQ bound to: 2 - type: integer 
+	Parameter NUM_COEFF_DEPTH bound to: 3 - type: integer 
+	Parameter DEN_COEFF_DEPTH bound to: 2 - type: integer 
+	Parameter COEFF_DEPTH bound to: 5 - type: integer 
+	Parameter PROD_WIDTH bound to: 36 - type: integer 
+	Parameter PROD_FRAC bound to: 33 - type: integer 
+	Parameter ACC_WIDTH bound to: 38 - type: integer 
+	Parameter ACC_FRAC bound to: 33 - type: integer 
+	Parameter SCALE bound to: 1 - type: integer 
+	Parameter B0_1 bound to: 20'sb00110111000001100001 
+	Parameter B1_1 bound to: 20'sb11001000111110011111 
+	Parameter B2_1 bound to: 20'sb00110111000001100001 
+	Parameter A1_1 bound to: 20'sb11001000111110011111 
+	Parameter A2_1 bound to: 20'sb00101110000011000011 
+	Parameter B0_2 bound to: 20'sb00110111000001100001 
+	Parameter B1_2 bound to: 20'sb00110111000001100001 
+	Parameter B2_2 bound to: 20'sb00110111000001100001 
+	Parameter A1_2 bound to: 20'sb00110111000001100001 
+	Parameter A2_2 bound to: 20'sb00101110000011000011 
+	Parameter B0_2_4 bound to: 20'sb00110111000001100001 
+	Parameter B1_2_4 bound to: 20'sb01011001000001111100 
+	Parameter B2_2_4 bound to: 20'sb00110111000001100001 
+	Parameter A1_2_4 bound to: 20'sb01011001000001111100 
+	Parameter A2_2_4 bound to: 20'sb00101110000011000011 
+	Parameter B0_INIT bound to: 20'sb00110111000001100001 
+	Parameter B1_INIT bound to: 20'sb01011001000001111100 
+	Parameter B2_INIT bound to: 20'sb00110111000001100001 
+	Parameter A1_INIT bound to: 20'sb01011001000001111100 
+	Parameter A2_INIT bound to: 20'sb00101110000011000011 
+INFO: [Synth 8-6157] synthesizing module 'rounding_overflow_arith__parameterized0' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv:1]
+	Parameter ACC_WIDTH bound to: 38 - type: integer 
+	Parameter ACC_FRAC bound to: 33 - type: integer 
+	Parameter OUT_WIDTH bound to: 16 - type: integer 
+	Parameter OUT_FRAC bound to: 15 - type: integer 
+	Parameter PROD_WIDTH bound to: 36 - type: integer 
+	Parameter PROD_FRAC bound to: 33 - type: integer 
+	Parameter SCALE bound to: 1 - type: integer 
+	Parameter OUT_MAX_INT bound to: 32'sb00000000000000000111111111111111 
+	Parameter OUT_MIN_INT bound to: 32'sb11111111111111111000000000000000 
+	Parameter MAX_VAL bound to: 16'sb0111111111111111 
+	Parameter MIN_VAL bound to: 16'sb1000000000000000 
+	Parameter FRAC_DIFF bound to: 32'sb00000000000000000000000000010010 
+	Parameter RAW_WIDTH bound to: 32'sb00000000000000000000000000010100 
+INFO: [Synth 8-6155] done synthesizing module 'rounding_overflow_arith__parameterized0' (2#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv:1]
+WARNING: [Synth 8-6014] Unused sequential element x_delay_reg[2] was removed.  [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:117]
+INFO: [Synth 8-6155] done synthesizing module 'IIR' (3#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'IIR__parameterized0' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:1]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_FRAC bound to: 15 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter COEFF_FRAC bound to: 18 - type: integer 
+	Parameter IIR_NOTCH_FREQ bound to: 0 - type: integer 
+	Parameter NUM_COEFF_DEPTH bound to: 3 - type: integer 
+	Parameter DEN_COEFF_DEPTH bound to: 2 - type: integer 
+	Parameter COEFF_DEPTH bound to: 5 - type: integer 
+	Parameter PROD_WIDTH bound to: 36 - type: integer 
+	Parameter PROD_FRAC bound to: 33 - type: integer 
+	Parameter ACC_WIDTH bound to: 38 - type: integer 
+	Parameter ACC_FRAC bound to: 33 - type: integer 
+	Parameter SCALE bound to: 1 - type: integer 
+	Parameter B0_1 bound to: 20'sb00110111000001100001 
+	Parameter B1_1 bound to: 20'sb11001000111110011111 
+	Parameter B2_1 bound to: 20'sb00110111000001100001 
+	Parameter A1_1 bound to: 20'sb11001000111110011111 
+	Parameter A2_1 bound to: 20'sb00101110000011000011 
+	Parameter B0_2 bound to: 20'sb00110111000001100001 
+	Parameter B1_2 bound to: 20'sb00110111000001100001 
+	Parameter B2_2 bound to: 20'sb00110111000001100001 
+	Parameter A1_2 bound to: 20'sb00110111000001100001 
+	Parameter A2_2 bound to: 20'sb00101110000011000011 
+	Parameter B0_2_4 bound to: 20'sb00110111000001100001 
+	Parameter B1_2_4 bound to: 20'sb01011001000001111100 
+	Parameter B2_2_4 bound to: 20'sb00110111000001100001 
+	Parameter A1_2_4 bound to: 20'sb01011001000001111100 
+	Parameter A2_2_4 bound to: 20'sb00101110000011000011 
+	Parameter B0_INIT bound to: 20'sb00110111000001100001 
+	Parameter B1_INIT bound to: 20'sb11001000111110011111 
+	Parameter B2_INIT bound to: 20'sb00110111000001100001 
+	Parameter A1_INIT bound to: 20'sb11001000111110011111 
+	Parameter A2_INIT bound to: 20'sb00101110000011000011 
+WARNING: [Synth 8-6014] Unused sequential element x_delay_reg[2] was removed.  [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:117]
+INFO: [Synth 8-6155] done synthesizing module 'IIR__parameterized0' (3#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'IIR__parameterized1' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:1]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_FRAC bound to: 15 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter COEFF_FRAC bound to: 18 - type: integer 
+	Parameter IIR_NOTCH_FREQ bound to: 1 - type: integer 
+	Parameter NUM_COEFF_DEPTH bound to: 3 - type: integer 
+	Parameter DEN_COEFF_DEPTH bound to: 2 - type: integer 
+	Parameter COEFF_DEPTH bound to: 5 - type: integer 
+	Parameter PROD_WIDTH bound to: 36 - type: integer 
+	Parameter PROD_FRAC bound to: 33 - type: integer 
+	Parameter ACC_WIDTH bound to: 38 - type: integer 
+	Parameter ACC_FRAC bound to: 33 - type: integer 
+	Parameter SCALE bound to: 1 - type: integer 
+	Parameter B0_1 bound to: 20'sb00110111000001100001 
+	Parameter B1_1 bound to: 20'sb11001000111110011111 
+	Parameter B2_1 bound to: 20'sb00110111000001100001 
+	Parameter A1_1 bound to: 20'sb11001000111110011111 
+	Parameter A2_1 bound to: 20'sb00101110000011000011 
+	Parameter B0_2 bound to: 20'sb00110111000001100001 
+	Parameter B1_2 bound to: 20'sb00110111000001100001 
+	Parameter B2_2 bound to: 20'sb00110111000001100001 
+	Parameter A1_2 bound to: 20'sb00110111000001100001 
+	Parameter A2_2 bound to: 20'sb00101110000011000011 
+	Parameter B0_2_4 bound to: 20'sb00110111000001100001 
+	Parameter B1_2_4 bound to: 20'sb01011001000001111100 
+	Parameter B2_2_4 bound to: 20'sb00110111000001100001 
+	Parameter A1_2_4 bound to: 20'sb01011001000001111100 
+	Parameter A2_2_4 bound to: 20'sb00101110000011000011 
+	Parameter B0_INIT bound to: 20'sb00110111000001100001 
+	Parameter B1_INIT bound to: 20'sb00110111000001100001 
+	Parameter B2_INIT bound to: 20'sb00110111000001100001 
+	Parameter A1_INIT bound to: 20'sb00110111000001100001 
+	Parameter A2_INIT bound to: 20'sb00101110000011000011 
+WARNING: [Synth 8-6014] Unused sequential element x_delay_reg[2] was removed.  [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:117]
+INFO: [Synth 8-6155] done synthesizing module 'IIR__parameterized1' (3#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'IIR_chain' (4#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'CIC' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv:16]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter DATA_FRAC bound to: 15 - type: integer 
+	Parameter Q bound to: 1 - type: integer 
+	Parameter N bound to: 1 - type: integer 
+	Parameter MAX_DEC_FACTOR bound to: 16 - type: integer 
+	Parameter ACC_FRAC bound to: 15 - type: integer 
+	Parameter ACC_WIDTH bound to: 20 - type: integer 
+	Parameter DEC_WIDTH bound to: 4 - type: integer 
+	Parameter SCALE bound to: 1 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'INTEG' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv:8]
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter ACC_WIDTH bound to: 20 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'INTEG' (5#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv:8]
+INFO: [Synth 8-6157] synthesizing module 'COMB' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv:10]
+	Parameter ACC_WIDTH bound to: 20 - type: integer 
+	Parameter N bound to: 1 - type: integer 
+WARNING: [Synth 8-3848] Net valid_out in module/entity COMB does not have driver. [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv:19]
+INFO: [Synth 8-6155] done synthesizing module 'COMB' (6#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv:10]
+WARNING: [Synth 8-350] instance 'COMB_INST_0' of module 'COMB' requires 6 connections, but only 5 given [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv:117]
+INFO: [Synth 8-6157] synthesizing module 'rounding_overflow_arith__parameterized1' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv:1]
+	Parameter ACC_WIDTH bound to: 20 - type: integer 
+	Parameter ACC_FRAC bound to: 15 - type: integer 
+	Parameter OUT_WIDTH bound to: 16 - type: integer 
+	Parameter OUT_FRAC bound to: 15 - type: integer 
+	Parameter PROD_WIDTH bound to: 0 - type: integer 
+	Parameter PROD_FRAC bound to: 0 - type: integer 
+	Parameter SCALE bound to: 1 - type: integer 
+	Parameter OUT_MAX_INT bound to: 32'sb00000000000000000111111111111111 
+	Parameter OUT_MIN_INT bound to: 32'sb11111111111111111000000000000000 
+	Parameter MAX_VAL bound to: 16'sb0111111111111111 
+	Parameter MIN_VAL bound to: 16'sb1000000000000000 
+	Parameter FRAC_DIFF bound to: 32'sb00000000000000000000000000000000 
+	Parameter RAW_WIDTH bound to: 32'sb00000000000000000000000000010100 
+INFO: [Synth 8-6155] done synthesizing module 'rounding_overflow_arith__parameterized1' (6#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'CIC' (7#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv:16]
+INFO: [Synth 8-6155] done synthesizing module 'CORE' (8#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'APB' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv:1]
+	Parameter ADDR_WIDTH bound to: 7 - type: integer 
+	Parameter PDATA_WIDTH bound to: 32 - type: integer 
+	Parameter DATA_WIDTH bound to: 16 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter N_TAP bound to: 72 - type: integer 
+	Parameter NUM_DENUM bound to: 5 - type: integer 
+	Parameter COMP bound to: 4 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'APB_Bridge' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv:1]
+	Parameter ADDR_WIDTH bound to: 7 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter COMP bound to: 4 - type: integer 
+	Parameter IDLE bound to: 2'b00 
+	Parameter SETUP bound to: 2'b01 
+	Parameter ACCESS bound to: 2'b11 
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv:102]
+INFO: [Synth 8-6155] done synthesizing module 'APB_Bridge' (9#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'MPRAM' [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv:1]
+	Parameter ADDR_WIDTH bound to: 7 - type: integer 
+	Parameter DATA_WIDTH bound to: 32 - type: integer 
+	Parameter TAPS bound to: 72 - type: integer 
+	Parameter COEFF_WIDTH bound to: 20 - type: integer 
+	Parameter NUM_DENUM bound to: 5 - type: integer 
+	Parameter COMP bound to: 4 - type: integer 
+	Parameter COEFF0 bound to: 20'sb11111111111101110110 
+	Parameter COEFF18 bound to: 20'sb11111111010011000100 
+	Parameter COEFF1 bound to: 20'sb11111111110010101100 
+	Parameter COEFF19 bound to: 20'sb00000000100010011000 
+	Parameter COEFF2 bound to: 20'sb11111111101011011010 
+	Parameter COEFF20 bound to: 20'sb00000000010101001011 
+	Parameter COEFF3 bound to: 20'sb11111111111101111101 
+	Parameter COEFF21 bound to: 20'sb11111110111111001100 
+	Parameter COEFF4 bound to: 20'sb00000000001100001001 
+	Parameter COEFF22 bound to: 20'sb00000000101000000001 
+	Parameter COEFF5 bound to: 20'sb11111111111001111011 
+	Parameter COEFF23 bound to: 20'sb00000000101000011100 
+	Parameter COEFF6 bound to: 20'sb11111111111001010000 
+	Parameter COEFF24 bound to: 20'sb11111110100011010100 
+	Parameter COEFF7 bound to: 20'sb00000000001101000001 
+	Parameter COEFF25 bound to: 20'sb00000000101101000010 
+	Parameter COEFF8 bound to: 20'sb11111111111011011110 
+	Parameter COEFF26 bound to: 20'sb00000001001000010100 
+	Parameter COEFF9 bound to: 20'sb11111111110100011001 
+	Parameter COEFF27 bound to: 20'sb11111101111000011001 
+	Parameter COEFF10 bound to: 20'sb00000000010001001111 
+	Parameter COEFF28 bound to: 20'sb00000000110001000110 
+	Parameter COEFF11 bound to: 20'sb11111111111101011110 
+	Parameter COEFF29 bound to: 20'sb00000010000100000001 
+	Parameter COEFF12 bound to: 20'sb11111111101100101011 
+	Parameter COEFF30 bound to: 20'sb11111100100111010100 
+	Parameter COEFF13 bound to: 20'sb00000000010110100111 
+	Parameter COEFF31 bound to: 20'sb00000000110011111110 
+	Parameter COEFF14 bound to: 20'sb00000000000001101011 
+	Parameter COEFF32 bound to: 20'sb00000100011111001000 
+	Parameter COEFF15 bound to: 20'sb11111111100001110011 
+	Parameter COEFF33 bound to: 20'sb11111000101000011000 
+	Parameter COEFF16 bound to: 20'sb00000000011100011110 
+	Parameter COEFF34 bound to: 20'sb00000000110101011101 
+	Parameter COEFF17 bound to: 20'sb00000000001001000110 
+	Parameter COEFF35 bound to: 20'sb00100010110110000111 
+	Parameter B0_1 bound to: 20'sb00110111000001100001 
+	Parameter B1_1 bound to: 20'sb11001000111110011111 
+	Parameter B2_1 bound to: 20'sb00110111000001100001 
+	Parameter A1_1 bound to: 20'sb11001000111110011111 
+	Parameter A2_1 bound to: 20'sb00101110000011000011 
+	Parameter B0_2 bound to: 20'sb00110111000001100001 
+	Parameter B1_2 bound to: 20'sb00110111000001100001 
+	Parameter B2_2 bound to: 20'sb00110111000001100001 
+	Parameter A1_2 bound to: 20'sb00110111000001100001 
+	Parameter A2_2 bound to: 20'sb00101110000011000011 
+	Parameter B0_2_4 bound to: 20'sb00110111000001100001 
+	Parameter B1_2_4 bound to: 20'sb01011001000001111100 
+	Parameter B2_2_4 bound to: 20'sb00110111000001100001 
+	Parameter A1_2_4 bound to: 20'sb01011001000001111100 
+	Parameter A2_2_4 bound to: 20'sb00101110000011000011 
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv:174]
+INFO: [Synth 8-6155] done synthesizing module 'MPRAM' (10#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'APB' (11#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv:1]
+INFO: [Synth 8-6155] done synthesizing module 'TOP' (12#1) [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv:1]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[31]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[30]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[29]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[28]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[27]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[26]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[25]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[24]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[23]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[22]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[21]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[20]
+WARNING: [Synth 8-3331] design rounding_overflow_arith__parameterized1 has unconnected port data_in[19]
+WARNING: [Synth 8-3331] design rounding_overflow_arith__parameterized1 has unconnected port data_in[18]
+WARNING: [Synth 8-3331] design rounding_overflow_arith__parameterized1 has unconnected port data_in[17]
+WARNING: [Synth 8-3331] design rounding_overflow_arith__parameterized1 has unconnected port data_in[16]
+WARNING: [Synth 8-3331] design COMB has unconnected port valid_out
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 425.070 ; gain = 167.969
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 425.070 ; gain = 167.969
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 425.070 ; gain = 167.969
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7a200tffg1156-3
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/Constraints_basys3_sys.xdc]
+WARNING: [Vivado 12-2489] -period contains time 111.111111 which will be rounded to 111.111 to ensure it is an integer multiple of 1 picosecond [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/Constraints_basys3_sys.xdc:8]
+WARNING: [Vivado 12-2489] -waveform contains time 55.555556 which will be rounded to 55.556 to ensure it is an integer multiple of 1 picosecond [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/Constraints_basys3_sys.xdc:8]
+Finished Parsing XDC File [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/Constraints_basys3_sys.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/Constraints_basys3_sys.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/TOP_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/TOP_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 867.199 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 867.199 ; gain = 610.098
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7a200tffg1156-3
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 867.199 ; gain = 610.098
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 867.199 ; gain = 610.098
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <multiplier> is shared. To prevent sharing consider applying a KEEP on the output of the operator [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:183]
+INFO: [Synth 8-5546] ROM "dec_in_enable" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'APB_Bridge'
+INFO: [Synth 8-5544] ROM "PENABLE" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[71]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[70]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[69]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[68]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[67]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[66]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[65]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[64]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[63]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[62]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[61]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[60]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[59]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[58]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[57]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[56]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[55]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[54]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[53]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[52]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[51]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[50]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[49]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[48]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[47]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[46]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[45]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[44]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[43]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[42]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[41]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[40]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[39]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[38]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[37]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[36]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[35]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[34]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[33]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[32]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[31]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[30]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[29]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[28]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[27]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[26]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[25]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[24]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[23]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[22]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[21]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[20]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[19]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[18]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[17]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[16]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[15]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[14]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[13]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[12]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[11]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[10]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[9]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[8]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[7]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[6]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[5]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[4]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[3]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[2]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[1]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[0]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5546] ROM "FRAC_DECI_VLD" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "IIR_24_VLD" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "CIC_R_OUT" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "OUT_SEL" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[71]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[70]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[69]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[68]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[67]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[66]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[65]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[64]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[63]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[62]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[61]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[60]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[59]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[58]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[57]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[56]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[55]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[54]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[53]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[52]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[51]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[50]" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "FRAC_DECI_OUT_reg[49]" won't be mapped to RAM because it is too sparse
+INFO: [Common 17-14] Message 'Synth 8-5546' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_1_OUT_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_5_2_OUT_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "IIR_24_OUT_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[4]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[3]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[2]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[1]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "CTRL_reg[0]" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                               00
+                   SETUP |                              010 |                               01
+                  ACCESS |                              100 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'current_state_reg' using encoding 'one-hot' in module 'APB_Bridge'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 867.199 ; gain = 610.098
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	  36 Input     42 Bit       Adders := 1     
+	   2 Input     32 Bit       Adders := 3     
+	   3 Input     20 Bit       Adders := 1     
+	   2 Input     16 Bit       Adders := 4     
+	   2 Input      5 Bit       Adders := 1     
+	   2 Input      3 Bit       Adders := 1     
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 2     
+	               20 Bit    Registers := 177   
+	               16 Bit    Registers := 53    
+	                7 Bit    Registers := 1     
+	                5 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 25    
++---Multipliers : 
+	                36x36  Multipliers := 36    
++---Muxes : 
+	   2 Input     42 Bit        Muxes := 1     
+	   2 Input     38 Bit        Muxes := 3     
+	   2 Input     36 Bit        Muxes := 36    
+	   2 Input     32 Bit        Muxes := 6     
+	   3 Input     32 Bit        Muxes := 2     
+	   2 Input     16 Bit        Muxes := 10    
+	   4 Input     16 Bit        Muxes := 1     
+	   3 Input      7 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 1     
+	   3 Input      4 Bit        Muxes := 1     
+	   3 Input      3 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 3     
+	   2 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 8     
+	   3 Input      1 Bit        Muxes := 1     
+	   6 Input      1 Bit        Muxes := 96    
+	   8 Input      1 Bit        Muxes := 2     
+	   7 Input      1 Bit        Muxes := 3     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module TOP 
+Detailed RTL Component Info : 
++---Muxes : 
+	   4 Input     16 Bit        Muxes := 1     
+	   7 Input      1 Bit        Muxes := 1     
+Module rounding_overflow_arith 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     16 Bit       Adders := 1     
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 1     
+Module fractional_decimator 
+Detailed RTL Component Info : 
++---Adders : 
+	  36 Input     42 Bit       Adders := 1     
+	   2 Input      2 Bit       Adders := 1     
++---Registers : 
+	               20 Bit    Registers := 72    
+	               16 Bit    Registers := 37    
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 3     
++---Multipliers : 
+	                36x36  Multipliers := 36    
++---Muxes : 
+	   2 Input     42 Bit        Muxes := 1     
+	   2 Input     36 Bit        Muxes := 36    
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input      2 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 2     
+Module rounding_overflow_arith__parameterized0 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     16 Bit       Adders := 1     
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 1     
+Module IIR 
+Detailed RTL Component Info : 
++---Registers : 
+	               20 Bit    Registers := 5     
+	               16 Bit    Registers := 5     
+	                1 Bit    Registers := 3     
++---Muxes : 
+	   2 Input     38 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 1     
+Module IIR__parameterized0 
+Detailed RTL Component Info : 
++---Registers : 
+	               20 Bit    Registers := 5     
+	               16 Bit    Registers := 5     
+	                1 Bit    Registers := 3     
++---Muxes : 
+	   2 Input     38 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 1     
+Module IIR__parameterized1 
+Detailed RTL Component Info : 
++---Registers : 
+	               20 Bit    Registers := 5     
+	               16 Bit    Registers := 5     
+	                1 Bit    Registers := 3     
++---Muxes : 
+	   2 Input     38 Bit        Muxes := 1     
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 1     
+Module COMB 
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input     20 Bit       Adders := 1     
++---Registers : 
+	               20 Bit    Registers := 2     
+Module rounding_overflow_arith__parameterized1 
+Detailed RTL Component Info : 
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 1     
+Module CIC 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 1     
+	   2 Input      5 Bit       Adders := 1     
++---Registers : 
+	               20 Bit    Registers := 1     
+	               16 Bit    Registers := 1     
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   2 Input     16 Bit        Muxes := 1     
+	   2 Input      5 Bit        Muxes := 1     
+	   2 Input      1 Bit        Muxes := 3     
+Module APB_Bridge 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 1     
+	                7 Bit    Registers := 1     
+	                4 Bit    Registers := 1     
+	                1 Bit    Registers := 1     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 2     
+	   3 Input     32 Bit        Muxes := 2     
+	   3 Input      7 Bit        Muxes := 1     
+	   3 Input      4 Bit        Muxes := 1     
+	   3 Input      3 Bit        Muxes := 1     
+	   2 Input      3 Bit        Muxes := 3     
+	   3 Input      1 Bit        Muxes := 1     
+Module MPRAM 
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input     32 Bit       Adders := 2     
+	   2 Input      3 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 1     
+	               20 Bit    Registers := 87    
+	                5 Bit    Registers := 1     
+	                3 Bit    Registers := 2     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 10    
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 4     
+	   6 Input      1 Bit        Muxes := 96    
+	   8 Input      1 Bit        Muxes := 2     
+	   7 Input      1 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 740 (col length:100)
+BRAMs: 730 (col length: RAMB18 100 RAMB36 50)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+INFO: [Synth 8-5845] Not enough pipeline registers after wide multiplier. Recommended levels of pipeline registers is 5 [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:184]
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP acc00, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: operator acc00 is absorbed into DSP acc00.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc2, operation Mode is: A*B.
+DSP Report: operator U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc2.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc0, operation Mode is: C+A*B.
+DSP Report: operator U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc0 is absorbed into DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc0.
+DSP Report: operator U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc3 is absorbed into DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc0.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc0, operation Mode is: PCIN+A*B.
+DSP Report: operator U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc0 is absorbed into DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc0.
+DSP Report: operator U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc3 is absorbed into DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc0.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc2, operation Mode is: A*B.
+DSP Report: operator U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc2.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc1, operation Mode is: PCIN+A*B.
+DSP Report: operator U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc1 is absorbed into DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc1.
+DSP Report: operator U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_2_4MHZ_NOTCH/result_acc1.
+DSP Report: Generating DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc2, operation Mode is: A*B.
+DSP Report: operator U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc2.
+DSP Report: Generating DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc0, operation Mode is: C+A*B.
+DSP Report: operator U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc0 is absorbed into DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc0.
+DSP Report: operator U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc3 is absorbed into DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc0.
+DSP Report: Generating DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc0, operation Mode is: PCIN+A*B.
+DSP Report: operator U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc0 is absorbed into DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc0.
+DSP Report: operator U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc3 is absorbed into DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc0.
+DSP Report: Generating DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc2, operation Mode is: A*B.
+DSP Report: operator U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc2.
+DSP Report: Generating DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc1, operation Mode is: PCIN+A*B.
+DSP Report: operator U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc1 is absorbed into DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc1.
+DSP Report: operator U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_1MHZ_NOTCH/result_acc1.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc2, operation Mode is: A*B.
+DSP Report: operator U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc2.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc0, operation Mode is: C+A*B.
+DSP Report: operator U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc0 is absorbed into DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc0.
+DSP Report: operator U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc3 is absorbed into DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc0.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc0, operation Mode is: PCIN+A*B.
+DSP Report: operator U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc0 is absorbed into DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc0.
+DSP Report: operator U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc3 is absorbed into DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc0.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc2, operation Mode is: A*B.
+DSP Report: operator U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc2.
+DSP Report: Generating DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc1, operation Mode is: PCIN+A*B.
+DSP Report: operator U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc1 is absorbed into DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc1.
+DSP Report: operator U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc2 is absorbed into DSP U_CORE/IIR/IIR_2MHZ_NOTCH/result_acc1.
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[31]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[30]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[29]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[28]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[27]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[26]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[25]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[24]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[23]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[22]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[21]
+WARNING: [Synth 8-3331] design MPRAM has unconnected port DATA_IN[20]
+WARNING: [Synth 8-3331] design rounding_overflow_arith has unconnected port data_in[41]
+WARNING: [Synth 8-3331] design rounding_overflow_arith has unconnected port data_in[40]
+WARNING: [Synth 8-3331] design rounding_overflow_arith has unconnected port data_in[39]
+WARNING: [Synth 8-3331] design rounding_overflow_arith has unconnected port data_in[38]
+WARNING: [Synth 8-3331] design rounding_overflow_arith has unconnected port data_in[37]
+WARNING: [Synth 8-3331] design rounding_overflow_arith has unconnected port data_in[36]
+WARNING: [Synth 8-3331] design rounding_overflow_arith has unconnected port data_in[35]
+WARNING: [Synth 8-3331] design rounding_overflow_arith has unconnected port data_in[34]
+INFO: [Synth 8-3886] merging instance 'U_CORE/FRACTIONAL_DECIMATOR/underflow_reg__0' (FDCE) to 'U_CORE/FRACTIONAL_DECIMATOR/overflow_reg__0'
+INFO: [Synth 8-3886] merging instance 'U_CORE/IIR/IIR_2_4MHZ_NOTCH/underflow_reg' (FDC) to 'U_CORE/IIR/IIR_2MHZ_NOTCH/overflow_reg'
+INFO: [Synth 8-3886] merging instance 'U_CORE/IIR/IIR_2MHZ_NOTCH/underflow_reg' (FDC) to 'U_CORE/IIR/IIR_2MHZ_NOTCH/overflow_reg'
+INFO: [Synth 8-3886] merging instance 'U_CORE/IIR/IIR_1MHZ_NOTCH/underflow_reg' (FDC) to 'U_CORE/IIR/IIR_2MHZ_NOTCH/overflow_reg'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\U_CORE/FRACTIONAL_DECIMATOR /overflow_reg__0)
+INFO: [Synth 8-3886] merging instance 'U_CORE/IIR/IIR_2_4MHZ_NOTCH/overflow_reg' (FDC) to 'U_CORE/IIR/IIR_2MHZ_NOTCH/overflow_reg'
+INFO: [Synth 8-3886] merging instance 'U_CORE/IIR/IIR_2MHZ_NOTCH/overflow_reg' (FDC) to 'U_CORE/IIR/IIR_1MHZ_NOTCH/overflow_reg'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\U_CORE/IIR/IIR_1MHZ_NOTCH/overflow_reg )
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[19]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[21]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[20]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[22]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[21]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[23]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[22]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[24]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[23]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[25]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[24]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[26]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[25]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[27]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[26]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[28]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[27]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[29]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[28]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[30]'
+INFO: [Synth 8-3886] merging instance 'U_APB/U_MPRAM/PRDATA_reg[29]' (FDCE) to 'U_APB/U_MPRAM/PRDATA_reg[31]'
+WARNING: [Synth 8-3332] Sequential element (overflow_reg__0) is unused and will be removed from module fractional_decimator.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/decimator_out_reg[19]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/decimator_out_reg[18]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/decimator_out_reg[17]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/decimator_out_reg[16]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/COMB_INST_0/delay_reg_reg[0][19]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/COMB_INST_0/delay_reg_reg[0][18]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/COMB_INST_0/delay_reg_reg[0][17]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/COMB_INST_0/delay_reg_reg[0][16]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/COMB_INST_0/comb_out_reg[19]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/COMB_INST_0/comb_out_reg[18]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/COMB_INST_0/comb_out_reg[17]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/CIC/COMB_INST_0/comb_out_reg[16]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[31]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[30]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[29]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[28]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[27]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[26]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[25]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[24]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[23]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[22]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[21]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_APB/U_APB/WDATA_reg_reg[20]) is unused and will be removed from module TOP.
+WARNING: [Synth 8-3332] Sequential element (U_CORE/IIR/IIR_1MHZ_NOTCH/overflow_reg) is unused and will be removed from module TOP.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:36 ; elapsed = 00:00:38 . Memory (MB): peak = 867.199 ; gain = 610.098
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping  Report (see note below)
++---------------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name          | DSP Mapping    | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++---------------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | A*B            | 18     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|fractional_decimator | (PCIN>>17)+A*B | 20     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | A*B            | 20     | 16     | -      | -      | 36     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | C+A*B          | 20     | 16     | 34     | -      | 34     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|IIR                  | PCIN+A*B       | 20     | 16     | -      | -      | 34     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | A*B            | 20     | 16     | -      | -      | 36     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | PCIN+A*B       | 20     | 16     | -      | -      | 38     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | A*B            | 20     | 16     | -      | -      | 36     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | C+A*B          | 20     | 16     | 34     | -      | 34     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|IIR                  | PCIN+A*B       | 20     | 16     | -      | -      | 34     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | A*B            | 20     | 16     | -      | -      | 36     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | PCIN+A*B       | 20     | 16     | -      | -      | 38     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | A*B            | 20     | 16     | -      | -      | 36     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | C+A*B          | 20     | 16     | 34     | -      | 34     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|IIR                  | PCIN+A*B       | 20     | 16     | -      | -      | 34     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | A*B            | 20     | 16     | -      | -      | 36     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|IIR                  | PCIN+A*B       | 20     | 16     | -      | -      | 38     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++---------------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP and Shift Register Reporting
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Synth 8-5844] Detected registers with asynchronous reset at DSP/BRAM block boundary. Consider using synchronous reset for optimal packing [D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv:142]
+INFO: [Common 17-14] Message 'Synth 8-5844' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:45 ; elapsed = 00:00:49 . Memory (MB): peak = 902.008 ; gain = 644.906
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:52 ; elapsed = 00:00:55 . Memory (MB): peak = 960.031 ; gain = 702.930
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1027.465 ; gain = 770.363
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:59 ; elapsed = 00:01:03 . Memory (MB): peak = 1027.465 ; gain = 770.363
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:59 ; elapsed = 00:01:03 . Memory (MB): peak = 1027.465 ; gain = 770.363
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:02 ; elapsed = 00:01:06 . Memory (MB): peak = 1027.465 ; gain = 770.363
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:01:02 ; elapsed = 00:01:06 . Memory (MB): peak = 1027.465 ; gain = 770.363
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:02 ; elapsed = 00:01:06 . Memory (MB): peak = 1027.465 ; gain = 770.363
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:01:02 ; elapsed = 00:01:06 . Memory (MB): peak = 1027.465 ; gain = 770.363
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+----------+------+
+|      |Cell      |Count |
++------+----------+------+
+|1     |BUFG      |     1|
+|2     |CARRY4    |   414|
+|3     |DSP48E1   |   120|
+|4     |DSP48E1_1 |     3|
+|5     |LUT1      |   139|
+|6     |LUT2      |   832|
+|7     |LUT3      |   622|
+|8     |LUT4      |  1359|
+|9     |LUT5      |   188|
+|10    |LUT6      |   732|
+|11    |MUXF7     |   180|
+|12    |MUXF8     |    68|
+|13    |FDCE      |  2831|
+|14    |FDPE      |  1662|
+|15    |IBUF      |    52|
+|16    |OBUF      |    70|
++------+----------+------+
+
+Report Instance Areas: 
++------+-------------------------+---------------------+------+
+|      |Instance                 |Module               |Cells |
++------+-------------------------+---------------------+------+
+|1     |top                      |                     |  9273|
+|2     |  U_APB                  |APB                  |  2987|
+|3     |    U_APB                |APB_Bridge           |   446|
+|4     |    U_MPRAM              |MPRAM                |  2541|
+|5     |  U_CORE                 |CORE                 |  6163|
+|6     |    CIC                  |CIC                  |   152|
+|7     |      COMB_INST_0        |COMB                 |    68|
+|8     |      INTEG_INST_0       |INTEG                |    17|
+|9     |    FRACTIONAL_DECIMATOR |fractional_decimator |  5050|
+|10    |    IIR                  |IIR_chain            |   924|
+|11    |      IIR_1MHZ_NOTCH     |IIR__parameterized0  |   313|
+|12    |      IIR_2MHZ_NOTCH     |IIR__parameterized1  |   297|
+|13    |      IIR_2_4MHZ_NOTCH   |IIR                  |   314|
++------+-------------------------+---------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:02 ; elapsed = 00:01:06 . Memory (MB): peak = 1027.465 ; gain = 770.363
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 46 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:44 ; elapsed = 00:00:49 . Memory (MB): peak = 1027.465 ; gain = 328.234
+Synthesis Optimization Complete : Time (s): cpu = 00:01:02 ; elapsed = 00:01:06 . Memory (MB): peak = 1027.465 ; gain = 770.363
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 837 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+382 Infos, 70 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:01:05 ; elapsed = 00:01:09 . Memory (MB): peak = 1027.465 ; gain = 783.090
+WARNING: [Constraints 18-5210] No constraint will be written out.
+INFO: [Common 17-1381] The checkpoint 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/System_V/System_V.runs/synth_1/TOP.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file TOP_utilization_synth.rpt -pb TOP_utilization_synth.pb
+report_utilization: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.125 . Memory (MB): peak = 1027.465 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sat Nov 22 21:18:33 2025...

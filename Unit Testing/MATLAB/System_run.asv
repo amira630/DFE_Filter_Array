@@ -50,20 +50,16 @@ else
     signal_shape = default_shape;
 end
 
-% Display configuration
-fprintf('Binary Configuration:\n');
-fprintf('Raw bits: ');
-fprintf('%d', config);
-fprintf('\n\n');
-
-fprintf('Parsed Configuration:\n');
-fprintf('Signal flags - f:%d, a:%d, s:%d\n', f, a, s);
-fprintf('Bypass flags - frac_dec:%d, iir_24:%d, iir_5:%d, cic:%d\n', ...
-        bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
-fprintf('CIC decf (binary %s) = %d\n', ...
-        num2str(cic_decf_binary), cic_decf);
-fprintf('Generated signal - Freq: %.2f kHz, Amp: %.3f, Shape: %s\n\n', ...
-        f_sig/1000, amplitude, signal_shape);
+% Display selected parameters
+fprintf('Generated signal parameters:\n');
+fprintf('  Frequency: %.2f kHz\n', f_sig/1000);
+fprintf('  Amplitude: %.3f\n', amplitude);
+fprintf('  Shape: %s\n', signal_shape);
+fprintf('Bypass settings:\n');
+fprintf('  Fractional Decimator: %d\n', bypass_frac_dec);
+fprintf('  IIR 2.4MHz: %d\n', bypass_iir_24);
+fprintf('  IIR 5MHz: %d\n', bypass_iir_5);
+fprintf('  CIC: %d\n', bypass_cic);
 
 Fs = 9e6;        
 N  = 48000;      

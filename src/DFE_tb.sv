@@ -440,11 +440,6 @@ module DFE_tb();
             $display("MTRANS_tb is asserted at %0t", $realtime);
             if (WR) begin
                 MWDATA_tb = WDATA;
-                // PRDATA_tb = 'b0;
-            end
-            else begin
-                // MWDATA_tb = 'b0;
-                // PRDATA_tb = $random();
             end
             #(2*CLOCK_PERIOD)
             MTRANS_tb = 1'b0;
