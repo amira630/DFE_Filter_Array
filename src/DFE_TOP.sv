@@ -207,9 +207,30 @@ module DFE_TOP #(
                 end
             end
             3'b001: coeff_out = frac_dec_coeff_data_out;
-            3'b010: coeff_out = iir_coeff_out_1MHz;
-            3'b011: coeff_out = iir_coeff_out_2MHz;
-            3'b100: coeff_out = iir_coeff_out_2_4MHz;
+            3'b010: begin
+                for (int i = 0; i < N_TAP; i++) begin
+                    if (i < NUM_DENUM)
+                        coeff_out[i] = iir_coeff_out_1MHz[i];
+                    else
+                        coeff_out[i] = 'b0;
+                end
+            end
+            3'b011: begin
+                for (int i = 0; i < N_TAP; i++) begin
+                    if (i < NUM_DENUM)
+                        coeff_out[i] = iir_coeff_out_2MHz[i];
+                    else
+                        coeff_out[i] = 'b0;
+                end
+            end
+            3'b100: begin
+                for (int i = 0; i < N_TAP; i++) begin
+                    if (i < NUM_DENUM)
+                        coeff_out[i] = iir_coeff_out_2_4MHz[i];
+                    else
+                        coeff_out[i] = 'b0;
+                end
+            end
             default : begin
                 for (int i = 0; i < N_TAP; i++) begin
                     coeff_out[i] = 'b0;

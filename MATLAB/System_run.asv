@@ -50,16 +50,20 @@ else
     signal_shape = default_shape;
 end
 
-% Display selected parameters
-fprintf('Generated signal parameters:\n');
-fprintf('  Frequency: %.2f kHz\n', f_sig/1000);
-fprintf('  Amplitude: %.3f\n', amplitude);
-fprintf('  Shape: %s\n', signal_shape);
-fprintf('Bypass settings:\n');
-fprintf('  Fractional Decimator: %d\n', bypass_frac_dec);
-fprintf('  IIR 2.4MHz: %d\n', bypass_iir_24);
-fprintf('  IIR 5MHz: %d\n', bypass_iir_5);
-fprintf('  CIC: %d\n', bypass_cic);
+% Display configuration
+fprintf('Binary Configuration:\n');
+fprintf('Raw bits: ');
+fprintf('%d', config);
+fprintf('\n\n');
+
+fprintf('Parsed Configuration:\n');
+fprintf('Signal flags - f:%d, a:%d, s:%d\n', f, a, s);
+fprintf('Bypass flags - frac_dec:%d, iir_24:%d, iir_5:%d, cic:%d\n', ...
+        bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
+fprintf('CIC decf (binary %s) = %d\n', ...
+        num2str(cic_decf_binary), cic_decf);
+fprintf('Generated signal - Freq: %.2f kHz, Amp: %.3f, Shape: %s\n\n', ...
+        f_sig/1000, amplitude, signal_shape);
 
 Fs = 9e6;        
 N  = 48000;      
@@ -92,13 +96,20 @@ x_quantized_noisy = fi(x_real_noisy, 1, 16, 15);
 % Processing chain with bypass options
 current_signal = x_quantized_noisy;
 
+% Write Stage 0: Input signal (after quantization)
+writeFixedPointBinary(current_signal, 'input.txt', 16, 15);
+
 % Stage 1: Fractional Decimator
 if bypass_frac_dec == 0
     fprintf('Applying Fractional Decimator...\n');
     Hd_Fractional_Decimator = Fractional_Decimator();
     current_signal = step(Hd_Fractional_Decimator, current_signal);
+
+    % Write Stage 1: After fractional decimator
+    writeFixedPointBinary(current_signal, 'frac_decimator.txt', 16, 15);
 else
     fprintf('Bypassing Fractional Decimator\n');
+    copyfile('input.txt', 'frac_decimator.txt');
 end
 
 % Stage 2: IIR 2.4MHz Notch Filter
@@ -106,8 +117,12 @@ if bypass_iir_24 == 0
     fprintf('Applying IIR 2.4MHz Notch Filter...\n');
     Hd_IIR_2_4 = IIR_2_4();
     current_signal = filter(Hd_IIR_2_4, current_signal);
+
+    % Write Stage 2: After IIR 2.4MHz filter
+    writeFixedPointBinary(current_signal, 'iir_24mhz.txt', 16, 15);
 else
     fprintf('Bypassing IIR 2.4MHz Notch Filter\n');
+    copyfile('frac_decimator.txt', 'iir_24mhz.txt');
 end
 
 % Stage 3: IIR 5MHz Notch Filter (both IIR_1 and IIR_2)
@@ -115,10 +130,19 @@ if bypass_iir_5 == 0
     fprintf('Applying IIR 5MHz Notch Filter...\n');
     Hd_IIR_1 = IIR_1(); 
     Hd_IIR_2 = IIR_2();
-    y_filtered_1 = filter(Hd_IIR_1, current_signal);
-    current_signal = filter(Hd_IIR_2, y_filtered_1);
+    current_signal_PH1 = filter(Hd_IIR_1, current_signal);
+
+    % Write Stage 3.1: After first IIR 5MHz filter
+    writeFixedPointBinary(current_signal_PH1, 'iir_5mhz_1.txt', 16, 15);
+
+    current_signal = filter(Hd_IIR_2, current_signal_PH1);
+
+    % Write Stage 3.2: After second IIR 5MHz filter
+    writeFixedPointBinary(current_signal, 'iir_5mhz_2.txt', 16, 15);
 else
     fprintf('Bypassing IIR 5MHz Notch Filter\n');
+    copyfile('iir_24mhz.txt', 'iir_5mhz_1.txt');
+    copyfile('iir_24mhz.txt', 'iir_5mhz_2.txt');
 end
 
 % Stage 4: CIC Filter
@@ -126,11 +150,18 @@ if bypass_cic == 0
     fprintf('Applying CIC Filter with decimation factor %d...\n', cic_decf);
     Hd_cic = CIC(cic_decf);
     current_signal = step(Hd_cic, current_signal);
+
+    % Write Stage 4: After CIC filter
+    writeFixedPointBinary(current_signal, 'cic.txt', 16, 15);
 else
     fprintf('Bypassing CIC Filter\n');
+    copyfile('iir_5mhz_2.txt', 'cic.txt');
 end
 
 % Final output
-y_final = current_signal;
+output = current_signal;
+
+writeFixedPointBinary(output, 'stage7_final_output.txt', 16, 15);
+    
 
 fprintf('Processing complete!\n');
