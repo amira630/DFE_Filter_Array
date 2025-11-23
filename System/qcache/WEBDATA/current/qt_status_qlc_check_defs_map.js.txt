@@ -1,0 +1,6 @@
+0:uninspected
+1:pending
+2:waived
+3:bug
+4:fixed
+5:verified

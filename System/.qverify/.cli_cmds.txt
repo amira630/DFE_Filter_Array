@@ -1,0 +1,75 @@
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 5
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/share/modeltech/win64/vlib work
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 6
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/share/modeltech/win64/vmap work work
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 7
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/share/modeltech/win64/vlog D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv -work work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 1606
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverifyek  -od D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System -l .elab.log  -cli -internal -cmd elab -zdb D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_1 -tool lint -d TOP -L work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 2305
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverifyek  -od D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System -l .elab.log  -cli -internal -cmd elab -zdb D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_2 -tool lint -d TOP -L work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 3004
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverifyek  -od D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System -l .elab.log  -cli -internal -cmd elab -zdb D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_3 -tool lint -d TOP -L work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 3703
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverifyek  -od D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System -l .elab.log  -cli -internal -cmd elab -zdb D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_4 -tool lint -d TOP -L work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 5101
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverifyek  -od D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System -l .elab.log  -cli -internal -cmd elab -zdb D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_5 -tool lint -d TOP -L work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 5801
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/share/modeltech/win64/vlib work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 5802
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/share/modeltech/win64/vmap work work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 5803
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/share/modeltech/win64/vlog D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv -work work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 6502
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverifyek  -od D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System -l .elab.log  -cli -internal -cmd elab -zdb D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_7 -tool lint -d TOP -L work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 6502
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverifyek  -od D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System -l .createnl.log  -cli -internal -cmd create_netlist -zdb D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_7 -tool lint -d TOP -L work
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False) signal for any gui required action
+
+
+# C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverify_ui_cmds.tcl : 6504
+C:/QFT_2021.1/QFT_2021.1/QFT/V2021.1/win64/bin/qverifyek  -od D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System -l .qlcstatus.log  -cli -internal -cmd qlc_status_update -zdb D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_8 -db D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/lint.db

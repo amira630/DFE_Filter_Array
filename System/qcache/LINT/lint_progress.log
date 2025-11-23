@@ -1,0 +1,147 @@
+====================================================================================================
+Lint Progress Report
+Questa Lint  Version 2021.1 4558100 win64 28-Jan-2021
+
+Timestamp            : Sat Nov 22 20:56:26 2025
+Description          : Reports real-time progress of the design checks and provides checks summary 
+               For intermediate results, please refer lint.rpt
+
+Stage 1 (Pre Design Elaboration)  : Completed   ########## 100%[4 checks]
+Stage 2 (Design Elaboration)      : Completed   ########## 100%[262 checks]
+Stage 3 (Post Design Elaboration) : Completed   ########## 100%[36 checks]
+Stage 4 (Design Synthesis)        : Completed   ########## 100%[16 checks]
+Stage 5 (Post Design Synthesis)   : Completed   ########## 100%[31 checks]
+                     
+Total Progress : 100% [349/349 checks]
+====================================================================================================
+
+
+Stage 1 of 5 (4 checks completed)
+----------------------------------
+  sensitivity_list_signal_repeated               gen_label_missing                              gen_label_duplicate                          
+  violations_suppressed                        
+Stage 2 of 5 (262 checks completed)
+------------------------------------
+  case_item_duplicate                            case_stmt_with_parallel_case                   case_default_missing                         
+  incomplete_case_stmt_with_full_case            case_select_has_expr                           case_nested                                  
+  case_pragma_redundant                          case_width_mismatch                            case_others_null                             
+  case_item_invalid                              assign_width_overflow                          concurrent_block_with_duplicate_assign       
+  seq_block_has_duplicate_assign                 assign_with_multi_arith_operations             var_released_without_force                   
+  var_forced_without_release                     arith_expr_with_conditional_operator           nonblocking_assign_and_delay_in_always       
+  sim_synth_mismatch_assign_event                assigns_mixed_in_always_block                  assign_to_supply_net                         
+  assign_chain                                   var_deassign_without_assign                    var_assign_without_deassign                  
+  blocking_assign_in_seq_block                   nonblocking_assign_in_combo_block              assign_width_underflow                       
+  assign_real_to_bit                             assign_real_to_reg                             assign_int_to_reg                            
+  assign_reg_to_int                              assign_real_to_int                             assign_reg_to_real                           
+  task_has_event_and_output                      task_has_event_and_input                       task_has_event                               
+  line_char_large                                while_loop_iteration_limit                     string_has_control_char                      
+  func_expr_input_size_mismatch                  signed_unsigned_mixed_expr                     concat_expr_with_unsized_operand             
+  unsynth_arithmetic_operator                    const_with_inconsistent_value                  div_mod_rem_operand_complex_expr             
+  power_operand_invalid                          assign_or_comparison_has_x                     assign_or_comparison_has_z                   
+  exponent_negative                              part_select_illegal                            div_mod_rhs_zero                             
+  div_mod_rhs_var                                div_mod_rhs_invalid                            condition_const                              
+  int_without_range                              func_to_stdlogicvector                         stable_attribute                             
+  div_mod_rhs_too_wide                           div_mod_lhs_too_wide                           conversion_to_stdlogicvector_invalid         
+  unsynth_shift_operator                         condition_has_assign                           func_input_width_mismatch                    
+  qualified_expression                           conditional_operator_nested                    comparison_has_real_operand                  
+  operand_redundant                              condition_is_multi_bit                         expr_operands_width_mismatch                 
+  comparison_width_mismatch                      sim_synth_mismatch_tristate_compare            synopsys_attribute                           
+  unsynth_port_type_unconstrained                attribute_with_keyword_all                     unsynth_drive_strength_assign                
+  unsynth_drive_strength_gate                    unsynth_charge_strength                        unsynth_const_redefined                      
+  unsynth_defparam                               unsynth_enum_encoding_attribute                unsynth_while_in_subprogram                  
+  unsynth_delay_in_net_decl                      unsynth_delay_in_bidirectional_switch          unsynth_bidirectional_switch                 
+  unsynth_delay_in_blocking_assign               unsynth_delay_in_stmt                          unsynth_deferred_const                       
+  unsynth_specify_block                          unsynth_multi_dim_array                        unsynth_physical_type                        
+  unsynth_assign_deassign                        unsynth_file_type                              unsynth_force_release                        
+  unsynth_delay_in_cmos_switch                   unsynth_delay_in_mos_switch                    unsynth_delay_in_tristate_gate               
+  unsynth_delay_in_gate                          unsynth_repeat                                 unsynth_integer_array                        
+  unsynth_pulldown                               unsynth_pullup                                 unsynth_repeat_in_nonblocking_assign         
+  unsynth_fork_join_block                        loop_without_break                             unsynth_initial_value                        
+  unsynth_resolution_func                        unsynth_tri_net                                unsynth_pli_task_func                        
+  unsynth_func_returns_real                      unsynth_predefined_attribute                   unsynth_assert_stmt                          
+  unsynth_block_stmt_header                      unsynth_generic_not_int                        unsynth_user_defined_attribute               
+  unsynth_type_declaration_incomplete            unsynth_stmt_in_entity                         unsynth_array_index_type_enum                
+  unsynth_allocator                              unsynth_wait_stmt                              unsynth_port_type                            
+  unsynth_disable_stmt                           unsynth_mos_switch                             unsynth_sensitivity_list_conditions          
+  unsynth_real_var                               unsynth_event_var                              unsynth_time_var                             
+  unsynth_initial_stmt                           array_index_with_expr                          var_index_range_insufficient                 
+  index_x_z                                      data_type_bit_select_invalid                   complex_expression                           
+  reduction_operator_on_single_bit               logical_not_on_multi_bit                       logical_operator_on_multi_bit                
+  generic_map_ordered                            bus_conn_to_prim_gate                          design_ware_inst                             
+  ordered_port_connection                        bus_conn_to_inst_reversed                      implicit_wire                                
+  const_signal                                   data_type_not_recommended                      data_type_std_ulogic                         
+  inst_param_width_overflow                      parameter_count_large                          signal_assign_in_multi_initial               
+  multi_ports_in_single_line                     process_exceeds_line_limit                     reference_event_without_edge                 
+  always_exceeds_line_limit                      data_event_has_edge                            process_signal_assign_large                  
+  always_signal_assign_large                     identifier_with_error_warning                  port_exp_with_integer                        
+  enum_decl_invalid                              always_has_nested_event_control                sensitivity_list_var_both_edges              
+  var_name_duplicate                             always_has_multiple_events                     sim_synth_mismatch_shared_var                
+  reserved_keyword                               unsynth_signal_kind_register_bus               unsynth_alias_declaration                    
+  unsynth_disconnection_spec                     unsynth_access_type                            record_type                                  
+  std_logic_vector_without_range                 inout_port_exists                              loop_index_not_int                           
+  two_state_data_type                            unsynth_wand_wor_net                           always_without_event                         
+  if_else_if_can_be_case                         if_stmt_shares_arithmetic_operator             signal_with_negative_value                   
+  tristate_not_at_top_level                      gen_loop_index_not_int                         gen_inst_label_duplicate                     
+  if_stmt_with_arith_expr                        tristate_other_desc_mixed                      if_else_nested_large                         
+  tristate_enable_with_expr                      selected_signal_stmt                           if_condition_with_tristate                   
+  case_condition_with_tristate                   process_without_event                          tristate_inferred                            
+  for_loop_var_init_not_const                    for_loop_with_wait                             when_else_nested                             
+  var_assign_in_process                          unsynth_while_loop                             procedure_call                               
+  multi_wave_element                             loop_index_modified                            unsynth_guarded_block_stmt                   
+  loop_with_next_exit                            else_condition_dangling                        empty_stmt                                   
+  empty_block                                    module_without_ports                           multiplication_operator                      
+  func_input_unused                              func_bit_not_set                               func_arg_array_constrained                   
+  func_return_range_fixed                        func_nonblocking_assign                        func_return_range_mismatch                   
+  func_return_before_last_stmt                   subroutines_recursive_loop                     assign_others_to_slice                       
+  module_with_duplicate_ports                    module_with_null_port                          std_packages_mixed                           
+  reset_set_with_both_polarity                   reset_set_non_const_assign                     flop_output_in_initial                       
+  async_reset_active_high                        func_as_reset_condition                        process_has_inconsistent_async_control       
+  always_has_inconsistent_async_control          always_has_multiple_async_control              process_has_multiple_async_control           
+  seq_block_has_complex_cond                     seq_block_first_stmt_not_if                    async_block_top_stmt_not_if                  
+  process_has_async_set_reset                    reset_polarity_mismatch                        sync_read_as_async                           
+  bus_bit_as_clk                                 clock_in_wait_stmt                             unsynth_else_after_clk_event                 
+  unsynth_clocking_style                         seq_block_has_multi_clks                       unsynth_multi_wait_with_same_clk             
+  unsynth_clk_in_concurrent_stmt                 func_sets_global_var                           procedure_sets_global_var                    
+  task_sets_global_var                           port_conn_is_expression                        clk_port_conn_complex                        
+  reset_port_connection_static                   parameter_name_duplicate                       inst_port_width_mismatch                     
+  fsm_without_one_hot_encoding                   fsm_state_count_large                          delay_in_non_flop_expr                       
+  shared_variable_in_multi_process               bus_bits_in_multi_seq_blocks                   process_var_assign_disorder                  
+  var_read_before_set                            func_return_value_unspecified                  for_stmt_with_complex_logic                  
+  case_with_memory_output                        if_with_memory_output                          bit_order_reversed                           
+  memory_not_set                                 memory_redefined                               package_excluded                             
+  library_excluded                             
+Stage 3 of 5 (36 checks completed)
+-----------------------------------
+  case_large                                     case_default_not_last_item                     case_item_not_const                          
+  case_with_x_z                                  casez_has_x                                    casez                                        
+  casex                                          case_default_redundant                         case_select_const                            
+  loop_index_in_multi_always_blocks              sensitivity_list_edge_multi_bit                sensitivity_list_operator_unexpected         
+  sensitivity_list_var_missing                   sensitivity_list_var_modified                  unsynth_hier_reference                       
+  bus_bits_not_set                               bus_bits_not_read                              inout_port_not_set                           
+  inout_port_unused                              input_port_set                                 loop_condition_const                         
+  loop_var_not_in_condition                      loop_var_not_in_init                           loop_step_incorrect                          
+  repeat_ctrl_not_const                          case_eq_operator                               assigns_mixed                                
+  synth_pragma_prefix_missing                    comment_has_control_char                       pragma_coverage_off_nested                   
+  pragma_translate_on_nested                     pragma_translate_off_nested                    unsynth_dc_shell_script                      
+  comment_not_in_english                         synth_pragma_prefix_invalid                    unsynth_udp                                  
+Stage 4 of 5 (16 checks completed)
+-----------------------------------
+  unconnected_inst                               unconnected_inst_output                        unconnected_inst_input                       
+  feedthrough_path                               unloaded_input_port                            undriven_signal                              
+  multi_driven_signal                            clock_internal                                 clock_path_buffer                            
+  clock_gated                                    reset_pragma_mismatch                          async_control_is_gated                       
+  async_control_is_internal                      latch_inferred                                 task_in_combo_block                          
+  task_in_seq_block                            
+Stage 5 of 5 (31 checks completed)
+-----------------------------------
+  const_output                                   undriven_latch_enable                          undriven_reg_clock                           
+  undriven_latch_data                            undriven_reg_data                              mux_select_const                             
+  flop_async_reset_const                         const_latch_data                               const_reg_clock                              
+  const_reg_data                                 combo_loop                                     flop_redundant                               
+  blackbox_input_conn_inconsistent               blackbox_output_control_signal                 signal_sync_async                            
+  flop_without_control                           flop_clock_reset_loop                          combo_path_input_to_output                   
+  tristate_multi_driven                          flop_output_as_clock                           long_combinational_path                      
+  clock_with_both_edges                          flop_with_inverted_clock                       clock_signal_as_non_clock                    
+  re_entrant_output                              combo_loop_with_latch                          inferred_blackbox                            
+  user_blackbox                                  unresolved_module                              empty_module                                 
+  module_has_blackbox_instance                 

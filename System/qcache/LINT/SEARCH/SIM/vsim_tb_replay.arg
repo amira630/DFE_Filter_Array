@@ -1,0 +1,3 @@
+-f D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/LINT/SEARCH/SIM/vsim_tb_replay_top_modules.arg \
+-L work \
+-voptargs="-assertdebug"

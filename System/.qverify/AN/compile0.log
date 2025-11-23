@@ -1,0 +1,29 @@
+QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+Start time: 20:56:01 on Nov 22,2025
+vlog D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv -work work 
+-- Compiling module APB
+-- Compiling module APB_Bridge
+-- Compiling module CIC
+-- Compiling module COMB
+-- Compiling module CORE
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv(36): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv(48): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv(55): (vlog-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv(63): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+-- Compiling module fractional_decimator
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv(21): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+-- Compiling module IIR
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv(24): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+-- Compiling module IIR_chain
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv(26): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv(37): (vlog-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+** Warning: D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv(48): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+-- Compiling module INTEG
+-- Compiling module MPRAM
+-- Compiling module rounding_overflow_arith
+-- Compiling module TOP
+
+Top level modules:
+	TOP
+End time: 20:56:01 on Nov 22,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 9

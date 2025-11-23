@@ -1,0 +1,252 @@
+# 
+# Questa Static Verification System
+# Version 2021.1 4558100 win64 28-Jan-2021
+
+log created Sat Nov 22 20:56:35 2025 by Mustafa on DESKTOP-KPUS47E
+
+
+# 
+# Questa Static Verification System
+# Version 2021.1 4558100 win64 28-Jan-2021
+
+log created Sat Nov 22 20:56:08 2025 by Mustafa on DESKTOP-KPUS47E
+
+
+Command: netlist elaborate
+Command arguments:
+    -zdb
+      D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_7
+    -tool lint
+    -d TOP
+    -L work
+
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False)
+
+
+## Elaborating Design...
+Reading MTI mapping for library mapping
+Writing all MTI mappings to vmap output ...
+
+Top level modules:
+	TOP
+
+Analyzing design...
+-- Loading module z0in_work.TOP
+
+Performing 349 Lint Checks
+=============================
+
+Lint Stage 1 of 5 - Pre Design Elaboration (4 checks)
+------------------------------------------------------
+-- Loading module z0in_work.CORE
+-- Loading module z0in_work.fractional_decimator
+-- Loading module z0in_work.rounding_overflow_arith
+-- Loading module z0in_work.IIR_chain
+-- Loading module z0in_work.IIR
+-- Loading module z0in_work.CIC
+-- Loading module z0in_work.INTEG
+-- Loading module z0in_work.COMB
+-- Loading module z0in_work.APB
+-- Loading module z0in_work.APB_Bridge
+-- Loading module z0in_work.MPRAM
+Optimizing 16 design-units (inlining 0/18 module instances):
+-- Optimizing module z0in_work.rounding_overflow_arith(fast)
+Lint Stage-1 100% complete [Total Progress -   7%]
+
+Lint Stage 2 of 5 - Design Elaboration (262 checks)
+----------------------------------------------------
+-- Optimizing module z0in_work.fractional_decimator(fast)
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line 21.  [parser-285]
+        : Elaboration will continue.
+-- Optimizing module z0in_work.rounding_overflow_arith(fast__1)
+-- Optimizing module z0in_work.IIR(fast)
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line 24.  [parser-285]
+        : Elaboration will continue.
+Lint Stage-2  19% complete (3 out of 16 modules checked) [Total Progress -   8%]
+-- Optimizing module z0in_work.IIR(fast__1)
+-- Optimizing module z0in_work.IIR(fast__2)
+-- Optimizing module z0in_work.IIR_chain(fast)
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv', Line 26.  [parser-285]
+        : Elaboration will continue.
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv', Line 37.  [parser-285]
+        : Elaboration will continue.
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv', Line 48.  [parser-285]
+        : Elaboration will continue.
+Lint Stage-2  38% complete (6 out of 16 modules checked) [Total Progress -  11%]
+-- Optimizing module z0in_work.INTEG(fast)
+-- Optimizing module z0in_work.COMB(fast)
+-- Optimizing module z0in_work.rounding_overflow_arith(fast__2)
+Lint Stage-2  56% complete (9 out of 16 modules checked) [Total Progress -  15%]
+-- Optimizing module z0in_work.CIC(fast)
+Warning : Vopt warning.  (vopt-2685) [TFMPC] - Too few port connections for 'COMB_INST_0'.  Expected 6, found 5, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line 117.  [parser-285]
+        : Elaboration will continue.
+Warning : Vopt warning.  (vopt-2718) [TFMPC] - Missing connection for port 'valid_out', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line 117.  [parser-285]
+        : Elaboration will continue.
+Warning : Too few module port connections for an instance.  Instance 'COMB_INST_0', Module 'COMB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line 117.  [parser-3]
+        : Interface might be specified incorrectly.  Parsing will continue.
+-- Optimizing module z0in_work.CORE(fast)
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line 36.  [parser-285]
+        : Elaboration will continue.
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line 48.  [parser-285]
+        : Elaboration will continue.
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'iir_coeff_in_2MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line 55.  [parser-285]
+        : Elaboration will continue.
+Warning : Vopt warning.  (vopt-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed, File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line 63.  [parser-285]
+        : Elaboration will continue.
+-- Optimizing module z0in_work.APB_Bridge(fast)
+Lint Stage-2  75% complete (12 out of 16 modules checked) [Total Progress -  18%]
+-- Optimizing module z0in_work.MPRAM(fast)
+-- Optimizing module z0in_work.APB(fast)
+-- Optimizing module z0in_work.TOP(fast)
+Lint Stage-2  94% complete (15 out of 16 modules checked) [Total Progress -  21%]
+Optimized design name is zi_opt_def_895752150_1
+Lint Stage-2 100% complete (16 out of 16 modules checked) [Total Progress -  23%]
+Summary: 12 Warnings in processing "netlist elaborate"
+End of log Sat Nov 22 20:56:16 2025
+
+
+# 
+# Questa Static Verification System
+# Version 2021.1 4558100 win64 28-Jan-2021
+
+log created Sat Nov 22 20:56:17 2025 by Mustafa on DESKTOP-KPUS47E
+
+
+Command: netlist create
+Command arguments:
+    -zdb
+      D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/DB/zdb_7
+    -tool lint
+    -d TOP
+    -L work
+
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False)
+
+
+## Synthesizing netlist...
+
+Lint Stage 3 of 5 - Post Design Elaboration (36 checks)
+--------------------------------------------------------
+Lint Stage-3  25% complete [Total Progress -  27%]
+Lint Stage-3  50% complete [Total Progress -  30%]
+Lint Stage-3  75% complete [Total Progress -  32%]
+Lint Stage-3 100% complete [Total Progress -  35%]
+Analyzing designs.
+Elaborating module 'rounding_overflow_arith'.
+Elaborating module 'fractional_decimator'.
+Elaborating module 'rounding_overflow_arith(1)'.
+Elaborating module 'IIR'.
+Elaborating module 'IIR(1)'.
+Elaborating module 'IIR(2)'.
+Elaborating module 'IIR_chain'.
+Elaborating module 'INTEG'.
+Elaborating module 'COMB'.
+Elaborating module 'rounding_overflow_arith(2)'.
+Elaborating module 'CIC'.
+Elaborating module 'CORE'.
+Elaborating module 'APB_Bridge'.
+Elaborating module 'MPRAM'.
+Elaborating module 'APB'.
+Elaborating module 'TOP'.
+Warning : Latch inferred in always_comb.  Signal 'coeff_out' in module 'TOP', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv', Line 202.  [elaboration-835]
+        : Possible RTL coding oversight. Elaboration will continue.
+
+Lint Stage 4 of 5 - Design Synthesis (16 checks)
+-------------------------------------------------
+Lint Stage-4  25% complete [Total Progress -  67%]
+Lint Stage-4  50% complete [Total Progress -  70%]
+Lint Stage-4  75% complete [Total Progress -  72%]
+Lint Stage-4 100% complete [Total Progress -  75%]
+
+Lint Stage 5 of 5 - Post Design Synthesis (31 checks)
+------------------------------------------------------
+Lint Stage-5  23% complete [Total Progress -  88%]
+Lint Stage-5  45% complete [Total Progress -  91%]
+Lint Stage-5  68% complete [Total Progress -  95%]
+Lint Stage-5  90% complete [Total Progress -  98%]
+Lint Stage-5 100% complete [Total Progress - 100%]
+
+Lint Checking Completed
+##Time Taken (Synthesis) = 2940.000000 ticks = 2.940000 secs
+
+Summary: 13 Warnings in processing "netlist create"
+End of log Sat Nov 22 20:56:26 2025
+
+
+# Reading design database from D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/qcache/LINT/CACHE...completed (0.017 (s)).
+End of log Sat Nov 22 20:56:28 2025
+
+
+# 
+# Questa Static Verification System
+# Version 2021.1 4558100 win64 28-Jan-2021
+
+log created Sat Nov 22 20:56:28 2025 by Mustafa on DESKTOP-KPUS47E
+
+
+Questa Debug flags:
+ 4300:  lint_gui_mode        (Default False)
+
+
+## Applying Lint Waivers...
+
+Message Summary
+---------------------------------------------------------------------------
+Count  Type     Message ID         Summary
+---------------------------------------------------------------------------
+    1  Warning  elaboration-835    Latch inferred in always_comb.
+   11  Warning  parser-285         Vopt warning.
+    1  Warning  parser-3           Too few module port connections for an instance.
+
+Final Process Statistics: Max memory 279MB, CPU time 20s, Total time 22s
+End of log Sat Nov 22 20:56:33 2025
+
+
+Result Summary
+-----------------------------------------------------------
+Error (27)
+-----------------------------------------------------------
+  assign_width_overflow                   :11
+  assign_width_underflow                  :9
+  array_index_with_expr                   :4
+  case_default_missing                    :2
+  reset_set_non_const_assign              :1
+
+-----------------------------------------------------------
+Warning (17)
+-----------------------------------------------------------
+  bus_bits_not_read                       :2
+  data_type_not_recommended               :1
+  for_stmt_with_complex_logic             :3
+  if_else_nested_large                    :1
+  if_stmt_with_arith_expr                 :1
+  latch_inferred                          :1
+  always_signal_assign_large              :3
+  assign_with_multi_arith_operations      :4
+  unconnected_inst_output                 :1
+
+-----------------------------------------------------------
+Info (86)
+-----------------------------------------------------------
+  fsm_without_one_hot_encoding            :1
+  implicit_wire                           :2
+  multiplication_operator                 :7
+  parameter_name_duplicate                :72
+  reserved_keyword                        :2
+  line_char_large                         :2
+
+-----------------------------------------------------------
+Resolved (0)
+-----------------------------------------------------------
+
+# Generating Debug Information...
+
+=================================================================
+To view results in batch
+  D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/lint.rpt
+
+To view results in GUI (Beta Version) 
+  qverify D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/lint.db
+=================================================================

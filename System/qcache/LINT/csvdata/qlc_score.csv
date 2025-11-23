@@ -1,0 +1,524 @@
+CheckName@Current Score@Max Score@Category@Status
+const_value_size_mismatch@0@0@Rtl Design Style@0
+assigns_mixed_in_always_block@0@10@Simulation@1
+always_without_event@0@10@Rtl Design Style@1
+blocking_assign_in_seq_block@0@10@Simulation@1
+assign_chain@0@2@Rtl Design Style@1
+assign_int_to_real@0@0@Rtl Design Style@0
+assign_int_to_reg@0@10@Rtl Design Style@1
+sim_synth_mismatch_assign_event@0@10@Simulation@1
+nonblocking_assign_in_combo_block@0@10@Simulation@1
+assign_real_to_bit@0@10@Rtl Design Style@1
+assign_real_to_int@0@10@Rtl Design Style@1
+assign_real_to_reg@0@10@Rtl Design Style@1
+assign_reg_to_int@0@10@Rtl Design Style@1
+assign_reg_to_real@0@10@Rtl Design Style@1
+assign_to_supply_net@0@0@Rtl Design Style@1
+assigns_mixed@0@10@Simulation@1
+assign_width_overflow@5@10@Rtl Design Style@1
+assign_width_underflow@5@10@Rtl Design Style@1
+bus_conn_to_prim_gate@0@2@Implementation@1
+bus_bits_not_read@1@2@Rtl Design Style@1
+bus_bits_not_set@0@2@Rtl Design Style@1
+case_default_not_last_item@0@10@Simulation@1
+case_eq_operator@0@10@Implementation@1
+case_item_invalid@0@10@Rtl Design Style@1
+case_item_not_const@0@10@Rtl Design Style@1
+case_large@0@0@Rtl Design Style@1
+case_nested@0@2@Rtl Design Style@1
+case_others_null@0@0@Rtl Design Style@1
+case_default_redundant@0@0@Rtl Design Style@1
+case_select_const@0@10@Rtl Design Style@1
+case_width_mismatch@0@10@Rtl Design Style@1
+case_with_x_z@0@10@Simulation@1
+casex@0@10@Simulation@1
+casez@0@0@Simulation@1
+comparison_has_real_operand@0@0@Rtl Design Style@1
+comparison_width_mismatch@0@10@Rtl Design Style@1
+condition_is_multi_bit@0@10@Rtl Design Style@1
+const_output@0@0@Implementation@1
+const_signal@0@0@Implementation@1
+const_latch_data@0@0@Implementation@1
+const_reg_clock@0@0@Implementation@1
+const_reg_data@0@0@Implementation@1
+else_condition_dangling@0@10@Rtl Design Style@1
+delay_has_x_z@0@0@Simulation@0
+delay_negative@0@0@Rtl Design Style@0
+delay_not_int@0@0@Rtl Design Style@0
+delay_var@0@0@Rtl Design Style@0
+design_ware_inst@0@0@Rtl Design Style@1
+empty_block@0@10@Rtl Design Style@1
+empty_stmt@0@0@Rtl Design Style@1
+entity_component_name_mismatch@0@0@Nomenclature Style@0
+expr_operands_width_mismatch@0@10@Rtl Design Style@1
+complex_expression@0@0@Rtl Design Style@1
+feedthrough_path@0@0@Implementation@1
+func_bit_not_set@0@10@Rtl Design Style@1
+func_input_unused@0@0@Rtl Design Style@1
+func_return_before_last_stmt@0@2@Rtl Design Style@1
+implicit_wire@0@0@Rtl Design Style@1
+data_type_bit_select_invalid@0@2@Rtl Design Style@1
+inout_port_not_set@0@2@Implementation@1
+inout_port_not_read@0@0@Implementation@0
+inout_port_unused@0@0@Implementation@1
+input_port_not_read@0@0@Implementation@0
+input_port_set@0@10@Implementation@1
+unloaded_input_port@0@0@Implementation@1
+bus_conn_to_inst_reversed@0@10@Implementation@1
+ordered_port_connection@0@2@Implementation@1
+logical_not_on_multi_bit@0@2@Rtl Design Style@1
+logical_operator_on_multi_bit@0@2@Rtl Design Style@1
+loop_condition_const@0@10@Rtl Design Style@1
+loop_var_not_in_condition@0@10@Rtl Design Style@1
+loop_index_not_int@0@10@Rtl Design Style@1
+loop_index_in_multi_always_blocks@0@10@Rtl Design Style@1
+loop_var_not_in_init@0@10@Rtl Design Style@1
+loop_step_incorrect@0@10@Rtl Design Style@1
+module_without_ports@0@2@Implementation@1
+multiplication_operator@0@0@Rtl Design Style@1
+loop_without_break@0@10@Rtl Design Style@1
+delay_in_nonblocking_assign@0@0@Rtl Design Style@0
+port_conn_open@0@0@Rtl Design Style@0
+output_port_not_set@0@0@Implementation@0
+output_port_read@0@0@Implementation@0
+undriven_output_port@0@0@Implementation@0
+if_else_if_can_be_case@0@0@Rtl Design Style@1
+operand_redundant@0@10@Rtl Design Style@1
+repeat_ctrl_not_const@0@10@Implementation@1
+self_assign@0@0@Rtl Design Style@0
+sensitivity_list_edge_multi_bit@0@10@Rtl Design Style@1
+sensitivity_list_var_missing@0@10@Simulation@1
+sensitivity_list_signal_repeated@0@2@Rtl Design Style@1
+sensitivity_list_operator_unexpected@0@10@Rtl Design Style@1
+sensitivity_list_var_unused@0@0@Simulation@0
+sensitivity_list_var_bit_unused@0@0@Simulation@0
+sensitivity_list_var_modified@0@10@Simulation@1
+sensitivity_list_var_range@0@0@Simulation@0
+assign_others_to_slice@0@0@Rtl Design Style@1
+task_has_event@0@10@Implementation@1
+task_in_seq_block@0@10@Rtl Design Style@1
+task_in_combo_block@0@10@Rtl Design Style@1
+two_state_data_type@0@0@Rtl Design Style@1
+reduction_operator_on_single_bit@0@0@Rtl Design Style@1
+unconnected_inst@0@0@Implementation@1
+unconnected_inst_input@0@10@Implementation@1
+unconnected_inst_output@1@2@Implementation@1
+undriven_latch_data@0@2@Implementation@1
+undriven_latch_enable@0@2@Implementation@1
+undriven_signal@0@10@Implementation@1
+undriven_reg_clock@0@2@Implementation@1
+undriven_reg_data@0@2@Implementation@1
+undriven_unloaded_signal@0@0@Implementation@0
+unloaded_signal@0@0@Implementation@0
+unsynth_allocator@0@10@Rtl Design Style@1
+unsynth_drive_strength_gate@0@10@Implementation@1
+unsynth_charge_strength@0@10@Implementation@1
+unsynth_drive_strength_assign@0@10@Implementation@1
+unsynth_assert_stmt@0@0@Implementation@1
+unsynth_block_stmt_header@0@10@Implementation@1
+sim_synth_mismatch_tristate_compare@0@10@Simulation@1
+unsynth_disable_stmt@0@10@Implementation@1
+unsynth_array_index_type_enum@0@10@Implementation@1
+unsynth_event_var@0@10@Implementation@1
+unsynth_func_returns_real@0@10@Implementation@1
+unsynth_generic_not_int@0@2@Implementation@1
+unsynth_hier_reference@0@10@Implementation@1
+unsynth_type_declaration_incomplete@0@10@Implementation@1
+unsynth_initial_stmt@0@10@Implementation@1
+unsynth_port_type@0@10@Implementation@1
+unsynth_mos_switch@0@10@Implementation@1
+unsynth_pli_task_func@0@10@Implementation@1
+unsynth_predefined_attribute@0@10@Implementation@1
+unsynth_real_var@0@10@Implementation@1
+unsynth_resolution_func@0@10@Implementation@1
+unsynth_sensitivity_list_conditions@0@10@Rtl Design Style@1
+unsynth_stmt_in_entity@0@10@Implementation@1
+unsynth_time_var@0@10@Implementation@1
+unsynth_tri_net@0@10@Implementation@1
+unsynth_user_defined_attribute@0@10@Implementation@1
+unsynth_while_in_subprogram@0@10@Implementation@1
+unsynth_wait_stmt@0@10@Implementation@1
+var_assign_without_deassign@0@2@Rtl Design Style@1
+var_deassign_without_assign@0@2@Rtl Design Style@1
+var_unused@0@0@Rtl Design Style@0
+var_read_not_set@0@0@Rtl Design Style@0
+var_set_not_read@0@0@Rtl Design Style@0
+unsynth_wand_wor_net@0@10@Rtl Design Style@1
+casez_has_x@0@10@Simulation@1
+inout_port_exists@0@0@Implementation@1
+func_return_range_mismatch@0@10@Rtl Design Style@1
+timescales_differ@0@0@Rtl Design Style@0
+unsynth_initial_value@0@10@Simulation@1
+int_range_overflow@0@0@Rtl Design Style@0
+case_pragma_redundant@0@0@Simulation@1
+loop_with_next_exit@0@10@Rtl Design Style@1
+unsynth_fork_join_block@0@10@Implementation@1
+subprogram_unused@0@0@Rtl Design Style@0
+port_name_not_standard@0@0@Nomenclature Style@0
+conditional_operator_nested@0@0@Rtl Design Style@1
+index_x_z@0@10@Simulation@1
+func_nonblocking_assign@0@10@Simulation@1
+unpacked_struct_or_union@0@0@Rtl Design Style@0
+std_logic_vector_without_range@0@10@Simulation@1
+data_type_unrecommended@0@0@Simulation@0
+reg_rising_edge_or_falling_edge@0@0@Rtl Design Style@0
+condition_has_assign@0@10@Rtl Design Style@1
+loop_index_modified@0@10@Rtl Design Style@1
+qualified_expression@0@0@Rtl Design Style@1
+port_order_not_standard@0@0@Implementation@0
+func_input_width_mismatch@0@10@Rtl Design Style@1
+unsynth_while_loop@0@10@Implementation@1
+unsynth_guarded_block_stmt@0@10@Implementation@1
+record_type@0@2@Rtl Design Style@1
+reg_name_not_standard@0@0@Nomenclature Style@0
+unsynth_signal_kind_register_bus@0@10@Implementation@1
+conversion_to_stdlogicvector_invalid@0@10@Rtl Design Style@1
+std_package_missing@0@0@Rtl Design Style@0
+package_disallowed@0@0@Rtl Design Style@0
+procedure_call@0@2@Rtl Design Style@1
+std_packages_mixed@0@0@Rtl Design Style@1
+multi_wave_element@0@2@Rtl Design Style@1
+sim_synth_mismatch_shared_var@0@10@Simulation@1
+unsynth_shift_operator@0@10@Implementation@1
+unsynth_disconnection_spec@0@10@Implementation@1
+unsynth_access_type@0@10@Implementation@1
+unsynth_alias_declaration@0@10@Implementation@1
+inst_port_width_mismatch@0@10@Rtl Design Style@1
+signal_range_without_parameter@0@0@Rtl Design Style@0
+var_assign_in_process@0@2@Rtl Design Style@1
+stable_attribute@0@10@Rtl Design Style@1
+unsynth_aggregate_indirect_assign@0@0@Implementation@0
+func_return_range_fixed@0@10@Rtl Design Style@1
+func_to_stdlogicvector@0@2@Rtl Design Style@1
+entity_inst@0@0@Rtl Design Style@0
+div_mod_lhs_too_wide@0@2@Rtl Design Style@1
+div_mod_rhs_too_wide@0@2@Rtl Design Style@1
+reserved_keyword@0@0@Nomenclature Style@1
+subprogram_nested@0@0@Rtl Design Style@0
+subprogram_calling_subprogram@0@0@Rtl Design Style@0
+entity_architecture_different_file@0@0@Rtl Design Style@0
+int_without_range@0@0@Rtl Design Style@1
+generic_in_top_module@0@0@Rtl Design Style@0
+when_else_nested@0@2@Rtl Design Style@1
+func_input_array_constrained@0@0@Rtl Design Style@0
+condition_const@0@2@Rtl Design Style@1
+condition_has_implicit_x@0@0@Simulation@0
+var_index_range_insufficient@0@10@Rtl Design Style@1
+multi_driven_signal@0@10@Simulation@1
+if_conditions_overlap@0@0@Rtl Design Style@0
+unsynth_repeat_in_nonblocking_assign@0@10@Implementation@1
+unsynth_pullup@0@10@Implementation@1
+unsynth_pulldown@0@10@Implementation@1
+unsynth_integer_array@0@10@Implementation@1
+unsynth_repeat@0@10@Implementation@1
+unsynth_delay_in_gate@0@10@Implementation@1
+unsynth_delay_in_tristate_gate@0@10@Implementation@1
+unsynth_delay_in_mos_switch@0@10@Implementation@1
+unsynth_delay_in_cmos_switch@0@10@Implementation@1
+port_count_large@0@0@Rtl Design Style@0
+seq_block_has_multi_if_case@0@0@Rtl Design Style@0
+always_has_multiple_events@0@10@Simulation@1
+var_name_duplicate@0@10@Nomenclature Style@1
+div_mod_rhs_invalid@0@10@Implementation@1
+div_mod_rhs_var@0@10@Rtl Design Style@1
+div_mod_rhs_zero@0@10@Rtl Design Style@1
+interface_modport_unused@0@0@Rtl Design Style@0
+interface_without_modport@0@0@Rtl Design Style@0
+exponent_negative@0@10@Rtl Design Style@1
+assign_or_comparison_has_z@0@10@Simulation@1
+part_select_illegal@0@10@Rtl Design Style@1
+assign_or_comparison_has_x@0@10@Simulation@1
+unsynth_force_release@0@10@Implementation@1
+for_loop_with_wait@0@10@Simulation@1
+unsynth_file_type@0@10@Implementation@1
+power_operand_invalid@0@10@Rtl Design Style@1
+sensitivity_list_var_both_edges@0@2@Implementation@1
+parameter_with_range@0@0@Simulation@0
+unsynth_physical_type@0@10@Implementation@1
+for_loop_bound_not_static@0@0@Rtl Design Style@0
+case_stmt_with_full_case@0@0@Simulation@0
+unsynth_assign_deassign@0@10@Implementation@1
+reset_polarity_mismatch@0@10@Implementation@1
+unsynth_specify_block@0@10@Implementation@1
+unsynth_multi_dim_array@0@10@Implementation@1
+unsynth_deferred_const@0@10@Implementation@1
+combo_loop@0@10@Simulation@1
+unsynth_delay_in_stmt@0@10@Simulation@1
+unsynth_delay_in_blocking_assign@0@10@Simulation@1
+for_loop_var_init_not_const@0@10@Rtl Design Style@1
+unsynth_delay_in_bidirectional_switch@0@10@Implementation@1
+unsynth_delay_in_net_decl@0@10@Implementation@1
+unsynth_bidirectional_switch@0@10@Implementation@1
+reset_pragma_mismatch@0@10@Implementation@1
+nonblocking_assign_and_delay_in_always@0@2@Simulation@1
+async_block_top_stmt_not_if@0@10@Implementation@1
+seq_block_first_stmt_not_if@0@10@Implementation@1
+unsynth_defparam@0@10@Implementation@1
+flop_without_control@0@0@Implementation@1
+process_has_async_set_reset@0@0@Simulation@1
+gate_instantiation@0@0@Rtl Design Style@0
+seq_block_has_complex_cond@0@2@Implementation@1
+process_has_multiple_async_control@0@0@Implementation@1
+unsynth_clk_in_concurrent_stmt@0@10@Implementation@1
+flop_clock_reset_loop@0@10@Implementation@1
+always_has_async_set_reset@0@0@Simulation@0
+task_sets_global_var@0@10@Rtl Design Style@1
+procedure_sets_global_var@0@10@Rtl Design Style@1
+task_uses_global_var@0@0@Rtl Design Style@0
+procedure_uses_global_var@0@0@Rtl Design Style@0
+func_sets_global_var@0@10@Rtl Design Style@1
+func_uses_global_var@0@0@Rtl Design Style@0
+incomplete_case_stmt_with_full_case@0@10@Simulation@1
+case_default_missing@5@10@Simulation@1
+parameter_name_not_standard@0@0@Nomenclature Style@0
+clock_with_both_edges@0@0@Implementation@1
+always_has_nested_event_control@0@2@Implementation@1
+process_has_inconsistent_async_control@0@2@Implementation@1
+tristate_inferred@0@2@Rtl Design Style@1
+always_has_multiple_async_control@0@0@Implementation@1
+always_has_inconsistent_async_control@0@2@Implementation@1
+reset_name_not_standard@0@0@Nomenclature Style@0
+clock_name_not_standard@0@0@Nomenclature Style@0
+case_condition_with_tristate@0@10@Rtl Design Style@1
+seq_block_has_multi_clks@0@10@Implementation@1
+unsynth_multi_wait_with_same_clk@0@10@Implementation@1
+process_without_event@0@10@Rtl Design Style@1
+unsynth_const_redefined@0@10@Implementation@1
+unsynth_enum_encoding_attribute@0@10@Implementation@1
+if_condition_with_tristate@0@10@Rtl Design Style@1
+div_mod_rem_operand_complex_expr@0@2@Rtl Design Style@1
+case_stmt_with_parallel_case@0@10@Rtl Design Style@1
+selected_signal_stmt@0@2@Rtl Design Style@1
+module_with_null_port@0@10@Rtl Design Style@1
+for_loop_iteration_limit@0@0@Rtl Design Style@0
+func_return_value_unspecified@0@10@Simulation@1
+signal_sync_async@0@10@Implementation@1
+const_with_inconsistent_value@0@10@Implementation@1
+clock_gated@0@2@Implementation@1
+clock_path_buffer@0@0@Implementation@1
+clock_internal@0@2@Implementation@1
+latch_inferred@1@2@Rtl Design Style@1
+parameter_not_used@0@0@Rtl Design Style@0
+genvar_unused@0@0@Rtl Design Style@0
+signal_name_not_standard@0@0@Nomenclature Style@0
+param_as_replication_multiplier@0@0@Rtl Design Style@0
+subroutines_recursive_loop@0@10@Rtl Design Style@1
+array_index_with_expr@5@10@Rtl Design Style@1
+unsynth_clocking_style@0@10@Implementation@1
+unsynth_arithmetic_operator@0@10@Implementation@1
+header_missing@0@0@Nomenclature Style@0
+header_field_revision_invalid@0@0@Nomenclature Style@0
+header_field_file_invalid@0@0@Nomenclature Style@0
+header_field_description_invalid@0@0@Nomenclature Style@0
+header_field_date_invalid@0@0@Nomenclature Style@0
+header_field_copyright_invalid@0@0@Nomenclature Style@0
+header_field_author_invalid@0@0@Nomenclature Style@0
+delay_without_timescale@0@0@Rtl Design Style@0
+inst_port_signal_name_mismatch@0@0@Nomenclature Style@0
+async_control_is_internal@0@10@Implementation@1
+sync_control_is_external@0@0@Implementation@0
+async_control_is_gated@0@2@Implementation@1
+concat_expr_with_unsized_operand@0@0@Rtl Design Style@1
+file_module_name_mismatch@0@0@Nomenclature Style@0
+func_aggregate_invalid@0@0@Implementation@0
+enum_decl_invalid@0@2@Rtl Design Style@1
+module_name_not_standard@0@0@Nomenclature Style@0
+unsynth_else_after_clk_event@0@10@Implementation@1
+port_exp_with_integer@0@10@Implementation@1
+clock_in_wait_stmt@0@10@Implementation@1
+var_forced_without_release@0@10@Rtl Design Style@1
+var_released_without_force@0@10@Rtl Design Style@1
+func_as_reset_condition@0@10@Implementation@1
+module_with_duplicate_ports@0@10@Rtl Design Style@1
+for_stmt_with_complex_logic@1@2@Rtl Design Style@1
+generic_map_ordered@0@2@Implementation@1
+arith_expr_with_conditional_operator@0@10@Rtl Design Style@1
+module_inst_name_mismatch@0@0@Nomenclature Style@0
+case_select_has_expr@0@2@Rtl Design Style@1
+vector_lower_index_not_zero@0@0@Rtl Design Style@0
+file_with_multi_modules@0@0@Rtl Design Style@0
+inst_name_not_standard@0@0@Nomenclature Style@0
+case_default_value_not_x@0@0@Rtl Design Style@0
+signed_unsigned_mixed_expr@0@10@Rtl Design Style@1
+attribute_with_keyword_all@0@10@Implementation@1
+module_output_not_registered@0@0@Implementation@0
+combo_path_input_to_output@0@0@Implementation@1
+task_name_not_standard@0@0@Nomenclature Style@0
+func_name_not_standard@0@0@Nomenclature Style@0
+latch_with_async_control@0@0@Implementation@0
+tristate_enable_with_expr@0@2@Rtl Design Style@1
+fsm_state_count_large@0@0@Rtl Design Style@1
+module_input_not_registered@0@0@Implementation@0
+unsynth_port_type_unconstrained@0@10@Implementation@1
+identifier_with_error_warning@0@0@Nomenclature Style@1
+blackbox_output_control_signal@0@10@Implementation@1
+tristate_multi_driven@0@0@Implementation@1
+procedure_name_not_standard@0@0@Nomenclature Style@0
+package_name_not_standard@0@0@Nomenclature Style@0
+architecture_name_not_standard@0@0@Nomenclature Style@0
+process_label_not_standard@0@0@Nomenclature Style@0
+generic_name_not_standard@0@0@Nomenclature Style@0
+fsm_combo_seq_logic_mixed@0@0@Rtl Design Style@0
+aggregate_assignment_mixed@0@0@Rtl Design Style@0
+assign_with_multi_arith_operations@1@2@Rtl Design Style@1
+design_element_has_std_word@0@0@Nomenclature Style@0
+tristate_name_not_standard@0@0@Nomenclature Style@0
+tristate_other_desc_mixed@0@0@Rtl Design Style@1
+for_loop_with_operation@0@0@Rtl Design Style@0
+multi_assign_in_same_line@0@0@Rtl Design Style@0
+flop_output_as_clock@0@2@Implementation@1
+synth_pragma_prefix_invalid@0@10@Implementation@1
+if_else_nested_large@1@2@Rtl Design Style@1
+fsm_state_value_hardcoded@0@0@Rtl Design Style@0
+file_name_not_standard@0@0@Nomenclature Style@0
+const_name_not_standard@0@0@Nomenclature Style@0
+fsm_without_one_hot_encoding@0@0@Rtl Design Style@1
+flop_without_delay@0@0@Rtl Design Style@0
+if_stmt_with_arith_expr@1@2@Rtl Design Style@1
+udp_name_not_standard@0@0@Nomenclature Style@0
+unsynth_udp@0@0@Implementation@0
+data_type_name_not_standard@0@0@Rtl Design Style@0
+file_func_name_mismatch@0@0@Nomenclature Style@0
+shared_variable_in_multi_process@0@10@Rtl Design Style@1
+gen_inst_label_duplicate@0@10@Rtl Design Style@1
+always_signal_assign_large@1@2@Rtl Design Style@1
+data_event_has_edge@0@2@Rtl Design Style@1
+seq_block_has_duplicate_assign@0@2@Rtl Design Style@1
+parameter_name_duplicate@0@0@Nomenclature Style@1
+process_signal_assign_large@0@2@Rtl Design Style@1
+gen_loop_index_not_int@0@10@Rtl Design Style@1
+synopsys_reset_pragma@0@0@Implementation@0
+tristate_not_at_top_level@0@2@Rtl Design Style@1
+unsynth_dc_shell_script@0@10@Rtl Design Style@1
+comment_not_in_english@0@0@Nomenclature Style@1
+block_comment@0@0@Nomenclature Style@0
+pragma_translate_off_nested@0@2@Rtl Design Style@1
+pragma_translate_on_nested@0@10@Rtl Design Style@1
+func_expr_input_size_mismatch@0@10@Rtl Design Style@1
+signal_with_negative_value@0@10@Rtl Design Style@1
+long_combinational_path@0@10@Implementation@1
+always_exceeds_line_limit@0@0@Rtl Design Style@1
+process_exceeds_line_limit@0@2@Rtl Design Style@1
+reference_event_without_edge@0@2@Rtl Design Style@1
+pragma_coverage_off_nested@0@2@Rtl Design Style@1
+async_reset_active_high@0@0@Implementation@1
+latch_combo_mixed@0@0@Implementation@0
+string_has_control_char@0@2@Rtl Design Style@1
+if_stmt_shares_arithmetic_operator@0@10@Rtl Design Style@1
+flop_with_inverted_clock@0@0@Implementation@1
+comment_has_control_char@0@0@Nomenclature Style@1
+bus_bit_as_clk@0@10@Implementation@1
+clock_signal_as_non_clock@0@10@Implementation@1
+flop_output_in_initial@0@2@Rtl Design Style@1
+parameter_not_specified@0@0@Rtl Design Style@0
+var_read_before_set@0@10@Rtl Design Style@1
+enable_signal_name_not_standard@0@0@Rtl Design Style@0
+concurrent_block_with_duplicate_assign@0@2@Rtl Design Style@1
+process_var_assign_disorder@0@2@Rtl Design Style@1
+parameter_count_large@0@0@Rtl Design Style@1
+signal_assign_in_multi_initial@0@2@Rtl Design Style@1
+synopsys_attribute@0@0@Rtl Design Style@1
+multi_ports_in_single_line@0@0@Rtl Design Style@1
+re_entrant_output@0@0@Implementation@1
+case_item_duplicate@0@10@Simulation@1
+synth_pragma_prefix_missing@0@10@Rtl Design Style@1
+sync_read_as_async@0@2@Rtl Design Style@1
+mux_select_const@0@2@Implementation@1
+bus_bits_in_multi_seq_blocks@0@10@Rtl Design Style@1
+memory_redefined@0@2@Rtl Design Style@1
+memory_not_set@0@2@Rtl Design Style@1
+flop_async_reset_const@0@0@Implementation@1
+shift_register_inferred@0@0@Rtl Design Style@0
+testbench_suffix_not_standard@0@0@Rtl Design Style@0
+bit_order_reversed@0@2@Rtl Design Style@1
+delay_in_non_flop_expr@0@0@Rtl Design Style@1
+reset_port_connection_static@0@0@Implementation@1
+if_with_memory_output@0@2@Rtl Design Style@1
+module_has_blackbox_instance@0@2@Implementation@1
+while_loop_iteration_limit@0@2@Rtl Design Style@1
+inst_param_width_overflow@0@10@Rtl Design Style@1
+case_with_memory_output@0@10@Rtl Design Style@1
+blackbox_input_conn_inconsistent@0@10@Implementation@1
+combo_loop_with_latch@0@10@Simulation@1
+reset_set_same_net_driven@0@0@Implementation@0
+reset_set_with_both_polarity@0@10@Implementation@1
+task_has_event_and_input@0@0@Simulation@1
+task_has_event_and_output@0@0@Simulation@1
+empty_module@0@10@Rtl Design Style@1
+unresolved_module@0@10@Rtl Design Style@1
+user_blackbox@0@0@Rtl Design Style@1
+inferred_blackbox@0@10@Rtl Design Style@1
+reset_set_non_const_assign@5@10@Implementation@1
+clk_port_conn_complex@0@10@Implementation@1
+flop_redundant@0@0@Implementation@1
+line_char_large@0@0@Rtl Design Style@1
+process_without_async_reset@0@0@Implementation@0
+data_type_std_ulogic@0@0@Rtl Design Style@1
+clock_with_different_names@0@0@Implementation@0
+unsynth_clock_read_in_always@0@0@Implementation@0
+async_signal_name_not_standard@0@0@Nomenclature Style@0
+inout_not_driven_by_tristate@0@0@Implementation@0
+bus_width_not_specified@0@0@Rtl Design Style@0
+package_excluded@0@0@Setup Checks@1
+state_name_not_unique@0@0@Rtl Design Style@0
+literal_bit_width_not_specified@0@0@Rtl Design Style@0
+parameter_width_not_specified@0@0@Rtl Design Style@0
+unsynth_signal_in_package@0@0@Implementation@0
+fsm_without_reset_state@0@0@Rtl Design Style@0
+line_with_multi_decls@0@0@Rtl Design Style@0
+identifier_name_not_unique@0@0@Rtl Design Style@0
+unsynth_configuration@0@0@Implementation@0
+multi_seq_block_with_same_clk@0@0@Rtl Design Style@0
+line_with_multi_stmts@0@0@Rtl Design Style@0
+constant_literal@0@0@Rtl Design Style@0
+fsm_with_unreachable_state@0@0@Rtl Design Style@0
+fsm_with_deadend_state@0@0@Rtl Design Style@0
+equality_operator_redundant@0@0@Rtl Design Style@0
+design_file_line_limit@0@0@Rtl Design Style@0
+sensitivity_list_has_constant@0@0@Rtl Design Style@0
+base_type_not_specified@0@0@Rtl Design Style@0
+file_extension_not_standard@0@0@Nomenclature Style@0
+fsm_without_default_state@0@0@Rtl Design Style@0
+library_excluded@0@0@Setup Checks@1
+port_mode_not_specified@0@0@Rtl Design Style@0
+control_signal_active_low@0@0@Implementation@0
+seq_block_has_combo_logic@0@0@Rtl Design Style@0
+parentheses_missing@0@0@Rtl Design Style@0
+const_value_width_size_mismatch@0@0@Rtl Design Style@0
+lib_cell_name_as_mod_inst@0@0@Nomenclature Style@0
+port_redefined@0@0@Rtl Design Style@0
+design_unit_name_similar@0@0@Rtl Design Style@0
+structural_mod_with_non_inst_logic@0@0@Rtl Design Style@0
+generate_port_info@0@0@Rtl Design Style@0
+gen_label_missing@0@0@Rtl Design Style@1
+gen_label_duplicate@0@10@Rtl Design Style@1
+port_conn_is_expression@0@10@Implementation@1
+always_without_async_reset@0@0@Implementation@0
+violations_suppressed@2@2@Setup Checks@1
+serial_latches_open_together@0@0@Rtl Design Style@0
+include_path_not_relative@0@0@Rtl Design Style@0
+module_not_at_top@0@0@Rtl Design Style@0
+input_port_name_not_standard@0@0@Nomenclature Style@0
+output_port_name_not_standard@0@0@Nomenclature Style@0
+macro_nested@0@0@Rtl Design Style@0
+regex_user_defined@0@0@Rtl Design Style@0
+macro_defines_numeric_constant@0@0@Rtl Design Style@0
+macro_redefined@0@0@Rtl Design Style@0
+design_unit_overwritten@0@0@Rtl Design Style@0
+file_with_entity_and_package@0@0@Rtl Design Style@0
+logical_not_on_single_bit@0@0@Rtl Design Style@0
+logical_operator_on_single_bit@0@0@Rtl Design Style@0
+active_low_signal_name_not_standard@0@0@Nomenclature Style@0
+data_type_not_recommended@1@2@Simulation@1
+entity_with_sync_async_reset_process@0@0@Implementation@0
+design_with_sync_async_reset_process@0@0@Implementation@0
+clock_event_in_process_block@0@0@Implementation@0
+case_small@0@0@Rtl Design Style@0
+package_file_name_not_standard@0@0@Nomenclature Style@0
+comment_density_low@0@0@Rtl Design Style@0
+pragma_disallowed@0@0@Implementation@0
+sync_control_is_internal@0@0@Implementation@0
+net_decl_with_assign@0@0@Rtl Design Style@0
+module_has_multi_clks@0@0@Implementation@0
+reg_reset_value_disallowed@0@0@Implementation@0
+func_arg_array_constrained@0@2@Rtl Design Style@1

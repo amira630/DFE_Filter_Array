@@ -34,3 +34,6 @@ y_filtered = filter(Hd_IIR_2, y_filtered_1);
 
 Hd_cic = CIC();
 y_cic = step(Hd_cic, y_filtered);
+
+
+

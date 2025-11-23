@@ -1,0 +1,321 @@
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
+| Date         : Sat Nov 22 21:19:48 2025
+| Host         : DESKTOP-KPUS47E running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file TOP_control_sets_placed.rpt
+| Design       : TOP
+| Device       : xc7a200t
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Number of unique control sets                            |   250 |
+| Unused register locations in slices containing registers |   612 |
++----------------------------------------------------------+-------+
+
+
+2. Histogram
+------------
+
++--------+--------------+
+| Fanout | Control Sets |
++--------+--------------+
+|      2 |           15 |
+|      4 |            9 |
+|      6 |           12 |
+|      8 |           13 |
+|     10 |           10 |
+|     12 |           11 |
+|     14 |           14 |
+|    16+ |          166 |
++--------+--------------+
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |               0 |            0 |
+| No           | No                    | Yes                    |              54 |           17 |
+| No           | Yes                   | No                     |               0 |            0 |
+| Yes          | No                    | No                     |               0 |            0 |
+| Yes          | No                    | Yes                    |            8966 |         1583 |
+| Yes          | Yes                   | No                     |               0 |            0 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------+----------------------------------------------------+----------------------------------+------------------+----------------+
+|  Clock Signal  |                    Enable Signal                   |         Set/Reset Signal         | Slice Load Count | Bel Load Count |
++----------------+----------------------------------------------------+----------------------------------+------------------+----------------+
+|  clk_IBUF_BUFG |                                                    | U_CORE/den_coeff_reg[1][17]      |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[4][19][0]              | U_CORE/x_delay_reg[1][0]         |                1 |              2 |
+|  clk_IBUF_BUFG |                                                    | U_CORE/x_delay_reg[1][0]         |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[27][19][0]           | U_CORE/coeff_phase2_reg[15][13]  |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[68][19][0]           | U_CORE/delayline_reg[28][15]     |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[59][19][0]           | U_CORE/coeff_phase2_reg[27][19]  |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[25][19][0]           | U_CORE/coeff_phase2_reg[15][13]  |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[70][19][0]           | U_CORE/delayline_reg[28][15]     |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[26][19][0]           | U_CORE/coeff_phase2_reg[15][13]  |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[40][19][0]           | U_CORE/coeff_phase2_reg[21][0]   |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[71][19][0]           | U_CORE/delayline_reg[28][15]     |                1 |              2 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/valid_out_reg             |                1 |              2 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/iir_out_reg[11]           |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[3][19][0]              | U_CORE/x_delay_reg[1][0]         |                1 |              2 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[69][19][0]           | U_CORE/delayline_reg[28][15]     |                1 |              2 |
+|  clk_IBUF_BUFG |                                                    | U_CORE/valid_out_i_1_n_0         |                1 |              4 |
+|  clk_IBUF_BUFG |                                                    | U_CORE/iir_out_reg[11]           |                2 |              4 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/delayline_reg[28][15]     |                1 |              4 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[43][19][0]           | U_CORE/coeff_phase2_reg[21][0]   |                1 |              4 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[2][19][0]              | U_CORE/x_delay_reg[1][0]         |                1 |              4 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[41][19][0]           | U_CORE/coeff_phase2_reg[21][0]   |                1 |              4 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[43][19][0]           | U_CORE/coeff_phase1_reg[23][12]  |                2 |              4 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[24][19][0]           | U_CORE/coeff_phase2_reg[15][13]  |                2 |              4 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[42][19][0]           | U_CORE/coeff_phase2_reg[21][0]   |                1 |              4 |
+|  clk_IBUF_BUFG |                                                    | U_CORE/num_coeff_reg[0][1]_0     |                3 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/IIR_5_1_VLD                          | U_CORE/num_coeff_reg[0][1]_0     |                3 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[41][19][0]           | U_CORE/coeff_phase1_reg[23][12]  |                2 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[69][19][0]           | U_CORE/coeff_phase2_reg[35][2]   |                1 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[70][19][0]           | U_CORE/coeff_phase2_reg[35][2]   |                1 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[68][19][0]           | U_CORE/coeff_phase2_reg[35][2]   |                1 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[42][19][0]           | U_CORE/coeff_phase1_reg[23][12]  |                2 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[26][19][0]           | U_CORE/coeff_phase1_reg[12][2]   |                1 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[24][19][0]           | U_CORE/coeff_phase1_reg[12][2]   |                1 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[40][19][0]           | U_CORE/coeff_phase1_reg[23][12]  |                3 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[25][19][0]           | U_CORE/coeff_phase1_reg[12][2]   |                2 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[27][19][0]           | U_CORE/coeff_phase1_reg[12][2]   |                1 |              6 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[8][19][0]            | U_CORE/coeff_phase1_reg[5][3]    |                2 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[57][19][0]           | U_CORE/coeff_phase1_reg[30][11]  |                3 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[52][19][0]           | U_CORE/coeff_phase2_reg[27][3]   |                2 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[9][19][0]            | U_CORE/coeff_phase1_reg[5][3]    |                3 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[10][19][0]           | U_CORE/coeff_phase1_reg[5][3]    |                3 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[13][19][0]           | U_CORE/coeff_phase2_reg[9][10]   |                4 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[11][19][0]           | U_CORE/coeff_phase1_reg[5][3]    |                3 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[14][19][0]           | U_CORE/coeff_phase2_reg[9][10]   |                3 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[71][19][0]           | U_CORE/coeff_phase2_reg[35][2]   |                4 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[15][19][0]           | U_CORE/coeff_phase2_reg[9][10]   |                3 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[59][19][0]           | U_CORE/coeff_phase1_reg[30][11]  |                2 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[58][19][0]           | U_CORE/coeff_phase1_reg[30][11]  |                3 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[56][19][0]           | U_CORE/coeff_phase1_reg[30][11]  |                3 |              8 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[0][19][0]              | U_CORE/num_coeff_reg[0][1]       |                4 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/delayline_reg[28][15]     |                1 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[53][19][0]           | U_CORE/coeff_phase2_reg[27][3]   |                3 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[54][19][0]           | U_CORE/coeff_phase2_reg[27][3]   |                3 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[12][19][0]           | U_CORE/coeff_phase2_reg[9][10]   |                3 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/CIC_R_OUT_reg[4][0]                    | U_CORE/valid_out_reg             |                2 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[31][19][0]           | U_CORE/coeff_phase1_reg[17][9]   |                3 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[55][19][0]           | U_CORE/coeff_phase2_reg[27][3]   |                1 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[3][19][0]              | U_CORE/num_coeff_reg[0][1]       |                3 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[4][19][0]              | U_CORE/num_coeff_reg[0][1]       |                3 |             10 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[28][19][0]           | U_CORE/coeff_phase1_reg[17][9]   |                4 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[29][19][0]           | U_CORE/coeff_phase1_reg[17][9]   |                3 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[37][19][0]           | U_CORE/coeff_phase1_reg[18][5]   |                1 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[0][19][0]              | U_CORE/x_delay_reg[1][0]         |                3 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[2][19][0]              | U_CORE/num_coeff_reg[0][1]       |                1 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[1][19][0]              | U_CORE/num_coeff_reg[0][1]       |                1 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_24_OUT_reg[4][19][0]               | U_CORE/den_coeff_reg[1][17]      |                1 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[36][19][0]           | U_CORE/coeff_phase1_reg[18][5]   |                5 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[39][19][0]           | U_CORE/coeff_phase1_reg[18][5]   |                5 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[38][19][0]           | U_CORE/coeff_phase1_reg[18][5]   |                3 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[30][19][0]           | U_CORE/coeff_phase1_reg[17][9]   |                4 |             12 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[20][19][0]           | U_CORE/coeff_phase1_reg[11][6]   |                4 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[64][19][0]           | U_CORE/coeff_phase2_reg[33][6]   |                4 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[21][19][0]           | U_CORE/coeff_phase1_reg[11][6]   |                4 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[3][19][0]            | U_CORE/coeff_phase2_reg[3][7]    |                3 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[1][19][0]            | U_CORE/coeff_phase2_reg[3][7]    |                3 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[1][19][0]              | U_CORE/x_delay_reg[1][0]         |                4 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[44][19][0]           | U_CORE/coeff_phase1_reg[24][8]   |                6 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[23][19][0]           | U_CORE/coeff_phase1_reg[11][6]   |                4 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[22][19][0]           | U_CORE/coeff_phase1_reg[11][6]   |                4 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[46][19][0]           | U_CORE/coeff_phase1_reg[24][8]   |                5 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[2][19][0]            | U_CORE/coeff_phase2_reg[3][7]    |                4 |             14 |
+|  clk_IBUF_BUFG | U_CORE/CIC/dec_in_enable                           | U_CORE/valid_out_reg             |                1 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[47][19][0]           | U_CORE/coeff_phase1_reg[24][8]   |                5 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[45][19][0]           | U_CORE/coeff_phase1_reg[24][8]   |                4 |             14 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[0][19][0]            | U_CORE/coeff_phase2_reg[3][7]    |                5 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[67][19][0]           | U_CORE/coeff_phase2_reg[33][6]   |                4 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[63][19][0]           | U_CORE/coeff_phase2_reg[33][6]   |                3 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/E[0]                                 | U_CORE/valid_out_reg             |                3 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/E[0]                                 | U_CORE/iir_out_reg[11]           |                3 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[65][19][0]           | U_CORE/coeff_phase2_reg[33][6]   |                3 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[19][19][0]           | U_CORE/coeff_phase1_reg[11][6]   |                4 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[6][19][0]            | U_CORE/coeff_phase2_reg[3][7]    |                6 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[62][19][0]           | U_CORE/coeff_phase2_reg[33][6]   |                3 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[61][19][0]           | U_CORE/coeff_phase2_reg[33][6]   |                3 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[60][19][0]           | U_CORE/coeff_phase2_reg[33][6]   |                3 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[5][19][0]            | U_CORE/coeff_phase2_reg[3][7]    |                7 |             16 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/num_coeff_reg[0][1]_0     |                4 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[4][19][0]            | U_CORE/coeff_phase2_reg[3][7]    |                5 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[66][19][0]           | U_CORE/coeff_phase2_reg[33][6]   |                4 |             16 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[49][19][0]           | U_CORE/coeff_phase1_reg[24][8]   |                4 |             18 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[17][19][0]           | U_CORE/coeff_phase1_reg[11][6]   |                5 |             18 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[51][19][0]           | U_CORE/coeff_phase1_reg[24][8]   |                3 |             18 |
+|  clk_IBUF_BUFG | U_CORE/IIR/IIR_2MHZ_NOTCH/iir_valid_out            | U_CORE/iir_out_reg[11]           |                3 |             18 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[48][19][0]           | U_CORE/coeff_phase1_reg[24][8]   |                6 |             18 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[50][19][0]           | U_CORE/coeff_phase1_reg[24][8]   |                7 |             18 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[16][19][0]           | U_CORE/coeff_phase1_reg[11][6]   |                4 |             18 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[7][19][0]            | U_CORE/coeff_phase2_reg[3][7]    |                7 |             18 |
+|  clk_IBUF_BUFG | U_CORE/CIC/dec_in_enable                           | U_CORE/iir_out_reg[11]           |                2 |             18 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[18][19][0]           | U_CORE/coeff_phase1_reg[11][6]   |                5 |             18 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[33][19][0]           | U_CORE/coeff_phase1_reg[18][5]   |                8 |             20 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[33][19][0]           | U_CORE/coeff_phase1_reg[17][9]   |                3 |             20 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[34][19][0]           | U_CORE/coeff_phase1_reg[18][5]   |                4 |             20 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[34][19][0]           | U_CORE/coeff_phase1_reg[17][9]   |                5 |             20 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[32][19][0]           | U_CORE/coeff_phase1_reg[18][5]   |                7 |             20 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[32][19][0]           | U_CORE/coeff_phase1_reg[17][9]   |                4 |             20 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[35][19][0]           | U_CORE/coeff_phase1_reg[18][5]   |                3 |             20 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[35][19][0]           | U_CORE/coeff_phase1_reg[17][9]   |                5 |             20 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[48][19][0]           | U_CORE/coeff_phase2_reg[27][3]   |                3 |             22 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[7][19][0]            | U_CORE/coeff_phase1_reg[5][3]    |                8 |             22 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[18][19][0]           | U_CORE/coeff_phase2_reg[9][10]   |                4 |             22 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[50][19][0]           | U_CORE/coeff_phase2_reg[27][3]   |                4 |             22 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[17][19][0]           | U_CORE/coeff_phase2_reg[9][10]   |                4 |             22 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[16][19][0]           | U_CORE/coeff_phase2_reg[9][10]   |                4 |             22 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[49][19][0]           | U_CORE/coeff_phase2_reg[27][3]   |                3 |             22 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[51][19][0]           | U_CORE/coeff_phase2_reg[27][3]   |                5 |             22 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[4][19][0]            | U_CORE/coeff_phase1_reg[5][3]    |                6 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[5][19][0]            | U_CORE/coeff_phase1_reg[5][3]    |                6 |             24 |
+|  clk_IBUF_BUFG | U_CORE/FRACTIONAL_DECIMATOR/E[0]                   | U_CORE/num_coeff_reg[0][1]_0     |                4 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[62][19][0]           | U_CORE/coeff_phase1_reg[30][11]  |                5 |             24 |
+|  clk_IBUF_BUFG | U_CORE/IIR/IIR_2MHZ_NOTCH/iir_valid_out            | U_CORE/valid_out_reg             |                3 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[67][19][0]           | U_CORE/coeff_phase2_reg[35][2]   |                4 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[0][19][0]            | U_CORE/den_coeff_reg[1][17]      |                3 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[66][19][0]           | U_CORE/coeff_phase2_reg[35][2]   |                5 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[19][19][0]           | U_CORE/coeff_phase2_reg[9][10]   |                4 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[6][19][0]            | U_CORE/coeff_phase1_reg[5][3]    |               10 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[63][19][0]           | U_CORE/coeff_phase1_reg[30][11]  |                6 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[61][19][0]           | U_CORE/coeff_phase1_reg[30][11]  |                4 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[60][19][0]           | U_CORE/coeff_phase1_reg[30][11]  |                5 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[65][19][0]           | U_CORE/coeff_phase2_reg[35][2]   |                8 |             24 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[45][19][0]           | U_CORE/coeff_phase1_reg[23][12]  |                5 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[1][19][0]            | U_CORE/den_coeff_reg[1][17]      |                7 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[44][19][0]           | U_CORE/coeff_phase1_reg[23][12]  |                8 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[20][19][0]           | U_CORE/coeff_phase1_reg[12][2]   |                6 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[64][19][0]           | U_CORE/coeff_phase2_reg[35][2]   |                4 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[22][19][0]           | U_CORE/coeff_phase1_reg[12][2]   |               10 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[21][19][0]           | U_CORE/coeff_phase1_reg[12][2]   |                7 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[2][19][0]            | U_CORE/den_coeff_reg[1][17]      |                6 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[46][19][0]           | U_CORE/coeff_phase1_reg[23][12]  |                5 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[47][19][0]           | U_CORE/coeff_phase1_reg[23][12]  |                8 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[3][19][0]            | U_CORE/den_coeff_reg[1][17]      |                7 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[1][19][0]              | U_CORE/num_coeff_reg[0][1]       |                3 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[23][19][0]           | U_CORE/coeff_phase1_reg[12][2]   |               10 |             26 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[38][19][0]           | U_CORE/coeff_phase2_reg[21][0]   |                8 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[0][19][0]              | U_CORE/num_coeff_reg[0][1]       |                6 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[39][19][0]           | U_CORE/coeff_phase2_reg[21][0]   |                8 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[36][19][0]           | U_CORE/coeff_phase2_reg[21][0]   |               10 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[2][19][0]              | U_CORE/den_coeff_reg[0][19]      |                4 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[30][19][0]           | U_CORE/coeff_phase2_reg[15][13]  |                6 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[29][19][0]           | U_CORE/coeff_phase2_reg[15][13]  |                6 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[1][19][0]              | U_CORE/den_coeff_reg[0][19]      |                6 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[37][19][0]           | U_CORE/coeff_phase2_reg[21][0]   |                7 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[28][19][0]           | U_CORE/coeff_phase2_reg[15][13]  |                4 |             28 |
+|  clk_IBUF_BUFG | U_CORE/CIC/cic_out[15]_i_1_n_0                     | U_CORE/valid_out_reg             |                4 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_24_OUT_reg[4][19][0]               | U_CORE/x_delay_reg[0][12]        |                4 |             28 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[53][19][0]           | U_CORE/coeff_phase2_reg[27][19]  |                5 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[41][19][0]           | U_CORE/coeff_phase2_reg[21][16]  |                6 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[55][19][0]           | U_CORE/coeff_phase2_reg[27][19]  |                9 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[24][19][0]           | U_CORE/coeff_phase2_reg[13][17]  |                5 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[31][19][0]           | U_CORE/coeff_phase2_reg[15][13]  |                7 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[42][19][0]           | U_CORE/coeff_phase2_reg[21][16]  |                6 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[4][19][0]              | U_CORE/den_coeff_reg[0][19]      |                6 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[12][19][0]           | U_CORE/coeff_phase2_reg[7][14]   |               11 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[0][19][0]              | U_CORE/den_coeff_reg[0][19]      |                4 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_1_OUT_reg[3][19][0]              | U_CORE/den_coeff_reg[0][19]      |                7 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[71][19][0]           | U_CORE/coeff_phase1_reg[35][18]  |                7 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[59][19][0]           | U_CORE/coeff_phase1_reg[29][15]  |                6 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[54][19][0]           | U_CORE/coeff_phase2_reg[27][19]  |                4 |             30 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[58][19][0]           | U_CORE/coeff_phase1_reg[29][15]  |                6 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[13][19][0]           | U_CORE/coeff_phase2_reg[7][14]   |                7 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[68][19][0]           | U_CORE/coeff_phase1_reg[35][18]  |               10 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[57][19][0]           | U_CORE/coeff_phase1_reg[29][15]  |                8 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[69][19][0]           | U_CORE/coeff_phase1_reg[35][18]  |                9 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[70][19][0]           | U_CORE/coeff_phase1_reg[35][18]  |                8 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[52][19][0]           | U_CORE/coeff_phase2_reg[27][19]  |                6 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[40][19][0]           | U_CORE/coeff_phase2_reg[21][16]  |                8 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[43][19][0]           | U_CORE/coeff_phase2_reg[21][16]  |                9 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[26][19][0]           | U_CORE/coeff_phase2_reg[13][17]  |               11 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[14][19][0]           | U_CORE/coeff_phase2_reg[7][14]   |                9 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[11][19][0]           | U_CORE/coeff_phase1_reg[4][19]   |                7 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[10][19][0]           | U_CORE/coeff_phase1_reg[4][19]   |                3 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[8][19][0]            | U_CORE/coeff_phase1_reg[4][19]   |                4 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[9][19][0]            | U_CORE/coeff_phase1_reg[4][19]   |                5 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[15][19][0]           | U_CORE/coeff_phase2_reg[7][14]   |                8 |             32 |
+|  clk_IBUF_BUFG | U_CORE/IIR/IIR_2_4MHZ_NOTCH/iir_out_reg[15]_0[0]   | U_CORE/num_coeff_reg[0][1]       |                5 |             32 |
+|  clk_IBUF_BUFG | U_CORE/IIR/IIR_1MHZ_NOTCH/x_delay_reg[0][15]_0     | U_CORE/num_coeff_reg[0][1]       |                5 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[25][19][0]           | U_CORE/coeff_phase2_reg[13][17]  |                9 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[56][19][0]           | U_CORE/coeff_phase1_reg[29][15]  |                3 |             32 |
+|  clk_IBUF_BUFG | U_APB/U_APB/FRAC_DECI_OUT_reg[27][19][0]           | U_CORE/coeff_phase2_reg[13][17]  |               10 |             32 |
+|  clk_IBUF_BUFG | U_CORE/FRACTIONAL_DECIMATOR/filter_out[15]_i_1_n_0 | U_CORE/valid_out_reg             |                3 |             32 |
+|  clk_IBUF_BUFG | U_CORE/FRACTIONAL_DECIMATOR/iir_out_reg[0][0]      | U_CORE/valid_out_i_1_n_0         |                5 |             32 |
+|  clk_IBUF_BUFG |                                                    | U_CORE/valid_out_reg             |                9 |             36 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[2][19][0]              | U_CORE/iir_out_reg[11]           |               11 |             36 |
+|  clk_IBUF_BUFG | U_CORE/CIC/cic_out[15]_i_1_n_0                     | U_CORE/iir_out_reg[11]           |                5 |             36 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[4][19][0]              | U_CORE/iir_out_reg[11]           |               11 |             38 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_5_2_OUT_reg[3][19][0]              | U_CORE/iir_out_reg[11]           |                7 |             38 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_24_OUT_reg[1][19][0]               | U_CORE/num_coeff_reg[0][1]_0     |                6 |             40 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/IIR_24_VLD                           | U_CORE/num_coeff_reg[0][1]_0     |                3 |             40 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_24_OUT_reg[3][19][0]               | U_CORE/num_coeff_reg[0][1]_0     |                9 |             40 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/IIR_24_VLD                           | U_CORE/den_coeff_reg[1][17]      |                3 |             40 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_24_OUT_reg[0][19][0]               | U_CORE/num_coeff_reg[0][1]_0     |                9 |             40 |
+|  clk_IBUF_BUFG | U_APB/U_APB/IIR_24_OUT_reg[2][19][0]               | U_CORE/num_coeff_reg[0][1]_0     |                8 |             40 |
+|  clk_IBUF_BUFG | U_APB/U_APB/E[0]                                   | U_CORE/valid_out_reg             |               11 |             42 |
+|  clk_IBUF_BUFG | U_CORE/CIC/valid_comb_in                           | U_CORE/iir_out_reg[11]           |                4 |             64 |
+|  clk_IBUF_BUFG | U_APB/U_APB/SELx_reg0_n_0                          | U_CORE/valid_out_reg             |               12 |             64 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/IIR_5_2_VLD                          | U_CORE/num_coeff_reg[0][1]       |               13 |             80 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/IIR_5_1_VLD                          | U_CORE/valid_out_i_1_n_0         |               11 |             88 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/den_coeff_reg[1][17]      |                9 |             96 |
+|  clk_IBUF_BUFG | U_CORE/IIR/IIR_1MHZ_NOTCH/x_delay_reg[0][15]_0     | U_CORE/x_delay_reg[1][0]         |               14 |             96 |
+|  clk_IBUF_BUFG | U_CORE/FRACTIONAL_DECIMATOR/E[0]                   | U_CORE/x_delay_reg[0][12]        |               12 |            104 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/IIR_5_1_VLD                          | U_CORE/den_coeff_reg[0][19]      |               16 |            106 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/IIR_5_2_VLD                          | U_CORE/x_delay_reg[1][0]         |               19 |            120 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/IIR_24_VLD                           | U_CORE/x_delay_reg[0][12]        |               11 |            120 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[4][19]   |               11 |            124 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[18][5]   |               12 |            124 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[24][8]   |               12 |            124 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[30][11]  |               16 |            124 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[12][2]   |               18 |            124 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[5][3]    |               17 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[23][12]  |               17 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[29][15]  |               16 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[13][17]  |               16 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[35][18]  |               14 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[27][3]   |               13 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[21][0]   |               14 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[7][14]   |               15 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[33][6]   |               13 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[11][6]   |               12 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase1_reg[17][9]   |               16 |            126 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[9][10]   |               16 |            128 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[3][7]    |               13 |            128 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[15][13]  |               12 |            128 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[35][2]   |               10 |            128 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[27][19]  |               19 |            128 |
+|  clk_IBUF_BUFG | U_CORE/IIR/IIR_2_4MHZ_NOTCH/valid_2_4MHz_out       | U_CORE/valid_out_i_1_n_0         |               17 |            128 |
+|  clk_IBUF_BUFG | U_APB/U_MPRAM/FRAC_DECI_VLD                        | U_CORE/coeff_phase2_reg[21][16]  |               15 |            128 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/delayline[29][15]_i_1_n_0 |               38 |            224 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/cur_count[0]_i_2_n_0      |               42 |            232 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/delayline[14][9]_i_1_n_0  |               33 |            232 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/delayline[7][13]_i_1_n_0  |               47 |            232 |
+|  clk_IBUF_BUFG | valid_in_IBUF                                      | U_CORE/delayline[21][5]_i_1_n_0  |               42 |            232 |
++----------------+----------------------------------------------------+----------------------------------+------------------+----------------+
+
+

@@ -1,0 +1,27 @@
+m255
+K4
+z2
+Z0 !s99 nomlopt
+R0
+R0
+R0
+R0
+R0
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System
+Tzi_opt_def_895752150_1
+!s110 1763837775
+VhX=fW6nHo5HD4]kEY;Gnl2
+09 3 4 z0in_work TOP fast 0
+!s96 mlvalmap
+!s102 +cover=f
+!s124 OEM100
+o-suppress 143 -nologo -noclknetalias -nolock -noOptProcessWaits -noinstaliasopt -pslallowseverity -suppress 153 -suppress 3053 -suppress 8884 -suppress 1491 -suppress 8885 -suppress 1127 -suppress 7033 -suppress 3838 -suppress 12003 -suppress 3054 -suppress 2734 -0in_enable_questa_fsm -suppress 2071 -suppress 13408 -suppress 2108 -suppress 2250 -suppress 1272 +cover=f +acc=a -0in_elab -mlvalmap -opt=-optStmt -opt=-optExpr -noStaticExprOpt -L work -work work -mixedansiports -disable_type_sharing
+tCvgOpt 0
+nzi_opt_def_895752150_1
+OL;O;2021.1;73

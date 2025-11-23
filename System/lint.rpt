@@ -1,0 +1,440 @@
+====================================================================================================
+Lint Check Report
+Questa Lint  Version 2021.1 4558100 win64 28-Jan-2021
+
+Timestamp            : Sat Nov 22 20:56:26 2025
+Description          : Report for referring checks count, check violations details, and  design information
+Design               : TOP
+Database             : D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/lint.db
+Design Quality Score : 96.9%
+
+Sections:
+   Section 1 : Check Summary
+   Section 2 : Check Details
+   Section 3 : Design Information
+====================================================================================================
+
+
+====================================================================================================
+Section 1 : Check Summary
+====================================================================================================
+--------------
+| Error (27) |
+--------------
+  assign_width_overflow                   : 11
+  assign_width_underflow                  : 9
+  array_index_with_expr                   : 4
+  case_default_missing                    : 2
+  reset_set_non_const_assign              : 1
+
+----------------
+| Warning (17) |
+----------------
+  bus_bits_not_read                       : 2
+  data_type_not_recommended               : 1
+  for_stmt_with_complex_logic             : 3
+  if_else_nested_large                    : 1
+  if_stmt_with_arith_expr                 : 1
+  latch_inferred                          : 1
+  always_signal_assign_large              : 3
+  assign_with_multi_arith_operations      : 4
+  unconnected_inst_output                 : 1
+
+-------------
+| Info (86) |
+-------------
+  fsm_without_one_hot_encoding            : 1
+  implicit_wire                           : 2
+  multiplication_operator                 : 7
+  parameter_name_duplicate                : 72
+  reserved_keyword                        : 2
+  line_char_large                         : 2
+
+----------------
+| Resolved (0) |
+----------------
+
+
+====================================================================================================
+Section 2 : Check Details
+====================================================================================================
+--------------
+| Error (27) |
+--------------
+
+Check: assign_width_overflow [Category: Rtl Design Style] (11)
+       [Message: Width of assignment RHS is greater than width of LHS.  LHS Expression '<lhs_expression>', LHS Width '<lhs_width>', RHS Width '<rhs_width>', Module '<module>', File '<file>', Line '<line>'.]
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'FRAC_DECI_OUT[DATA_ADDR]', LHS Width '20', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '176'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'IIR_24_OUT[DATA_ADDR-72]', LHS Width '20', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '181'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'IIR_5_1_OUT[DATA_ADDR-72-5]', LHS Width '20', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '182'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'IIR_5_2_OUT[DATA_ADDR-72-10]', LHS Width '20', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '183'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'CIC_R_OUT', LHS Width '5', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '193'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'CTRL[DATA_ADDR-72-15-1]', LHS Width '1', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '197'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'OUT_SEL', LHS Width '2', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '199'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'COEFF_SEL', LHS Width '3', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '201'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'STATUS', LHS Width '3', RHS Width '32', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '203'. [RTL ID:2f4a23e7_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'raw', LHS Width '20', RHS Width '38', Module 'rounding_overflow_arith', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv', Line '52'. [RTL ID:f7f7df8b_00200]
+
+assign_width_overflow: [uninspected] Width of assignment RHS is greater than width of LHS.  LHS Expression 'raw', LHS Width '24', RHS Width '42', Module 'rounding_overflow_arith', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv', Line '52'. [RTL ID:f7f7df8b_00200]
+
+
+Check: assign_width_underflow [Category: Rtl Design Style] (9)
+       [Message: Width of assignment RHS is less than width of LHS.  LHS Expression '<lhs_expression>', LHS Width '<lhs_width>', RHS Width '<rhs_width>', Module '<module>', File '<file>', Line '<line>'.]
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '20', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '215'. [RTL ID:cf612ebb_00200]
+
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '20', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '217'. [RTL ID:2b8191f1_00200]
+
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '20', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '219'. [RTL ID:bcae1000_00200]
+
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '20', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '221'. [RTL ID:448d19c_00200]
+
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '5', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '223'. [RTL ID:4727e2f7_00200]
+
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '1', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '225'. [RTL ID:111938fb_00200]
+
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '2', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '227'. [RTL ID:34fe96c4_00200]
+
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '3', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '229'. [RTL ID:72a1a2ca_00200]
+
+assign_width_underflow: [uninspected] Width of assignment RHS is less than width of LHS.  LHS Expression 'PRDATA', LHS Width '32', RHS Width '3', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '231'. [RTL ID:e4bb2000_00200]
+
+
+Check: array_index_with_expr [Category: Rtl Design Style] (4)
+       [Message: Index value of an array has expression. Array '<array>', Module '<module>', File '<file>', Line '<line>'.]
+----------------------------------------------------------------------------------------------------------------------------
+array_index_with_expr: [uninspected] Index value of an array has expression. Array 'IIR_24_OUT[DATA_ADDR-TAPS]', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '181'.
+    1 more occurrence at: line 217.
+
+array_index_with_expr: [uninspected] Index value of an array has expression. Array 'IIR_5_1_OUT[DATA_ADDR-TAPS-NUM_DENUM]', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '182'.
+    1 more occurrence at: line 219.
+
+array_index_with_expr: [uninspected] Index value of an array has expression. Array 'IIR_5_2_OUT[DATA_ADDR-TAPS-2*NUM_DENUM]', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '183'.
+    1 more occurrence at: line 221.
+
+array_index_with_expr: [uninspected] Index value of an array has expression. Array 'CTRL[DATA_ADDR-TAPS-3*NUM_DENUM-1]', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '197'.
+    1 more occurrence at: line 225.
+
+
+Check: case_default_missing [Category: Simulation] (2)
+       [Message: Case statement is missing the default clause or does not cover all possible scenarios, which infers a latch. Module '<module>', File '<file>', Line '<line>'.]
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+case_default_missing: [uninspected] Case statement is missing the default clause or does not cover all possible scenarios, which infers a latch. Module 'APB_Bridge', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv', Line '102'. [RTL ID:279d97d4_00201]
+
+case_default_missing: [uninspected] Case statement is missing the default clause or does not cover all possible scenarios, which infers a latch. Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '174'. [RTL ID:a12815af_00201]
+
+
+Check: reset_set_non_const_assign [Category: Reset] (1)
+       [Message: Signal is assigned non-constant value under set/reset condition. Signal '<signal>', Module '<module>', File '<file>', Line '<line>'.]
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+reset_set_non_const_assign: [uninspected] Signal is assigned non-constant value under set/reset condition. Signal 'iir_out', Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '179'. [RTL ID:7a5614f0_00200]
+
+
+
+----------------
+| Warning (17) |
+----------------
+
+Check: bus_bits_not_read [Category: Rtl Design Style] (2)
+       [Message: Bus has one or more bits that are not read. Bus unread bits '<bits>', Module '<module>', File '<file>', Line '<line>'.]
+-----------------------------------------------------------------------------------------------------------------------------------------
+bus_bits_not_read: [uninspected] Bus has one or more bits that are not read. Bus unread bits 'result_interm[20:16]', Module 'rounding_overflow_arith', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv', Line '41'.
+
+bus_bits_not_read: [uninspected] Bus has one or more bits that are not read. Bus unread bits 'result_interm[24:16]', Module 'rounding_overflow_arith', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv', Line '41'.
+
+
+Check: data_type_not_recommended [Category: Simulation] (1)
+       [Message: Data type used is not recommended. Signal '<signal>', Unrecommended Type '<type>', Module '<module>', File '<file>', Line '<line>'.]
+------------------------------------------------------------------------------------------------------------------------------------------------------
+data_type_not_recommended: [uninspected] Data type used is not recommended. Signal 'i', Unrecommended Type 'int', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '92'.
+
+
+Check: for_stmt_with_complex_logic [Category: Rtl Design Style] (3)
+       [Message: For statement has complex logic. Module '<module>', File '<file>', For statement at line '<line>', Statement(s) at lines '<line1>' and '<line2>' may introduce cascading logic.]
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+for_stmt_with_complex_logic: [uninspected] For statement has complex logic. Module 'COMB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv', For statement at line '34', Statement(s) at lines '35' and '35' may introduce cascading logic. [RTL ID:b072e516_00200]
+
+for_stmt_with_complex_logic: [uninspected] For statement has complex logic. Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', For statement at line '146', Statement(s) at lines '147' and '147' may introduce cascading logic. [RTL ID:ccf243c5_00200]
+
+for_stmt_with_complex_logic: [uninspected] For statement has complex logic. Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', For statement at line '182', Statement(s) at lines '190' and '190' may introduce cascading logic. [RTL ID:85dfda7e_00200]
+
+
+Check: if_else_nested_large [Category: Rtl Design Style] (1)
+       [Message: Number of if-if or if-else if statements defined are more than the specified limit. Limit '<limit>', Module '<module>', File '<file>', First Violated Line '<line>', Total Count '<count>'.]
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if_else_nested_large: [uninspected] Number of if-if or if-else if statements defined are more than the specified limit. Limit '7', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', First Violated Line '228', Total Count '9'.
+
+
+Check: if_stmt_with_arith_expr [Category: Rtl Design Style] (1)
+       [Message: Arithmetic operation is used in conditional expression of if statement. Expression '<expression>', Module '<module>', File '<file>', Line '<line>'.]
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+if_stmt_with_arith_expr: [uninspected] Arithmetic operation is used in conditional expression of if statement. Expression 'dec_factor-1', Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '87'.
+
+
+Check: latch_inferred [Category: Rtl Design Style] (1)
+       [Message: Latch inferred. Signal '<signal>', Module '<module>', File '<file>', Line '<line>'.]
+------------------------------------------------------------------------------------------------------
+latch_inferred: [uninspected] Latch inferred. Signal 'coeff_out[71:5]', Module 'TOP', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv', Line '45'.
+
+
+Check: always_signal_assign_large [Category: Rtl Design Style] (3)
+       [Message: Always block has more signal assignments than the specified limit. Total count '<count>', Specified limit '<limit>', Module '<module>', File '<file>', Line '<line>'.]
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+always_signal_assign_large: [uninspected] Always block has more signal assignments than the specified limit. Total count '6', Specified limit '5', Module 'APB_Bridge', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv', Line '95'.
+
+always_signal_assign_large: [uninspected] Always block has more signal assignments than the specified limit. Total count '15', Specified limit '5', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '98'.
+
+always_signal_assign_large: [uninspected] Always block has more signal assignments than the specified limit. Total count '7', Specified limit '5', Module 'rounding_overflow_arith', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv', Line '79'.
+
+
+Check: assign_with_multi_arith_operations [Category: Rtl Design Style] (4)
+       [Message: Assignment statement has more than one arithmetic operation. Expression '<expression>', Operator Count '<count>', Module '<module>', File '<file>' Line '<line>'.]
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+assign_with_multi_arith_operations: [uninspected] Assignment statement has more than one arithmetic operation. Expression 'DATA_ADDR-72-5', Operator Count '2', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv' Line '219'. [RTL ID:7da2b6f8_00200]
+
+assign_with_multi_arith_operations: [uninspected] Assignment statement has more than one arithmetic operation. Expression 'DATA_ADDR-72-10', Operator Count '2', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv' Line '221'. [RTL ID:7714db7c_00200]
+
+assign_with_multi_arith_operations: [uninspected] Assignment statement has more than one arithmetic operation. Expression 'DATA_ADDR-72-15-1', Operator Count '3', Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv' Line '225'. [RTL ID:646e12fe_00200]
+
+assign_with_multi_arith_operations: [uninspected] Assignment statement has more than one arithmetic operation. Expression 'num_products[0]+num_products[1]+num_products[2]-(den_products[0]+den_products[1])', Operator Count '3', Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv' Line '151'. [RTL ID:fd16530f_00200]
+
+
+Check: unconnected_inst_output [Category: Connectivity] (1)
+       [Message: Instance output is not connected or drives no logic. Port '<port>', Instance '<instance>', Instantiated in module '<module>', File '<file>', Line '<line>']
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+unconnected_inst_output: [uninspected] Instance output is not connected or drives no logic. Port 'valid_out', Instance 'COMB_INST_0', Instantiated in module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '117'
+
+
+
+-------------
+| Info (86) |
+-------------
+
+Check: fsm_without_one_hot_encoding [Category: Rtl Design Style] (1)
+       [Message: FSM encoding is not one-hot. Module '<module>', File '<file>', Line '<line>'.]
+------------------------------------------------------------------------------------------------
+fsm_without_one_hot_encoding: [uninspected] FSM encoding is not one-hot. Module 'APB_Bridge', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv', Line '73'. [RTL ID:7389c170_00200]
+
+
+Check: implicit_wire [Category: Rtl Design Style] (2)
+       [Message: Module has an implicit wire. Signal '<signal>', Module '<module>', File '<file>', Line '<line>'.]
+-------------------------------------------------------------------------------------------------------------------
+implicit_wire: [uninspected] Module has an implicit wire. Signal 'cic_overflow', Module 'TOP', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv', Line '152'.
+
+implicit_wire: [uninspected] Module has an implicit wire. Signal 'cic_underflow', Module 'TOP', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv', Line '153'.
+
+
+Check: multiplication_operator [Category: Rtl Design Style] (7)
+       [Message: Expression has a multiplication operator. Module '<module>', File '<file>', Line '<line>'.]
+-------------------------------------------------------------------------------------------------------------
+multiplication_operator: [uninspected] Expression has a multiplication operator. Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '184'. [RTL ID:ee720f0d_00200]
+
+multiplication_operator: [uninspected] Expression has a multiplication operator. Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '187'. [RTL ID:17bb8f04_00200]
+
+multiplication_operator: [uninspected] Expression has a multiplication operator. Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '139'. [RTL ID:78614bc3_00200]
+
+multiplication_operator: [uninspected] Expression has a multiplication operator. Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '141'. [RTL ID:7addccf7_00200]
+
+multiplication_operator: [uninspected] Expression has a multiplication operator. Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '143'. [RTL ID:f275cf33_00200]
+
+multiplication_operator: [uninspected] Expression has a multiplication operator. Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '146'. [RTL ID:a4d16f57_00200]
+
+multiplication_operator: [uninspected] Expression has a multiplication operator. Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '148'. [RTL ID:be520ba9_00200]
+
+
+Check: parameter_name_duplicate [Category: Nomenclature Style] (72)
+       [Message: Same parameter name is used in more than one module. Parameter '<parameter>', Total count '<count>', First module: Module '<module1>', File '<file1>', Line '<line1>', Second module: Module '<module2>', File '<file2>', Line '<line2>']
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'ADDR_WIDTH', Total count '4', First module: Module 'APB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv', Line '2', Second module: Module 'APB_Bridge', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv', Line '2'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'PDATA_WIDTH', Total count '2', First module: Module 'APB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv', Line '3', Second module: Module 'TOP', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv', Line '19'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'DATA_WIDTH', Total count '10', First module: Module 'APB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv', Line '4', Second module: Module 'APB_Bridge', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv', Line '3'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF_WIDTH', Total count '7', First module: Module 'APB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv', Line '5', Second module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '5'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'N_TAP', Total count '4', First module: Module 'APB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv', Line '6', Second module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '8'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'NUM_DENUM', Total count '3', First module: Module 'APB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv', Line '7', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '6'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COMP', Total count '4', First module: Module 'APB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv', Line '8', Second module: Module 'APB_Bridge', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv', Line '7'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF_FRAC', Total count '5', First module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '6', Second module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '5'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'NUM_COEFF_DEPTH', Total count '3', First module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '11', Second module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '8'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'DEN_COEFF_DEPTH', Total count '3', First module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '12', Second module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '9'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF_DEPTH', Total count '3', First module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '13', Second module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '10'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF0', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '48', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '32'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF18', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '48', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '32'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF1', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '49', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '33'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF19', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '49', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '33'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF2', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '50', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '34'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF20', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '50', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '34'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF21', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '51', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '35'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF3', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '51', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '35'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF22', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '52', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '36'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF4', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '52', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '36'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF23', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '53', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '37'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF5', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '53', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '37'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF24', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '54', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '38'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF6', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '54', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '38'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF25', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '55', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '39'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF7', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '55', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '39'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF26', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '56', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '40'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF8', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '56', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '40'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF27', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '57', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '41'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF9', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '57', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '41'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF10', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '58', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '42'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF28', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '58', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '42'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF11', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '59', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '43'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF29', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '59', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '43'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF12', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '60', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '44'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF30', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '60', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '44'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF13', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '61', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '45'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF31', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '61', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '45'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF14', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '62', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '46'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF32', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '62', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '46'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF15', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '63', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '47'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF33', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '63', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '47'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF16', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '64', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '48'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF34', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '64', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '48'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF17', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '65', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '49'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'COEFF35', Total count '2', First module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '65', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '49'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'DATA_FRAC', Total count '6', First module: Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '18', Second module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '4'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'Q', Total count '3', First module: Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '19', Second module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '16'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'N', Total count '4', First module: Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '20', Second module: Module 'COMB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv', Line '12'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'MAX_DEC_FACTOR', Total count '2', First module: Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '21', Second module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '18'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'ACC_FRAC', Total count '4', First module: Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '22', Second module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '15'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'ACC_WIDTH', Total count '6', First module: Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '23', Second module: Module 'COMB', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv', Line '11'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'DEC_WIDTH', Total count '2', First module: Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '24', Second module: Module 'CORE', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv', Line '19'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'SCALE', Total count '4', First module: Module 'CIC', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv', Line '25', Second module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '16'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'PROD_WIDTH', Total count '3', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '12', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '9'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'PROD_FRAC', Total count '3', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '13', Second module: Module 'fractional_decimator', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '10'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B0_1', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '38', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '69'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B1_1', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '39', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '70'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B2_1', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '40', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '71'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'A1_1', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '42', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '73'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'A2_1', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '43', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '74'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B0_2', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '46', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '77'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B1_2', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '47', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '78'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B2_2', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '48', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '79'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'A1_2', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '50', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '81'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'A2_2', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '51', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '82'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B0_2_4', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '54', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '85'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B1_2_4', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '55', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '86'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'B2_2_4', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '56', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '87'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'A1_2_4', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '58', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '89'
+
+parameter_name_duplicate: [uninspected] Same parameter name is used in more than one module. Parameter 'A2_2_4', Total count '2', First module: Module 'IIR', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '59', Second module: Module 'MPRAM', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv', Line '90'
+
+
+Check: reserved_keyword [Category: Nomenclature Style] (2)
+       [Message: Name of the design element matches a reserved keyword. Name '<name>', Reason '<reason>', Module '<module>', File '<file>', Line '<line>'.]
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+reserved_keyword: [uninspected] Name of the design element matches a reserved keyword. Name 'SETUP', Reason 'SDF or EDIF keyword', Module 'APB_Bridge', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv', Line '33'.
+
+reserved_keyword: [uninspected] Name of the design element matches a reserved keyword. Name 'ACCESS', Reason 'VHDL keyword', Module 'APB_Bridge', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv', Line '34'.
+
+
+Check: line_char_large [Category: Rtl Design Style] (2)
+       [Message: Line has more characters than the specified limit. Current Count '<count>', Specified Limit '<limit>', File '<file>', Line '<line>'.]
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+line_char_large: [uninspected] Line has more characters than the specified limit. Current Count '112', Specified Limit '110', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv', Line '70'.
+    2 more occurrences at: line 185 and line 188.
+
+line_char_large: [uninspected] Line has more characters than the specified limit. Current Count '113', Specified Limit '110', File 'D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv', Line '151'.
+
+
+
+----------------
+| Resolved (0) |
+----------------
+
+
+
+====================================================================================================
+Section 3 : Design Information
+====================================================================================================
+-----------
+| Summary |
+-----------
+  Register Bits                           : 4610
+  Latch Bits                              : 1340
+  User-specified Blackboxes               : 0
+  Inferred Blackboxes                     : 0
+  Empty Modules                           : 0
+  Unresolved Modules                      : 0
+  Hierarchical IPs                        : 0
+

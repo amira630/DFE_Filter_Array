@@ -1,0 +1,309 @@
+m255
+K4
+z2
+!s11f vlog 2021.1 2021.01, Jan 19 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System
+vAPB
+Z1 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z2 !s110 1763837761
+!i10b 1
+!s100 ;J@Yz^<h;O^53VEUo@nY70
+IghDIWPU0h]]I[XJ?DeQ<00
+S1
+R0
+Z3 w1763836948
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv
+!i122 1
+L0 1 105
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z5 OL;L;2021.1;73
+r1
+!s85 0
+31
+Z6 !s108 1763837761.000000
+!s107 D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv|
+Z7 !s90 D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv|-work|work|
+!i113 0
+Z8 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z9 tCvgOpt 0
+n@a@p@b
+vAPB_Bridge
+R1
+R2
+!i10b 1
+!s100 AHYSg7=Ij]YH__]^CFmH22
+IWmz@dEZML>Nf<_OGaFoUK2
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv
+!i122 1
+L0 1 122
+R4
+R5
+r1
+!s85 0
+31
+R6
+Z10 !s107 D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB_Bridge.sv|D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/APB.sv|
+R7
+!i113 0
+R8
+R9
+n@a@p@b_@bridge
+vCIC
+R1
+R2
+!i10b 1
+!s100 e:oWih2AEe7iDV7X7X6[K2
+I4N?l2=@c52D0BZMc=QnGD1
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/cic.sv
+!i122 1
+L0 16 161
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+n@c@i@c
+vCOMB
+R1
+R2
+!i10b 1
+!s100 7Zl5aeC>PA@]3MHN>Q<:?1
+IRc=`ki8gE>HNoMWNgFizW2
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/comb.sv
+!i122 1
+L0 10 33
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+n@c@o@m@b
+vCORE
+R1
+R2
+!i10b 1
+!s100 hKoRB6OS0:n2^;i<@m@;f3
+Io6JM=JF52]FejbPN1U:?c2
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/CORE.sv
+!i122 1
+L0 1 157
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+n@c@o@r@e
+vfractional_decimator
+R1
+R2
+!i10b 1
+!s100 CSgXJRjbCjd0D2Z_eU=WC3
+IghgOk@RkfD0oz=LdAKhWz1
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/fractional_decimator.sv
+!i122 1
+L0 1 210
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vIIR
+R1
+R2
+!i10b 1
+!s100 H<cTTXCjMX35V08no7omT2
+I5U:GaF0Q[^=>];JIZEG_:2
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir.sv
+!i122 1
+L0 1 204
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+n@i@i@r
+vIIR_chain
+R1
+R2
+!i10b 1
+!s100 E^leXCKP[EYd4I67WoZnl3
+Ifg@E<EYKbdT3aDmc0bXaS2
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/iir_chain.sv
+!i122 1
+L0 1 133
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+n@i@i@r_chain
+vINTEG
+R1
+R2
+!i10b 1
+!s100 D94UH2P`NmU:9f95AliHK2
+I7AI^6eG:MWh5<B0R:>2CE2
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/integrator.sv
+!i122 1
+L0 8 19
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+n@i@n@t@e@g
+vMPRAM
+R1
+R2
+!i10b 1
+!s100 BQ@gUSGWn?hbED@CjdcPc3
+IEma^:K`bjc115a2OeR_c<2
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/MPRAM.sv
+!i122 1
+L0 1 242
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+n@m@p@r@a@m
+vrounding_overflow_arith
+R1
+R2
+!i10b 1
+!s100 PToIT1]^f1H>2`gA3DE9h2
+IoiNB:cL;lL:41L]GGUJVz1
+S1
+R0
+R3
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/rounding_overflow_handling.sv
+!i122 1
+L0 1 119
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+vTOP
+R1
+R2
+!i10b 1
+!s100 eaBf65iIAkJSEI;0nAUW43
+I<X2JeoNK:0bgmlUGTbW]i1
+S1
+R0
+w1763837666
+8D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv
+FD:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/System/TOP.sv
+!i122 1
+L0 1 262
+R4
+R5
+r1
+!s85 0
+31
+R6
+R10
+R7
+!i113 0
+R8
+R9
+n@t@o@p

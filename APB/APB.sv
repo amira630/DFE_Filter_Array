@@ -6,7 +6,7 @@ module APB #(
     parameter N_TAP       = 72 ,
     localparam NUM_DENUM   = 5 ,
     parameter COMP        = 4  
-)(
+) (
     input logic                              clk                               ,
     input logic                              rst_n                             ,   
                         
