@@ -415,3 +415,15 @@ do run.do
 # ** Note: $stop    : DFE_tb.sv(182)
 #    Time: 5280330 ns  Iteration: 1  Instance: /DFE_tb
 # Break in Module DFE_tb at DFE_tb.sv line 182
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/src/dfe_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/src/dfe_q.mpf).  File can not be renamed.
+# ** Error: Acs sdne.
+# 
+#        Unable to replace existing ini file (D:/Mustafa/Projects/Digital_Design/Si_Clash_N/Design/DFE_Filter_Array/src/dfe_q.mpf).  File can not be renamed.
+# Saving coverage database on exit...
+# End time: 11:33:58 on Nov 27,2025, Elapsed time: 83:13:25
+# Errors: 3, Warnings: 1
