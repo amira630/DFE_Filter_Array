@@ -213,7 +213,7 @@ module MPRAM #(
                         
                         if (DATA_ADDR == (TAPS + (3 * NUM_DENUM) + 1 + 5)) OUT_SEL <= DATA_IN[1 : 0];
                         else if (DATA_ADDR == (TAPS + (3 * NUM_DENUM) + 1 + 5 +1)) COEFF_SEL <= DATA_IN[2 : 0];
-                        else if (DATA_ADDR == (TAPS + (3 * NUM_DENUM) + 1 + 5 + 1 + 1)) TATUS <= DATA_IN[2 : 0];
+                        else if (DATA_ADDR == (TAPS + (3 * NUM_DENUM) + 1 + 5 + 1 + 1)) STATUS <= DATA_IN[2 : 0];
                     end
                     default: ;
                 endcase
