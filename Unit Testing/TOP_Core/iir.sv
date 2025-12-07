@@ -1,19 +1,29 @@
+////////////////////////////////////////////////////////////////////////////////
+// Design Author: Mustaf EL-Sherif
+// Verified by Mustaf EL-Sherif
+// --> Linting check
+// --> Synthesis
+// --> Functional Simulation
+// Design: IIR
+// Date: 02-11-2025
+////////////////////////////////////////////////////////////////////////////////
+
 module IIR #(
-    parameter   DATA_WIDTH      = 16                                    ,
-    parameter   DATA_FRAC       = 15                                    ,
-    parameter   COEFF_WIDTH     = 20                                    ,
-    parameter   COEFF_FRAC      = 18                                    ,
-    parameter   IIR_NOTCH_FREQ  = 2                                     ,// 0: 1MHz, 1: 2MHz, 2:2.4MHz
+    parameter   int  DATA_WIDTH         = 32'd16                                ,
+    parameter   int  DATA_FRAC          = 32'd15                                ,
+    parameter   int  COEFF_WIDTH        = 32'd20                                ,
+    parameter   int  COEFF_FRAC         = 32'd18                                ,
+    parameter   int  IIR_NOTCH_FREQ     = 32'd2                                 , // 0: 1MHz, 1: 2MHz, 2:2.4MHz
     // Coefficient depths
-    localparam NUM_COEFF_DEPTH = 3                                      ,
-    localparam DEN_COEFF_DEPTH = 2                                      ,
-    localparam COEFF_DEPTH     = NUM_COEFF_DEPTH + DEN_COEFF_DEPTH      ,
+    localparam  int NUM_COEFF_DEPTH     = 32'd3                                 ,
+    localparam  int DEN_COEFF_DEPTH     = 32'd2                                 ,
+    localparam  int COEFF_DEPTH         = NUM_COEFF_DEPTH + DEN_COEFF_DEPTH     ,
     // Product and Accumulator widths
-    localparam PROD_WIDTH      = DATA_WIDTH + COEFF_WIDTH               ,
-    localparam PROD_FRAC       = DATA_FRAC + COEFF_FRAC                 ,
-    localparam ACC_WIDTH       = PROD_WIDTH + $clog2(NUM_COEFF_DEPTH)   ,
-    localparam ACC_FRAC        = PROD_FRAC                              ,   
-    localparam SCALE           = 1
+    localparam  int PROD_WIDTH          = DATA_WIDTH + COEFF_WIDTH              ,
+    localparam  int PROD_FRAC           = DATA_FRAC + COEFF_FRAC                ,
+    localparam  int ACC_WIDTH           = PROD_WIDTH + $clog2(NUM_COEFF_DEPTH)  ,
+    localparam  int ACC_FRAC            = PROD_FRAC                             ,   
+    localparam  int SCALE               = 32'd1
 ) (
     input   logic                               clk                                             ,
     input   logic                               rst_n                                           ,
@@ -35,28 +45,28 @@ module IIR #(
 );
 
     // Coefficients 1 MHz Notch Filter
-    localparam B0_1 = 20'sh37061;
-    localparam B1_1 = 20'shc8f9f;
-    localparam B2_1 = 20'sh37061;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B0_1 = 20'sh37061     ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B1_1 = 20'shc8f9f     ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B2_1 = 20'sh37061     ;
 
-    localparam A1_1 = 20'shc8f9f;
-    localparam A2_1 = 20'sh2e0c3;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] A1_1 = 20'shc8f9f     ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] A2_1 = 20'sh2e0c3     ;
 
     // Coefficients 2 MHz Notch Filter
-    localparam B0_2 = 20'sh37061;
-    localparam B1_2 = 20'sh37061;
-    localparam B2_2 = 20'sh37061;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B0_2 = 20'sh37061     ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B1_2 = 20'sh37061     ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B2_2 = 20'sh37061     ;
 
-    localparam A1_2 = 20'sh37061;
-    localparam A2_2 = 20'sh2e0c3;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] A1_2 = 20'sh37061     ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] A2_2 = 20'sh2e0c3     ;
 
     // Coefficients 2.4 MHz Notch Filter
-    localparam B0_2_4 = 20'sh37061;
-    localparam B1_2_4 = 20'sh5907c;
-    localparam B2_2_4 = 20'sh37061;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B0_2_4 = 20'sh37061   ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B1_2_4 = 20'sh5907c   ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B2_2_4 = 20'sh37061   ;
 
-    localparam A1_2_4 = 20'sh5907c;
-    localparam A2_2_4 = 20'sh2e0c3;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] A1_2_4 = 20'sh5907c   ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] A2_2_4 = 20'sh2e0c3   ;
     
     // Select coefficients based on IIR_NOTCH_FREQ parameter
     localparam logic signed [COEFF_WIDTH - 1 : 0] B0_INIT = (IIR_NOTCH_FREQ == 0) ? B0_1 : (IIR_NOTCH_FREQ == 1) ? B0_2 : B0_2_4;
@@ -115,37 +125,50 @@ module IIR #(
             // Reset delay lines
             for (int i = 0 ; i < NUM_COEFF_DEPTH ; i++) begin
                 x_delay[i] <= {DATA_WIDTH{1'sb0}};
+
                 if (i < DEN_COEFF_DEPTH) y_delay[i] <= {DATA_WIDTH{1'sb0}};
             end
         end else if (valid_in) begin
-            x_delay[0] <= iir_in;
-            x_delay[1] <= x_delay[0];
-            x_delay[2] <= x_delay[1];
+            x_delay[0] <= iir_in        ;
+            x_delay[1] <= x_delay[0]    ;
+            x_delay[2] <= x_delay[1]    ;
             
             y_delay[0] <= rounded_result;
-            y_delay[1] <= y_delay[0];
+            y_delay[1] <= y_delay[0]    ;
         end
     end
 
     always_comb begin
-        result_acc      = {ACC_WIDTH{1'sb0}};
-        num_products[0] = {PROD_WIDTH{1'sb0}};
-        num_products[1] = {PROD_WIDTH{1'sb0}};
-        num_products[2] = {PROD_WIDTH{1'sb0}};
-        den_products[0] = {PROD_WIDTH{1'sb0}};
-        den_products[1] = {PROD_WIDTH{1'sb0}};
+        result_acc      = {ACC_WIDTH{1'sb0}}    ;
+        num_products[0] = {PROD_WIDTH{1'sb0}}   ;
+        num_products[1] = {PROD_WIDTH{1'sb0}}   ;
+        num_products[2] = {PROD_WIDTH{1'sb0}}   ;
+        den_products[0] = {PROD_WIDTH{1'sb0}}   ;
+        den_products[1] = {PROD_WIDTH{1'sb0}}   ;
         
         if (valid_in) begin
             num_products[0] = {{(PROD_WIDTH - DATA_WIDTH){iir_in[DATA_WIDTH - 1]}}, iir_in} * 
+
                               {{(PROD_WIDTH - COEFF_WIDTH){num_coeff[0][COEFF_WIDTH - 1]}}, num_coeff[0]};
+
+
             num_products[1] = {{(PROD_WIDTH - DATA_WIDTH){x_delay[0][DATA_WIDTH - 1]}}, x_delay[0]} * 
+
                               {{(PROD_WIDTH - COEFF_WIDTH){num_coeff[1][COEFF_WIDTH - 1]}}, num_coeff[1]};
+
+
             num_products[2] = {{(PROD_WIDTH - DATA_WIDTH){x_delay[1][DATA_WIDTH - 1]}}, x_delay[1]} * 
+
                               {{(PROD_WIDTH - COEFF_WIDTH){num_coeff[2][COEFF_WIDTH - 1]}}, num_coeff[2]};
 
+
             den_products[0] = {{(PROD_WIDTH - DATA_WIDTH){y_delay[0][DATA_WIDTH - 1]}}, y_delay[0]} * 
+
                               {{(PROD_WIDTH - COEFF_WIDTH){den_coeff[0][COEFF_WIDTH - 1]}}, den_coeff[0]};
+
+
             den_products[1] = {{(PROD_WIDTH - DATA_WIDTH){y_delay[1][DATA_WIDTH - 1]}}, y_delay[1]} * 
+
                               {{(PROD_WIDTH - COEFF_WIDTH){den_coeff[1][COEFF_WIDTH - 1]}}, den_coeff[1]};
             
             result_acc = (num_products[0] + num_products[1] + num_products[2]) - (den_products[0] + den_products[1]);
@@ -155,30 +178,26 @@ module IIR #(
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             valid_out  <= 1'b0;
-            overflow   <= 1'b0;
-            underflow  <= 1'b0;
-        end else if (bypass) begin
+        end else if (bypass || valid_in) begin
             valid_out  <= valid_in;
-            overflow   <= 1'b0;
-            underflow  <= 1'b0;
-        end else if (valid_in) begin
-            valid_out <= valid_in;
-            overflow   <= overflow_reg;
-            underflow  <= underflow_reg;
         end else begin
             valid_out  <= 1'b0;
-            overflow   <= 1'b0;
-            underflow  <= 1'b0;
         end
     end
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            iir_out <= {DATA_WIDTH{1'sb0}};
+            iir_out     <= {DATA_WIDTH{1'sb0}}  ;
+            overflow    <= 1'b0                 ;
+            underflow   <= 1'b0                 ;
         end else if (bypass) begin
-            iir_out <= iir_in;
+            iir_out     <= iir_in   ;
+            overflow    <= 1'b0     ;
+            underflow   <= 1'b0     ;
         end else if (valid_out_reg) begin
-            iir_out <= rounded_result;
+            iir_out     <= rounded_result   ;
+            overflow    <= overflow_reg     ;
+            underflow   <= underflow_reg    ;
         end
     end
 
@@ -188,8 +207,6 @@ module IIR #(
         .ACC_FRAC       (ACC_FRAC)      ,
         .OUT_WIDTH      (DATA_WIDTH)    ,
         .OUT_FRAC       (DATA_FRAC)     ,
-        .PROD_WIDTH     (PROD_WIDTH)    ,
-        .PROD_FRAC      (PROD_FRAC)     ,
         .SCALE          (SCALE)
     ) ROUNDING_INST (
         .data_in        (result_acc)        ,

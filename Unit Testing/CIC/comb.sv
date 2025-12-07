@@ -5,11 +5,9 @@
 // Description: A comb stage for CIC filter
 ////////////////////////////////////////////////////////////////////////////////
 
-
-
 module COMB #(
-    parameter ACC_WIDTH     = 42    ,       // Accumulator width
-    parameter N             = 1             // Differential delay
+    parameter int ACC_WIDTH     = 32'd42    ,       // Accumulator width
+    parameter int N             = 32'd1             // Differential delay
 ) (
     input  logic                                clk      ,
     input  logic                                rst_n    ,
@@ -18,25 +16,40 @@ module COMB #(
     output logic signed [ACC_WIDTH - 1 : 0]     comb_out ,
     output logic                                valid_out
 );
+    
+    logic [(N * ACC_WIDTH) - 1 : 0] delay_line;
 
-    logic signed [ACC_WIDTH - 1 : 0] delay_reg [N - 1 : 0];
-
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            for (int i = 0 ; i < N ; i++) begin
-                delay_reg[i] <= {ACC_WIDTH{1'sb0}};
+    generate
+        if (N == 1) begin
+            always @(posedge clk or negedge rst_n) begin
+                if (!rst_n) begin
+                    delay_line  <= {(N * ACC_WIDTH){1'b0}}  ;
+                    comb_out    <= {ACC_WIDTH{1'sb0}}       ;
+                    valid_out   <= 1'b0                     ;
+                end else if (valid_in) begin
+                    delay_line  <= comb_in                      ;
+                    comb_out    <= comb_in - $signed(delay_line);
+                    valid_out   <= 1'b1                         ;
+                end else begin
+                    valid_out <= 1'b0;
+                end
             end
-            comb_out <= {ACC_WIDTH{1'sb0}};
-        end else if (valid_in) begin
-            
-            delay_reg[0] <= comb_in;
-
-            for(int j = 1 ; j < N ; j++) begin
-                delay_reg[j] <= delay_reg[j - 1]; 
+        end else begin
+            always @(posedge clk or negedge rst_n) begin
+                if (!rst_n) begin
+                    delay_line  <= {(N * ACC_WIDTH){1'b0}}  ;
+                    comb_out    <= {ACC_WIDTH{1'sb0}}       ;
+                    valid_out   <= 1'b0                     ;
+                end else if (valid_in) begin
+                    delay_line  <= {delay_line[0 +: ((N - 1) * ACC_WIDTH)], comb_in}                ;
+                    comb_out    <= comb_in - delay_line[(N * ACC_WIDTH) - 1 : (N - 1) * ACC_WIDTH]  ;
+                    valid_out   <= 1'b1                                                             ;
+                end else begin
+                    valid_out <= 1'b0;
+                end
             end
-            
-            comb_out <= comb_in - delay_reg[N - 1];
-            
         end
-    end
+    endgenerate
+
+    
 endmodule

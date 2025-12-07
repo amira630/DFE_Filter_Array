@@ -6,8 +6,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 module INTEG #(
-    parameter DATA_WIDTH = 16   , 
-    parameter ACC_WIDTH = 20
+    parameter int DATA_WIDTH = 32'd16   , 
+    parameter int ACC_WIDTH = 32'd20
 ) (
     input  logic                                clk         ,
     input  logic                                rst_n       ,   

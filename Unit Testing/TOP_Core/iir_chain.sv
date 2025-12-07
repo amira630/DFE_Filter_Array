@@ -1,13 +1,23 @@
+////////////////////////////////////////////////////////////////////////////////
+// Design Author: Mustaf EL-Sherif
+// Verified by Mustaf EL-Sherif
+// --> Linting check
+// --> Synthesis
+// --> Functional Simulation
+// Design: IIR Chain
+// Date: 02-11-2025
+////////////////////////////////////////////////////////////////////////////////
+
 module IIR_chain #(
-    parameter   DATA_WIDTH      = 16                                    ,
-    parameter   DATA_FRAC       = 15                                    ,
-    parameter   COEFF_WIDTH     = 20                                    ,
-    parameter   COEFF_FRAC      = 18                                    ,
+    parameter   int  DATA_WIDTH         = 32'd16                            ,
+    parameter   int  DATA_FRAC          = 32'd15                            ,
+    parameter   int  COEFF_WIDTH        = 32'd20                            ,
+    parameter   int  COEFF_FRAC         = 32'd18                            ,
 
     // Coefficient depths
-    localparam NUM_COEFF_DEPTH = 3                                      ,
-    localparam DEN_COEFF_DEPTH = 2                                      ,
-    localparam COEFF_DEPTH     = NUM_COEFF_DEPTH + DEN_COEFF_DEPTH      
+    localparam  int NUM_COEFF_DEPTH     = 32'd3                             ,
+    localparam  int DEN_COEFF_DEPTH     = 32'd2                             ,
+    localparam  int COEFF_DEPTH         = NUM_COEFF_DEPTH + DEN_COEFF_DEPTH      
 ) (
     /********************** General I/O ************************/
     input   logic                               clk                                             ,
@@ -52,15 +62,15 @@ module IIR_chain #(
     output  logic                               overflow_2_4MHz                                 ,
     output  logic                               underflow_2_4MHz                                
 );
-    localparam NOTCH_1MHZ   = 0;
-    localparam NOTCH_2MHZ   = 1;
-    localparam NOTCH_2_4MHZ = 2;
+    localparam logic [1 : 0] NOTCH_1MHZ   = 2'b00;
+    localparam logic [1 : 0] NOTCH_2MHZ   = 2'b01;
+    localparam logic [1 : 0] NOTCH_2_4MHZ = 2'b10;
 
     logic signed [DATA_WIDTH - 1 : 0]   iir_out_1MHz    ;
-    logic signed [DATA_WIDTH - 1 : 0]   iir_out_2_4MHz    ;
+    logic signed [DATA_WIDTH - 1 : 0]   iir_out_2_4MHz  ;
 
-    logic valid_1MHz_out;
-    logic valid_2_4MHz_out;
+    logic                               valid_1MHz_out  ;
+    logic                               valid_2_4MHz_out;
 
     IIR #(
         .DATA_WIDTH      (DATA_WIDTH)  ,
@@ -94,11 +104,11 @@ module IIR_chain #(
     ) IIR_1MHZ_NOTCH (
         .clk           (clk)                ,
         .rst_n         (rst_n)              ,
-        .valid_in      (valid_2_4MHz_out)           ,
+        .valid_in      (valid_2_4MHz_out)   ,
         .bypass        (bypass_1MHz)        ,   
         .coeff_wr_en   (coeff_wr_en_1MHz)   ,
         .coeff_in      (coeff_in_1MHz)      ,
-        .iir_in        (iir_out_2_4MHz)             ,
+        .iir_in        (iir_out_2_4MHz)     ,
         .iir_out       (iir_out_1MHz)       ,   
         .coeff_out     (coeff_out_1MHz)     ,
         .overflow      (overflow_1MHz)      ,
@@ -121,13 +131,10 @@ module IIR_chain #(
         .coeff_wr_en    (coeff_wr_en_2MHz)   ,
         .coeff_in       (coeff_in_2MHz)      ,
         .iir_in         (iir_out_1MHz)       ,
-        .iir_out        (iir_out)       ,   
+        .iir_out        (iir_out)            ,   
         .coeff_out      (coeff_out_2MHz)     ,
         .overflow       (overflow_2MHz)      ,
         .underflow      (underflow_2MHz)     ,
         .valid_out      (valid_out)
     );
-
-    
-    
 endmodule

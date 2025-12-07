@@ -43,7 +43,7 @@ module top_tb ();
     real                        current_error                               ;
 
     logic [DATA_WIDTH - 1 : 0]  input_samples        [N_SAMPLES_I - 1 : 0]  ;
-    logic [DATA_WIDTH - 1 : 0]  output_exp_samples   [N_SAMPLES_I - 1 : 0]  ;
+    logic [DATA_WIDTH - 1 : 0]  output_exp_samples   [32000 - 1 : 0]  ;
 
     fractional_decimator #(
         .DATA_WIDTH  (DATA_WIDTH)       ,

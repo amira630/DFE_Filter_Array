@@ -4,7 +4,7 @@ module DFE_tb();
     ///////////////////// Parameters ////////////////////////
     /////////////////////////////////////////////////////////
 
-    parameter N_SAMPLES_I   = 48000                     ;
+    parameter N_SAMPLES_I   = 4800                      ;   // Max = 48000
     parameter FREQ_CLK      = 9_000_000                 ;
     parameter T_CLK         = 1_000_000_000 / FREQ_CLK  ;
 
@@ -12,7 +12,8 @@ module DFE_tb();
     parameter string MATLAB_FILE_NAME = "System_run.m";
     parameter string PATH = "../MATLAB/";
     parameter string OUT_PATH = "";
-    parameter string BASE_PATH = ".";           // Path where MATLAB output files are located
+    parameter string BASE_PATH = "scenario_";           // Path where MATLAB output files are located
+    parameter string VCD_FILE_NAME = "DFE.vcd";        // VCD output file name
 
     parameter DATA_WIDTH   = 16        ;
     parameter DATA_FRAC    = 15        ;
@@ -24,13 +25,36 @@ module DFE_tb();
     parameter NUM_DENUM    = 5         ;
     parameter COMP         = 4         ;
 
-    int i; 
-    int n;
+    integer input_idx = 0;
+    integer frac_decimator_idx = 0;
+    integer iir_24mhz_idx = 0;
+    integer iir_5mhz_1_idx = 0;
+    integer iir_5mhz_2_idx = 0;
+    integer cic_idx = 0;
+    integer output_idx = 0;
+
+    typedef enum {EMPTY, FRACTIONAL_DECIMATOR, IIR_24, IIR_5_1, IIR_5_2, IIR, CIC} BLOCK_SEL;
+
+    typedef enum {SINE, SQUARE, TRIANGULAR} INPUT_SHAPE; 
+    
+    BLOCK_SEL block_var;
+    BLOCK_SEL status_var;
+    BLOCK_SEL coeff_var;
+
+    logic [1 : 0] input_shape [0 : 0];
+    INPUT_SHAPE shape_var;
 
     bit trig;
+    bit core_test_end;
 
-    integer j = 0;
-  
+    logic [3:0] bypass_TC;
+    logic [4:0] cic_decf_TC [4:0];
+
+    logic signed [COEFF_WIDTH - 1 : 0] frac_dec_coeff_tb [N_TAP - 1 : 0];
+    logic signed [COEFF_WIDTH - 1 : 0] iir_24mhz_coeff_tb [NUM_DENUM - 1 : 0];
+    logic signed [COEFF_WIDTH - 1 : 0] iir_5mhz_1_coeff_tb [NUM_DENUM - 1 : 0];
+    logic signed [COEFF_WIDTH - 1 : 0] iir_5mhz_2_coeff_tb [NUM_DENUM - 1 : 0];
+    
     real input_sig;
     real frac_decimator_sig;
     real iir_24mhz_sig;
@@ -39,8 +63,20 @@ module DFE_tb();
     real cic_sig;
     real output_sig;
 
+    real frac_decimator_sig_tb;
+    real iir_24mhz_sig_tb;
+    real iir_5mhz_1_sig_tb;
+    real iir_5mhz_2_sig_tb;
+    real cic_sig_tb;
+
     real block_out_sig;
-    real core_out_sig;
+    real core_out_sig_tb;
+
+    logic frac_decimator_valid_out_tb;
+    logic iir_24mhz_valid_out_tb;
+    logic iir_5mhz_1_valid_out_tb;
+    logic iir_5mhz_2_valid_out_tb;
+    logic cic_valid_out_tb;
 
     /////////////////////////////////////////////////////////
     /////////// Testbench Signal Declaration ////////////////
@@ -88,9 +124,7 @@ module DFE_tb();
         .DATA_FRAC  (DATA_FRAC)                           ,
         .COEFF_WIDTH(COEFF_WIDTH)                         ,
         .COEFF_FRAC (COEFF_FRAC)                          ,
-        //******************** Fractional Decimator Parameters **********//
-        .N_TAP      (N_TAP)                               ,
-
+        
         //********************** APB Parameters ********************//
         .ADDR_WIDTH  (ADDR_WIDTH)                         ,
         .PDATA_WIDTH (PDATA_WIDTH)                        ,
@@ -123,6 +157,13 @@ module DFE_tb();
     );
 
     ////////////////////////////////////////////////////////
+    ////////////////// Report variables ////////////////////
+    ////////////////////////////////////////////////////////
+
+    integer core_out_success    = 0;
+    integer core_out_fail       = 0;
+    
+    ////////////////////////////////////////////////////////
     ////////////////// Clock Generator  ////////////////////
     ////////////////////////////////////////////////////////
 
@@ -130,32 +171,119 @@ module DFE_tb();
         clk_tb = 0;
         forever #(T_CLK/2) clk_tb = ~clk_tb;
     end
- 
+
+    ////////////////////////////////////////////////////////
+    ////////////////// Clocking Block  /////////////////////
+    ////////////////////////////////////////////////////////
+
+    clocking cb @(posedge clk_tb);
+        output negedge valid_in_tb;
+        output #1step core_in_tb;
+        output #1step input_sig;
+    endclocking
+
     ////////////////////////////////////////////////////////
     /////////// Applying Stimulus on Inputs //////////////// 
     ////////////////////////////////////////////////////////
 
     //////////////////  Response  ////////////////////
 
+    assign frac_decimator_valid_out_tb = DUT.U_CORE.frac_dec_valid_out  ;
+    assign iir_24mhz_valid_out_tb      = DUT.U_CORE.IIR.valid_2_4MHz_out;
+    assign iir_5mhz_1_valid_out_tb     = DUT.U_CORE.IIR.valid_1MHz_out  ;
+    assign iir_5mhz_2_valid_out_tb     = DUT.U_CORE.IIR.valid_out       ;
+    assign cic_valid_out_tb            = DUT.U_CORE.valid_out           ;
+ 
     always_ff @(posedge clk_tb or negedge rst_n_tb) begin
         if (!rst_n_tb) begin
-            j <= 0;
-            input_sig               <= 0;
+            frac_decimator_idx <= 0;
             frac_decimator_sig      <= 0;
+        end else if (frac_decimator_valid_out_tb && trig && frac_decimator_idx < frac_decimator_exp.size()) begin
+            frac_decimator_sig      <= $itor($signed(frac_decimator_exp[frac_decimator_idx])) / 32768.0;
+            frac_decimator_idx <= frac_decimator_idx + 1;
+        end
+    end
+
+    always_ff @(posedge clk_tb or negedge rst_n_tb) begin
+        if (!rst_n_tb) begin
+            iir_24mhz_idx <= 0;
             iir_24mhz_sig           <= 0;
+        end else if (iir_24mhz_valid_out_tb && trig && iir_24mhz_idx < iir_24mhz_exp.size()) begin
+            iir_24mhz_sig           <= $itor($signed(iir_24mhz_exp[iir_24mhz_idx])) / 32768.0;
+            iir_24mhz_idx <= iir_24mhz_idx + 1;
+        end
+    end
+
+    always_ff @(posedge clk_tb or negedge rst_n_tb) begin
+        if (!rst_n_tb) begin
+            iir_5mhz_1_idx <= 0;
             iir_5mhz_1_sig          <= 0;
+        end else if (iir_5mhz_1_valid_out_tb && trig && iir_5mhz_1_idx < iir_5mhz_1_exp.size()) begin
+            iir_5mhz_1_sig          <= $itor($signed(iir_5mhz_1_exp[iir_5mhz_1_idx])) / 32768.0;
+            iir_5mhz_1_idx <= iir_5mhz_1_idx + 1;
+        end
+    end
+
+    always_ff @(posedge clk_tb or negedge rst_n_tb) begin
+        if (!rst_n_tb) begin
+            iir_5mhz_2_idx <= 0;
             iir_5mhz_2_sig          <= 0;
-            cic_sig                 <= 0;
-            output_sig              <= 0;
-        end else if (trig) begin
-            input_sig               <= $itor($signed(input_exp[j])) / 32768.0;
-            frac_decimator_sig      <= $itor($signed(frac_decimator_exp[j])) / 32768.0;
-            iir_24mhz_sig           <= $itor($signed(iir_24mhz_exp[j])) / 32768.0;
-            iir_5mhz_1_sig          <= $itor($signed(iir_5mhz_1_exp[j])) / 32768.0;
-            iir_5mhz_2_sig          <= $itor($signed(iir_5mhz_2_exp[j])) / 32768.0;
-            cic_sig                 <= $itor($signed(cic_exp[j])) / 32768.0;
-            output_sig              <= $itor($signed(output_exp[j])) / 32768.0;
-            j = j + 1;
+        end else if (iir_5mhz_2_valid_out_tb && trig && iir_5mhz_2_idx < iir_5mhz_2_exp.size()) begin
+            iir_5mhz_2_sig          <= $itor($signed(iir_5mhz_2_exp[iir_5mhz_2_idx])) / 32768.0;
+            iir_5mhz_2_idx <= iir_5mhz_2_idx + 1 ;
+        end
+    end
+
+    always_ff @(posedge clk_tb or negedge rst_n_tb) begin
+        if (!rst_n_tb) begin
+            cic_idx <= 0;
+            cic_sig <= 0;
+        end else if (cic_valid_out_tb && trig && cic_idx < cic_exp.size()) begin
+            cic_sig <= $itor($signed(cic_exp[cic_idx])) / 32768.0;
+            cic_idx <= cic_idx + 1;
+        end
+    end
+
+    always_ff @(posedge clk_tb or negedge rst_n_tb) begin
+        if (!rst_n_tb) begin
+            output_idx <= 0;
+            output_sig               <= 0;
+        end else if (valid_out_tb && trig && output_idx < output_exp.size()) begin
+            output_sig               <= $itor($signed(output_exp[output_idx])) / 32768.0;
+            output_idx <= output_idx + 1;
+        end
+    end
+
+
+    always_ff @(posedge clk_tb or negedge rst_n_tb) begin
+        if (!rst_n_tb) begin
+            input_idx       <= 0    ;
+            cb.input_sig    <= 0    ;
+            cb.valid_in_tb  <= 1'b0 ;
+            cb.core_in_tb   <= '0   ;
+        end else if (trig && input_idx < input_exp.size()) begin
+            cb.input_sig    <= $itor($signed(input_exp[input_idx])) / 32768.0   ;
+            cb.core_in_tb   <= input_exp[input_idx]                             ;
+            cb.valid_in_tb  <= 1'b1                                             ;
+            input_idx       <= input_idx + 1                                    ;
+        end else begin
+            cb.valid_in_tb  <= 1'b0 ;
+        end
+    end
+
+    always_ff @(posedge clk_tb or negedge rst_n_tb) begin
+        if (!rst_n_tb) begin
+            frac_decimator_sig_tb  <= 0;
+            iir_24mhz_sig_tb       <= 0;
+            iir_5mhz_1_sig_tb      <= 0;
+            iir_5mhz_2_sig_tb      <= 0;
+            cic_sig_tb             <= 0;
+        end else begin
+            frac_decimator_sig_tb  <= $itor($signed(DUT.U_CORE.frac_dec_out)) / 32768.0;
+            iir_24mhz_sig_tb       <= $itor($signed(DUT.U_CORE.IIR.iir_out_2_4MHz)) / 32768.0;
+            iir_5mhz_1_sig_tb      <= $itor($signed(DUT.U_CORE.IIR.iir_out_1MHz)) / 32768.0;
+            iir_5mhz_2_sig_tb      <= $itor($signed(DUT.U_CORE.IIR.iir_out)) / 32768.0;
+            cic_sig_tb             <= $itor($signed(DUT.U_CORE.core_out)) / 32768.0;
         end
     end
 
@@ -163,221 +291,440 @@ module DFE_tb();
     always_ff @(posedge clk_tb or negedge rst_n_tb) begin
         if (!rst_n_tb) begin
             block_out_sig <= 'b0;
-            core_out_sig  <= 'b0;
-        end else if (valid_in_tb) begin
+            core_out_sig_tb  <= 'b0;
+        end else begin
             block_out_sig <=  $itor($signed(block_out_tb)) / 32768.0;
-            core_out_sig  <= $itor($signed(core_out_tb)) / 32768.0;
+            core_out_sig_tb  <= $itor($signed(core_out_tb)) / 32768.0;
+        end
+    end
+
+    always_ff @(posedge clk_tb) begin
+        if (!core_test_end) begin
+            if (core_out_sig_tb === output_sig) begin
+                core_out_success = core_out_success + 1;
+            end else begin
+                core_out_fail = core_out_fail + 1;
+            end
+        end
+    end
+
+    always_ff @(posedge clk_tb) begin
+        if (input_shape[0] == 2'b00) begin
+            shape_var = SINE;
+        end else if (input_shape[0] == 2'b01) begin
+            shape_var = SQUARE;
+        end else begin
+            shape_var = TRIANGULAR;
         end
     end
 
     initial begin
         // System Functions
-        $dumpfile("DFE.vcd");
+        $dumpfile(VCD_FILE_NAME);
         $dumpvars;
 
         // initialization
         init();
+        repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+
+        repeat (15) begin
+            bypass_TC = bypass_TC + 1;
+            // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+            TC_cfg({3'b0_0_0, cic_decf_TC[2]}, bypass_TC, 0, 1);
+            SET_OUTPUT($random % 4);
+            SET_COEFF($random % 5);
+            READ_STATUS(4);
+            repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+        end
+
+        repeat (2) begin
+            bypass_TC = 0;
+            TC_cfg({3'b0_0_1, cic_decf_TC[0]}, 4'b0000, 1, 1);
+            repeat (16) begin
+                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+                TC_cfg({3'b0_0_1, cic_decf_TC[0]}, bypass_TC, 0, 1);
+                SET_OUTPUT($random % 4);
+                SET_COEFF($random % 5);
+                READ_STATUS(4);
+                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+                bypass_TC = bypass_TC + 1;
+            end
+        end
+
+        repeat (2) begin
+            bypass_TC = 0;
+            TC_cfg({3'b0_0_1, cic_decf_TC[1]}, 4'b0000, 1, 1);
+            repeat (16) begin
+                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+                TC_cfg({3'b0_0_1, cic_decf_TC[1]}, bypass_TC, 0, 1);
+                SET_OUTPUT($random % 4);
+                SET_COEFF($random % 5);
+                READ_STATUS(4);
+                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+                bypass_TC = bypass_TC + 1;
+            end
+        end
+
+        repeat (2) begin
+            bypass_TC = 0;
+            TC_cfg({3'b1_0_1, cic_decf_TC[2]}, 4'b0000, 1, 1);
+            repeat (16) begin
+                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+                TC_cfg({3'b1_0_1, cic_decf_TC[2]}, bypass_TC, 0, 1);
+                SET_OUTPUT($random % 4);
+                SET_COEFF($random % 5);
+                READ_STATUS(4);
+                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+                bypass_TC = bypass_TC + 1;
+            end
+        end
+
+        repeat (1) begin
+            bypass_TC = 0;
+            TC_cfg({3'b1_1_1, cic_decf_TC[3]}, 4'b0000, 1, 1);
+            repeat (16) begin
+                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+                TC_cfg({3'b1_1_1, cic_decf_TC[3]}, bypass_TC, 0, 1);
+                SET_OUTPUT($random % 4);
+                SET_COEFF($random % 5);
+                READ_STATUS($random % 5);
+                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+                bypass_TC = bypass_TC + 1;
+            end
+        end
+
+        repeat (2) begin
+            bypass_TC = 0;
+            TC_cfg({3'b0_1_1, cic_decf_TC[4]}, 4'b0000, 1, 1);
+            repeat (16) begin
+                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+                TC_cfg({3'b1_1_1, cic_decf_TC[4]}, bypass_TC, 0, 1);
+                SET_OUTPUT($random % 4);
+                SET_COEFF($random % 5);
+                READ_STATUS($random % 5);
+                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+                bypass_TC = bypass_TC + 1;
+            end
+        end
+
+
+        core_test_end = 1;
+        // Verify coefficient readback
+        $display("========== Verifying Coefficient Readback ==========");
+        SET_COEFF(0);  // Default coefficients
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(1);  // Fractional decimator
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(2);  // 2.4 MHz IIR
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(4);  // 5 MHz IIR (2 MHz alias)
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(0);  // Default coefficients
         
-        repeat (N_SAMPLES_I) @(negedge clk_tb);
+        // Test coefficient write functionality
+        $display("========== Coefficient Write Tests ==========");
+        
+        // Test 1: Write Fractional Decimator Coefficients
+        $display("[%0t] Writing Fractional Decimator Coefficients...", $time);
+        CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
+        $display("[%0t] Fractional Decimator coefficients written", $time);
+
+        // Test 2: Write 2.4 MHz IIR Coefficients
+        $display("[%0t] Writing 2.4 MHz IIR Coefficients...", $time);
+        CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
+        $display("[%0t] 2.4 MHz IIR coefficients written", $time);
+    
+        // Test 3: Write 5 MHz IIR (1 MHz alias) Coefficients
+        $display("[%0t] Writing 5 MHz IIR (1 MHz alias) Coefficients...", $time);
+        CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
+        $display("[%0t] 5 MHz IIR (1 MHz alias) coefficients written", $time);
+
+        // Test 4: Write 5 MHz IIR (2 MHz alias) Coefficients
+        $display("[%0t] Writing 5 MHz IIR (2 MHz alias) Coefficients...", $time);
+        CHANGE_IIR52_COEFF(iir_5mhz_2_coeff_tb);
+        $display("[%0t] 5 MHz IIR (2 MHz alias) coefficients written", $time);
+
+        $display("========== Reading Coeff After Modification ==========");
+
+        SET_COEFF(0);  // Default coefficients
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(1);  // Fractional decimator
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(2);  // 2.4 MHz IIR
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(4);  // 5 MHz IIR (2 MHz alias)
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(0);  // Default coefficients
+
+        $display("========== Testing After Coefficient Modification ==========");
+
+        repeat (1) begin
+            bypass_TC = 0;
+            TC_cfg({3'b0_0_0, cic_decf_TC[2]}, 4'b0000, 1, 1);
+            repeat (16) begin
+                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+                TC_cfg({3'b0_0_0, cic_decf_TC[2]}, bypass_TC, 0, 1);
+
+                CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
+                CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
+                CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
+                CHANGE_IIR52_COEFF(iir_5mhz_2_coeff_tb);
+
+                SET_OUTPUT($random % 4);
+                SET_COEFF($random % 5);
+                READ_STATUS($random % 5);
+                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+                bypass_TC = bypass_TC + 1;
+            end
+        end
+        
+        $display("===========================================");
+        $display("Core Output Success Count: %0d", core_out_success);
+        $display("Core Output Failure Count: %0d", core_out_fail);
+        $display("===========================================");
         $stop;
     end
 
-    ////////////////////////////////////////////////////////
-    /////////////////////// TASKS //////////////////////////
-    ////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////
+    /////////////////////// TASKS //////////////////////
+    ////////////////////////////////////////////////////
 
-    /////////////// Signals Initialization //////////////////
+    /////////////// Signals Initialization /////////////
 
-    task init ;
-        begin
-            // Default Configuration
-            // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-            TC_cfg(12'b0_0_0_0_0_0_0_00100, 1);  
-            
-            MTRANS_tb = 1'b0;
-            MWRITE_tb = 1'b0;
-            MSELx_tb  = 'b10;
-            MADDR_tb  = $random();
-            MWDATA_tb = $random();
-            valid_in_tb = 1'b1;
-            core_in_tb = $random();
-            assert_reset();
-        end	
+    task init ();
+
+        bypass_TC = 0;
+        cic_decf_TC[0] = 5'b00001; // 1
+        cic_decf_TC[1] = 5'b00010; // 2
+        cic_decf_TC[2] = 5'b00100; // 4
+        cic_decf_TC[3] = 5'b01000; // 8
+        cic_decf_TC[4] = 5'b10000; // 16
+
+        MTRANS_tb = 1'b0;
+        MWRITE_tb = 1'b0;
+        MSELx_tb  = 'b10;
+        MADDR_tb  = $random();
+        MWDATA_tb = $random();
+        core_in_tb = $random();
+        valid_in_tb = 0;
+
+        core_test_end = 0;
+
+        SET_COEFF(0);
+        SET_OUTPUT(0);
+        READ_STATUS(0);
+
+        for (int i = 0; i < N_TAP; i = i + 1) begin
+            frac_dec_coeff_tb[i] = 20'sh11111;
+        end
+        for (int i = 0; i < NUM_DENUM; i = i + 1) begin
+            iir_24mhz_coeff_tb[i] = 20'sh22222;
+            iir_5mhz_1_coeff_tb[i] = 20'sh33333;
+            iir_5mhz_2_coeff_tb[i] = 20'sh44444;
+        end
+        assert_reset();
+
+        // Default Configuration - Run MATLAB once at initialization
+        TC_cfg({3'b0_0_0, cic_decf_TC[2]}, 4'b0000, 1, 1);  
     endtask
 
-    ///////////////////////// RESET /////////////////////////
+    ///////////////////////// RESET ////////////////////
 
-    task assert_reset;
-        begin
-            rst_n_tb = 1'b0;
-            valid_in_tb = 1'b0;
-            repeat (2) @(negedge clk_tb);
-            rst_n_tb = 1'b1;
-        end
+    task assert_reset ();
+        
+        rst_n_tb = 1'b0;
+        repeat (2) @(negedge clk_tb);
+        rst_n_tb = 1'b1;
     endtask
 
-    /////////////////////// Operations ////////////////////////
+    /////////////////////// Operations /////////////////
 
-    task RW ;
-        input logic                          WR;
-        input logic                          last;
-        input logic        [ADDR_WIDTH-1:0]  ADDR;
-        input logic        [COMP-1:0]        SELx;
-        input logic signed [COEFF_WIDTH-1:0] WDATA;
-        begin
-            n = 0;
-            MWRITE_tb = WR;
-            MADDR_tb  = ADDR;
-            MTRANS_tb = 1'b1;
-            MSELx_tb  = SELx;
-            $display("MTRANS_tb is asserted at %0t", $realtime);
-            if (WR) begin
-                MWDATA_tb = WDATA;
-            end
-            repeat (1) @(negedge clk_tb);
-            MTRANS_tb = 1'b0;
-            $display("MTRANS_tb is de-asserted at %0t", $realtime);
-            if (last)
-                @(negedge clk_tb);
-            // MSELx_tb  = 'b0;
+    task RW (
+        input logic                          WR     ,
+        input logic                          last   ,
+        input logic        [ADDR_WIDTH-1:0]  ADDR   ,
+        input logic        [COMP-1:0]        SELx   ,
+        input logic signed [COEFF_WIDTH-1:0] WDATA
+    );
+        MWRITE_tb = WR;
+        MADDR_tb  = ADDR;
+        MTRANS_tb = 1'b1;
+        MSELx_tb  = SELx;
+        $display("MTRANS_tb is asserted at %0t", $realtime);
+        if (WR) begin
+            MWDATA_tb = WDATA;
         end
+
+        repeat (2) @(negedge clk_tb);
+
+        MTRANS_tb = 1'b0;
+        $display("MTRANS_tb is de-asserted at %0t", $realtime);
+        if (last) @(negedge clk_tb);
+        // MSELx_tb  = 'b0;
     endtask
 
-    task BYPASS ;
-        input logic [1:0] sel; 
-        input logic off;
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            RW(1, 1, N_TAP + 3*NUM_DENUM +1 +sel,'b1000, off); // Write CTRLs
-        end
+    task BYPASS (
+        input logic [1:0] sel,
+        input logic bypass_flag
+    );
+        // WR, last, ADDR, SELx, WDATA
+        RW(1, 1, (N_TAP + (3 * NUM_DENUM) + 1 + sel), 'b1000, bypass_flag); // Write CTRLs
     endtask
 
-    task SET_OUTPUT ;
-        input logic [1:0] sel; 
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            RW(1, 1, N_TAP + 3*NUM_DENUM + 6,'b1000, sel); // Write OUT_SEL
+    task SET_OUTPUT (
+        input logic [1:0] sel
+    );
+
+        if (sel == 0) begin
+            block_var = EMPTY;
+        end else if (sel == 1) begin
+            block_var = FRACTIONAL_DECIMATOR;
+        end else if (sel == 2) begin
+            block_var = IIR;
+        end else begin
+            block_var = CIC;
         end
+        
+        // WR, last, ADDR, SELx, WDATA
+        RW(1, 1, N_TAP + 3*NUM_DENUM + 6,'b1000, sel); // Write OUT_SEL
     endtask
 
-    task SET_COEFF ;
-        input logic [2:0] sel;
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            RW(1, 1, N_TAP + 3*NUM_DENUM + 7,'b1000, sel); // Write COEFF_SEL
+    task SET_COEFF (
+        input logic [2:0] sel
+    );
+
+        if (sel == 0) begin
+            coeff_var = EMPTY;
+        end else if (sel == 1) begin
+            coeff_var = FRACTIONAL_DECIMATOR;
+        end else if (sel == 2) begin
+            coeff_var = IIR_5_1;
+        end else if (sel == 3) begin
+            coeff_var = IIR_5_2;
+        end else begin
+            coeff_var = IIR_24;
         end
+        
+        // WR, last, ADDR, SELx, WDATA
+        RW(1, 1, N_TAP + 3*NUM_DENUM + 7,'b1000, sel); // Write COEFF_SEL
     endtask
     
-    task READ_STATUS ;
-        input logic [2:0] sel;
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            RW(1, 1, N_TAP + 3*NUM_DENUM + 8,'b1000, sel); // Write STATUS
+    task READ_STATUS (
+        input logic [2:0] sel
+    );
+
+        if (sel == 0) begin
+            status_var = EMPTY;
+        end else if (sel == 1) begin
+            status_var = FRACTIONAL_DECIMATOR;
+        end else if (sel == 2) begin
+            status_var = IIR_5_1;
+        end else if (sel == 3) begin
+            status_var = IIR_5_2;
+        end else if (sel == 4) begin
+            status_var = IIR_24;
+        end else begin
+            status_var = CIC;
+        end
+
+        // WR, last, ADDR, SELx, WDATA
+        RW(1, 1, N_TAP + 3*NUM_DENUM + 8,'b1000, sel); // Write STATUS
+    endtask
+
+    task CHANGE_DECIMATION (
+        input logic [4:0] rate
+    );
+        // WR, last, ADDR, SELx, WDATA
+        RW(1, 1, N_TAP + 3*NUM_DENUM,'b100, rate); // Write CIC_R
+    endtask
+
+    task CHANGE_FAC_DECI_COEFF (
+        input logic signed [COEFF_WIDTH-1:0] coeff [N_TAP - 1 : 0]
+    );
+        
+        // WR, last, ADDR, SELx, WDATA
+        for (int i = 0; i < N_TAP; i = i + 1) begin
+            RW(1, 0, i,'b1, coeff[i]); // Write Frac_Deci Coeff
         end
     endtask
 
-    task CHANGE_DECIMATION ;
-        input logic [4:0] rate;
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            RW(1, 1, N_TAP + 3*NUM_DENUM,'b100, rate); // Write CIC_R
+    task CHANGE_IIR24_COEFF (
+        input logic signed [COEFF_WIDTH-1:0] coeff [NUM_DENUM - 1 : 0]
+    );
+        // WR, last, ADDR, SELx, WDATA
+        for (int i = N_TAP; i < N_TAP + NUM_DENUM; i = i + 1) begin
+            RW(1, 0, i,'b10, coeff[i - N_TAP]); // Write IIR 2.4 Coeff
         end
     endtask
 
-    task CHANGE_FAC_DECI_COEFF ;
-        input logic signed [COEFF_WIDTH-1:0] coeff [N_TAP - 1 : 0];
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            for (i = 0; i < N_TAP; i = i + 1) begin
-                RW(1, 0, i,'b1, coeff[i]); // Write Frac_Deci Coeff
-            end
+    task CHANGE_IIR51_COEFF (
+        input logic signed [COEFF_WIDTH-1:0] coeff [NUM_DENUM -1 : 0]
+    );
+        // WR, last, ADDR, SELx, WDATA
+        for (int i = N_TAP + NUM_DENUM; i < N_TAP + 2*NUM_DENUM; i = i + 1) begin
+            RW(1, 0, i,'b10, coeff[i - N_TAP - NUM_DENUM]); // Write IIR 5_1 Coeff
         end
     endtask
 
-    task CHANGE_IIR24_COEFF ;
-        input logic signed [COEFF_WIDTH-1:0] coeff [NUM_DENUM - 1 : 0];
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            for (i = N_TAP; i < N_TAP + NUM_DENUM; i = i + 1) begin
-                RW(1, 0, i,'b10, coeff[i - N_TAP]); // Write IIR 2.4 Coeff
-            end
-        end         
-    endtask
-
-    task CHANGE_IIR51_COEFF ;
-        input logic signed [COEFF_WIDTH-1:0] coeff [NUM_DENUM -1 : 0];
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            for (i = N_TAP + NUM_DENUM; i < N_TAP + 2*NUM_DENUM; i = i + 1) begin
-                RW(1, 0, i,'b10, coeff[i - N_TAP - NUM_DENUM]); // Write IIR 5_1 Coeff
-            end
+    task CHANGE_IIR52_COEFF (
+        input logic signed [COEFF_WIDTH-1:0] coeff [NUM_DENUM -1 : 0]
+    );
+        // WR, last, ADDR, SELx, WDATA
+        for (int i = N_TAP + 2*NUM_DENUM; i < N_TAP + 3*NUM_DENUM; i = i + 1) begin
+            RW(1, 0, i,'b10, coeff[i - N_TAP - 2*NUM_DENUM]); // Write IIR 5_2 Coeff
         end
     endtask
 
-    task CHANGE_IIR52_COEFF ;
-        input logic signed [COEFF_WIDTH-1:0] coeff [NUM_DENUM -1 : 0];
-        begin
-            // WR, last, ADDR, SELx, WDATA
-            for (i = N_TAP + 2*NUM_DENUM; i < N_TAP + 3*NUM_DENUM; i = i + 1) begin
-                RW(1, 0, i,'b10, coeff[i - N_TAP - 2*NUM_DENUM]); // Write IIR 5_2 Coeff
-            end
-        end
-    endtask
-
-    task update_config ;
-        input logic [11 : 0] config_stream; 
-        // (f, a, s, bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic, cic_decf)                   
-        // Frequency randomization flag
-        // Amplitude randomization flag
-        // Shape randomization flag
-        // Fractional decimator bypass
-        // IIR 2.4MHz bypass
-        // IIR 5MHz bypass
-        // CIC bypass
-        // CIC decimation factor (5 bits)
+    task update_config (
+        input logic [7 : 0] config_stream 
+    );
+        // f                :  (config_stream[7])     :   Frequency randomization flag
+        // a                :  (config_stream[6])     :   Amplitude randomization flag
+        // s                :  (config_stream[5])      :   Shape randomization flag
+        // cic_decf         :  (config_stream[4:0])    :   CIC decimation factor (5 bits)
 
         integer file_handle;
         string filename;
 
-        begin
-
-            // Construct full file path
-            if (PATH == "") begin
-                filename = CONFIG_FILE_NAME;  // Default to current directory if no path
+        // Construct full file path
+        if (PATH == "") begin
+            filename = CONFIG_FILE_NAME;  // Default to current directory if no path
+        end else begin
+            // Ensure path ends with slash
+            if (PATH.substr(PATH.len()-1, PATH.len()-1) != "/") begin
+                filename = {PATH, "/", CONFIG_FILE_NAME};
             end else begin
-                // Ensure path ends with slash
-                if (PATH.substr(PATH.len()-1, PATH.len()-1) != "/") begin
-                    filename = {PATH, "/", CONFIG_FILE_NAME};
-                end else begin
-                    filename = {PATH, CONFIG_FILE_NAME};
-                end
+                filename = {PATH, CONFIG_FILE_NAME};
             end
-
-            // Open file for writing
-            file_handle = $fopen(filename, "w");
-
-            if (file_handle == 0) begin
-                $display("Error: Cannot open file %s for writing", filename);
-                $stop;
-            end
-
-            // Write signal configuration flags (bits 1-3)
-            $fwrite(file_handle, "%012b", config_stream);
-
-            // Close file
-            $fclose(file_handle);
-
-            $display("Configuration file '%s' created successfully", filename);
-            $display("Configuration: f=%b, a=%b, s=%b", config_stream[0], config_stream[1], config_stream[2]);
-            $display("Bypass flags: frac_dec=%b, iir_24=%b, iir_5=%b, cic=%b", 
-                     config_stream[3], config_stream[4], config_stream[5], config_stream[6]);
-            $display("CIC decf = %d (binary: %05b)", config_stream[11 : 7], config_stream[11 : 7]);
         end
+
+        // Open file for writing
+        file_handle = $fopen(filename, "w");
+
+        if (file_handle == 0) begin
+            $display("Error: Cannot open file %s for writing", filename);
+            $stop;
+        end
+
+        // Write signal configuration flags (bits 1-3)
+        $fwrite(file_handle, "%08b", config_stream);
+
+        // Close file
+        $fclose(file_handle);
+
+        $display("Configuration file '%s' created successfully", filename);
+        $display("Configuration: f=%b, a=%b, s=%b", config_stream[7], config_stream[6], config_stream[5]);
+        $display("CIC decf = %d (binary: %05b)", config_stream[4 : 0], config_stream[4 : 0]);
     endtask
 
-    task run_matlab_advanced;
-        input bit wait_for_completion;    // 1 = wait, 0 = run in background
-
+    task run_matlab (
+        input bit wait_for_completion    // 1 = wait, 0 = run in background
+    );
+        
         integer result;
         string command;
         string log_file;
@@ -385,79 +732,75 @@ module DFE_tb();
         string full_script_path;
         string matlab_function_name;  // ADDED: Extract function name without .m
 
-        begin
-            // ADDED: Extract function name without .m extension
-            if (MATLAB_FILE_NAME.len() > 2 && MATLAB_FILE_NAME.substr(MATLAB_FILE_NAME.len()-2, MATLAB_FILE_NAME.len()-1) == ".m") begin
-                matlab_function_name = MATLAB_FILE_NAME.substr(0, MATLAB_FILE_NAME.len()-3);
+        // ADDED: Extract function name without .m extension
+        if (MATLAB_FILE_NAME.len() > 2 && MATLAB_FILE_NAME.substr(MATLAB_FILE_NAME.len()-2, MATLAB_FILE_NAME.len()-1) == ".m") begin
+            matlab_function_name = MATLAB_FILE_NAME.substr(0, MATLAB_FILE_NAME.len()-3);
+        end else begin
+            matlab_function_name = MATLAB_FILE_NAME;
+        end
+
+        // Create timestamp for unique log file
+        $sformat(timestamp, "%0t", $realtime);
+
+        // Construct log file path
+        if (OUT_PATH == "") begin
+            $sformat(log_file, "matlab_%s_%s.log", matlab_function_name, timestamp);
+        end else begin
+            if (OUT_PATH.substr(OUT_PATH.len()-1, OUT_PATH.len()-1) != "/") begin
+                $sformat(log_file, "%s/matlab_%s_%s.log", OUT_PATH, matlab_function_name, timestamp);
             end else begin
-                matlab_function_name = MATLAB_FILE_NAME;
+                $sformat(log_file, "%smatlab_%s_%s.log", OUT_PATH, matlab_function_name, timestamp);
             end
+        end
 
-            // Create timestamp for unique log file
-            $sformat(timestamp, "%0t", $realtime);
+        // Build the MATLAB command - FIXED: Remove .m from function call
+        if (wait_for_completion) begin
+            // Synchronous execution
+            $sformat(command, "matlab -batch \"addpath('%s'); %s;\" -logfile %s", 
+                     PATH, matlab_function_name, log_file);  // CHANGED: Removed ('%s') argument and .m
+        end else begin
+            // Asynchronous execution (background)
+            $sformat(command, "matlab -batch \"addpath('%s'); %s;\" -logfile %s &", 
+                     PATH, matlab_function_name, log_file);  // CHANGED: Removed ('%s') argument and .m
+        end
 
-            // Construct log file path
-            if (OUT_PATH == "") begin
-                $sformat(log_file, "matlab_%s_%s.log", matlab_function_name, timestamp);
+        $display("[%0t] Starting MATLAB execution:", $time);
+        $display("[%0t]   Script: %s%s", $time, PATH, MATLAB_FILE_NAME);  // CHANGED: Show actual file path
+        $display("[%0t]   Function: %s", $time, matlab_function_name);    // ADDED: Show function name being called
+        $display("[%0t]   Log: %s", $time, log_file);
+        $display("[%0t]   Command: %s", $time, command);
+
+        // Execute the command
+        result = $system(command);
+
+        if (wait_for_completion) begin
+            if (result == 0) begin
+                $display("[%0t] MATLAB execution completed successfully", $time);
             end else begin
-                if (OUT_PATH.substr(OUT_PATH.len()-1, OUT_PATH.len()-1) != "/") begin
-                    $sformat(log_file, "%s/matlab_%s_%s.log", OUT_PATH, matlab_function_name, timestamp);
-                end else begin
-                    $sformat(log_file, "%smatlab_%s_%s.log", OUT_PATH, matlab_function_name, timestamp);
-                end
+                $display("[%0t] ERROR: MATLAB execution failed with code %0d", $time, result);
+                $display("[%0t] Please check:", $time);
+                $display("[%0t]   1. MATLAB is installed and in system PATH", $time);
+                $display("[%0t]   2. File exists: %s%s", $time, PATH, MATLAB_FILE_NAME);
+                $display("[%0t]   3. MATLAB script has no syntax errors", $time);
             end
-
-            // Build the MATLAB command - FIXED: Remove .m from function call
-            if (wait_for_completion) begin
-                // Synchronous execution
-                $sformat(command, "matlab -batch \"addpath('%s'); %s;\" -logfile %s", 
-                         PATH, matlab_function_name, log_file);  // CHANGED: Removed ('%s') argument and .m
-            end else begin
-                // Asynchronous execution (background)
-                $sformat(command, "matlab -batch \"addpath('%s'); %s;\" -logfile %s &", 
-                         PATH, matlab_function_name, log_file);  // CHANGED: Removed ('%s') argument and .m
-            end
-
-            $display("[%0t] Starting MATLAB execution:", $time);
-            $display("[%0t]   Script: %s%s", $time, PATH, MATLAB_FILE_NAME);  // CHANGED: Show actual file path
-            $display("[%0t]   Function: %s", $time, matlab_function_name);    // ADDED: Show function name being called
-            $display("[%0t]   Log: %s", $time, log_file);
-            $display("[%0t]   Command: %s", $time, command);
-
-            // Execute the command
-            result = $system(command);
-
-            if (wait_for_completion) begin
-                if (result == 0) begin
-                    $display("[%0t] MATLAB execution completed successfully", $time);
-                end else begin
-                    $display("[%0t] ERROR: MATLAB execution failed with code %0d", $time, result);
-                    // ADDED: More specific error information
-                    $display("[%0t] Please check:", $time);
-                    $display("[%0t]   1. MATLAB is installed and in system PATH", $time);
-                    $display("[%0t]   2. File exists: %s%s", $time, PATH, MATLAB_FILE_NAME);
-                    $display("[%0t]   3. MATLAB script has no syntax errors", $time);
-                end
-            end else begin
-                $display("[%0t] MATLAB started in background", $time);
-            end
+        end else begin
+            $display("[%0t] MATLAB started in background", $time);
         end
     endtask
 
-    task run_script ;
-        input logic [11 : 0] config_stream; 
-        input bit wait_for_completion;    // 1 = wait, 0 = run in background
+    task run_script (
+        input logic [7 : 0] config_stream, 
+        input bit wait_for_completion           // 1 = wait, 0 = run in background
+    );
+    
+        // Create configuration file
+        update_config(config_stream);
 
-        begin
-            // Create configuration file
-            update_config(config_stream);
-
-            // Run MATLAB script
-            run_matlab_advanced(wait_for_completion);
-        end
+        // Run MATLAB script
+        run_matlab(wait_for_completion);  
     endtask
 
-    function automatic int calculate_depth(
+    function automatic int calculate_depth (
         input bit bypass_frac_dec,
         input bit bypass_cic,
         input int cic_decf
@@ -478,93 +821,151 @@ module DFE_tb();
         return depth;
     endfunction
 
-    task automatic load_stage_file ;
-        ref logic signed [DATA_WIDTH-1:0] memory[$];  // Reference to memory array
-        input string filename;                        // File to load
-        input string stage_name;                      // Stage name for logging
+    task reset_idx ();
+        input_idx = 0;
+        frac_decimator_idx = 0;
+        iir_24mhz_idx = 0;
+        iir_5mhz_1_idx = 0;
+        iir_5mhz_2_idx = 0;
+        cic_idx = 0;
+        output_idx = 0;
+    endtask
 
+    task automatic load_stage_file (
+        ref logic signed [DATA_WIDTH-1:0] memory[$]     ,       // Reference to memory array
+        input string filename                           ,       // File to load
+        input string stage_name                                 // Stage name for logging
+    );
+        
         integer file_handle;
         integer i;
         logic [15:0] temp_data;
 
-        begin
-            file_handle = $fopen(filename, "r");
-            if (file_handle == 0) begin
-                $display("  Warning: Could not open %s for stage %s", filename, stage_name);
-                return;
-            end
-
-            // Clear existing memory and load new data
-            memory.delete();
-            i = 0;
-            while (!$feof(file_handle)) begin
-                if ($fscanf(file_handle, "%b\n", temp_data) == 1) begin
-                    memory.push_back(temp_data);
-                    i++;
-                end
-            end
-            $fclose(file_handle);
-
-            $display("  Stage %s: %0d samples from %s", stage_name, i, filename);
+        file_handle = $fopen(filename, "r");
+        if (file_handle == 0) begin
+            $display("  Warning: Could not open %s for stage %s", filename, stage_name);
+            return;
         end
+
+        // Clear existing memory and load new data
+        memory.delete();
+        i = 0;
+        while (!$feof(file_handle)) begin
+            if ($fscanf(file_handle, "%b\n", temp_data) == 1) begin
+                memory.push_back(temp_data);
+                i++;
+            end
+        end
+        $fclose(file_handle);
+
+        // $display("  Stage %s: %0d samples from %s", stage_name, i, filename);
     endtask
 
-    task automatic load_matlab_output ;
-        input bit bypass_frac_dec;
-        input bit bypass_iir_24;
-        input bit bypass_iir_5; 
-        input bit bypass_cic;
-        input int cic_decf;
-   
+    task automatic load_matlab_stages (
+        input string bypass_cfg                         // Stage name for logging
+    );
+        load_stage_file(input_exp, {BASE_PATH, bypass_cfg, "/input.txt"}, "Input");
+        load_stage_file(frac_decimator_exp, {BASE_PATH, bypass_cfg, "/frac_decimator.txt"}, "Fractional Decimator");
+        load_stage_file(iir_24mhz_exp, {BASE_PATH, bypass_cfg, "/iir_24mhz.txt"}, "IIR 2.4MHz");
+        load_stage_file(iir_5mhz_1_exp, {BASE_PATH, bypass_cfg, "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
+        load_stage_file(iir_5mhz_2_exp, {BASE_PATH, bypass_cfg, "/iir_5mhz_2.txt"}, "IIR 5MHz 2");
+        load_stage_file(cic_exp, {BASE_PATH, bypass_cfg, "/cic.txt"}, "CIC");
+        load_stage_file(output_exp, {BASE_PATH, bypass_cfg, "/output.txt"}, "Final Output");
+    endtask
+
+    task automatic load_matlab_output (
+        input bit bypass_frac_dec   ,
+        input bit bypass_iir_24     ,
+        input bit bypass_iir_5      , 
+        input bit bypass_cic        ,
+        input int cic_decf
+    );
+
         int expected_depth;
 
-        begin
-            $display("Loading MATLAB outputs for configuration:");
-            $display("  Frac_Dec:%b, IIR_24:%b, IIR_5:%b, CIC:%b, CIC_DecF:%0d", 
-                     bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic, cic_decf);
+        expected_depth = calculate_depth(bypass_frac_dec, bypass_cic, cic_decf);
 
-            expected_depth = calculate_depth(bypass_frac_dec, bypass_cic, cic_decf);
-
-            // Load each stage using the generic task
-            load_stage_file(input_exp, {BASE_PATH, "/input.txt"}, "Input");
-            load_stage_file(frac_decimator_exp, {BASE_PATH, "/frac_decimator.txt"}, "Fractional Decimator");
-            load_stage_file(iir_24mhz_exp, {BASE_PATH, "/iir_24mhz.txt"}, "IIR 2.4MHz");
-            load_stage_file(iir_5mhz_1_exp, {BASE_PATH, "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
-            load_stage_file(iir_5mhz_2_exp, {BASE_PATH, "/iir_5mhz_2.txt"}, "IIR 5MHz 2");
-            load_stage_file(cic_exp, {BASE_PATH, "/cic.txt"}, "CIC");
-            load_stage_file(output_exp, {BASE_PATH, "/output.txt"}, "Final Output");
-
-            // Verify final output depth
-            if (output_exp.size() != expected_depth) begin
-                $display("  Note: Actual depth (%0d) differs from expected (%0d)", 
-                         output_exp.size(), expected_depth);
-            end
-
-            $display("Loading complete for configuration %b%b%b%b (CIC_DecF=%0d)",
-                     bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic, cic_decf);
+        // Load each stage using the generic task
+        if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0000) begin
+            load_matlab_stages("frac0_iir240_iir50_cic0");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0001) begin
+            load_matlab_stages("frac0_iir240_iir50_cic1");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0010) begin
+            load_matlab_stages("frac0_iir240_iir51_cic0");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0011) begin
+            load_matlab_stages("frac0_iir240_iir51_cic1");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0100) begin
+            load_matlab_stages("frac0_iir241_iir50_cic0");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0101) begin
+            load_matlab_stages("frac0_iir241_iir50_cic1");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0110) begin
+            load_matlab_stages("frac0_iir241_iir51_cic0");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0111) begin
+            load_matlab_stages("frac0_iir241_iir51_cic1");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1000) begin
+            load_matlab_stages("frac1_iir240_iir50_cic0");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1001) begin
+            load_matlab_stages("frac1_iir240_iir50_cic1");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1010) begin
+            load_matlab_stages("frac1_iir240_iir51_cic0");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1011) begin
+            load_matlab_stages("frac1_iir240_iir51_cic1");  
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1100) begin
+            load_matlab_stages("frac1_iir241_iir50_cic0");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1101) begin
+            load_matlab_stages("frac1_iir241_iir50_cic1");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1110) begin
+            load_matlab_stages("frac1_iir241_iir51_cic0");
+        end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1111) begin
+            load_matlab_stages("frac1_iir241_iir51_cic1");
         end
+
+        // Verify final output depth
+        if (output_exp.size() != expected_depth) begin
+            $display("  Note: Actual depth (%0d) differs from expected (%0d)", 
+                     output_exp.size(), expected_depth);
+        end
+
+        // $display("Loading complete for configuration %b%b%b%b (CIC_DecF=%0d)",
+        //          bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic, cic_decf);
     endtask
 
-    task TC_cfg ;
-        input logic [11 : 0] config_stream; 
-        input bit wait_for_completion;    // 1 = wait, 0 = run in background
+    task TC_cfg (
+        input logic [7 : 0] config_stream,
+        input bit [3 : 0] bypass_config   ,
+        input logic run_matlab_script, 
+        input bit wait_for_completion        // 1 = wait, 0 = run in background
+    );
 
-        begin
-            trig = 0;
-            // Run the script to generate outputs
-            run_script(config_stream, wait_for_completion);
+        assert_reset ();
+        
+        trig = 0;
+        // Run the script to generate outputs
+        if (run_matlab_script) run_script(config_stream, wait_for_completion);
 
-            load_matlab_output(
-                config_stream[3], 
-                config_stream[4], 
-                config_stream[5], 
-                config_stream[6], 
-                config_stream[11 : 7]
-            );
+        load_matlab_output(
+            bypass_config [3]        , 
+            bypass_config [2]        , 
+            bypass_config [1]        , 
+            bypass_config [0]        , 
+            config_stream[4 : 0]
+        );
 
-            repeat (1) @(negedge clk_tb);
+        $display("Bypasses: %0b, %0b, %0b, %0b", bypass_config [3], bypass_config [2], bypass_config [1], bypass_config [0]);
 
-            trig = 1;
-        end
+        BYPASS(2'b00, bypass_config [3]); // Fractional Decimator
+        BYPASS(2'b01, bypass_config [2]); // IIR 2.4MHz
+        BYPASS(2'b10, bypass_config [1]); // IIR 5MHz
+        BYPASS(2'b11, bypass_config [0]); // CIC
+
+        CHANGE_DECIMATION(config_stream[4 : 0]);
+
+        $readmemb("signal_shape_code.txt", input_shape);
+
+        repeat (1) @(negedge clk_tb);
+        
+        reset_idx();
+        trig = 1;
     endtask
+
 endmodule

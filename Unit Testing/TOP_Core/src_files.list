@@ -5,5 +5,5 @@ cic.sv
 iir.sv
 iir_chain.sv
 fractional_decimator.sv
-top_core.sv
+CORE.sv
 top_core_tb.sv
