@@ -308,11 +308,11 @@ else
         % Stage 4: CIC Filter
         if bypass_cic == 0
             fprintf('  Applying CIC Filter with decimation factor %d...\n', cic_decf);
-            Hd_cic_float = CIC_float(cic_decf);
-            current_signal = step(Hd_cic_float, current_signal);
+            Hd_cic_float = CIC(cic_decf);
+            current_signal = step(Hd_cic, current_signal);
 
             % Write Stage 4: After CIC filter
-            writeFloatingDouble(current_signal, fullfile(scenario_dir, 'cic.txt'));
+            writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'cic.txt'), 16, 15);
         else
             fprintf('  Bypassing CIC Filter\n');
             copyfile(fullfile(scenario_dir, 'iir_5mhz_2.txt'), ...
@@ -321,7 +321,7 @@ else
 
         % Final output
         output = current_signal;
-        writeFloatingDouble(output, fullfile(scenario_dir, 'output.txt'));
+        writeFixedPointBinary(output, fullfile(scenario_dir, 'output.txt'), 16, 15);
     
         fprintf('  Scenario %s complete!\n\n', scenario_dir);
     end
