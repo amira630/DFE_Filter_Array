@@ -310,10 +310,337 @@ The entire RTL codebase has been subjected to rigorous **STARC (Semiconductor Te
 - **Performance Analysis:** MATLAB R2025a, Python (NumPy/SciPy)
 - **Waveform Analysis:** GTKWave, ModelSim Wave Viewer
 
+### MATLAB Reference Model Environment
+- **Version:** MATLAB R2025a
+- **Required Toolboxes:**
+  - DSP System Toolbox™ 25.2
+  - Signal Processing Toolbox™
+  - Fixed-Point Designer™
+- **Python Integration:** NumPy, SciPy for cross-validation
+- **Automation:** Batch processing and scenario generation scripts
+
 ### Version Control & Collaboration
 - **Repository:** Git-based version control
 - **Code Review:** Structured peer review process
 - **Issue Tracking:** Integrated bug tracking and feature management
+
+---
+
+## MATLAB Reference Model & Golden Verification
+
+### Overview
+
+A comprehensive **MATLAB-based golden reference model** forms the cornerstone of the verification strategy for this DFE Filter Array. This reference implementation provides bit-accurate behavioral models of all filter stages, enabling rigorous validation of the RTL implementation through automated comparison and performance analysis.
+
+The MATLAB environment serves multiple critical functions:
+- **Algorithm Development:** Initial filter design, coefficient generation, and performance optimization
+- **Golden Reference:** Bit-accurate fixed-point models matching RTL arithmetic precision
+- **Test Vector Generation:** Automated creation of stimulus and expected response datasets
+- **Performance Validation:** Frequency-domain analysis, SIR measurements, and quality metrics
+- **Rapid Prototyping:** Fast iteration on filter parameters and architectural trade-offs
+
+### MATLAB Codebase Structure
+
+```
+MATLAB/
+├── System.m                        # Main signal processing chain (primary simulation)
+├── System_run.m                    # Automated test scenario generator
+│
+├── Filter Definitions (Fixed-Point)
+│   ├── Fractional_Decimator.m      # 72-tap polyphase FIR (9→6 MHz)
+│   ├── IIR_2_4.m                   # 2.4 MHz notch filter
+│   ├── IIR_1.m                     # 1.0 MHz notch filter
+│   ├── IIR_2.m                     # 2.0 MHz notch filter
+│   ├── CIC.m                       # CIC decimator (configurable)
+│   └── FIR_comp.m                  # Compensation filter (optional)
+│
+├── Filter Definitions (Floating-Point Reference)
+│   ├── Fractional_Decimator_float.m
+│   ├── IIR_2_4_float.m
+│   ├── IIR_1_float.m
+│   ├── IIR_2_float.m
+│   └── CIC_float.m
+│
+├── Utility Functions
+│   ├── writeFixedPointBinary.m     # Convert signals to binary test vectors
+│   ├── writeFloatingDouble.m       # Export floating-point results
+│   ├── readBinaryConfig.m          # Parse configuration bitstreams
+│   └── binaryVectorToDecimal.m     # Binary-to-decimal conversion
+│
+├── Python Integration
+│   └── FP_to_16BIN.py              # Fixed-point to binary converter (s16.15)
+│
+└── Generated Test Data
+    ├── cfg.txt                     # Binary configuration file
+    ├── signal_shape_code.txt       # Signal type encoding
+    └── scenario_*/                 # Per-scenario test vectors
+        ├── input.txt
+        ├── frac_decimator.txt
+        ├── iir_24mhz.txt
+        ├── iir_5mhz_1.txt
+        ├── iir_5mhz_2.txt
+        ├── cic.txt
+        └── output.txt
+```
+
+### Fixed-Point Arithmetic Models
+
+All MATLAB filter implementations maintain **bit-accurate correspondence** with the RTL design through precise fixed-point configuration:
+
+#### Fractional Decimator Configuration
+```matlab
+dsp.FIRRateConverter(
+    'CoefficientsDataType', numerictype([], 20, 18),      % s20.18 coefficients
+    'ProductDataType', numerictype([], 36, 33),           % s36.33 products
+    'AccumulatorDataType', numerictype([], 42, 33),       % s42.33 accumulator
+    'OutputDataType', numerictype([], 16, 15),            % s16.15 output
+    'RoundingMethod', 'Convergent',                       % IEEE round-to-nearest
+    'OverflowAction', 'Saturate'                          % Saturation on overflow
+)
+```
+
+#### IIR Notch Filter Configuration
+```matlab
+set(Hd_IIR, 'Arithmetic', 'fixed',
+    'CoeffWordLength', 20,           % 20-bit coefficients
+    'NumFracLength', 18,             % 18 fractional bits (s20.18)
+    'DenFracLength', 18,
+    'ProductWordLength', 36,         % 36-bit products
+    'NumProdFracLength', 33,
+    'AccumWordLength', 38,           % 38-bit accumulation
+    'NumAccumFracLength', 33,
+    'StateWordLength', 38,           % 38-bit internal states
+    'StateFracLength', 33,
+    'InputWordLength', 16,           % s16.15 input/output
+    'inputFracLength', 15,
+    'OutputWordLength', 16,
+    'outputFracLength', 15,
+    'RoundMode', 'convergent',       % Convergent rounding
+    'OverflowMode', 'Saturate'       % Saturation arithmetic
+)
+```
+
+#### CIC Decimator Configuration
+```matlab
+dsp.CICDecimator(
+    'FixedPointDataType', 'Specify word and fraction lengths',
+    'SectionWordLengths', [20 20],   % Integrator/comb precision
+    'SectionFractionLengths', [15 15],
+    'OutputWordLength', 16,          % s16.15 output
+    'OutputFractionLength', 15
+)
+```
+
+### Automated Test Vector Generation
+
+The **System_run.m** script provides comprehensive automated test scenario generation with the following capabilities:
+
+#### Configuration-Driven Testing
+```matlab
+% Binary configuration format (cfg.txt):
+% Bit 0:    Fixed-point (0) vs Floating-point (1) mode
+% Bits 1-3: Signal configuration (frequency, amplitude, shape randomization)
+% Bits 4-8: CIC decimation factor (5-bit binary: 1, 2, 4, 8, 16)
+```
+
+#### Exhaustive Bypass Scenario Generation
+The system automatically generates **16 bypass combinations** (2^4 = 16) covering:
+- Fractional Decimator bypass (stage 1)
+- IIR 2.4 MHz notch bypass (stage 2)
+- IIR 5.0 MHz notch bypass (stage 3 - cascaded filters)
+- CIC decimator bypass (stage 4)
+
+Each scenario produces stage-by-stage outputs in separate directories:
+```
+scenario_frac0_iir240_iir50_cic0/    # All stages active
+scenario_frac1_iir240_iir50_cic0/    # Fractional decimator bypassed
+scenario_frac0_iir241_iir50_cic0/    # IIR 2.4MHz bypassed
+...
+scenario_frac1_iir241_iir51_cic1/    # All stages bypassed
+```
+
+#### Test Signal Generation
+**Configurable signal generation with randomization:**
+- **Signal Types:** Sine wave, square wave, triangular wave
+- **Frequency Range:** 50 kHz – 200 kHz (randomizable)
+- **Amplitude Range:** 0.1 – 1.0 (randomizable)
+- **Interference Injection:** Fixed 2.4 MHz and 5.0 MHz tones (0.2 amplitude each)
+
+**Signal shape encoding (2-bit):**
+```matlab
+'sine'       -> '00'
+'square'     -> '01'
+'triangular' -> '10'
+```
+
+#### Output Formats
+
+**Fixed-Point Mode (Default):**
+- Binary representation: 16-bit two's complement (s16.15)
+- Format: One binary word per line (e.g., `0011110100101011`)
+- Generated via `writeFixedPointBinary.m`
+
+**Floating-Point Reference Mode:**
+- High-precision double format (%.17g precision)
+- Format: One floating-point value per line
+- Generated via `writeFloatingDouble.m`
+
+### Python Fixed-Point Conversion Utility
+
+The **FP_to_16BIN.py** script provides bidirectional conversion between floating-point coefficients and fixed-point binary representations:
+
+#### Key Features
+- **Format:** s16.15 signed fixed-point
+- **Range:** -1.0 to +0.999969482421875 (max positive value)
+- **Rounding:** Nearest integer (round half to even)
+- **Saturation:** Automatic clipping to valid range
+- **Two's Complement:** Proper negative number representation
+
+#### Usage Example
+```python
+# Input: floating-point coefficients (input_FP.txt)
+# 0.5
+# -0.75
+# 0.999
+# -0.333
+
+# Output: binary representation (output_16BIN.txt)
+# 0100000000000000  (0.5 → 16384 → 0x4000)
+# 1010000000000000  (-0.75 → -24576 → 0xA000)
+# 0111111111111111  (0.999 → 32767 → 0x7FFF, saturated)
+# 1110101011001011  (-0.333 → -10912 → 0xEACB)
+```
+
+### Signal Processing Analysis Capabilities
+
+The MATLAB environment provides extensive analysis tools documented throughout **System.m**:
+
+#### Frequency-Domain Analysis
+- FFT-based spectrum visualization at each processing stage
+- Stopband attenuation measurement (>80 dB specification)
+- Notch depth characterization (>50 dB specification)
+- Passband ripple quantification (≤0.25 dB specification)
+
+#### Time-Domain Metrics
+- Signal-to-Interference Ratio (SIR) calculation
+  - Pre-filtering baseline measurement
+  - Post-filtering performance validation
+  - Improvement delta (typically >40 dB)
+- Transient response analysis
+- Group delay characterization
+
+#### Advanced Signal Alignment (Commented Reference)
+```matlab
+% Hilbert transform-based complex envelope analysis
+% for optimal signal alignment and residual interference measurement:
+a1 = hilbert(filtered_signal);
+a2 = hilbert(reference_signal);
+c = sum(a1 .* conj(a2)) / sum(abs(a2).^2);  % Complex scaling factor
+```
+
+### Performance Validation Workflow
+
+**Step 1: MATLAB Golden Model Execution**
+```matlab
+% Run primary simulation chain
+System.m
+
+% Generate all test scenarios (16 bypass combinations × 2 modes)
+System_run.m
+```
+
+**Step 2: Test Vector Export**
+- Fixed-point test vectors: `scenario_*/input.txt`, `*_output.txt`
+- Floating-point reference: Parallel directory structure
+- Configuration files: `cfg.txt`, `signal_shape_code.txt`
+
+**Step 3: RTL Simulation**
+- Load test vectors into SystemVerilog testbench
+- Execute RTL simulation (ModelSim/QuestaSim)
+- Capture RTL outputs at each filter stage
+
+**Step 4: Bit-Accurate Comparison**
+- Compare RTL outputs against MATLAB golden reference
+- Verify bit-exact matching for fixed-point implementations
+- Quantify quantization error relative to floating-point reference
+
+**Step 5: Performance Metric Extraction**
+- Automated parsing of simulation results
+- Statistical analysis across all test scenarios
+- Regression testing against performance specifications
+
+### Floating-Point vs Fixed-Point Validation
+
+The dual implementation strategy (fixed-point + floating-point) enables:
+
+**Quantization Noise Analysis:**
+- Direct comparison between ideal (floating) and implemented (fixed) results
+- Quantify SNR degradation due to fixed-point arithmetic
+- Validate that quantization effects remain below noise floor
+
+**Numerical Stability Verification:**
+- Long-duration simulations (48,000+ samples at 9 MHz)
+- Monitor for accumulation errors or limit-cycle oscillations
+- Confirm convergent rounding prevents DC bias
+
+**Performance Boundary Testing:**
+- Maximum signal amplitude (approach s16.15 saturation limits)
+- Minimum signal levels (quantization noise floor)
+- Extreme interference conditions (high-amplitude interferers)
+
+### Cross-Platform Validation
+
+The MATLAB reference model integrates with Python utilities for:
+- **Coefficient format conversion** (Python `FP_to_16BIN.py`)
+- **Alternative numerical analysis** (NumPy/SciPy verification)
+- **Visualization and reporting** (Matplotlib for publication-quality plots)
+- **Automated regression testing** (Python test harness)
+
+### Usage Example: Complete Verification Flow
+
+```matlab
+% ========== 1. Configure Test Scenario ==========
+% Edit cfg.txt:
+% 0           → Fixed-point mode
+% 001         → Randomize frequency only
+% 00010       → CIC decimation factor = 2
+
+% ========== 2. Generate Reference Data ==========
+System_run.m
+% Output: 16 scenarios × 7 stage outputs = 112 test vector files
+
+% ========== 3. Run RTL Simulation ==========
+% (In SystemVerilog testbench)
+% $readmemb("scenario_frac0_iir240_iir50_cic0/input.txt", test_stimulus);
+% ... (run simulation)
+% $writememb("rtl_output.txt", dut_output);
+
+% ========== 4. Validate Results ==========
+% Compare rtl_output.txt vs scenario_*/output.txt
+% Expected: Bit-exact match for fixed-point mode
+%           < 1 LSB error for floating-point reference
+```
+
+### MATLAB Model Advantages
+
+| Capability | Benefit |
+|-----------|---------|
+| **Rapid Prototyping** | Filter architecture exploration in hours vs. weeks |
+| **Bit-Accurate Models** | Direct correspondence with RTL implementation |
+| **Comprehensive Analysis** | Frequency/time domain, SIR, metrics, visualization |
+| **Automated Testing** | 16+ scenarios × multiple configurations generated automatically |
+| **Cross-Validation** | Floating-point ideal vs. fixed-point implementation |
+| **Documentation** | Extensively commented code serves as implementation guide |
+| **Reproducibility** | Deterministic results, version-controlled alongside RTL |
+
+### Continuous Integration Support
+
+The MATLAB infrastructure supports automated CI/CD workflows:
+- **Batch Execution:** Headless MATLAB runtime for nightly regression
+- **Script-Based Control:** Command-line invocation with parameter passing
+- **Structured Outputs:** Standardized file formats for automated parsing
+- **Exit Code Reporting:** Success/failure indication for CI systems
+- **Performance Tracking:** Automated extraction of key metrics over time
 
 ---
 
