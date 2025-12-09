@@ -152,6 +152,51 @@ graph LR
 
 ---
 
+## Linting & Code Quality
+
+The entire RTL codebase was linted at **release-grade quality** using the **STARC (Semiconductor Technology Academic Research Center) RTL Coding Standards**, one of the most stringent rule sets used in industrial ASIC development.  
+STARC compliance ensures high reliability, strict design hygiene, and long-term maintainability across complex hardware systems.
+
+### Scope of Linting
+
+The linting process validated the following aspects of the design:
+
+- **Structural correctness**  
+  - No unintended latches  
+  - No combinational loops  
+  - Clean, deterministic reset architecture  
+
+- **Synthesis-safe coding**  
+  - Only synthesis-portable constructs  
+  - No ambiguous or tool-dependent RTL behavior  
+
+- **Clocking discipline**  
+  - Verified single-clock design  
+  - No unsafe clock-domain crossings (CDC)  
+
+- **Coding-style compliance**  
+  - Consistent naming conventions  
+  - Hierarchical module organization  
+  - Readable, maintainable RTL  
+
+- **Arithmetic safety**  
+  - Fully validated signed/unsigned usage  
+  - All arithmetic width expansions and truncations accounted for  
+
+- **Deterministic finite state machines**  
+  - Fully encoded states  
+  - No unreachable or unsafe transitions  
+
+### Result
+
+The design achieved:
+
+- **0 Errors**  
+- **0 Violations**
+
+Successfully passing the complete STARC lint suite confirms that the DFE filter array reaches true **professional release quality**, suitable for **production ASIC/FPGA flows**, long-lifecycle products, and high-integrity hardware systems.
+
+
 ## Team
 
 > **Project Team — SI Clash Digital Hackathon (Team #8)**
