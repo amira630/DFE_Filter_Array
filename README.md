@@ -149,3 +149,17 @@ graph LR
 | Latency              | < 200 µs      | 185 µs                                     |
 | Data Format          | s16.15        | s16.15                                     |
 | Coefficient Format   | s20.18        | s20.18                                     |
+
+---
+
+## Team
+
+> **Project Team — SI Clash Digital Hackathon (Team #8)**
+
+| Name | Role |
+|------|------|
+| Mustafa El-Sherif | Project Lead |
+| Amira El-Komy | Core Contributor |
+| Omar Ayoub | Core Contributor |
+| Hazem Hanafi | Core Contributor |
+| Shahd El-Masry | Core Contributor |
