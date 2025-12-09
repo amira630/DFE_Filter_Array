@@ -289,7 +289,6 @@ The entire RTL codebase has been subjected to rigorous **STARC (Semiconductor Te
 |--------|--------|-------------------|
 | **Total Rules Checked** | 234 | STARC 2.1.3 Standard |
 | **Violations (Errors)** | **0** | Target: 0 |
-| **Violations (Warnings)** | **0** | Target: <5 |
 | **Code Review Sign-off** | **Approved** | Manual inspection |
 
 **Certification:** This design meets **production ASIC/FPGA release criteria** and is suitable for tape-out workflows, safety-critical applications, and long-lifecycle commercial products.
@@ -677,19 +676,17 @@ The MATLAB infrastructure supports automated CI/CD workflows:
 **SI Clash Digital Hackathon — Team #8**  
 *IEEE Solid-State Circuits Society (SSCS) AUSC Chapter*
 
-| Team Member | Role | Contributions |
-|------------|------|---------------|
-| **Mustafa El-Sherif** | Project Lead & System Architect | Overall architecture, fractional decimator design, project management |
-| **Amira El-Komy** | Core Contributor | IIR filter implementation, fixed-point optimization |
-| **Omar Ayoub** | Core Contributor | CIC decimator, APB interface design |
-| **Hazem Hanafi** | Core Contributor | Verification infrastructure, testbench development |
-| **Shahd El-Masry** | Core Contributor | Performance validation, MATLAB/Python reference models |
+| Team Member | Role |
+|------------|------|
+| **Mustafa El-Sherif** | Project Lead |
+| **Amira El-Komy** | Core Contributor |
+| **Omar Ayoub** | Core Contributor |
+| **Hazem Hanafi** | Core Contributor |
+| **Shahd El-Masry** | Core Contributor |
 
 ---
 
 ## License & Usage
-
-This design is proprietary intellectual property developed for the SI Clash Digital Hackathon. For licensing inquiries, collaboration opportunities, or commercial deployment, please contact the project team through official IEEE SSCS channels.
 
 ---
 
