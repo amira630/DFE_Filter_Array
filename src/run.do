@@ -11,6 +11,8 @@ sim:/DFE_tb/DUT/U_CORE/frac_dec_bypass \
 sim:/DFE_tb/DUT/U_CORE/iir_bypass_2_4MHz \
 sim:/DFE_tb/DUT/U_CORE/iir_bypass_5MHz \
 sim:/DFE_tb/DUT/U_CORE/cic_bypass \
+sim:/DFE_tb/dec_factor \
+sim:/DFE_tb/arith_base_var \
 sim:/DFE_tb/shape_var \
 sim:/DFE_tb/input_sig \
 sim:/DFE_tb/frac_decimator_sig \
@@ -25,11 +27,13 @@ sim:/DFE_tb/cic_sig \
 sim:/DFE_tb/cic_sig_tb \
 sim:/DFE_tb/output_sig \
 sim:/DFE_tb/core_out_sig_tb \
+sim:/DFE_tb/error \
+sim:/DFE_tb/acc_error \
 sim:/DFE_tb/overflow_tb \
 sim:/DFE_tb/underflow_tb \
 sim:/DFE_tb/valid_out_tb \
 sim:/DFE_tb/block_var \
-sim:/DFE_tb/block_out_sig \
+sim:/DFE_tb/block_out_sig_tb \
 sim:/DFE_tb/status_var \
 sim:/DFE_tb/block_overflow_tb \
 sim:/DFE_tb/block_underflow_tb \

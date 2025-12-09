@@ -4,18 +4,18 @@ clc
 % Read binary configuration from file
 config = readBinaryConfig('cfg.txt');
 
-% Extract values from binary configuration
-% Signal configuration flags (bits 1-3)
-f = config(1);
-a = config(2);  
-s = config(3);
-
-% CIC Configuration (bits 8-12 as 5-bit value)
-cic_decf_binary = config(4:8);
-cic_decf = binaryVectorToDecimal(cic_decf_binary);
-
 % Floating vs Fixed Point
-fi_vs_float_var = config(9);
+fi_vs_float_var = config(1);
+
+% Extract values from binary configuration
+% Signal configuration flags (bits 2-4)
+f = config(2);
+a = config(3);  
+s = config(4);
+
+% CIC Configuration (bits 5-9 as 5-bit value)
+cic_decf_binary = config(5:9);
+cic_decf = binaryVectorToDecimal(cic_decf_binary);
 
 % Default parameters
 default_freq = 1e5;      % 100 kHz
@@ -254,6 +254,8 @@ else
 
         % Write Stage 0: Input signal (after quantization)
         writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'input.txt'), 16, 15);
+
+        current_signal = x_real_noisy;
 
         % Stage 1: Fractional Decimator
         if bypass_frac_dec == 0
