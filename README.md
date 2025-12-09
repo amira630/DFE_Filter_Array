@@ -1,5 +1,5 @@
 <div style="display: flex; align-items: center;">
-  <img src="./Pictures/SI_Clash_logo.jpeg" alt="Logo" width="80" style="margin-right: 15px;">
+  <img src="./Logo/SI_Clash_logo.jpeg" alt="Logo" width="80" style="margin-right: 15px;">
   <h1>Digital Front-End (DFE) Filter Array</h1>
 </div>
 
