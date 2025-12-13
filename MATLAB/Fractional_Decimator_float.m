@@ -20,7 +20,7 @@ dens  = 20;                % Density Factor
 [N, Fo, Ao, W] = firpmord([Fpass, Fstop]/(Fs/2), [1 0], [Dpass, Dstop]);
 
 % Calculate the coefficients using the FIRPM function.
-b  = firpm(N, Fo, Ao, W, {dens});
+b = firpm(N, Fo, Ao, W, {dens});
 intf = 2;                     % Interpolation Factor
 decf = 3;                     % Decimation Factor
 

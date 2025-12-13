@@ -15,15 +15,15 @@ module DFE_tb();
     parameter string BASE_PATH = "scenario_";           // Path where MATLAB output files are located
     parameter string VCD_FILE_NAME = "DFE.vcd";        // VCD output file name
 
-    parameter DATA_WIDTH   = 16        ;
-    parameter DATA_FRAC    = 15        ;
-    parameter PDATA_WIDTH  = 32        ;
-    parameter ADDR_WIDTH   = 7         ;
-    parameter COEFF_WIDTH  = 20        ;
-    parameter COEFF_FRAC   = 18        ;
-    parameter N_TAP        = 72        ;
-    parameter NUM_DENUM    = 5         ;
-    parameter COMP         = 4         ;
+    parameter DATA_WIDTH   = 16  ;
+    parameter DATA_FRAC    = 15  ;
+    parameter PDATA_WIDTH  = 32  ;
+    parameter ADDR_WIDTH   = 7   ;
+    parameter COEFF_WIDTH  = 20  ;
+    parameter COEFF_FRAC   = 18  ;
+    parameter N_TAP        = 72  ;
+    parameter NUM_DENUM    = 5   ;
+    parameter COMP         = 4   ;
 
     integer input_idx = 0;
     integer frac_decimator_idx = 0;
@@ -83,7 +83,7 @@ module DFE_tb();
     real core_out_sig_tb;
 
     real error;
-    real acc_error;
+    real max_error;
 
     logic frac_decimator_valid_out_tb;
     logic iir_24mhz_valid_out_tb;
@@ -299,9 +299,9 @@ module DFE_tb();
 
             if (!core_test_end) begin
                 if (error < 0) begin
-                    acc_error <= acc_error - error;
+                    max_error <= $max(max_error, -error);
                 end else begin
-                    acc_error <= acc_error + error;
+                    max_error <= $max(max_error, error);
                 end
             end
 
@@ -592,7 +592,7 @@ module DFE_tb();
         floating_point_flag = 0;
 
         error = 0.0;
-        acc_error = 0.0;
+        max_error = 0.0;
 
         bypass_TC = 0;
         cic_decf_TC[0] = 5'b00001; // 1

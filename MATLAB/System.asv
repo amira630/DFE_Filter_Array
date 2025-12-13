@@ -202,7 +202,7 @@ analyze_fixed_point_filter(Hd_FIR_comp, Fs_cic_16, output_cic_16_sig, 1, 0, 'FIR
 %% ======================= SECTION 9: SNR Analysis =======================
 
 delay_samples = 35;
-delay_samples_comp = 70;
+delay_samples_comp = 45;
 
 snr_init = snr(double(input_sig_quant_noisy), double(interference_quant));
 
@@ -218,13 +218,13 @@ snr_cic_2 = snr(double(output_cic_2_sig(delay_samples : end)), double(output_cic
 snr_cic_2_comp = snr(double(output_cic_2_compensated_sig(delay_samples_comp : end)), double(output_cic_2_compensated_inter(delay_samples_comp : end)));
 
 snr_cic_4 = snr(double(output_cic_4_sig(delay_samples : end)), double(output_cic_4_inter(delay_samples : end)));
-snr_cic_4_comp = snr(double(output_cic_4_compensated_sig(delay_samples_comp : end)), double(output_cic_4_compensated_inter(delay_samples_comp : end)));
+snr_cic_4_comp = snr(double(output_cic_4_compensated_sig(delay_samples : end)), double(output_cic_4_compensated_inter(delay_samples : end)));
 
 snr_cic_8 = snr(double(output_cic_8_sig(delay_samples : end)), double(output_cic_8_inter(delay_samples : end)));
-snr_cic_8_comp = snr(double(output_cic_8_compensated_sig(delay_samples_comp : end)), double(output_cic_8_compensated_inter(delay_samples_comp : end)));
+snr_cic_8_comp = snr(double(output_cic_8_compensated_sig(delay_samples : end)), double(output_cic_8_compensated_inter(delay_samples : end)));
 
 snr_cic_16 = snr(double(output_cic_16_sig(delay_samples : end)), double(output_cic_16_inter(delay_samples : end)));
-snr_cic_16_comp = snr(double(output_cic_16_compensated_sig(delay_samples_comp : end)), double(output_cic_16_compensated_inter(delay_samples_comp : end)));
+snr_cic_16_comp = snr(double(output_cic_16_compensated_sig(delay_samples : end)), double(output_cic_16_compensated_inter(delay_samples : end)));
 
 snr_after = min(snr_cic_2, min(snr_cic_4, min(snr_cic_8, snr_cic_16))); % Worst Case SNR with no Compensator
 

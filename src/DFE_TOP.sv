@@ -95,6 +95,10 @@ module DFE_TOP #(
     logic signed [DATA_WIDTH - 1 : 0]   iir_out                                     ;
     logic                               iir_valid_out                               ;
 
+    logic                               cic_overflow                                ;
+    logic                               cic_underflow                               ;
+    
+
 
     CORE #(
         .DATA_WIDTH   (DATA_WIDTH)  ,
