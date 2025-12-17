@@ -23,7 +23,7 @@ module DFE_tb();
     parameter COEFF_FRAC   = 18  ;
     parameter N_TAP        = 146 ;
     parameter NUM_DENUM    = 5   ;
-    parameter COMP         = 5   ;
+    parameter COMP         = 4   ;
 
     integer input_idx = 0;
     integer frac_decimator_idx = 0;
@@ -497,8 +497,6 @@ module DFE_tb();
         repeat (50) @(negedge clk_tb);
         SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
         repeat (50) @(negedge clk_tb);
-        SET_COEFF(4);  // 5 MHz IIR (2 MHz alias)
-        repeat (50) @(negedge clk_tb);
         SET_COEFF(0);  // Default coefficients
         
         // Test coefficient write functionality
@@ -528,8 +526,6 @@ module DFE_tb();
         SET_COEFF(2);  // 2.4 MHz IIR
         repeat (50) @(negedge clk_tb);
         SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
-        repeat (50) @(negedge clk_tb);
-        SET_COEFF(4);  // 5 MHz IIR (2 MHz alias)
         repeat (50) @(negedge clk_tb);
         SET_COEFF(0);  // Default coefficients
 
@@ -667,15 +663,15 @@ module DFE_tb();
         input logic [2:0] sel
     );
 
-        if (sel == 0) begin
-            coeff_var = EMPTY;
-        end else if (sel == 1) begin
+        if (sel == 1) begin
             coeff_var = FRACTIONAL_DECIMATOR;
         end else if (sel == 2) begin
             coeff_var = IIR_5_1;
         end else if (sel == 3) begin
             coeff_var = IIR_24;
-        end
+        end else begin
+            coeff_var = EMPTY;
+        end 
         
         // WR, last, ADDR, SELx, WDATA
         RW(1, 1, N_TAP + 2*NUM_DENUM + 7,'b1000, sel); // Write COEFF_SEL
@@ -685,16 +681,16 @@ module DFE_tb();
         input logic [2:0] sel
     );
 
-        if (sel == 0) begin
-            status_var = EMPTY;
-        end else if (sel == 1) begin
+        if (sel == 1) begin
             status_var = FRACTIONAL_DECIMATOR;
         end else if (sel == 2) begin
             status_var = IIR_5_1;
         end else if (sel == 3) begin
             status_var = IIR_24;
-        end else begin
+        end else if (sel == 4) begin
             status_var = CIC;
+        end else begin
+            status_var = EMPTY;
         end
 
         // WR, last, ADDR, SELx, WDATA
