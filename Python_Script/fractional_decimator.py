@@ -8,51 +8,13 @@ MATLAB Reference: Fractional_Decimator.m
 - Effective Rate Change: 2/3 (reduces sampling rate by factor of 1.5)
 - Fixed-point: Q20.18 coeffs -> Q36.33 product -> Q42.33 accum -> Q16.15 output
 
-Author: Copilot
-Date: December 15, 2025
+Author: Mustafa EL-Sherif
 """
 
 import numpy as np
-from coeff_utils import load_coefficients
+from read_write_utils import load_coefficients
+from fixed_point_utils import *
 from scipy.signal import upfirdn
-
-
-def convergent_round(x):
-    """
-    Convergent rounding (round-to-even) to match MATLAB's 'Convergent' rounding mode.
-    Also known as banker's rounding or round-half-to-even.
-    """
-    rounded = np.round(x)
-    # For values exactly at 0.5, round to nearest even
-    halfway = np.abs(x - np.floor(x) - 0.5) < 1e-10
-    is_odd = np.asarray((rounded % 2) != 0, dtype=bool)
-    rounded = np.where(halfway & is_odd, rounded - np.sign(x), rounded)
-    return rounded
-
-
-def quantize_with_convergent_rounding(data, word_length, frac_length):
-    """
-    Quantize with convergent rounding and saturation to match MATLAB behavior.
-    """
-    scale = 2 ** frac_length
-    max_positive = (2 ** (word_length - 1) - 1) / scale
-    max_negative = -(2 ** (word_length - 1)) / scale
-
-    # Saturate first
-    data_clipped = np.clip(data, max_negative, max_positive)
-
-    # Scale and apply convergent rounding
-    scaled = data_clipped * scale
-    rounded_int = convergent_round(scaled).astype(np.int64)
-
-    # Apply integer saturation
-    max_int = 2 ** (word_length - 1) - 1
-    min_int = -(2 ** (word_length - 1))
-    rounded_int = np.clip(rounded_int, min_int, max_int)
-
-    # Convert back to floating-point
-    return rounded_int / scale
-
 
 def fractional_decimator(input_signal, use_fixed_point = False):
     """

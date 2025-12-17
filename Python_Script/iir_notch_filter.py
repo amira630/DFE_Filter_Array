@@ -7,51 +7,13 @@ MATLAB Reference: IIR_1.m, IIR_2.m, IIR_2_4.m
 - Fixed-point: Q20.18 coeffs -> Q36.33 product -> Q38.33 accum -> Q16.15 output
 - Convergent rounding and saturation
 
-Author: Copilot
-Date: December 15, 2025
+Author: Mustafa EL-Sherif
 """
 
 import numpy as np
 from scipy import signal
-from coeff_utils import load_coefficients
-
-
-def convergent_round(x):
-    """
-    Convergent rounding (round-to-even) to match MATLAB's 'Convergent' rounding mode.
-    Also known as banker's rounding or round-half-to-even.
-    """
-    rounded = np.round(x)
-    # For values exactly at 0.5, round to nearest even
-    halfway = np.abs(x - np.floor(x) - 0.5) < 1e-10
-    is_odd = np.asarray((rounded % 2) != 0, dtype=bool)
-    rounded = np.where(halfway & is_odd, rounded - np.sign(x), rounded)
-    return rounded
-
-
-def quantize_with_convergent_rounding(data, word_length, frac_length):
-    """
-    Quantize with convergent rounding and saturation to match MATLAB behavior.
-    """
-    scale = 2 ** frac_length
-    max_positive = (2 ** (word_length - 1) - 1) / scale
-    max_negative = -(2 ** (word_length - 1)) / scale
-
-    # Saturate first
-    data_clipped = np.clip(data, max_negative, max_positive)
-
-    # Scale and apply convergent rounding
-    scaled = data_clipped * scale
-    rounded_int = convergent_round(scaled).astype(np.int64)
-
-    # Apply integer saturation
-    max_int = 2 ** (word_length - 1) - 1
-    min_int = -(2 ** (word_length - 1))
-    rounded_int = np.clip(rounded_int, min_int, max_int)
-
-    # Convert back to floating-point
-    return rounded_int / scale
-
+from read_write_utils import load_coefficients
+from fixed_point_utils import *
 
 def load_iir_coefficients(notch_freq):
     """
@@ -66,9 +28,8 @@ def load_iir_coefficients(notch_freq):
     # Map notch frequency to coefficient file
     freq_to_file = {
         2400000: 'iir_24_coeff.txt',      # 2.4 MHz notch
-        1000000: 'iir_5_1_coeff.txt',     # 5 MHz stage 1 (1 MHz notch)
-        2000000: 'iir_5_2_coeff.txt',     # 5 MHz stage 2 (2 MHz notch)
-    }
+        1000000: 'iir_5_1_coeff.txt',     # 5 MHz (1 MHz notch)
+        }
 
     if notch_freq not in freq_to_file:
         raise ValueError(
@@ -182,7 +143,7 @@ def iir_notch_filter(input_sig, notch_freq, use_fixed_point=False):
 
     Args:
         input_sig: Input signal array (Q16.15 if use_fixed_point=True)
-        notch_freq: Notch frequency in Hz (1000000, 2400000, or 5000000)
+        notch_freq: Notch frequency in Hz (2400000 & 5000000)
         use_fixed_point: If True, applies fixed-point quantization matching MATLAB
 
     Returns:
@@ -190,10 +151,10 @@ def iir_notch_filter(input_sig, notch_freq, use_fixed_point=False):
 
     Example:
         # 2.4 MHz notch filter with fixed-point
-        output = iir_notch_filter(input_sig, notch_freq=2400000, use_fixed_point=True)
+        output = iir_notch_filter(input_sig, notch_freq = 2400000, use_fixed_point=True)
 
-        # 5 MHz notch filter stage 1
-        output = iir_notch_filter(input_sig, notch_freq=1000000, use_fixed_point=True)
+        # 5 MHz notch filter
+        output = iir_notch_filter(input_sig, notch_freq = 1000000, use_fixed_point=True)
     """
     # Load IIR coefficients in SOS format
     sos = load_iir_coefficients(notch_freq)
@@ -225,11 +186,6 @@ def iir_24mhz_filter(input_sig, use_fixed_point=False):
     return iir_notch_filter(input_sig, notch_freq=2400000, use_fixed_point=use_fixed_point)
 
 
-def iir_5mhz_filter_stage_1(input_sig, use_fixed_point = False):
+def iir_5mhz_filter(input_sig, use_fixed_point = False):
     """ Apply 5 MHz notch filter """
     return iir_notch_filter(input_sig, notch_freq=1000000, use_fixed_point=use_fixed_point)
-
-def iir_5mhz_filter_stage_2(input_sig, use_fixed_point = False):
-    """ Apply 5 MHz notch filter """
-    return iir_notch_filter(input_sig, notch_freq=2000000, use_fixed_point=use_fixed_point)
-

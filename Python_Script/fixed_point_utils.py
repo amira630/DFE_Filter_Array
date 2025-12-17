@@ -1,9 +1,45 @@
 import numpy as np
 
+def convergent_round(x):
+    """
+    Convergent rounding (round-to-even) to match MATLAB's 'Convergent' rounding mode.
+    Also known as banker's rounding or round-half-to-even.
+    """
+    rounded = np.round(x)
+    # For values exactly at 0.5, round to nearest even
+    halfway = np.abs(x - np.floor(x) - 0.5) < 1e-10
+    is_odd = np.asarray((rounded % 2) != 0, dtype=bool)
+    rounded = np.where(halfway & is_odd, rounded - np.sign(x), rounded)
+    return rounded
+
 def int_to_binary(int_value, word_length=16):
     """Convert integer to binary string with configurable bit width"""
     mask = (1 << word_length) - 1
     return f'{int_value & mask:0{word_length}b}'
+
+def quantize_with_convergent_rounding(data, word_length, frac_length):
+    """
+    Quantize with convergent rounding and saturation to match MATLAB behavior.
+    """
+    scale = 2 ** frac_length
+    max_positive = (2 ** (word_length - 1) - 1) / scale
+    max_negative = -(2 ** (word_length - 1)) / scale
+
+    # Saturate first
+    data_clipped = np.clip(data, max_negative, max_positive)
+
+    # Scale and apply convergent rounding
+    scaled = data_clipped * scale
+    rounded_int = convergent_round(scaled).astype(np.int64)
+
+    # Apply integer saturation
+    max_int = 2 ** (word_length - 1) - 1
+    min_int = -(2 ** (word_length - 1))
+    rounded_int = np.clip(rounded_int, min_int, max_int)
+
+    # Convert back to floating-point
+    return rounded_int / scale
+
 
 def quantize_fixed_point(data, word_length = 16, frac_length = 15, return_FP = True):
     """
