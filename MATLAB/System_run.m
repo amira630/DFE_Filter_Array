@@ -19,7 +19,7 @@ cic_decf = binaryVectorToDecimal(cic_decf_binary);
 
 % Default parameters
 default_freq = 1e5;      % 100 kHz
-default_amp = 0.25;      % Default amplitude
+default_amp = 0.999969482421875;      % Default amplitude
 default_shape = 'sine';  % Default shape
 
 % Parameter ranges for randomization
@@ -186,22 +186,14 @@ if (fi_vs_float_var == 0)
         if bypass_iir_5 == 0
             fprintf('  Applying IIR 5MHz Notch Filter...\n');
             Hd_IIR_1 = IIR_1(); 
-            Hd_IIR_2 = IIR_2();
-            current_signal_PH1 = filter(Hd_IIR_1, current_signal);
+            current_signal = filter(Hd_IIR_1, current_signal);
 
             % Write Stage 3.1: After first IIR 5MHz filter
-            writeFixedPointBinary(current_signal_PH1, fullfile(scenario_dir, 'iir_5mhz_1.txt'), 16, 15);
-
-            current_signal = filter(Hd_IIR_2, current_signal_PH1);
-
-            % Write Stage 3.2: After second IIR 5MHz filter
-            writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'iir_5mhz_2.txt'), 16, 15);
+            writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'iir_5mhz_1.txt'), 16, 15);
         else
             fprintf('  Bypassing IIR 5MHz Notch Filter\n');
             copyfile(fullfile(scenario_dir, 'iir_24mhz.txt'), ...
                      fullfile(scenario_dir, 'iir_5mhz_1.txt'));
-            copyfile(fullfile(scenario_dir, 'iir_24mhz.txt'), ...
-                     fullfile(scenario_dir, 'iir_5mhz_2.txt'));
         end
 
         % Stage 4: CIC Filter
@@ -214,7 +206,7 @@ if (fi_vs_float_var == 0)
             writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'cic.txt'), 16, 15);
         else
             fprintf('  Bypassing CIC Filter\n');
-            copyfile(fullfile(scenario_dir, 'iir_5mhz_2.txt'), ...
+            copyfile(fullfile(scenario_dir, 'iir_5mhz_1.txt'), ...
                     fullfile(scenario_dir, 'cic.txt'));
         end
 
@@ -289,22 +281,15 @@ else
         if bypass_iir_5 == 0
             fprintf('  Applying IIR 5MHz Notch Filter...\n');
             Hd_IIR_1_float = IIR_1_float(); 
-            Hd_IIR_2_float = IIR_2_float();
-            current_signal_PH1 = filter(Hd_IIR_1_float, current_signal);
+            
+            current_signal = filter(Hd_IIR_1_float, current_signal);
 
             % Write Stage 3.1: After first IIR 5MHz filter
-            writeFloatingDouble(current_signal_PH1, fullfile(scenario_dir, 'iir_5mhz_1.txt'));
-
-            current_signal = filter(Hd_IIR_2_float, current_signal_PH1);
-
-            % Write Stage 3.2: After second IIR 5MHz filter
-            writeFloatingDouble(current_signal, fullfile(scenario_dir, 'iir_5mhz_2.txt'));
+            writeFloatingDouble(current_signal, fullfile(scenario_dir, 'iir_5mhz_1.txt'));
         else
             fprintf('  Bypassing IIR 5MHz Notch Filter\n');
             copyfile(fullfile(scenario_dir, 'iir_24mhz.txt'), ...
                      fullfile(scenario_dir, 'iir_5mhz_1.txt'));
-            copyfile(fullfile(scenario_dir, 'iir_24mhz.txt'), ...
-                     fullfile(scenario_dir, 'iir_5mhz_2.txt'));
         end
 
         % Stage 4: CIC Filter
@@ -317,7 +302,7 @@ else
             writeFloatingDouble(current_signal, fullfile(scenario_dir, 'cic.txt'));
         else
             fprintf('  Bypassing CIC Filter\n');
-            copyfile(fullfile(scenario_dir, 'iir_5mhz_2.txt'), ...
+            copyfile(fullfile(scenario_dir, 'iir_5mhz_1.txt'), ...
                     fullfile(scenario_dir, 'cic.txt'));
         end
 
@@ -346,7 +331,6 @@ for combo_idx = 1:num_combinations
     fprintf('    frac_decimator.txt\n');
     fprintf('    iir_24mhz.txt\n');
     fprintf('    iir_5mhz_1.txt\n');
-    fprintf('    iir_5mhz_2.txt\n');
     fprintf('    cic.txt\n');
     fprintf('    output.txt\n\n');
 end

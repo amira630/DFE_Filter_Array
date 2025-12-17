@@ -19,8 +19,8 @@ function analyze_fixed_point_filter(Hd, fs, input_signal, rate_change, rate_conv
     end
     
     % 1. Basic info
-    fprintf('Filter Type: %s\n', class(Hd));
     try
+        fprintf('Filter Type: %s\n', class(Hd));
         fprintf('Filter Order: %d', order(Hd));
     catch
         fprintf('Filter Order: N/A');

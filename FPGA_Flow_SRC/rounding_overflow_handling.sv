@@ -17,6 +17,7 @@ module rounding_overflow_arith #(
 ) (
     input  logic signed [ACC_WIDTH - 1 : 0]     data_in     ,
     input  logic                                valid_in    ,
+    input  logic        [4 : 0]                 dec_factor  ,
 
     output logic signed [OUT_WIDTH - 1 : 0]     data_out    ,
     output logic                                overflow    ,
@@ -106,15 +107,25 @@ module rounding_overflow_arith #(
 
                     // raw + increment
                     // Note: raw may be wider than OUT_WIDTH; result is declared as OUT_WIDTH signed
-                    result_interm   = raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment});
-                    result          = result_interm[OUT_WIDTH - 1 : 0]                  ;
+                    if (dec_factor == 5'd1) begin
+                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment}));
+                    end else if (dec_factor == 5'd2) begin
+                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 1;
+                    end else if (dec_factor == 5'd4) begin
+                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 2;
+                    end else if (dec_factor == 5'd8) begin
+                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 3;
+                    end else if (dec_factor == 5'd16) begin
+                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 4;
+                    end
+                    result          = raw[OUT_WIDTH - 1 : 0]                  ;
 
                     // saturation / clipping
-                    if (result > MAX_VAL) begin
+                    if (result_interm > MAX_VAL) begin
                         data_out    = MAX_VAL   ;
                         overflow    = 1'b1      ;
                         underflow   = 1'b0      ;
-                    end else if (result < MIN_VAL) begin
+                    end else if (result_interm < MIN_VAL) begin
                         data_out    = MIN_VAL   ;
                         underflow   = 1'b1      ;
                         overflow    = 1'b0      ;

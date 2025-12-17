@@ -8,12 +8,12 @@ function Hd_Fractional_Decimator_float = Fractional_Decimator_float
 % Equiripple Lowpass filter designed using the FIRPM function.
 
 % All frequency values are in Hz.
-Fs = 9000000;  % Sampling Frequency
+Fs = 18000000;  % Sampling Frequency
 
 Fpass = 2800000;           % Passband Frequency
 Fstop = 3200000;           % Stopband Frequency
 Dpass = 0.014390163418;    % Passband Ripple
-Dstop = 5.6234132519e-05;  % Stopband Attenuation
+Dstop = 4.4668359215e-05;  % Stopband Attenuation
 dens  = 20;                % Density Factor
 
 % Calculate the order from the parameters using FIRPMORD.

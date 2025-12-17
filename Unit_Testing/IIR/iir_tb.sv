@@ -47,19 +47,26 @@ module top_tb ();
     // Signals for monitoring output
     integer                     i                           = 0             ;
     integer                     j                           = 0             ;
-    integer                     output_sample_index         = 0             ;
+    integer                     idx_24         = 0             ;
+    integer                     idx_5_1        = 0             ;
+    integer                     idx_5_2        = 0             ;
     integer                     input_sample_index              = 0             ;
     integer                     number_of_output_samples    = 1             ;
 
     real                        input_sig                                   ;
     real                        iir_output_sig                              ;
-    real                        output_sig_exp                              ;
-    real                        output_sig_exp_reg                              ;
+    real                        output_24_sig_exp                           ;
+    real                        output_5_1_sig_exp                          ;
+    real                        output_5_2_sig_exp                          ;
+    
+    logic valid_1MHz_out;
+    logic valid_2_4MHz_out;
+    logic valid_2MHz_out;
 
     logic signed [DATA_WIDTH - 1 : 0]  input_samples        [N_SAMPLES_I - 1 : 0]       ;
-    logic signed [DATA_WIDTH - 1 : 0]  output_B5_exp_samples   [N_SAMPLES_I - 1 : 0]    ;
-    logic signed [DATA_WIDTH - 1 : 0]  output_B2_4_exp_samples   [N_SAMPLES_I - 1 : 0]  ;
-    logic signed [DATA_WIDTH - 1 : 0]  output_exp_samples   [N_SAMPLES_I - 1 : 0]       ;
+    logic signed [DATA_WIDTH - 1 : 0]  output_5_1_exp_samples   [N_SAMPLES_I - 1 : 0]    ;
+    logic signed [DATA_WIDTH - 1 : 0]  output_2_4_exp_samples   [N_SAMPLES_I - 1 : 0]  ;
+    logic signed [DATA_WIDTH - 1 : 0]  output_5_2_exp_samples   [N_SAMPLES_I - 1 : 0]       ;
 
     // DUT instantiation
     IIR_chain #(
@@ -94,6 +101,10 @@ module top_tb ();
         .underflow_2_4MHz   (underflow_2_4MHz)
     );
 
+    assign valid_2_4MHz_out = DUT.valid_2_4MHz_out;
+    assign valid_1MHz_out = DUT.valid_1MHz_out;
+    assign valid_2MHz_out = valid_out;
+
     initial begin
         clk = 0;
         forever #(T_CLK/2) clk = ~clk;
@@ -102,36 +113,53 @@ module top_tb ();
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             iir_output_sig <= 0;
-        end else if (valid_out) begin
+        end else begin
             iir_output_sig <= $itor($signed(iir_out)) / 32768.0;
         end
     end         
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            output_sig_exp <= 0;
-            output_sig_exp_reg <= 0;
-            output_sample_index <= 0;
-        end else if (valid_out) begin
-            // Account for pipeline delay - start comparing after pipeline fills
-            if (bypass_1MHz && bypass_2MHz && !bypass_2_4MHz) begin
-                output_sig_exp <= $itor($signed(output_B5_exp_samples[output_sample_index + 1])) / 32768.0;
-            end else if (!bypass_1MHz && !bypass_2MHz && bypass_2_4MHz) begin
-                output_sig_exp <= $itor($signed(output_B2_4_exp_samples[output_sample_index])) / 32768.0;
-            end else if (bypass_1MHz && bypass_2MHz && bypass_2_4MHz) begin
-                output_sig_exp_reg <= $itor($signed(input_samples[input_sample_index])) / 32768.0;
-                output_sig_exp <= output_sig_exp_reg;
-            end else begin
-                output_sig_exp_reg <= $itor($signed(output_exp_samples[output_sample_index])) / 32768.0;
-                output_sig_exp <= output_sig_exp_reg;
-            end
+            output_24_sig_exp <= 0;
+            idx_24 <= 0;
+        end else if (valid_2_4MHz_out) begin
+            output_24_sig_exp <= $itor($signed(output_2_4_exp_samples[idx_24])) / 32768.0;
 
-            if (output_sample_index == N_SAMPLES_I - 1) begin
-                output_sample_index <= 0;
+            if (idx_24 == N_SAMPLES_I - 1) begin
+                idx_24 <= 0;
             end else begin
-                output_sample_index <= output_sample_index + 1; 
-            end
-            
+                idx_24 <= idx_24 + 1; 
+            end 
+        end
+    end
+
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            output_5_1_sig_exp <= 0;
+            idx_5_1 <= 0;
+        end else if (valid_1MHz_out) begin
+            output_5_1_sig_exp <= $itor($signed(output_5_1_exp_samples[idx_5_1])) / 32768.0;
+
+            if (idx_5_1 == N_SAMPLES_I - 1) begin
+                idx_5_1 <= 0;
+            end else begin
+                idx_5_1 <= idx_5_1 + 1; 
+            end 
+        end
+    end
+
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            output_5_2_sig_exp <= 0;
+            idx_5_2 <= 0;
+        end else if (valid_2MHz_out) begin
+            output_5_2_sig_exp <= $itor($signed(output_5_2_exp_samples[idx_5_2])) / 32768.0;
+
+            if (idx_5_2 == N_SAMPLES_I - 1) begin
+                idx_5_2 <= 0;
+            end else begin
+                idx_5_2 <= idx_5_2 + 1; 
+            end 
         end
     end
 
@@ -175,27 +203,27 @@ module top_tb ();
         bypass_2_4MHz = 1'b0;
         repeat(N_SAMPLES_I) @(negedge clk);
 
-        bypass_1MHz = 1'b1;
-        bypass_2MHz = 1'b1;
-        bypass_2_4MHz = 1'b0;
-        repeat(N_SAMPLES_I) @(negedge clk);
+        // bypass_1MHz = 1'b1;
+        // bypass_2MHz = 1'b1;
+        // bypass_2_4MHz = 1'b0;
+        // repeat(N_SAMPLES_I) @(negedge clk);
 
-        bypass_1MHz = 1'b0;
-        bypass_2MHz = 1'b0;
-        bypass_2_4MHz = 1'b1;
-        repeat(N_SAMPLES_I) @(negedge clk);
+        // bypass_1MHz = 1'b0;
+        // bypass_2MHz = 1'b0;
+        // bypass_2_4MHz = 1'b1;
+        // repeat(N_SAMPLES_I) @(negedge clk);
 
-        bypass_1MHz = 1'b1;
-        bypass_2MHz = 1'b1;
-        bypass_2_4MHz = 1'b1;
-        repeat(N_SAMPLES_I) @(negedge clk);
+        // bypass_1MHz = 1'b1;
+        // bypass_2MHz = 1'b1;
+        // bypass_2_4MHz = 1'b1;
+        // repeat(N_SAMPLES_I) @(negedge clk);
 
-        repeat (100) begin
-            bypass_1MHz = $random;
-            bypass_2MHz = bypass_1MHz;
-            bypass_2_4MHz = $random;
-            repeat(16000) @(negedge clk);
-        end
+        // repeat (100) begin
+        //     bypass_1MHz = $random;
+        //     bypass_2MHz = bypass_1MHz;
+        //     bypass_2_4MHz = $random;
+        //     repeat(16000) @(negedge clk);
+        // end
      
         
         $display("\n========================================");
@@ -216,9 +244,9 @@ module top_tb ();
         $display("========================================");
 
         $readmemb("input_wave.txt", input_samples);
-        $readmemb("output_B5_wave_exp.txt", output_B5_exp_samples);
-        $readmemb("output_B2_4_wave_exp.txt", output_B2_4_exp_samples);
-        $readmemb("output_wave_exp.txt", output_exp_samples);
+        $readmemb("output_5_1_wave_exp.txt", output_5_1_exp_samples);
+        $readmemb("output_5_2_wave_exp.txt", output_5_2_exp_samples);
+        $readmemb("output_2_4_wave_exp.txt", output_2_4_exp_samples);
         
         rst_n           = 1;
         valid_in        = 0;
@@ -249,7 +277,9 @@ module top_tb ();
     task reset_counters ();
         number_of_output_samples = 0;
         i = 0;
-        output_sample_index = 0;
+        idx_24 = 0;
+        idx_5_1 = 0;
+        idx_5_2 = 0;
         input_sample_index = 0;
     endtask
 endmodule

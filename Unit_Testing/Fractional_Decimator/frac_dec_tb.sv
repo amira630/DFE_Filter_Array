@@ -6,7 +6,7 @@ module top_tb ();
     parameter   COEFF_WIDTH     = 20  ;
     parameter   COEFF_FRAC      = 18  ;
     parameter   M               = 3   ;
-    parameter   N_TAP           = 72  ;
+    parameter   N_TAP           = 146 ;
 
     // Testbench Parameters
     parameter N_SAMPLES_I   = 48000                     ;
@@ -49,8 +49,7 @@ module top_tb ();
         .DATA_WIDTH  (DATA_WIDTH)       ,
         .DATA_FRAC   (DATA_FRAC)        ,
         .COEFF_WIDTH (COEFF_WIDTH)      ,
-        .COEFF_FRAC  (COEFF_FRAC)       ,
-        .N_TAP       (N_TAP)            
+        .COEFF_FRAC  (COEFF_FRAC)       
     ) fractional_Decimator (
         .clk           (clk)            ,
         .valid_in      (valid_in)       ,

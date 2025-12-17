@@ -9,8 +9,8 @@ function Hd_FIR_comp = FIR_comp
 
 % All frequency values are normalized to 1.
 
-Fpass = 0.35;               % Passband Frequency
-Fstop = 0.45;               % Stopband Frequency
+Fpass = 0.55;               % Passband Frequency
+Fstop = 0.65;               % Stopband Frequency
 Dpass = 0.014390163418;    % Passband Ripple
 Dstop = 3.1622776602e-05;  % Stopband Attenuation
 dens  = 20;                % Density Factor

@@ -16,7 +16,7 @@ module CORE #(
     parameter int  COEFF_FRAC       = 32'd18                            ,
 
     //********************** Fractional Decimator ********************//
-    localparam int N_TAP            = 32'd72                            ,
+    localparam int N_TAP            = 32'd146                            ,
     
     //********************** IIR Chain Parameters ********************//
     localparam int NUM_COEFF_DEPTH  = 32'd3                             ,
@@ -61,13 +61,6 @@ module CORE #(
     output logic                                iir_overflow_1MHz                               ,
     output logic                                iir_underflow_1MHz                              ,
     
-    /********************** 2 MHz Notch Filter I/O ************************/
-    input  logic         			            iir_coeff_wr_en_2MHz                            ,
-    input  logic signed [COEFF_WIDTH - 1 : 0]   iir_coeff_in_2MHz       [COEFF_DEPTH - 1 : 0]   ,
-    output logic signed [COEFF_WIDTH - 1 : 0]   iir_coeff_out_2MHz      [COEFF_DEPTH - 1 : 0]   ,
-    output logic                                iir_overflow_2MHz                               ,
-    output logic                                iir_underflow_2MHz                              ,
-    
     /********************** 2.4 MHz Notch Filter I/O ************************/
     input  logic                                iir_bypass_2_4MHz                               , 
     input  logic         			            iir_coeff_wr_en_2_4MHz                          ,
@@ -88,9 +81,9 @@ module CORE #(
     
 );
 
-    assign overflow     = frac_dec_overflow     |   iir_overflow_1MHz   |   iir_overflow_2MHz   |   iir_overflow_2_4MHz     |   cic_overflow    ;
+    assign overflow     = frac_dec_overflow     |   iir_overflow_1MHz   |   iir_overflow_2_4MHz     |   cic_overflow    ;
     
-    assign underflow    = frac_dec_underflow    |   iir_underflow_1MHz  |   iir_underflow_2MHz  |   iir_underflow_2_4MHz    |   cic_underflow   ;
+    assign underflow    = frac_dec_underflow    |   iir_underflow_1MHz  |   iir_underflow_2_4MHz    |   cic_underflow   ;
 
 
     fractional_decimator #(
@@ -131,12 +124,6 @@ module CORE #(
         .coeff_out_1MHz      (iir_coeff_out_1MHz)      ,
         .overflow_1MHz       (iir_overflow_1MHz)       ,
         .underflow_1MHz      (iir_underflow_1MHz)      ,
-        .bypass_2MHz         (iir_bypass_5MHz)         ,
-        .coeff_wr_en_2MHz    (iir_coeff_wr_en_2MHz)    ,
-        .coeff_in_2MHz       (iir_coeff_in_2MHz)       ,
-        .coeff_out_2MHz      (iir_coeff_out_2MHz)      ,
-        .overflow_2MHz       (iir_overflow_2MHz)       ,
-        .underflow_2MHz      (iir_underflow_2MHz)      ,
         .bypass_2_4MHz       (iir_bypass_2_4MHz)       ,
         .coeff_wr_en_2_4MHz  (iir_coeff_wr_en_2_4MHz)  ,
         .coeff_in_2_4MHz     (iir_coeff_in_2_4MHz)     ,

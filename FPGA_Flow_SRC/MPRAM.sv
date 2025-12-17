@@ -8,7 +8,7 @@
 module MPRAM #(
     parameter int ADDR_WIDTH  = 32'd7    ,
     parameter int DATA_WIDTH  = 32'd32   ,
-    parameter int TAPS        = 32'd72   ,
+    parameter int TAPS        = 32'd146   ,
     parameter int COEFF_WIDTH = 32'd20   ,
     parameter int NUM_DENUM   = 32'd5    ,
     parameter int COMP        = 32'd5
@@ -36,8 +36,6 @@ module MPRAM #(
     output  logic signed    [COEFF_WIDTH - 1 : 0]   IIR_24_OUT       [NUM_DENUM - 1 : 0]    ,       // IIR 2.4MHz Notch Coefficients
     output  logic                                   IIR_5_1_VLD                             ,       // IIR 1MHz Notch Coefficients Valid
     output  logic signed    [COEFF_WIDTH - 1 : 0]   IIR_5_1_OUT      [NUM_DENUM - 1 : 0]    ,       // IIR 1MHz Notch Coefficients
-    output  logic                                   IIR_5_2_VLD                             ,       // IIR 2MHz Notch Coefficients Valid
-    output  logic signed    [COEFF_WIDTH - 1 : 0]   IIR_5_2_OUT      [NUM_DENUM - 1 : 0]    ,       // IIR 2MHz Notch Coefficients
 
     output  logic signed    [4 : 0]                 CIC_R_OUT                               ,       // CIC Decimation Factor
 
@@ -45,32 +43,51 @@ module MPRAM #(
     
     output  logic           [1 : 0]                 OUT_SEL                                 ,       // Allow the output of a certain block 
 
-    output  logic           [2 : 0]                 COEFF_SEL                               ,       // Allow the output of a certain block's coefficients can be 0 to 4
+    output  logic           [1 : 0]                 COEFF_SEL                               ,       // Allow the output of a certain block's coefficients can be 0 to 4
 
     output  logic           [2 : 0]                 STATUS                                          // Show Overflow, Underflow, Ready and valid_out for a certain block can be 0 to 5
 );
 
     // Default Coefficient Values (S20.18 format)
     // Coefficients generated using MATLAB's firpm function
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF0   = 20'shfff76  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF18  = 20'shff4c4  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF1   = 20'shffcac  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF19  = 20'sh00898  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF2   = 20'shffada  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF20  = 20'sh0054b  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF3   = 20'shfff7d  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF21  = 20'shfefcc  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF4   = 20'sh00309  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF22  = 20'sh00a01  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF5   = 20'shffe7b  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF23  = 20'sh00a1c  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF6   = 20'shffe50  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF24  = 20'shfe8d4  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF7   = 20'sh00341  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF25  = 20'sh00b42  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF8   = 20'shffede  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF26  = 20'sh01214  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF9   = 20'shffd19  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF27  = 20'shfde19  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF10  = 20'sh0044f  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF28  = 20'sh00c46  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF11  = 20'shfff5e  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF29  = 20'sh02101  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF12  = 20'shffb2b  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF30  = 20'shfc9d4  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF13  = 20'sh005a7  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF31  = 20'sh00cfe  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF14  = 20'sh0006b  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF32  = 20'sh047c8  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF15  = 20'shff873  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF33  = 20'shf8a18  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF16  = 20'sh0071e  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF34  = 20'sh00d5d  ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF17  = 20'sh00246  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF35  = 20'sh22d87  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF0   = 20'sh0000c  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF19  = 20'shffe14  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF1   = 20'shffff2  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF20  = 20'shfff76  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF2   = 20'shfff8d  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF21  = 20'sh0018d  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF3   = 20'shffec5  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF22  = 20'sh00258  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF4   = 20'shffdd4  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF23  = 20'sh000e1  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF5   = 20'shffd40  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF24  = 20'shffe59  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF6   = 20'shffd92  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF25  = 20'shffd29  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF7   = 20'shffedc  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF26  = 20'shffeb0  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF8   = 20'sh00082  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF27  = 20'sh001ba  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF9   = 20'sh00182  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF28  = 20'sh00367  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF10  = 20'sh00135  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF29  = 20'sh001da  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF11  = 20'shfffe4  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF30  = 20'shffe3e  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF12  = 20'shffeaf  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF31  = 20'shffbf8  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF13  = 20'shffeab  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF32  = 20'shffd7e  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF14  = 20'shfffec  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF33  = 20'sh001bd  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF15  = 20'sh00158  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF34  = 20'sh004bc  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF16  = 20'sh00194  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF35  = 20'sh0034d  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF17  = 20'sh00048  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF36  = 20'shffe5b  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF18  = 20'shffe90  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF37  = 20'shffa7c  ;
 
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF38  = 20'shffbbe  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF56  = 20'shfef43  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF39  = 20'sh00178  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF57  = 20'shffc5a  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF40  = 20'sh00662  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF58  = 20'sh00f67  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF41  = 20'sh00568  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF59  = 20'sh015a2  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF42  = 20'shffed2  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF60  = 20'sh0063f  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF43  = 20'shff8a5  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF61  = 20'shfed3c  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF44  = 20'shff935  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF62  = 20'shfe2f1  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF45  = 20'sh000c0  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF63  = 20'shff584  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF46  = 20'sh00873  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF64  = 20'sh0182d  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF47  = 20'sh0087b  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF65  = 20'sh02a07  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF48  = 20'shfffdd  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF66  = 20'sh01292  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF49  = 20'shff64b  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF67  = 20'shfdcfd  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF50  = 20'shff56d  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF68  = 20'shfb86f  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF51  = 20'shfff48  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF69  = 20'shfd7b9  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF52  = 20'sh00b32  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF70  = 20'sh046e9  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF53  = 20'sh00d3c  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF71  = 20'sh0d902  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF54  = 20'sh001ec  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF72  = 20'sh13fec  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF55  = 20'shff2fa  ;    
 
     // Coefficients 1 MHz Notch Filter
     localparam logic signed [COEFF_WIDTH - 1 : 0] B0_1 = 20'sh37061     ;
@@ -79,14 +96,6 @@ module MPRAM #(
 
     localparam logic signed [COEFF_WIDTH - 1 : 0] A1_1 = 20'shc8f9f     ;
     localparam logic signed [COEFF_WIDTH - 1 : 0] A2_1 = 20'sh2e0c3     ;
-
-    // Coefficients 2 MHz Notch Filter
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B0_2 = 20'sh37061     ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B1_2 = 20'sh37061     ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B2_2 = 20'sh37061     ;
-
-    localparam logic signed [COEFF_WIDTH - 1 : 0] A1_2 = 20'sh37061     ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] A2_2 = 20'sh2e0c3     ;
 
     // Coefficients 2.4 MHz Notch Filter
     localparam logic signed [COEFF_WIDTH - 1 : 0] B0_2_4 = 20'sh37061   ;
@@ -100,15 +109,13 @@ module MPRAM #(
 
     logic [ADDR_WIDTH - 1 : 0]  iir_24_coeff_idx;
     logic [ADDR_WIDTH - 1 : 0]  iir_51_coeff_idx;
-    logic [ADDR_WIDTH - 1 : 0]  iir_52_coeff_idx;
-
+    
     logic [ADDR_WIDTH - 1 : 0]  ctrl_idx        ;
 
     assign iir_24_coeff_idx = DATA_ADDR - TAPS                          ;
     assign iir_51_coeff_idx = DATA_ADDR - TAPS - NUM_DENUM              ;
-    assign iir_52_coeff_idx = DATA_ADDR - TAPS - 2 * NUM_DENUM          ;
-
-    assign ctrl_idx         = DATA_ADDR - TAPS - 3 * NUM_DENUM - 1      ;
+    
+    assign ctrl_idx         = DATA_ADDR - TAPS - 2 * NUM_DENUM - 1      ;
 
     assign  ENABLES         = {FRAC_DECI_EN, IIR_EN, CTRL_EN, CIC_EN}   ;
 
@@ -117,7 +124,6 @@ module MPRAM #(
             FRAC_DECI_VLD <= 1'b0;
             IIR_24_VLD    <= 1'b0;
             IIR_5_1_VLD   <= 1'b0;
-            IIR_5_2_VLD   <= 1'b0;
             CIC_R_OUT     <= 5'd1;
             OUT_SEL       <= 2'b0;
             STATUS        <= 3'b0; 
@@ -125,52 +131,85 @@ module MPRAM #(
             PREADY        <= 1'b0;
             PRDATA        <= {(DATA_WIDTH){1'b0}}; 
             
-            FRAC_DECI_OUT [0]   <= COEFF0 ;      FRAC_DECI_OUT [36] <= COEFF35;
-            FRAC_DECI_OUT [1]   <= COEFF1 ;      FRAC_DECI_OUT [37] <= COEFF34;
-            FRAC_DECI_OUT [2]   <= COEFF2 ;      FRAC_DECI_OUT [38] <= COEFF33;
-            FRAC_DECI_OUT [3]   <= COEFF3 ;      FRAC_DECI_OUT [39] <= COEFF32;
-            FRAC_DECI_OUT [4]   <= COEFF4 ;      FRAC_DECI_OUT [40] <= COEFF31;
-            FRAC_DECI_OUT [5]   <= COEFF5 ;      FRAC_DECI_OUT [41] <= COEFF30;
-            FRAC_DECI_OUT [6]   <= COEFF6 ;      FRAC_DECI_OUT [42] <= COEFF29;
-            FRAC_DECI_OUT [7]   <= COEFF7 ;      FRAC_DECI_OUT [43] <= COEFF28;
-            FRAC_DECI_OUT [8]   <= COEFF8 ;      FRAC_DECI_OUT [44] <= COEFF27;
-            FRAC_DECI_OUT [9]   <= COEFF9 ;      FRAC_DECI_OUT [45] <= COEFF26;
-            FRAC_DECI_OUT [10]  <= COEFF10;      FRAC_DECI_OUT [46] <= COEFF25;
-            FRAC_DECI_OUT [11]  <= COEFF11;      FRAC_DECI_OUT [47] <= COEFF24;
-            FRAC_DECI_OUT [12]  <= COEFF12;      FRAC_DECI_OUT [48] <= COEFF23;
-            FRAC_DECI_OUT [13]  <= COEFF13;      FRAC_DECI_OUT [49] <= COEFF22;
-            FRAC_DECI_OUT [14]  <= COEFF14;      FRAC_DECI_OUT [50] <= COEFF21;
-            FRAC_DECI_OUT [15]  <= COEFF15;      FRAC_DECI_OUT [51] <= COEFF20;
-            FRAC_DECI_OUT [16]  <= COEFF16;      FRAC_DECI_OUT [52] <= COEFF19;
-            FRAC_DECI_OUT [17]  <= COEFF17;      FRAC_DECI_OUT [53] <= COEFF18;
-            FRAC_DECI_OUT [18]  <= COEFF18;      FRAC_DECI_OUT [54] <= COEFF17;
-            FRAC_DECI_OUT [19]  <= COEFF19;      FRAC_DECI_OUT [55] <= COEFF16;
-            FRAC_DECI_OUT [20]  <= COEFF20;      FRAC_DECI_OUT [56] <= COEFF15;
-            FRAC_DECI_OUT [21]  <= COEFF21;      FRAC_DECI_OUT [57] <= COEFF14;
-            FRAC_DECI_OUT [22]  <= COEFF22;      FRAC_DECI_OUT [58] <= COEFF13;
-            FRAC_DECI_OUT [23]  <= COEFF23;      FRAC_DECI_OUT [59] <= COEFF12;
-            FRAC_DECI_OUT [24]  <= COEFF24;      FRAC_DECI_OUT [60] <= COEFF11;
-            FRAC_DECI_OUT [25]  <= COEFF25;      FRAC_DECI_OUT [61] <= COEFF10;
-            FRAC_DECI_OUT [26]  <= COEFF26;      FRAC_DECI_OUT [62] <= COEFF9 ;
-            FRAC_DECI_OUT [27]  <= COEFF27;      FRAC_DECI_OUT [63] <= COEFF8 ;
-            FRAC_DECI_OUT [28]  <= COEFF28;      FRAC_DECI_OUT [64] <= COEFF7 ;
-            FRAC_DECI_OUT [29]  <= COEFF29;      FRAC_DECI_OUT [65] <= COEFF6 ;
-            FRAC_DECI_OUT [30]  <= COEFF30;      FRAC_DECI_OUT [66] <= COEFF5 ;
-            FRAC_DECI_OUT [31]  <= COEFF31;      FRAC_DECI_OUT [67] <= COEFF4 ;
-            FRAC_DECI_OUT [32]  <= COEFF32;      FRAC_DECI_OUT [68] <= COEFF3 ;
-            FRAC_DECI_OUT [33]  <= COEFF33;      FRAC_DECI_OUT [69] <= COEFF2 ;
-            FRAC_DECI_OUT [34]  <= COEFF34;      FRAC_DECI_OUT [70] <= COEFF1 ;
-            FRAC_DECI_OUT [35]  <= COEFF35;      FRAC_DECI_OUT [71] <= COEFF0 ;
+            FRAC_DECI_OUT [0]   <= COEFF0 ;      FRAC_DECI_OUT [73]  <= COEFF72;
+            FRAC_DECI_OUT [1]   <= COEFF1 ;      FRAC_DECI_OUT [74]  <= COEFF71;
+            FRAC_DECI_OUT [2]   <= COEFF2 ;      FRAC_DECI_OUT [75]  <= COEFF70;
+            FRAC_DECI_OUT [3]   <= COEFF3 ;      FRAC_DECI_OUT [76]  <= COEFF69;
+            FRAC_DECI_OUT [4]   <= COEFF4 ;      FRAC_DECI_OUT [77]  <= COEFF68;
+            FRAC_DECI_OUT [5]   <= COEFF5 ;      FRAC_DECI_OUT [78]  <= COEFF67;
+            FRAC_DECI_OUT [6]   <= COEFF6 ;      FRAC_DECI_OUT [79]  <= COEFF66;
+            FRAC_DECI_OUT [7]   <= COEFF7 ;      FRAC_DECI_OUT [80]  <= COEFF65;
+            FRAC_DECI_OUT [8]   <= COEFF8 ;      FRAC_DECI_OUT [81]  <= COEFF64;
+            FRAC_DECI_OUT [9]   <= COEFF9 ;      FRAC_DECI_OUT [82]  <= COEFF63;
+            FRAC_DECI_OUT [10]  <= COEFF10;      FRAC_DECI_OUT [83]  <= COEFF62;
+            FRAC_DECI_OUT [11]  <= COEFF11;      FRAC_DECI_OUT [84]  <= COEFF61;
+            FRAC_DECI_OUT [12]  <= COEFF12;      FRAC_DECI_OUT [85]  <= COEFF60;
+            FRAC_DECI_OUT [13]  <= COEFF13;      FRAC_DECI_OUT [86]  <= COEFF59;
+            FRAC_DECI_OUT [14]  <= COEFF14;      FRAC_DECI_OUT [87]  <= COEFF58;
+            FRAC_DECI_OUT [15]  <= COEFF15;      FRAC_DECI_OUT [88]  <= COEFF57;
+            FRAC_DECI_OUT [16]  <= COEFF16;      FRAC_DECI_OUT [89]  <= COEFF56;
+            FRAC_DECI_OUT [17]  <= COEFF17;      FRAC_DECI_OUT [90]  <= COEFF55;
+            FRAC_DECI_OUT [18]  <= COEFF18;      FRAC_DECI_OUT [91]  <= COEFF54;
+            FRAC_DECI_OUT [19]  <= COEFF19;      FRAC_DECI_OUT [92]  <= COEFF53;
+            FRAC_DECI_OUT [20]  <= COEFF20;      FRAC_DECI_OUT [93]  <= COEFF52;
+            FRAC_DECI_OUT [21]  <= COEFF21;      FRAC_DECI_OUT [94]  <= COEFF51;
+            FRAC_DECI_OUT [22]  <= COEFF22;      FRAC_DECI_OUT [95]  <= COEFF50;
+            FRAC_DECI_OUT [23]  <= COEFF23;      FRAC_DECI_OUT [96]  <= COEFF49;
+            FRAC_DECI_OUT [24]  <= COEFF24;      FRAC_DECI_OUT [97]  <= COEFF48;
+            FRAC_DECI_OUT [25]  <= COEFF25;      FRAC_DECI_OUT [98]  <= COEFF47;
+            FRAC_DECI_OUT [26]  <= COEFF26;      FRAC_DECI_OUT [99]  <= COEFF46;
+            FRAC_DECI_OUT [27]  <= COEFF27;      FRAC_DECI_OUT [100] <= COEFF45;
+            FRAC_DECI_OUT [28]  <= COEFF28;      FRAC_DECI_OUT [101] <= COEFF44;
+            FRAC_DECI_OUT [29]  <= COEFF29;      FRAC_DECI_OUT [102] <= COEFF43;
+            FRAC_DECI_OUT [30]  <= COEFF30;      FRAC_DECI_OUT [103] <= COEFF42;
+            FRAC_DECI_OUT [31]  <= COEFF31;      FRAC_DECI_OUT [104] <= COEFF41;
+            FRAC_DECI_OUT [32]  <= COEFF32;      FRAC_DECI_OUT [105] <= COEFF40;
+            FRAC_DECI_OUT [33]  <= COEFF33;      FRAC_DECI_OUT [106] <= COEFF39;
+            FRAC_DECI_OUT [34]  <= COEFF34;      FRAC_DECI_OUT [107] <= COEFF38;
+            FRAC_DECI_OUT [35]  <= COEFF35;      FRAC_DECI_OUT [108] <= COEFF37;
+            FRAC_DECI_OUT [36]  <= COEFF36;      FRAC_DECI_OUT [109] <= COEFF36;
+            FRAC_DECI_OUT [37]  <= COEFF37;      FRAC_DECI_OUT [110] <= COEFF35;
+            FRAC_DECI_OUT [38]  <= COEFF38;      FRAC_DECI_OUT [111] <= COEFF34;
+            FRAC_DECI_OUT [39]  <= COEFF39;      FRAC_DECI_OUT [112] <= COEFF33;
+            FRAC_DECI_OUT [40]  <= COEFF40;      FRAC_DECI_OUT [113] <= COEFF32;
+            FRAC_DECI_OUT [41]  <= COEFF41;      FRAC_DECI_OUT [114] <= COEFF31;
+            FRAC_DECI_OUT [42]  <= COEFF42;      FRAC_DECI_OUT [115] <= COEFF30;
+            FRAC_DECI_OUT [43]  <= COEFF43;      FRAC_DECI_OUT [116] <= COEFF29;
+            FRAC_DECI_OUT [44]  <= COEFF44;      FRAC_DECI_OUT [117] <= COEFF28;
+            FRAC_DECI_OUT [45]  <= COEFF45;      FRAC_DECI_OUT [118] <= COEFF27;
+            FRAC_DECI_OUT [46]  <= COEFF46;      FRAC_DECI_OUT [119] <= COEFF26;
+            FRAC_DECI_OUT [47]  <= COEFF47;      FRAC_DECI_OUT [120] <= COEFF25;
+            FRAC_DECI_OUT [48]  <= COEFF48;      FRAC_DECI_OUT [121] <= COEFF24;
+            FRAC_DECI_OUT [49]  <= COEFF49;      FRAC_DECI_OUT [122] <= COEFF23;
+            FRAC_DECI_OUT [50]  <= COEFF50;      FRAC_DECI_OUT [123] <= COEFF22;
+            FRAC_DECI_OUT [51]  <= COEFF51;      FRAC_DECI_OUT [124] <= COEFF21;
+            FRAC_DECI_OUT [52]  <= COEFF52;      FRAC_DECI_OUT [125] <= COEFF20;
+            FRAC_DECI_OUT [53]  <= COEFF53;      FRAC_DECI_OUT [126] <= COEFF19;
+            FRAC_DECI_OUT [54]  <= COEFF54;      FRAC_DECI_OUT [127] <= COEFF18;
+            FRAC_DECI_OUT [55]  <= COEFF55;      FRAC_DECI_OUT [128] <= COEFF17;
+            FRAC_DECI_OUT [56]  <= COEFF56;      FRAC_DECI_OUT [129] <= COEFF16;
+            FRAC_DECI_OUT [57]  <= COEFF57;      FRAC_DECI_OUT [130] <= COEFF15;
+            FRAC_DECI_OUT [58]  <= COEFF58;      FRAC_DECI_OUT [131] <= COEFF14;
+            FRAC_DECI_OUT [59]  <= COEFF59;      FRAC_DECI_OUT [132] <= COEFF13;
+            FRAC_DECI_OUT [60]  <= COEFF60;      FRAC_DECI_OUT [133] <= COEFF12;
+            FRAC_DECI_OUT [61]  <= COEFF61;      FRAC_DECI_OUT [134] <= COEFF11;
+            FRAC_DECI_OUT [62]  <= COEFF62;      FRAC_DECI_OUT [135] <= COEFF10;
+            FRAC_DECI_OUT [63]  <= COEFF63;      FRAC_DECI_OUT [136] <= COEFF9 ;
+            FRAC_DECI_OUT [64]  <= COEFF64;      FRAC_DECI_OUT [137] <= COEFF8 ;
+            FRAC_DECI_OUT [65]  <= COEFF65;      FRAC_DECI_OUT [138] <= COEFF7 ;
+            FRAC_DECI_OUT [66]  <= COEFF66;      FRAC_DECI_OUT [139] <= COEFF6 ;
+            FRAC_DECI_OUT [67]  <= COEFF67;      FRAC_DECI_OUT [140] <= COEFF5 ;
+            FRAC_DECI_OUT [68]  <= COEFF68;      FRAC_DECI_OUT [141] <= COEFF4 ;
+            FRAC_DECI_OUT [69]  <= COEFF69;      FRAC_DECI_OUT [142] <= COEFF3 ;
+            FRAC_DECI_OUT [70]  <= COEFF70;      FRAC_DECI_OUT [143] <= COEFF2 ;
+            FRAC_DECI_OUT [71]  <= COEFF71;      FRAC_DECI_OUT [144] <= COEFF1 ;
+            FRAC_DECI_OUT [72]  <= COEFF72;      FRAC_DECI_OUT [145] <= COEFF0 ;
             
             
             IIR_5_1_OUT [0] <= B0_1;      IIR_5_1_OUT [3] <= A1_1;
             IIR_5_1_OUT [1] <= B1_1;      IIR_5_1_OUT [4] <= A2_1;
             IIR_5_1_OUT [2] <= B2_1;
 
-            IIR_5_2_OUT [0] <= B0_2;      IIR_5_2_OUT [3] <= A1_2;
-            IIR_5_2_OUT [1] <= B1_2;      IIR_5_2_OUT [4] <= A2_2;
-            IIR_5_2_OUT [2] <= B2_2;
-            
             IIR_24_OUT [0] <= B0_2_4;      IIR_24_OUT [3] <= A1_2_4;
             IIR_24_OUT [1] <= B1_2_4;      IIR_24_OUT [4] <= A2_2_4;
             IIR_24_OUT [2] <= B2_2_4;
@@ -178,15 +217,13 @@ module MPRAM #(
             for (int i = 0; i < 5; i++) CTRL [i] <= 1'b0;
         end
         else if (PWRITE) begin
-            if (|ENABLES && !PENABLE)
-                PREADY <= 1'b1;
-            else 
-                PREADY        <= 1'b0;
-                FRAC_DECI_VLD <= 1'b0;
-                IIR_24_VLD    <= 1'b0;
-                IIR_5_1_VLD   <= 1'b0;
-                IIR_5_2_VLD   <= 1'b0;
+            if (|ENABLES && !PENABLE) PREADY <= 1'b1;
+            else PREADY <= 1'b0;
 
+            FRAC_DECI_VLD <= 1'b0;
+            IIR_24_VLD    <= 1'b0;
+            IIR_5_1_VLD   <= 1'b0;
+            
             if (PENABLE) begin
                 case (ENABLES)
                     4'b1000: begin
@@ -197,23 +234,21 @@ module MPRAM #(
                     4'b0100: begin
                         IIR_24_OUT  [iir_24_coeff_idx] <= DATA_IN[COEFF_WIDTH - 1 : 0];
                         IIR_5_1_OUT [iir_51_coeff_idx] <= DATA_IN[COEFF_WIDTH - 1 : 0];
-                        IIR_5_2_OUT [iir_52_coeff_idx] <= DATA_IN[COEFF_WIDTH - 1 : 0];
 
                         if (DATA_ADDR == (TAPS + NUM_DENUM - 1)) IIR_24_VLD <= 1'b1;
                         else if (DATA_ADDR == (TAPS + (2 * NUM_DENUM) - 1)) IIR_5_1_VLD <= 1'b1;
-                        else if (DATA_ADDR == (TAPS + (3 * NUM_DENUM) - 1)) IIR_5_2_VLD <= 1'b1;
                     end
                     4'b0010: begin
-                        if (DATA_ADDR == (TAPS + (3 * NUM_DENUM))) begin
+                        if (DATA_ADDR == (TAPS + (2 * NUM_DENUM))) begin
                             CIC_R_OUT <= DATA_IN[4 : 0];
                         end
                     end
                     4'b0001: begin
                         CTRL [ctrl_idx[3 : 0]] <= DATA_IN[0];
-                        
-                        if (DATA_ADDR == (TAPS + (3 * NUM_DENUM) + 1 + 5)) OUT_SEL <= DATA_IN[1 : 0];
-                        else if (DATA_ADDR == (TAPS + (3 * NUM_DENUM) + 1 + 5 +1)) COEFF_SEL <= DATA_IN[2 : 0];
-                        else if (DATA_ADDR == (TAPS + (3 * NUM_DENUM) + 1 + 5 + 1 + 1)) STATUS <= DATA_IN[2 : 0];
+
+                        if (DATA_ADDR == (TAPS + (2 * NUM_DENUM) + 1 + 5)) OUT_SEL <= DATA_IN[1 : 0];
+                        else if (DATA_ADDR == (TAPS + (2 * NUM_DENUM) + 1 + 5 + 1)) COEFF_SEL <= DATA_IN[1 : 0];
+                        else if (DATA_ADDR == (TAPS + (2 * NUM_DENUM) + 1 + 5 + 1 + 1)) STATUS <= DATA_IN[2 : 0];
                     end
                     default: ;
                 endcase
@@ -222,7 +257,6 @@ module MPRAM #(
             FRAC_DECI_VLD <= 1'b0;
             IIR_24_VLD    <= 1'b0;
             IIR_5_1_VLD   <= 1'b0;
-            IIR_5_2_VLD   <= 1'b0;
             
             if (|ENABLES && !PENABLE) begin
                 PREADY <= 1'b1;
@@ -232,20 +266,18 @@ module MPRAM #(
                     PRDATA <= {{(DATA_WIDTH - COEFF_WIDTH){IIR_24_OUT [iir_24_coeff_idx][COEFF_WIDTH - 1]}}, IIR_24_OUT [iir_24_coeff_idx]};
                 end else if (DATA_ADDR < TAPS + (2 * NUM_DENUM)) begin
                     PRDATA <= {{(DATA_WIDTH - COEFF_WIDTH){IIR_5_1_OUT [iir_51_coeff_idx][COEFF_WIDTH - 1]}}, IIR_5_1_OUT [iir_51_coeff_idx]};
-                end else if (DATA_ADDR < TAPS + (3 * NUM_DENUM)) begin
-                    PRDATA <= {{(DATA_WIDTH - COEFF_WIDTH){IIR_5_2_OUT [iir_52_coeff_idx][COEFF_WIDTH - 1]}}, IIR_5_2_OUT [iir_52_coeff_idx]};
-                end else if (DATA_ADDR < TAPS + (3 * NUM_DENUM) + 1) begin
+                end else if (DATA_ADDR < TAPS + (2 * NUM_DENUM) + 1) begin
                     PRDATA <= {{(DATA_WIDTH - 5){1'b0}}, CIC_R_OUT};
-                end else if (DATA_ADDR < TAPS + (3 * NUM_DENUM) + 1 + 5) begin
+                end else if (DATA_ADDR < TAPS + (2 * NUM_DENUM) + 1 + 5) begin
                     PRDATA <= {{(DATA_WIDTH - 1){1'b0}}, CTRL [ctrl_idx[3:0]]};
-                end else if (DATA_ADDR < TAPS + (3 * NUM_DENUM) + 1 + 5 + 1) begin
+                end else if (DATA_ADDR < TAPS + (2 * NUM_DENUM) + 1 + 5 + 1) begin
                     PRDATA <= {{(DATA_WIDTH - 2){1'b0}}, OUT_SEL};
-                end else if (DATA_ADDR < TAPS + (3 * NUM_DENUM) + 1 + 5 + 2) begin
-                    PRDATA <= {{(DATA_WIDTH - 3){1'b0}}, COEFF_SEL};
-                end else if (DATA_ADDR < TAPS + (3 * NUM_DENUM) + 1 + 5 + 3) begin
+                end else if (DATA_ADDR < TAPS + (2 * NUM_DENUM) + 1 + 5 + 2) begin
+                    PRDATA <= {{(DATA_WIDTH - 2){1'b0}}, COEFF_SEL};
+                end else if (DATA_ADDR < TAPS + (2 * NUM_DENUM) + 1 + 5 + 3) begin
                     PRDATA <= {{(DATA_WIDTH - 3){1'b0}}, STATUS};
                 end else begin
-                    PRDATA <= {(DATA_WIDTH>>1){2'b10}};
+                    PRDATA <= {(DATA_WIDTH >> 1){2'b10}};
                 end
             end
             else begin
@@ -254,5 +286,4 @@ module MPRAM #(
             end
         end
     end
-
 endmodule

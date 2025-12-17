@@ -13,8 +13,8 @@ module APB #(
     parameter   int PDATA_WIDTH = 32'd32 ,
     parameter   int DATA_WIDTH  = 32'd16 ,
     parameter   int COEFF_WIDTH = 32'd20 ,
-    parameter   int N_TAP       = 32'd72 ,
-    parameter   int COMP        = 32'd4  ,
+    parameter   int N_TAP       = 32'd146,
+    parameter   int COMP        = 32'd5  ,
     localparam  int NUM_DENUM   = 32'd5 
 )(
     input   logic                                   clk                             ,
@@ -34,16 +34,14 @@ module APB #(
     output  logic signed    [COEFF_WIDTH - 1 : 0]   IIR_24_OUT      [NUM_DENUM-1:0] , 
     output  logic                                   IIR_5_1_VLD                     , 
     output  logic signed    [COEFF_WIDTH - 1 : 0]   IIR_5_1_OUT     [NUM_DENUM-1:0] , 
-    output  logic                                   IIR_5_2_VLD                     , 
-    output  logic signed    [COEFF_WIDTH - 1 : 0]   IIR_5_2_OUT     [NUM_DENUM-1:0] , 
-
+    
     output  logic signed    [4 : 0]                 CIC_R_OUT                       ,
 
     output  logic                                   CTRL            [4 : 0]         ,
 
     output  logic           [1 : 0]                 OUT_SEL                         ,
 
-    output  logic           [2 : 0]                 COEFF_SEL                       ,
+    output  logic           [1 : 0]                 COEFF_SEL                       ,
 
     output  logic           [2 : 0]                 STATUS                
 );
@@ -105,8 +103,6 @@ module APB #(
         .IIR_24_OUT(IIR_24_OUT)         ,
         .IIR_5_1_VLD(IIR_5_1_VLD)       ,
         .IIR_5_1_OUT(IIR_5_1_OUT)       ,
-        .IIR_5_2_VLD(IIR_5_2_VLD)       ,
-        .IIR_5_2_OUT(IIR_5_2_OUT)       ,
         .CIC_R_OUT(CIC_R_OUT)           , 
         .CTRL(CTRL)                     ,
         .OUT_SEL(OUT_SEL)               ,         

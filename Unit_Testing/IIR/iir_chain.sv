@@ -116,25 +116,28 @@ module IIR_chain #(
         .valid_out     (valid_1MHz_out)
     );
 
-    IIR #(
-        .DATA_WIDTH      (DATA_WIDTH)  ,
-        .DATA_FRAC       (DATA_FRAC)   ,
-        .COEFF_WIDTH     (COEFF_WIDTH) ,
-        .COEFF_FRAC      (COEFF_FRAC)  ,
-        .IIR_NOTCH_FREQ  (NOTCH_2MHZ)                // 0: 1MHz, 1: 2MHz, 2:2.4MHz
+    assign valid_out = valid_1MHz_out;
+    assign iir_out = iir_out_1MHz;
 
-    ) IIR_2MHZ_NOTCH (
-        .clk            (clk)                ,
-        .rst_n          (rst_n)              ,
-        .valid_in       (valid_1MHz_out)     ,
-        .bypass         (bypass_2MHz)        ,   
-        .coeff_wr_en    (coeff_wr_en_2MHz)   ,
-        .coeff_in       (coeff_in_2MHz)      ,
-        .iir_in         (iir_out_1MHz)       ,
-        .iir_out        (iir_out)            ,   
-        .coeff_out      (coeff_out_2MHz)     ,
-        .overflow       (overflow_2MHz)      ,
-        .underflow      (underflow_2MHz)     ,
-        .valid_out      (valid_out)
-    );
+    // IIR #(
+    //     .DATA_WIDTH      (DATA_WIDTH)  ,
+    //     .DATA_FRAC       (DATA_FRAC)   ,
+    //     .COEFF_WIDTH     (COEFF_WIDTH) ,
+    //     .COEFF_FRAC      (COEFF_FRAC)  ,
+    //     .IIR_NOTCH_FREQ  (NOTCH_2MHZ)                // 0: 1MHz, 1: 2MHz, 2:2.4MHz
+
+    // ) IIR_2MHZ_NOTCH (
+    //     .clk            (clk)                ,
+    //     .rst_n          (rst_n)              ,
+    //     .valid_in       (valid_1MHz_out)     ,
+    //     .bypass         (bypass_2MHz)        ,   
+    //     .coeff_wr_en    (coeff_wr_en_2MHz)   ,
+    //     .coeff_in       (coeff_in_2MHz)      ,
+    //     .iir_in         (iir_out_1MHz)       ,
+    //     .iir_out        (iir_out)            ,   
+    //     .coeff_out      (coeff_out_2MHz)     ,
+    //     .overflow       (overflow_2MHz)      ,
+    //     .underflow      (underflow_2MHz)     ,
+    //     .valid_out      (valid_out)
+    // );
 endmodule

@@ -21,14 +21,12 @@ sim:/DFE_tb/iir_24mhz_sig \
 sim:/DFE_tb/iir_24mhz_sig_tb \
 sim:/DFE_tb/iir_5mhz_1_sig \
 sim:/DFE_tb/iir_5mhz_1_sig_tb \
-sim:/DFE_tb/iir_5mhz_2_sig \
-sim:/DFE_tb/iir_5mhz_2_sig_tb \
 sim:/DFE_tb/cic_sig \
 sim:/DFE_tb/cic_sig_tb \
 sim:/DFE_tb/output_sig \
 sim:/DFE_tb/core_out_sig_tb \
 sim:/DFE_tb/error \
-sim:/DFE_tb/acc_error \
+sim:/DFE_tb/max_error \
 sim:/DFE_tb/overflow_tb \
 sim:/DFE_tb/underflow_tb \
 sim:/DFE_tb/valid_out_tb \
@@ -47,8 +45,6 @@ sim:/DFE_tb/DUT/U_CORE/frac_dec_overflow \
 sim:/DFE_tb/DUT/U_CORE/frac_dec_underflow \
 sim:/DFE_tb/DUT/U_CORE/iir_overflow_1MHz \
 sim:/DFE_tb/DUT/U_CORE/iir_underflow_1MHz \
-sim:/DFE_tb/DUT/U_CORE/iir_overflow_2MHz \
-sim:/DFE_tb/DUT/U_CORE/iir_underflow_2MHz \
 sim:/DFE_tb/DUT/U_CORE/iir_overflow_2_4MHz \
 sim:/DFE_tb/DUT/U_CORE/iir_underflow_2_4MHz \
 sim:/DFE_tb/DUT/U_CORE/cic_overflow \

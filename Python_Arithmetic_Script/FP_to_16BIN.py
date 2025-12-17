@@ -1,6 +1,3 @@
-import math
-
-
 def float_to_binary(f):
     # Convert floating-point number to s16.15 fixed-point with saturation and rounding
     # s16.15 range: -1.0 to 0.999969482421875 (approximately 1.0 - 2^-15)

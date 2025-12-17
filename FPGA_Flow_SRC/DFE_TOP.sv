@@ -16,7 +16,7 @@ module DFE_TOP #(
     parameter   int COEFF_FRAC      = 32'd18    ,
 
     //********************** Fractional Decimator ********************//
-    localparam  int N_TAP           = 32'd72    ,
+    localparam  int N_TAP           = 32'd146    ,
     
     //********************** IIR Parameters ********************//
     localparam  int NUM_DENUM       = 32'd5     ,
@@ -28,7 +28,7 @@ module DFE_TOP #(
     //********************** APB Parameters ********************//
     parameter   int ADDR_WIDTH      = 32'd7     ,
     parameter   int PDATA_WIDTH     = 32'd32    ,
-    parameter   int COMP            = 32'd4  
+    parameter   int COMP            = 32'd5  
 )(
     input   logic                                   clk                                 ,
     input   logic                                   rst_n                               ,
@@ -63,14 +63,12 @@ module DFE_TOP #(
     logic signed [COEFF_WIDTH - 1 : 0]  IIR_24_OUT              [NUM_DENUM - 1 : 0] ; 
     logic                               IIR_5_1_VLD                                 ;    
     logic signed [COEFF_WIDTH - 1 : 0]  IIR_5_1_OUT             [NUM_DENUM - 1 : 0] ; 
-    logic                               IIR_5_2_VLD                                 ; 
-    logic signed [COEFF_WIDTH - 1 : 0]  IIR_5_2_OUT             [NUM_DENUM - 1 : 0] ; 
-
+    
     logic signed [4 : 0]                CIC_R_OUT                                   ;
 
     logic                               CTRL                    [4 : 0]             ;
     logic        [1 : 0]                OUT_SEL                                     ;
-    logic        [2 : 0]                COEFF_SEL                                   ;
+    logic        [1 : 0]                COEFF_SEL                                   ;
     logic        [2 : 0]                STATUS                                      ;
 
     logic signed [COEFF_WIDTH - 1 : 0]  frac_dec_coeff_data_out [N_TAP - 1 : 0]     ;
@@ -83,10 +81,6 @@ module DFE_TOP #(
     logic signed [COEFF_WIDTH - 1 : 0]  iir_coeff_out_1MHz      [NUM_DENUM - 1 : 0] ;
     logic                               iir_overflow_1MHz                           ;
     logic                               iir_underflow_1MHz                          ;
-
-    logic signed [COEFF_WIDTH - 1 : 0]  iir_coeff_out_2MHz      [NUM_DENUM - 1 : 0] ;
-    logic                               iir_overflow_2MHz                           ;
-    logic                               iir_underflow_2MHz                          ;
 
     logic signed [COEFF_WIDTH - 1 : 0]  iir_coeff_out_2_4MHz    [NUM_DENUM - 1 : 0] ;
     logic                               iir_overflow_2_4MHz                         ;
@@ -139,13 +133,6 @@ module DFE_TOP #(
         .iir_overflow_1MHz       (iir_overflow_1MHz )       ,
         .iir_underflow_1MHz      (iir_underflow_1MHz)       ,
         
-        /********************** 2 MHz Notch Filter I/O ************************/
-        .iir_coeff_wr_en_2MHz    (IIR_5_2_VLD)              ,
-        .iir_coeff_in_2MHz       (IIR_5_2_OUT)              ,
-        .iir_coeff_out_2MHz      (iir_coeff_out_2MHz)       ,
-        .iir_overflow_2MHz       (iir_overflow_2MHz )       ,
-        .iir_underflow_2MHz      (iir_underflow_2MHz)       ,
-        
         /********************** 2.4 MHz Notch Filter I/O ************************/
         .iir_bypass_2_4MHz       (CTRL[1])                  , 
         .iir_coeff_wr_en_2_4MHz  (IIR_24_VLD)               ,
@@ -192,9 +179,7 @@ module DFE_TOP #(
         .IIR_24_OUT     (IIR_24_OUT )   , 
         .IIR_5_1_VLD    (IIR_5_1_VLD)   , 
         .IIR_5_1_OUT    (IIR_5_1_OUT)   , 
-        .IIR_5_2_VLD    (IIR_5_2_VLD)   , 
-        .IIR_5_2_OUT    (IIR_5_2_OUT)   , 
-
+        
         .CIC_R_OUT      (CIC_R_OUT)     ,
 
         .CTRL           (CTRL     )     ,
@@ -214,13 +199,8 @@ module DFE_TOP #(
 
     always_comb begin
         case (COEFF_SEL)
-            3'b000: begin
-                for (int i = 0 ; i < N_TAP ; i++) begin
-                    coeff_out[i] = {(COEFF_WIDTH){1'b0}};
-                end
-            end
-            3'b001: coeff_out = frac_dec_coeff_data_out;
-            3'b010: begin
+            2'b01: coeff_out = frac_dec_coeff_data_out;
+            2'b10: begin
                 for (int i = 0; i < N_TAP; i++) begin
                     if (i < NUM_DENUM)
                         coeff_out[i] = iir_coeff_out_1MHz[i];
@@ -228,15 +208,7 @@ module DFE_TOP #(
                         coeff_out[i] = {(COEFF_WIDTH){1'b0}};
                 end
             end
-            3'b011: begin
-                for (int i = 0; i < N_TAP; i++) begin
-                    if (i < NUM_DENUM)
-                        coeff_out[i] = iir_coeff_out_2MHz[i];
-                    else
-                        coeff_out[i] = {(COEFF_WIDTH){1'b0}};
-                end
-            end
-            3'b100: begin
+            2'b11: begin
                 for (int i = 0; i < N_TAP; i++) begin
                     if (i < NUM_DENUM)
                         coeff_out[i] = iir_coeff_out_2_4MHz[i]  ;
@@ -245,7 +217,7 @@ module DFE_TOP #(
                 end
             end
             default : begin
-                for (int i = 0; i < N_TAP; i++) begin
+                for (int i = 0 ; i < N_TAP ; i++) begin
                     coeff_out[i] = {(COEFF_WIDTH){1'b0}};
                 end
             end
@@ -254,11 +226,6 @@ module DFE_TOP #(
 
     always_comb begin
         case (STATUS)
-            3'b000: begin
-                block_overflow  = 1'b0;
-                block_underflow = 1'b0;
-                block_valid_out = 1'b0;
-            end
             3'b001: begin
                 block_overflow  = frac_dec_overflow  ;
                 block_underflow = frac_dec_underflow ;
@@ -270,22 +237,15 @@ module DFE_TOP #(
                 block_valid_out = iir_valid_out      ;
             end
             3'b011: begin
-                block_overflow  = iir_overflow_2MHz  ;
-                block_underflow = iir_underflow_2MHz ;
-                block_valid_out = iir_valid_out      ;
-            end
-            3'b100: begin
                 block_overflow  = iir_overflow_2_4MHz  ;
                 block_underflow = iir_underflow_2_4MHz ;
                 block_valid_out = iir_valid_out        ;
             end
-            
-            3'b101: begin
+            3'b100: begin
                 block_overflow  = cic_overflow  ;
                 block_underflow = cic_underflow ;
                 block_valid_out = valid_out     ;
             end
-
             default : begin
                 block_overflow  = 1'b0;
                 block_underflow = 1'b0;

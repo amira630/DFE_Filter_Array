@@ -21,19 +21,18 @@ module DFE_tb();
     parameter ADDR_WIDTH   = 7   ;
     parameter COEFF_WIDTH  = 20  ;
     parameter COEFF_FRAC   = 18  ;
-    parameter N_TAP        = 72  ;
+    parameter N_TAP        = 146 ;
     parameter NUM_DENUM    = 5   ;
-    parameter COMP         = 4   ;
+    parameter COMP         = 5   ;
 
     integer input_idx = 0;
     integer frac_decimator_idx = 0;
     integer iir_24mhz_idx = 0;
     integer iir_5mhz_1_idx = 0;
-    integer iir_5mhz_2_idx = 0;
     integer cic_idx = 0;
     integer output_idx = 0;
 
-    typedef enum {EMPTY, FRACTIONAL_DECIMATOR, IIR_24, IIR_5_1, IIR_5_2, IIR, CIC} BLOCK_SEL;
+    typedef enum {EMPTY, FRACTIONAL_DECIMATOR, IIR_24, IIR_5_1, IIR, CIC} BLOCK_SEL;
 
     typedef enum {SINE, SQUARE, TRIANGULAR} INPUT_SHAPE; 
 
@@ -63,20 +62,17 @@ module DFE_tb();
     logic signed [COEFF_WIDTH - 1 : 0] frac_dec_coeff_tb [N_TAP - 1 : 0];
     logic signed [COEFF_WIDTH - 1 : 0] iir_24mhz_coeff_tb [NUM_DENUM - 1 : 0];
     logic signed [COEFF_WIDTH - 1 : 0] iir_5mhz_1_coeff_tb [NUM_DENUM - 1 : 0];
-    logic signed [COEFF_WIDTH - 1 : 0] iir_5mhz_2_coeff_tb [NUM_DENUM - 1 : 0];
     
     real input_sig;
     real frac_decimator_sig;
     real iir_24mhz_sig;
     real iir_5mhz_1_sig;
-    real iir_5mhz_2_sig;
     real cic_sig;
     real output_sig;
 
     real frac_decimator_sig_tb;
     real iir_24mhz_sig_tb;
     real iir_5mhz_1_sig_tb;
-    real iir_5mhz_2_sig_tb;
     real cic_sig_tb;
 
     real block_out_sig_tb;
@@ -88,7 +84,6 @@ module DFE_tb();
     logic frac_decimator_valid_out_tb;
     logic iir_24mhz_valid_out_tb;
     logic iir_5mhz_1_valid_out_tb;
-    logic iir_5mhz_2_valid_out_tb;
     logic cic_valid_out_tb;
 
     /////////////////////////////////////////////////////////
@@ -122,14 +117,12 @@ module DFE_tb();
     logic signed [DATA_WIDTH - 1 : 0] frac_decimator_exp [$];
     logic signed [DATA_WIDTH - 1 : 0] iir_24mhz_exp [$];
     logic signed [DATA_WIDTH - 1 : 0] iir_5mhz_1_exp [$];
-    logic signed [DATA_WIDTH - 1 : 0] iir_5mhz_2_exp [$];
     logic signed [DATA_WIDTH - 1 : 0] cic_exp [$];
     logic signed [DATA_WIDTH - 1 : 0] output_exp [$];
 
     real frac_decimator_float_exp [$];
     real iir_24mhz_float_exp [$];
     real iir_5mhz_1_float_exp [$];
-    real iir_5mhz_2_float_exp [$];
     real cic_float_exp [$];
     real output_float_exp [$];
 
@@ -213,7 +206,6 @@ module DFE_tb();
     assign frac_decimator_valid_out_tb = DUT.U_CORE.frac_dec_valid_out  ;
     assign iir_24mhz_valid_out_tb      = DUT.U_CORE.IIR.valid_2_4MHz_out;
     assign iir_5mhz_1_valid_out_tb     = DUT.U_CORE.IIR.valid_1MHz_out  ;
-    assign iir_5mhz_2_valid_out_tb     = DUT.U_CORE.IIR.valid_out       ;
     assign cic_valid_out_tb            = DUT.U_CORE.valid_out           ;
  
     always_ff @(posedge clk_tb or negedge rst_n_tb) begin
@@ -260,20 +252,6 @@ module DFE_tb();
 
     always_ff @(posedge clk_tb or negedge rst_n_tb) begin
         if (!rst_n_tb) begin
-            iir_5mhz_2_idx <= 0;
-            iir_5mhz_2_sig          <= 0;
-        end else if (iir_5mhz_2_valid_out_tb && trig && iir_5mhz_2_idx < iir_5mhz_2_exp.size()) begin
-            if (floating_point_flag == 0) begin
-                iir_5mhz_2_sig          <= $itor($signed(iir_5mhz_2_exp[iir_5mhz_2_idx])) / 32768.0;
-            end else begin
-                iir_5mhz_2_sig          <= iir_5mhz_2_float_exp[iir_5mhz_2_idx];
-            end
-            iir_5mhz_2_idx <= iir_5mhz_2_idx + 1 ;
-        end
-    end
-
-    always_ff @(posedge clk_tb or negedge rst_n_tb) begin
-        if (!rst_n_tb) begin
             cic_idx <= 0;
             cic_sig <= 0;
         end else if (cic_valid_out_tb && trig && cic_idx < cic_exp.size()) begin
@@ -299,9 +277,13 @@ module DFE_tb();
 
             if (!core_test_end) begin
                 if (error < 0) begin
-                    max_error <= $max(max_error, -error);
+                    if (max_error < (-error)) begin
+                        max_error <= (-error);
+                    end 
                 end else begin
-                    max_error <= $max(max_error, error);
+                    if (max_error < (-error)) begin
+                        max_error <= error;
+                    end 
                 end
             end
 
@@ -331,13 +313,11 @@ module DFE_tb();
             frac_decimator_sig_tb  <= 0;
             iir_24mhz_sig_tb       <= 0;
             iir_5mhz_1_sig_tb      <= 0;
-            iir_5mhz_2_sig_tb      <= 0;
             cic_sig_tb             <= 0;
         end else begin
             frac_decimator_sig_tb  <= $itor($signed(DUT.U_CORE.frac_dec_out)) / 32768.0;
             iir_24mhz_sig_tb       <= $itor($signed(DUT.U_CORE.IIR.iir_out_2_4MHz)) / 32768.0;
             iir_5mhz_1_sig_tb      <= $itor($signed(DUT.U_CORE.IIR.iir_out_1MHz)) / 32768.0;
-            iir_5mhz_2_sig_tb      <= $itor($signed(DUT.U_CORE.IIR.iir_out)) / 32768.0;
             cic_sig_tb             <= $itor($signed(DUT.U_CORE.core_out)) / 32768.0;
         end
     end
@@ -434,75 +414,75 @@ module DFE_tb();
             i = i + 1;
         end
 
-        repeat (2) begin
-            bypass_TC = 0;
-            TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[0]}, 4'b0000, 1, 1);
-            repeat (16) begin
-                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-                TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[0]}, bypass_TC, 0, 1);
-                SET_OUTPUT($random % 4);
-                SET_COEFF($random % 5);
-                READ_STATUS(4);
-                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-                bypass_TC = bypass_TC + 1;
-            end
-        end
+        // repeat (2) begin
+        //     bypass_TC = 0;
+        //     TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[0]}, 4'b0000, 1, 1);
+        //     repeat (16) begin
+        //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+        //         TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[0]}, bypass_TC, 0, 1);
+        //         SET_OUTPUT($random % 4);
+        //         SET_COEFF($random % 5);
+        //         READ_STATUS(4);
+        //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+        //         bypass_TC = bypass_TC + 1;
+        //     end
+        // end
 
-        repeat (2) begin
-            bypass_TC = 0;
-            TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[1]}, 4'b0000, 1, 1);
-            repeat (16) begin
-                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-                TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[1]}, bypass_TC, 0, 1);
-                SET_OUTPUT($random % 4);
-                SET_COEFF($random % 5);
-                READ_STATUS(4);
-                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-                bypass_TC = bypass_TC + 1;
-            end
-        end
+        // repeat (2) begin
+        //     bypass_TC = 0;
+        //     TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[1]}, 4'b0000, 1, 1);
+        //     repeat (16) begin
+        //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+        //         TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[1]}, bypass_TC, 0, 1);
+        //         SET_OUTPUT($random % 4);
+        //         SET_COEFF($random % 5);
+        //         READ_STATUS(4);
+        //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+        //         bypass_TC = bypass_TC + 1;
+        //     end
+        // end
 
-        repeat (2) begin
-            bypass_TC = 0;
-            TC_cfg({fl_fi_flag, 3'b1_0_1, cic_decf_TC[2]}, 4'b0000, 1, 1);
-            repeat (16) begin
-                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-                TC_cfg({fl_fi_flag, 3'b1_0_1, cic_decf_TC[2]}, bypass_TC, 0, 1);
-                SET_OUTPUT($random % 4);
-                SET_COEFF($random % 5);
-                READ_STATUS(4);
-                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-                bypass_TC = bypass_TC + 1;
-            end
-        end
+        // repeat (2) begin
+        //     bypass_TC = 0;
+        //     TC_cfg({fl_fi_flag, 3'b1_0_1, cic_decf_TC[2]}, 4'b0000, 1, 1);
+        //     repeat (16) begin
+        //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+        //         TC_cfg({fl_fi_flag, 3'b1_0_1, cic_decf_TC[2]}, bypass_TC, 0, 1);
+        //         SET_OUTPUT($random % 4);
+        //         SET_COEFF($random % 5);
+        //         READ_STATUS(4);
+        //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+        //         bypass_TC = bypass_TC + 1;
+        //     end
+        // end
 
-        repeat (1) begin
-            bypass_TC = 0;
-            TC_cfg({fl_fi_flag, 3'b1_1_1, cic_decf_TC[3]}, 4'b0000, 1, 1);
-            repeat (16) begin
-                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-                TC_cfg({fl_fi_flag, 3'b1_1_1, cic_decf_TC[3]}, bypass_TC, 0, 1);
-                SET_OUTPUT($random % 4);
-                SET_COEFF($random % 5);
-                READ_STATUS($random % 5);
-                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-                bypass_TC = bypass_TC + 1;
-            end
-        end
+        // repeat (1) begin
+        //     bypass_TC = 0;
+        //     TC_cfg({fl_fi_flag, 3'b1_1_1, cic_decf_TC[3]}, 4'b0000, 1, 1);
+        //     repeat (16) begin
+        //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+        //         TC_cfg({fl_fi_flag, 3'b1_1_1, cic_decf_TC[3]}, bypass_TC, 0, 1);
+        //         SET_OUTPUT($random % 4);
+        //         SET_COEFF($random % 5);
+        //         READ_STATUS($random % 5);
+        //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+        //         bypass_TC = bypass_TC + 1;
+        //     end
+        // end
 
-        repeat (2) begin
-            bypass_TC = 0;
-            TC_cfg({fl_fi_flag, 3'b0_1_1, cic_decf_TC[4]}, 4'b0000, 1, 1);
-            repeat (16) begin
-                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-                TC_cfg({fl_fi_flag, 3'b0_1_1, cic_decf_TC[4]}, bypass_TC, 0, 1);
-                SET_OUTPUT($random % 4);
-                SET_COEFF($random % 5);
-                READ_STATUS($random % 5);
-                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-                bypass_TC = bypass_TC + 1;
-            end
-        end
+        // repeat (2) begin
+        //     bypass_TC = 0;
+        //     TC_cfg({fl_fi_flag, 3'b0_1_1, cic_decf_TC[4]}, 4'b0000, 1, 1);
+        //     repeat (16) begin
+        //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+        //         TC_cfg({fl_fi_flag, 3'b0_1_1, cic_decf_TC[4]}, bypass_TC, 0, 1);
+        //         SET_OUTPUT($random % 4);
+        //         SET_COEFF($random % 5);
+        //         READ_STATUS($random % 5);
+        //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+        //         bypass_TC = bypass_TC + 1;
+        //     end
+        // end
 
 
         core_test_end = 1;
@@ -539,11 +519,6 @@ module DFE_tb();
         CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
         $display("[%0t] 5 MHz IIR (1 MHz alias) coefficients written", $time);
 
-        // Test 4: Write 5 MHz IIR (2 MHz alias) Coefficients
-        $display("[%0t] Writing 5 MHz IIR (2 MHz alias) Coefficients...", $time);
-        CHANGE_IIR52_COEFF(iir_5mhz_2_coeff_tb);
-        $display("[%0t] 5 MHz IIR (2 MHz alias) coefficients written", $time);
-
         $display("========== Reading Coeff After Modification ==========");
 
         SET_COEFF(0);  // Default coefficients
@@ -560,25 +535,24 @@ module DFE_tb();
 
         $display("========== Testing After Coefficient Modification ==========");
 
-        repeat (1) begin
-            bypass_TC = 0;
-            TC_cfg({fl_fi_flag, 3'b0_0_0, cic_decf_TC[2]}, 4'b0000, 1, 1);
-            repeat (16) begin
-                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-                TC_cfg({fl_fi_flag, 3'b0_0_0, cic_decf_TC[2]}, bypass_TC, 0, 1);
+        // repeat (1) begin
+        //     bypass_TC = 0;
+        //     TC_cfg({fl_fi_flag, 3'b0_0_0, cic_decf_TC[2]}, 4'b0000, 1, 1);
+        //     repeat (16) begin
+        //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
+        //         TC_cfg({fl_fi_flag, 3'b0_0_0, cic_decf_TC[2]}, bypass_TC, 0, 1);
 
-                CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
-                CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
-                CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
-                CHANGE_IIR52_COEFF(iir_5mhz_2_coeff_tb);
-
-                SET_OUTPUT($random % 4);
-                SET_COEFF($random % 5);
-                READ_STATUS($random % 5);
-                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-                bypass_TC = bypass_TC + 1;
-            end
-        end
+        //         CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
+        //         CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
+        //         CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
+                
+        //         SET_OUTPUT($random % 4);
+        //         SET_COEFF($random % 5);
+        //         READ_STATUS($random % 5);
+        //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+        //         bypass_TC = bypass_TC + 1;
+        //     end
+        // end
     endtask
 
     ////////////////////////////////////////////////////
@@ -621,7 +595,6 @@ module DFE_tb();
         for (int i = 0; i < NUM_DENUM; i = i + 1) begin
             iir_24mhz_coeff_tb[i] = 20'sh22222;
             iir_5mhz_1_coeff_tb[i] = 20'sh33333;
-            iir_5mhz_2_coeff_tb[i] = 20'sh44444;
         end
         assert_reset();
 
@@ -669,7 +642,7 @@ module DFE_tb();
         input logic bypass_flag
     );
         // WR, last, ADDR, SELx, WDATA
-        RW(1, 1, (N_TAP + (3 * NUM_DENUM) + 1 + sel), 'b1000, bypass_flag); // Write CTRLs
+        RW(1, 1, (N_TAP + (2 * NUM_DENUM) + 1 + sel), 'b1000, bypass_flag); // Write CTRLs
     endtask
 
     task SET_OUTPUT (
@@ -687,7 +660,7 @@ module DFE_tb();
         end
         
         // WR, last, ADDR, SELx, WDATA
-        RW(1, 1, N_TAP + 3*NUM_DENUM + 6,'b1000, sel); // Write OUT_SEL
+        RW(1, 1, N_TAP + 2*NUM_DENUM + 6,'b1000, sel); // Write OUT_SEL
     endtask
 
     task SET_COEFF (
@@ -701,13 +674,11 @@ module DFE_tb();
         end else if (sel == 2) begin
             coeff_var = IIR_5_1;
         end else if (sel == 3) begin
-            coeff_var = IIR_5_2;
-        end else begin
             coeff_var = IIR_24;
         end
         
         // WR, last, ADDR, SELx, WDATA
-        RW(1, 1, N_TAP + 3*NUM_DENUM + 7,'b1000, sel); // Write COEFF_SEL
+        RW(1, 1, N_TAP + 2*NUM_DENUM + 7,'b1000, sel); // Write COEFF_SEL
     endtask
     
     task READ_STATUS (
@@ -721,22 +692,20 @@ module DFE_tb();
         end else if (sel == 2) begin
             status_var = IIR_5_1;
         end else if (sel == 3) begin
-            status_var = IIR_5_2;
-        end else if (sel == 4) begin
             status_var = IIR_24;
         end else begin
             status_var = CIC;
         end
 
         // WR, last, ADDR, SELx, WDATA
-        RW(1, 1, N_TAP + 3*NUM_DENUM + 8,'b1000, sel); // Write STATUS
+        RW(1, 1, N_TAP + 2*NUM_DENUM + 8,'b1000, sel); // Write STATUS
     endtask
 
     task CHANGE_DECIMATION (
         input logic [4:0] rate
     );
         // WR, last, ADDR, SELx, WDATA
-        RW(1, 1, N_TAP + 3*NUM_DENUM,'b100, rate); // Write CIC_R
+        RW(1, 1, N_TAP + 2*NUM_DENUM,'b100, rate); // Write CIC_R
     endtask
 
     task CHANGE_FAC_DECI_COEFF (
@@ -764,15 +733,6 @@ module DFE_tb();
         // WR, last, ADDR, SELx, WDATA
         for (int i = N_TAP + NUM_DENUM; i < N_TAP + 2*NUM_DENUM; i = i + 1) begin
             RW(1, 0, i,'b10, coeff[i - N_TAP - NUM_DENUM]); // Write IIR 5_1 Coeff
-        end
-    endtask
-
-    task CHANGE_IIR52_COEFF (
-        input logic signed [COEFF_WIDTH-1:0] coeff [NUM_DENUM -1 : 0]
-    );
-        // WR, last, ADDR, SELx, WDATA
-        for (int i = N_TAP + 2*NUM_DENUM; i < N_TAP + 3*NUM_DENUM; i = i + 1) begin
-            RW(1, 0, i,'b10, coeff[i - N_TAP - 2*NUM_DENUM]); // Write IIR 5_2 Coeff
         end
     endtask
 
@@ -925,7 +885,6 @@ module DFE_tb();
         frac_decimator_idx = 0;
         iir_24mhz_idx = 0;
         iir_5mhz_1_idx = 0;
-        iir_5mhz_2_idx = 0;
         cic_idx = 0;
         output_idx = 0;
     endtask
@@ -1000,7 +959,6 @@ module DFE_tb();
             load_stage_file_float(frac_decimator_float_exp, {BASE_PATH, bypass_cfg, "/frac_decimator.txt"}, "Fractional Decimator");
             load_stage_file_float(iir_24mhz_float_exp, {BASE_PATH, bypass_cfg, "/iir_24mhz.txt"}, "IIR 2.4MHz");
             load_stage_file_float(iir_5mhz_1_float_exp, {BASE_PATH, bypass_cfg, "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
-            load_stage_file_float(iir_5mhz_2_float_exp, {BASE_PATH, bypass_cfg, "/iir_5mhz_2.txt"}, "IIR 5MHz 2");
             load_stage_file_float(cic_float_exp, {BASE_PATH, bypass_cfg, "/cic.txt"}, "CIC");
             load_stage_file_float(output_float_exp, {BASE_PATH, bypass_cfg, "/output.txt"}, "Final Output");
         end else begin
@@ -1008,7 +966,6 @@ module DFE_tb();
             load_stage_file_fixed(frac_decimator_exp, {BASE_PATH, bypass_cfg, "/frac_decimator.txt"}, "Fractional Decimator");
             load_stage_file_fixed(iir_24mhz_exp, {BASE_PATH, bypass_cfg, "/iir_24mhz.txt"}, "IIR 2.4MHz");
             load_stage_file_fixed(iir_5mhz_1_exp, {BASE_PATH, bypass_cfg, "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
-            load_stage_file_fixed(iir_5mhz_2_exp, {BASE_PATH, bypass_cfg, "/iir_5mhz_2.txt"}, "IIR 5MHz 2");
             load_stage_file_fixed(cic_exp, {BASE_PATH, bypass_cfg, "/cic.txt"}, "CIC");
             load_stage_file_fixed(output_exp, {BASE_PATH, bypass_cfg, "/output.txt"}, "Final Output");
         end

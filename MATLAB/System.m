@@ -18,15 +18,42 @@ input_sig_real_clean = 0.25 * sin(2 * pi * f_sig * t);    % Amplitude < 1 to avo
 f_intf_2_4 = 2.4e6;     % 2.4 MHz interference tone
 f_intf_5 = 5e6;         % 5 MHz interference tone
 
+f_tone_1 = 2.8e6;
+f_tone_2 = 3e6;
+f_tone_3 = 3.2e6;
+f_tone_4 = 4e6;
+f_tone_5 = 4.5e6;
+
 % Interference amplitudes (adjusted to avoid saturation in fixed-point)
-A_intf_2_4 = 0.25;
-A_intf_5 = 0.25;
+A_intf_2_4 = 0.2;
+A_intf_5 = 0.2;
+
+A_tones = 0.2;
 
 % Generate and add the interference signals
 intf1 = (A_intf_2_4 * sin(2 * pi * f_intf_2_4 * t));
 intf2 = (A_intf_5 * sin(2 * pi * f_intf_5 * t));
+
+tone_1 = A_tones * sin(2 * pi * f_tone_1 * t);
+tone_2 = A_tones * sin(2 * pi * f_tone_2 * t);
+tone_3 = A_tones * sin(2 * pi * f_tone_3 * t);
+tone_4 = A_tones * sin(2 * pi * f_tone_4 * t);
+tone_5 = A_tones * sin(2 * pi * f_tone_5 * t);
+
 interference = intf1 + intf2;
-input_sig_real_noisy = input_sig_real_clean + interference;  % Combine desired signal with interference
+
+tones = tone_3 + tone_4 + tone_5;
+
+% White band noise
+% High quality (40-50 dB SNR): noise_variance = 1e-6 to 1e-5
+% Medium quality (30-40 dB SNR): noise_variance = 1e-5 to 1e-4
+% Low quality (20-30 dB SNR): noise_variance = 1e-4 to 1e-3
+noise_variance = 1e-5; % Adjust based on desired SNR
+noise = sqrt(noise_variance) * randn(N, 1); % White Gaussian noise
+
+input_sig_real_noisy = input_sig_real_clean + interference + tones + noise; % Combine desired signal with interference
+
+impurities = input_sig_real_noisy - input_sig_real_clean - noise;
 
 %% ======================= SECTION 3: FIXED-POINT COMPATIBILITY CHECK =======================
 
@@ -37,9 +64,9 @@ max_neg = -1;
 fprintf('\n=== FIXED-POINT COMPATIBILITY CHECK ===\n');
 
 if max(input_sig_real_noisy) > max_pos 
-    fprintf('WARNING: x_real_noisy exceeds s16.15 range! (max value = %.4f)\n', max(x_real_noisy));
+    fprintf('WARNING: x_real_noisy exceeds s16.15 range! (max value = %.4f)\n', max(input_sig_real_noisy));
 elseif min(input_sig_real_noisy) < max_neg
-    fprintf('WARNING: x_real_noisy exceeds s16.15 range! (min value = %.4f)\n', min(x_real_noisy));
+    fprintf('WARNING: x_real_noisy exceeds s16.15 range! (min value = %.4f)\n', min(input_sig_real_noisy));
 else
     fprintf('x_real_noisy is within s16.15 range ✓\n');
 end
@@ -63,12 +90,13 @@ end
 fprintf ('\n-------------------------------------------------------\n\n');
 
 input_sig_quant_clean = fi(input_sig_real_clean, 1, 16, 15);
-interference_quant = fi(interference, 1, 16, 15);
+impurities_quant = fi(impurities, 1, 16, 15);
 input_sig_quant_noisy = fi(input_sig_real_noisy, 1, 16, 15);
 
 %% ======================= SECTION 4: Filters Handles =======================
 
-Hd_Fractional_Decimator = Fractional_Decimator();
+Hd_Fractional_Decimator = Fractional_Decimator();%Fractional_Decimator();
+
 % Filter Information
 intr_factor = Hd_Fractional_Decimator.InterpolationFactor;
 dec_factor = Hd_Fractional_Decimator.DecimationFactor;
@@ -93,28 +121,36 @@ Fs_cic_8 = Fs_frac / 8;
 Hd_cic_16 = CIC(16);
 Fs_cic_16 = Fs_frac / 16;
 
+Hd_cic_2_float = CIC_float(2);
+
+Hd_cic_4_float = CIC_float(4);
+
+Hd_cic_8_float = CIC_float(8);
+
+Hd_cic_16_float = CIC_float(16);
+
 Hd_FIR_comp = FIR_comp();
 
 %% ======================= SECTION 5: Filters Analysis =======================
 
-filters = {Hd_Fractional_Decimator, Hd_IIR_2_4, Hd_IIR_1, Hd_IIR_2, ...
-    Hd_cic_2, Hd_cic_4, Hd_cic_8, Hd_cic_16};
-names = {'Fractional Decimator (2/3)', 'IIR 2.4 MHz Notch', 'IIR 1 MHz Notch', 'IIR 2 MHz Notch', ...
-    'CIC R = 2', 'CIC R = 4', 'CIC R = 8', 'CIC R = 16'};
-
-% Store all fvtool handles
-hfvt_array = cell(1, length(filters));
-
-% Create all fvtool windows first
-for i = 1:length(filters)
-    hfvt_array{i} = fvtool(filters{i});
-end
-
-% Now set all the names after all windows are created
-for i = 1:length(filters)
-    set(hfvt_array{i}, 'Name', sprintf('Filter Analysis: %s', names{i}));
-    set(hfvt_array{i}, 'NumberTitle', 'off');
-end
+% filters = {Hd_Fractional_Decimator, Hd_IIR_2_4, Hd_IIR_1, Hd_IIR_2, ...
+%     Hd_cic_2, Hd_cic_4, Hd_cic_8, Hd_cic_16};
+% names = {'Fractional Decimator (2/3)', 'IIR 2.4 MHz Notch', 'IIR 1 MHz Notch', 'IIR 2 MHz Notch', ...
+%     'CIC R = 2', 'CIC R = 4', 'CIC R = 8', 'CIC R = 16'};
+% 
+% % Store all fvtool handles
+% hfvt_array = cell(1, length(filters));
+% 
+% % Create all fvtool windows first
+% for i = 1:length(filters)
+%     hfvt_array{i} = fvtool(filters{i});
+% end
+% 
+% % Now set all the names after all windows are created
+% for i = 1:length(filters)
+%     set(hfvt_array{i}, 'Name', sprintf('Filter Analysis: %s', names{i}));
+%     set(hfvt_array{i}, 'NumberTitle', 'off');
+% end
 
 %% ======================= SECTION 6: Signal Propagation =======================
 
@@ -138,10 +174,18 @@ output_cic_8_compensated_sig = filter(Hd_FIR_comp, output_cic_8_sig);
 output_cic_16_sig = step(Hd_cic_16, output_iir5_2_sig);
 output_cic_16_compensated_sig = filter(Hd_FIR_comp, output_cic_16_sig);
 
+output_cic_2_sig_float = step(Hd_cic_2_float, output_iir5_2_sig);
+
+output_cic_4_sig_float = step(Hd_cic_4_float, output_iir5_2_sig);
+
+output_cic_8_sig_float = step(Hd_cic_8_float, output_iir5_2_sig);
+
+output_cic_16_sig_float = step(Hd_cic_16_float, output_iir5_2_sig);
+
 %% ======================= SECTION 7: Interference Propagation =======================
 % This filter is needed for SNR calculations
 
-output_frac_inter = step(Hd_Fractional_Decimator, interference_quant);
+output_frac_inter = step(Hd_Fractional_Decimator, impurities_quant);
 
 output_iir24_inter = filter(Hd_IIR_2_4, output_frac_inter);
 
@@ -161,6 +205,14 @@ output_cic_8_compensated_inter = filter(Hd_FIR_comp, output_cic_8_inter);
 output_cic_16_inter = step(Hd_cic_16, output_iir5_2_inter);
 output_cic_16_compensated_inter = filter(Hd_FIR_comp, output_cic_16_inter);
 
+output_cic_2_inter_float = step(Hd_cic_2_float, output_iir5_2_inter);
+
+output_cic_4_inter_float = step(Hd_cic_4_float, output_iir5_2_inter);
+
+output_cic_8_inter_float = step(Hd_cic_8_float, output_iir5_2_inter);
+
+output_cic_16_inter_float = step(Hd_cic_16_float, output_iir5_2_inter);
+
 %% ======================= SECTION 8: Signal Propagation Analysis =======================
 
 fprintf('(2 / 3) Fractional Decimator\n\n');
@@ -176,16 +228,16 @@ fprintf('IIR 2 MHz Notch\n\n');
 analyze_fixed_point_filter(Hd_IIR_2, Fs_frac, output_iir5_1_sig, 1, 0, 'IIR 2 MHz Notch');
 
 fprintf('CIC R = 2\n\n');
-analyze_fixed_point_filter(Hd_cic_2, Fs_frac, output_iir5_2_sig, 1/2, 1, 'CIC R = 2');
+analyze_fixed_point_filter(Hd_cic_2_float, Fs_frac, output_iir5_2_sig, 1/2, 1, 'CIC R = 2');
 
 fprintf('CIC R = 4\n\n');
-analyze_fixed_point_filter(Hd_cic_4, Fs_frac, output_iir5_2_sig, 1/4, 1, 'CIC R = 4');
+analyze_fixed_point_filter(Hd_cic_4_float, Fs_frac, output_iir5_2_sig, 1/4, 1, 'CIC R = 4');
 
 fprintf('CIC R = 8\n\n');
-analyze_fixed_point_filter(Hd_cic_8, Fs_frac, output_iir5_2_sig, 1/8, 1, 'CIC R = 8');
+analyze_fixed_point_filter(Hd_cic_8_float, Fs_frac, output_iir5_2_sig, 1/8, 1, 'CIC R = 8');
 
 fprintf('CIC R = 16\n\n');
-analyze_fixed_point_filter(Hd_cic_16, Fs_frac, output_iir5_2_sig, 1/16, 1, 'CIC R = 16');
+analyze_fixed_point_filter(Hd_cic_16_float, Fs_frac, output_iir5_2_sig, 1/16, 1, 'CIC R = 16');
 
 fprintf('FIR R = 2 Compensator\n\n');
 analyze_fixed_point_filter(Hd_FIR_comp, Fs_cic_2, output_cic_2_sig, 1, 0, 'FIR R = 2 Compensator');
@@ -204,7 +256,7 @@ analyze_fixed_point_filter(Hd_FIR_comp, Fs_cic_16, output_cic_16_sig, 1, 0, 'FIR
 delay_samples = 35;
 delay_samples_comp = 70;
 
-snr_init = snr(double(input_sig_quant_noisy), double(interference_quant));
+snr_init = snr(double(input_sig_quant_noisy), double(impurities_quant));
 
 snr_frac = snr(double(output_frac_sig), double(output_frac_inter));
 
@@ -226,8 +278,15 @@ snr_cic_8_comp = snr(double(output_cic_8_compensated_sig(delay_samples_comp : en
 snr_cic_16 = snr(double(output_cic_16_sig(delay_samples : end)), double(output_cic_16_inter(delay_samples : end)));
 snr_cic_16_comp = snr(double(output_cic_16_compensated_sig(delay_samples_comp : end)), double(output_cic_16_compensated_inter(delay_samples_comp : end)));
 
-snr_after = min(snr_cic_2, min(snr_cic_4, min(snr_cic_8, snr_cic_16))); % Worst Case SNR with no Compensator
+snr_cic_2_float = snr(double(output_cic_2_sig_float(delay_samples : end)), double(output_cic_2_inter_float(delay_samples : end)));
 
+snr_cic_4_float = snr(double(output_cic_4_sig_float(delay_samples : end)), double(output_cic_4_inter_float(delay_samples : end)));
+
+snr_cic_8_float = snr(double(output_cic_8_sig_float(delay_samples : end)), double(output_cic_8_inter_float(delay_samples : end)));
+
+snr_cic_16_float = snr(double(output_cic_16_sig_float(delay_samples : end)), double(output_cic_16_inter_float(delay_samples : end)));
+
+snr_after = min(snr_cic_2, min(snr_cic_4, min(snr_cic_8, snr_cic_16))); % Worst Case SNR with no Compensator
 snr_after_comp = min(snr_cic_2_comp, min(snr_cic_4_comp, min(snr_cic_8_comp, snr_cic_16_comp))); % Worst Case SNR with Compensator
 
 total_snr_improvment = snr_after - snr_init; 
@@ -259,8 +318,8 @@ fprintf('SNR after Fractional Decimator = %.4f dB\n', snr_frac);
 fprintf('SNR after IIR 2.4 MHz = %.4f dB\n', snr_iir24);
 fprintf('SNR after IIR 5 MHz (1st) = %.4f dB\n', snr_iir5_1);
 fprintf('SNR after IIR 5 MHz (2nd) = %.4f dB\n', snr_iir5_2);
-fprintf('SNR after CIC R=2 = %.4f dB (compensated: %.4f dB)\n', snr_cic_2, snr_cic_2_comp);
-fprintf('SNR after CIC R=4 = %.4f dB (compensated: %.4f dB)\n', snr_cic_4, snr_cic_4_comp);
-fprintf('SNR after CIC R=8 = %.4f dB (compensated: %.4f dB)\n', snr_cic_8, snr_cic_8_comp);
-fprintf('SNR after CIC R=16 = %.4f dB (compensated: %.4f dB)\n', snr_cic_16, snr_cic_16_comp);
+fprintf('SNR after CIC R=2 = %.4f dB  (Floating: %.4f dB) (compensated: %.4f dB)\n', snr_cic_2_float,  snr_cic_2, snr_cic_2_comp);
+fprintf('SNR after CIC R=4 = %.4f dB  (Floating: %.4f dB) (compensated: %.4f dB)\n', snr_cic_4_float,  snr_cic_4, snr_cic_4_comp);
+fprintf('SNR after CIC R=8 = %.4f dB  (Floating: %.4f dB) (compensated: %.4f dB)\n', snr_cic_8_float,  snr_cic_8, snr_cic_8_comp);
+fprintf('SNR after CIC R=16 = %.4f dB (Floating: %.4f dB) (compensated: %.4f dB)\n', snr_cic_16_float, snr_cic_16, snr_cic_16_comp);
 fprintf('\n-------------------------------------------------------\n');
