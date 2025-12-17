@@ -14,7 +14,7 @@ module APB #(
     parameter   int DATA_WIDTH  = 32'd16 ,
     parameter   int COEFF_WIDTH = 32'd20 ,
     parameter   int N_TAP       = 32'd146,
-    parameter   int COMP        = 32'd5  ,
+    parameter   int COMP        = 32'd4  ,
     localparam  int NUM_DENUM   = 32'd5 
 )(
     input   logic                                   clk                             ,

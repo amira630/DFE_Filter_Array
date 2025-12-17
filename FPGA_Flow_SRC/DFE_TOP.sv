@@ -28,7 +28,7 @@ module DFE_TOP #(
     //********************** APB Parameters ********************//
     parameter   int ADDR_WIDTH      = 32'd7     ,
     parameter   int PDATA_WIDTH     = 32'd32    ,
-    parameter   int COMP            = 32'd5  
+    parameter   int COMP            = 32'd4  
 )(
     input   logic                                   clk                                 ,
     input   logic                                   rst_n                               ,
