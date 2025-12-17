@@ -11,7 +11,7 @@ module MPRAM #(
     parameter int TAPS        = 32'd146   ,
     parameter int COEFF_WIDTH = 32'd20   ,
     parameter int NUM_DENUM   = 32'd5    ,
-    parameter int COMP        = 32'd5
+    parameter int COMP        = 32'd4
 )(
     input   logic                                   clk                                     ,
     input   logic                                   rst_n                                   ,
