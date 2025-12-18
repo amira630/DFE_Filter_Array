@@ -6,12 +6,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 module MPRAM #(
-    parameter int ADDR_WIDTH  = 32'd7    ,
-    parameter int DATA_WIDTH  = 32'd32   ,
-    parameter int TAPS        = 32'd146   ,
-    parameter int COEFF_WIDTH = 32'd20   ,
-    parameter int NUM_DENUM   = 32'd5    ,
-    parameter int COMP        = 32'd4
+    parameter int DATA_WIDTH  = 32'd32  ,
+    parameter int TAPS        = 32'd146 ,
+    parameter int COEFF_WIDTH = 32'd20  ,
+    parameter int NUM_DENUM   = 32'd5   ,
+    parameter int COMP        = 32'd4   ,
+    parameter int ADDR_WIDTH  = $clog2(TAPS + (2 * NUM_DENUM) + 9)
 )(
     input   logic                                   clk                                     ,
     input   logic                                   rst_n                                   ,

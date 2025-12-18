@@ -9,13 +9,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 module APB #(
-    parameter   int ADDR_WIDTH  = 32'd7  ,
-    parameter   int PDATA_WIDTH = 32'd32 ,
-    parameter   int DATA_WIDTH  = 32'd16 ,
-    parameter   int COEFF_WIDTH = 32'd20 ,
-    parameter   int N_TAP       = 32'd146,
-    parameter   int COMP        = 32'd4  ,
-    localparam  int NUM_DENUM   = 32'd5 
+    parameter   int PDATA_WIDTH = 32'd32                                ,
+    parameter   int DATA_WIDTH  = 32'd16                                ,
+    parameter   int COEFF_WIDTH = 32'd20                                ,
+    parameter   int N_TAP       = 32'd146                               ,
+    parameter   int COMP        = 32'd4                                 ,
+    parameter   int ADDR_WIDTH  = $clog2(N_TAP + (2 * NUM_DENUM) + 9)   ,
+    localparam  int NUM_DENUM   = 32'd5                                     
 )(
     input   logic                                   clk                             ,
     input   logic                                   rst_n                           ,   

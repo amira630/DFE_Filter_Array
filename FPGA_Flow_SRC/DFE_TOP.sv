@@ -26,8 +26,8 @@ module DFE_TOP #(
     parameter   int N               = 32'd1     ,
 
     //********************** APB Parameters ********************//
-    parameter   int ADDR_WIDTH      = 32'd7     ,
-    parameter   int PDATA_WIDTH     = 32'd32    ,
+    parameter   int ADDR_WIDTH      = $clog2(N_TAP + (2 * NUM_DENUM) + 9)    ,
+    parameter   int PDATA_WIDTH     = 32'd32                                ,
     parameter   int COMP            = 32'd4  
 )(
     input   logic                                   clk                                 ,

@@ -109,6 +109,7 @@ module APB_Bridge #(
         PWDATA  = MWDATA                ;
         MRDATA  = {(DATA_WIDTH){1'b0}}  ;
         PSELx   = {(COMP){1'b0}}        ;
+        
         case (current_state)
             SETUP: begin
                 PWRITE  = WRITE_reg ;

@@ -11,9 +11,10 @@ sim:/DFE_tb/DUT/U_CORE/frac_dec_bypass \
 sim:/DFE_tb/DUT/U_CORE/iir_bypass_2_4MHz \
 sim:/DFE_tb/DUT/U_CORE/iir_bypass_5MHz \
 sim:/DFE_tb/DUT/U_CORE/cic_bypass \
-sim:/DFE_tb/dec_factor \
 sim:/DFE_tb/arith_base_var \
+sim:/DFE_tb/TC \
 sim:/DFE_tb/shape_var \
+sim:/DFE_tb/dec_factor \
 sim:/DFE_tb/input_sig \
 sim:/DFE_tb/frac_decimator_sig \
 sim:/DFE_tb/frac_decimator_sig_tb \
