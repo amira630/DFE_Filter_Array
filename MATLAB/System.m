@@ -51,9 +51,11 @@ tones = tone_3 + tone_4 + tone_5;
 noise_variance = 1e-5; % Adjust based on desired SNR
 noise = sqrt(noise_variance) * randn(N, 1); % White Gaussian noise
 
-input_sig_real_noisy = input_sig_real_clean + interference + tones + noise; % Combine desired signal with interference
+input_sig_real_noisy = input_sig_real_clean + interference + tones; % Combine desired signal with interference
 
-impurities = input_sig_real_noisy - input_sig_real_clean - noise;
+impurities = input_sig_real_noisy - input_sig_real_clean;
+
+input_sig_real_noisy = input_sig_real_noisy + noise; % Combine desired signal with interference
 
 %% ======================= SECTION 3: FIXED-POINT COMPATIBILITY CHECK =======================
 
@@ -104,8 +106,10 @@ dec_factor = Hd_Fractional_Decimator.DecimationFactor;
 Fs_frac = Fs * intr_factor / dec_factor;
 
 Hd_IIR_2_4 = IIR_2_4();
+Hd_IIR_2_4_obj = IIR_2_4_obj(); % For Filter Analyzer
 
 Hd_IIR_1 = IIR_1();
+Hd_IIR_1_obj = IIR_1_obj(); % For Filter Analyzer
 
 Hd_IIR_2 = IIR_2();
 
@@ -121,6 +125,19 @@ Fs_cic_8 = Fs_frac / 8;
 Hd_cic_16 = CIC(16);
 Fs_cic_16 = Fs_frac / 16;
 
+% Combined cascaded filter for analysis (Fractional Decimator -> IIR 2.4 MHz -> IIR 5 MHz (1st) -> CIC R=2)
+Hd_cascade_2 = dsp.FilterCascade(Hd_Fractional_Decimator, Hd_IIR_2_4_obj, Hd_IIR_1_obj, Hd_cic_2);
+
+% Cascade for CIC R=4 path
+Hd_cascade_4 = dsp.FilterCascade(Hd_Fractional_Decimator, Hd_IIR_2_4_obj, Hd_IIR_1_obj, Hd_cic_4);
+
+% Cascade for CIC R=8 path
+Hd_cascade_8 = dsp.FilterCascade(Hd_Fractional_Decimator, Hd_IIR_2_4_obj, Hd_IIR_1_obj, Hd_cic_8);
+
+% Cascade for CIC R=16 path
+Hd_cascade_16 = dsp.FilterCascade(Hd_Fractional_Decimator, Hd_IIR_2_4_obj, Hd_IIR_1_obj, Hd_cic_16);
+
+
 Hd_cic_2_float = CIC_float(2);
 
 Hd_cic_4_float = CIC_float(4);
@@ -130,6 +147,20 @@ Hd_cic_8_float = CIC_float(8);
 Hd_cic_16_float = CIC_float(16);
 
 Hd_FIR_comp = FIR_comp();
+Hd_FIR_comp_obj = FIR_comp_obj();
+
+% Combined cascaded filter for analysis (Fractional Decimator -> IIR 2.4 MHz -> IIR 5 MHz (1st) -> CIC R=2)
+Hd_cascade_2_comp = dsp.FilterCascade(Hd_Fractional_Decimator, Hd_IIR_2_4_obj, Hd_IIR_1_obj, Hd_cic_2, Hd_FIR_comp_obj);
+
+% Cascade for CIC R=4 path
+Hd_cascade_4_comp = dsp.FilterCascade(Hd_Fractional_Decimator, Hd_IIR_2_4_obj, Hd_IIR_1_obj, Hd_cic_4, Hd_FIR_comp_obj);
+
+% Cascade for CIC R=8 path
+Hd_cascade_8_comp = dsp.FilterCascade(Hd_Fractional_Decimator, Hd_IIR_2_4_obj, Hd_IIR_1_obj, Hd_cic_8, Hd_FIR_comp_obj);
+
+% Cascade for CIC R=16 path
+Hd_cascade_16_comp = dsp.FilterCascade(Hd_Fractional_Decimator, Hd_IIR_2_4_obj, Hd_IIR_1_obj, Hd_cic_16, Hd_FIR_comp_obj);
+
 
 %% ======================= SECTION 5: Filters Analysis =======================
 
@@ -182,7 +213,7 @@ output_cic_8_sig_float = step(Hd_cic_8_float, output_iir5_2_sig);
 
 output_cic_16_sig_float = step(Hd_cic_16_float, output_iir5_2_sig);
 
-%% ======================= SECTION 7: Interference Propagation =======================
+%% ======================= SECTION 7: Noise Propagation =======================
 % This filter is needed for SNR calculations
 
 output_frac_inter = step(Hd_Fractional_Decimator, impurities_quant);
@@ -251,7 +282,7 @@ analyze_fixed_point_filter(Hd_FIR_comp, Fs_cic_8, output_cic_8_sig, 1, 0, 'FIR R
 fprintf('FIR R = 16 Compensator\n\n');
 analyze_fixed_point_filter(Hd_FIR_comp, Fs_cic_16, output_cic_16_sig, 1, 0, 'FIR R = 16 Compensator');
 
-%% ======================= SECTION 9: SNR Analysis =======================
+%% ======================= SECTION 9: SNR Calculations =======================
 
 delay_samples = 35;
 delay_samples_comp = 70;

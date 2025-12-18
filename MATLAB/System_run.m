@@ -7,69 +7,54 @@ config = readBinaryConfig('cfg.txt');
 % Floating vs Fixed Point
 fi_vs_float_var = config(1);
 
-% Extract values from binary configuration
-% Signal configuration flags (bits 2-4)
-f = config(2);
-a = config(3);  
-s = config(4);
+% Bypass Generation Control (bit 2)
+bypass_gen = config(2);
 
-% CIC Configuration (bits 5-9 as 5-bit value)
-cic_decf_binary = config(5:9);
-cic_decf = binaryVectorToDecimal(cic_decf_binary);
-
-% Default parameters
-default_freq = 1e5;      % 100 kHz
-default_amp = 0.999969482421875;      % Default amplitude
-default_shape = 'sine';  % Default shape
-
-% Parameter ranges for randomization
-freq_range = [50e3, 200e3];   % Frequency range: 50 kHz to 200 kHz
-amp_range = [0.1, 1];       % Amplitude range: 0.1 to 1
-shape_options = {'square', 'triangular'};
-
-% Determine final parameters based on flags
-if f == 1
-    f_sig = freq_range(1) + (freq_range(2) - freq_range(1)) * rand();
+% Extract values from binary configuration based on bypass_gen
+if bypass_gen == 1
+    % CIC Configuration (bits 3-7 as 5-bit value) - only used when bypass_gen = 1
+    cic_decf_binary = config(3:7);
+    cic_decf = binaryVectorToDecimal(cic_decf_binary);
 else
-    f_sig = default_freq;
+    % When bypass_gen = 0, we iterate over all decimation factors
+    cic_decf = 0; % Not used in this mode
+    cic_decf_binary = [0 0 0 0 0]; % Not used in this mode
 end
 
-if a == 1
-    amplitude = amp_range(1) + (amp_range(2) - amp_range(1)) * rand();
+% Define 16 test cases with different input characteristics
+% Each test case has: frequency, amplitude, signal_shape
+max_amplitude = 0.999969482421875; % Max amplitude for 16-bit signed fixed point
+
+test_cases = {
+    % TC_1 to TC_16: Different combinations of parameters
+    struct('freq', 1e5, 'amp', 0.25         , 'shape', 'sine', 'inter', 0, 'tones', 0, 'noise', 0);     % TC_1
+    struct('freq', 1e5, 'amp', 0.25         , 'shape', 'sine', 'inter', 1, 'tones', 0, 'noise', 0);     % TC_2
+    struct('freq', 1e5, 'amp', 0.25         , 'shape', 'sine', 'inter', 1, 'tones', 1, 'noise', 0);     % TC_3
+    struct('freq', 1e5, 'amp', 0.25         , 'shape', 'sine', 'inter', 0, 'tones', 0, 'noise', 1);     % TC_4
+    struct('freq', 1e5, 'amp', 0.25         , 'shape', 'sine', 'inter', 1, 'tones', 0, 'noise', 1);     % TC_5
+    struct('freq', 1e5, 'amp', 0.25         , 'shape', 'sine', 'inter', 1, 'tones', 1, 'noise', 1);     % TC_6
+    struct('freq', 1e5, 'amp', max_amplitude, 'shape', 'sine', 'inter', 0, 'tones', 0, 'noise', 0);     % TC_7
+    struct('freq', 1e5, 'amp', max_amplitude, 'shape', 'sine', 'inter', 1, 'tones', 0, 'noise', 0);     % TC_8
+    struct('freq', 1e5, 'amp', max_amplitude, 'shape', 'sine', 'inter', 1, 'tones', 1, 'noise', 0);     % TC_9
+    struct('freq', 1e5, 'amp', max_amplitude, 'shape', 'sine', 'inter', 0, 'tones', 0, 'noise', 1);     % TC_10
+    struct('freq', 1e5, 'amp', max_amplitude, 'shape', 'sine', 'inter', 1, 'tones', 0, 'noise', 1);     % TC_11
+    struct('freq', 1e5, 'amp', max_amplitude, 'shape', 'sine', 'inter', 1, 'tones', 1, 'noise', 1);     % TC_12
+    struct('freq', 5e4, 'amp', 0.25         , 'shape', 'sine', 'inter', 1, 'tones', 0, 'noise', 1);     % TC_13
+    struct('freq', 2e5, 'amp', 0.25         , 'shape', 'sine', 'inter', 1, 'tones', 0, 'noise', 1);     % TC_14
+    struct('freq', 5e4, 'amp', max_amplitude, 'shape', 'sine', 'inter', 1, 'tones', 0, 'noise', 0);     % TC_15
+    struct('freq', 2e5, 'amp', max_amplitude, 'shape', 'sine', 'inter', 1, 'tones', 0, 'noise', 0);     % TC_16
+};
+
+num_test_cases = length(test_cases);
+
+% Select which test cases to process based on bypass_gen
+if bypass_gen == 1
+    % For bypass mode, only process TC_5
+    test_cases_to_process = 5;
 else
-    amplitude = default_amp;
+    % For full flow mode, process all test cases
+    test_cases_to_process = 1:num_test_cases;
 end
-
-if s == 1
-    shape_idx = randi([1, length(shape_options)]);
-    signal_shape = shape_options{shape_idx};
-else
-    signal_shape = default_shape;
-end
-
-% Map signal shape to 2-bit binary code
-switch signal_shape
-    case 'sine'
-        shape_code = '00';
-    case 'square'
-        shape_code = '01';
-    case 'triangular'
-        shape_code = '10';
-    otherwise
-        shape_code = '00';  % Default to sine
-end
-
-% Write shape code to text file
-shape_filename = 'signal_shape_code.txt';
-fid = fopen(shape_filename, 'w');
-if fid == -1
-    error('Cannot open file %s for writing.', shape_filename);
-end
-fprintf(fid, '%s', shape_code);
-fclose(fid);
-
-fprintf('Shape code written to: %s\n', shape_filename);
-fprintf('Signal shape: %s -> 2-bit code: %s\n\n', signal_shape, shape_code);
 
 % Display configuration
 fprintf('Binary Configuration:\n');
@@ -78,259 +63,545 @@ fprintf('%d', config);
 fprintf('\n\n');
 
 fprintf('Parsed Configuration:\n');
-fprintf('Signal flags - f:%d, a:%d, s:%d\n', f, a, s);
-fprintf('CIC decf (binary %s) = %d\n\n', ...
-        num2str(cic_decf_binary), cic_decf);
-fprintf('Generated signal - Freq: %.2f kHz, Amp: %.3f, Shape: %s\n\n', ...
-        f_sig/1000, amplitude, signal_shape);
-
-Fs = 9e6;        
-N  = 48000;      
-
-t = (0 : N - 1)' / Fs;                    
-
-% Generate clean signal based on selected shape
-switch signal_shape
-    case 'sine'
-        x_real_clean = amplitude * sin(2 * pi * f_sig * t);
-    case 'square'
-        x_real_clean = amplitude * square(2 * pi * f_sig * t);
-    case 'triangular'
-        x_real_clean = amplitude * sawtooth(2 * pi * f_sig * t, 0.5);
+fprintf('Bypass Generation: %d (0=Full flow only, 1=All bypass scenarios)\n', bypass_gen);
+if bypass_gen == 1
+    fprintf('CIC decf (binary %s) = %d\n', ...
+            num2str(cic_decf_binary), cic_decf);
+    fprintf('Processing: TC_5 only with all bypass combinations\n\n');
+else
+    fprintf('Mode: Iterate over all decimation factors {2, 4, 8, 16}\n');
+    fprintf('Processing: All %d test cases\n\n', num_test_cases);
 end
 
-% Add interference
-f_intf_2_4 = 2.4e6;    
-f_intf_5 = 5e6;      
+% Sampling parameters
+Fs = 9e6;
+N  = 48000;
+t = (0 : N - 1)' / Fs;
+
+% Interference parameters (constant for all test cases)
+f_intf_2_4 = 2.4e6;
+f_intf_5 = 5e6;
+
 A_intf_2_4 = 0.2;
 A_intf_5 = 0.2;
 
 intf1 = (A_intf_2_4 * sin(2 * pi * f_intf_2_4 * t));
 intf2 = (A_intf_5 * sin(2 * pi * f_intf_5 * t));
 interference = intf1 + intf2;
-x_real_noisy = x_real_clean + interference;
 
-x_quantized_noisy = fi(x_real_noisy, 1, 16, 15);
+% Tones
+f_tone_1 = 2.8e6;
+f_tone_2 = 3e6;
+f_tone_3 = 3.2e6;
+f_tone_4 = 4e6;
+f_tone_5 = 4.5e6;
 
-% Generate all bypass combinations
-% Based on your description, we have 4 stages that can be bypassed:
-% 1. Fractional Decimator
-% 2. IIR 2.4 MHz
-% 3. IIR 5 MHz  
-% 4. CIC
+A_tones = 0.2;
 
-% Create all possible bypass combinations (2^4 = 16 combinations)
-bypass_combinations = dec2bin(0:15, 4) - '0'; % Convert to binary matrix
+tone_1 = A_tones * sin(2 * pi * f_tone_1 * t);
+tone_2 = A_tones * sin(2 * pi * f_tone_2 * t);
+tone_3 = A_tones * sin(2 * pi * f_tone_3 * t);
+tone_4 = A_tones * sin(2 * pi * f_tone_4 * t);
+tone_5 = A_tones * sin(2 * pi * f_tone_5 * t);
+
+tones = tone_1 + tone_2 + tone_3 + tone_4 + tone_5;
+
+% Wide-Band Noise parameters
+% High quality (40-50 dB SNR): noise_variance = 1e-6 to 1e-5
+% Medium quality (30-40 dB SNR): noise_variance = 1e-5 to 1e-4
+% Low quality (20-30 dB SNR): noise_variance = 1e-4 to 1e-3
+noise_variance = 1e-5; % Adjust based on desired SNR
+
+% Generate scenarios based on bypass_gen configuration
+if bypass_gen == 1
+    % Mode 1: Generate all bypass combinations with fixed decimation factor
+    % Based on your description, we have 4 stages that can be bypassed:
+    % 1. Fractional Decimator
+    % 2. IIR 2.4 MHz
+    % 3. IIR 5 MHz
+    % 4. CIC
+
+    % Create all possible bypass combinations (2^4 = 16 combinations)
+    bypass_combinations = dec2bin(0:15, 4) - '0'; % Convert to binary matrix
+    decimation_factors = cic_decf; % Use single decimation factor from config
+    iteration_mode = 'bypass';
+else
+    % Mode 0: Generate full flow only in single folder with 4 CIC outputs
+    % Only generate the full flow scenario (no bypasses)
+    bypass_combinations = [0, 0, 0, 0]; % No bypasses - full flow
+    decimation_factors = [2, 4, 8, 16]; % Generate 4 CIC outputs for these factors
+    iteration_mode = 'full_flow';
+end
+
 num_combinations = size(bypass_combinations, 1);
+num_decimation_factors = length(decimation_factors);
+total_scenarios_per_tc = num_combinations * num_decimation_factors;
+
+if strcmp(iteration_mode, 'bypass')
+    fprintf('Generating TC_5 with %d bypass scenario(s)...\n\n', num_combinations);
+else
+    fprintf('Generating %d Test Cases, each with full flow (4 CIC outputs for dec factors: 2, 4, 8, 16)...\n\n', length(test_cases_to_process));
+end
 
 if (fi_vs_float_var == 0)
-    fprintf('Generating %d bypass Fixed Point scenarios...\n\n', num_combinations);
+    fprintf('Processing mode: Fixed Point\n\n');
 
-    % Process each bypass combination
-    for combo_idx = 1:num_combinations
-        % Extract bypass flags for this combination
-        bypass_frac_dec = bypass_combinations(combo_idx, 1);
-        bypass_iir_24   = bypass_combinations(combo_idx, 2);
-        bypass_iir_5    = bypass_combinations(combo_idx, 3);
-        bypass_cic      = bypass_combinations(combo_idx, 4);
-    
-        % Create directory name for this scenario
-        scenario_dir = sprintf('scenario_frac%d_iir24%d_iir5%d_cic%d', ...
-                            bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
-    
-        % Create directory if it doesn't exist
-        if ~exist(scenario_dir, 'dir')
-            mkdir(scenario_dir);
+    % Loop through selected test cases
+    for tc_idx = test_cases_to_process
+        % Get current test case parameters
+        tc = test_cases{tc_idx};
+        f_sig = tc.freq;
+        amplitude = tc.amp;
+        signal_shape = tc.shape;
+        add_interference = tc.inter;
+        add_tones = tc.tones;
+        add_noise = tc.noise;
+
+        % Create test case directory
+        tc_dir = sprintf('TC_%d', tc_idx);
+        if ~exist(tc_dir, 'dir')
+            mkdir(tc_dir);
         end
-    
-        fprintf('Processing scenario %d/%d: %s\n', ...
-                combo_idx, num_combinations, scenario_dir);
-        fprintf('  Bypass flags - frac_dec:%d, iir_24:%d, iir_5:%d, cic:%d\n', ...
-                bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
-    
-        % Processing chain with current bypass options
-        current_signal = x_quantized_noisy;
 
-        % Write Stage 0: Input signal (after quantization)
-        writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'input.txt'), 16, 15);
+        fprintf('========================================\n');
+        fprintf('Processing Test Case %d/%d: %s\n', tc_idx, num_test_cases, tc_dir);
+        fprintf('  Signal parameters - Freq: %.2f kHz, Amp: %.3f, Shape: %s\n', ...
+                f_sig/1000, amplitude, signal_shape);
+        fprintf('========================================\n\n');
 
-        % Stage 1: Fractional Decimator
-        if bypass_frac_dec == 0
-            fprintf('  Applying Fractional Decimator...\n');
+        % Generate clean signal based on test case parameters
+        switch signal_shape
+            case 'sine'
+                x_real_clean = amplitude * sin(2 * pi * f_sig * t);
+            case 'square'
+                x_real_clean = amplitude * square(2 * pi * f_sig * t);
+            case 'triangular'
+                x_real_clean = amplitude * sawtooth(2 * pi * f_sig * t, 0.5);
+        end
+
+        x_real_noisy = x_real_clean;
+
+        % Add interference (same for all test cases)
+        if (add_interference == 1)
+            fprintf('  Adding interference signals (2.4 MHz and 5 MHz)...\n');
+            x_real_noisy = x_real_noisy + interference;
+        end
+
+        % Add tones
+        if (add_tones == 1)
+            fprintf('  Adding tone signals (2.8 MHz, 3 MHz, 3.2 MHz, 4 MHz, 4.5 MHz)...\n');
+            x_real_noisy = x_real_noisy + tones;
+        end
+
+        % Add wide-band noise (generate unique noise for each test case)
+        if (add_noise == 1)
+            fprintf('  Adding wide-band noise (variance = %.1e)...\n', noise_variance);
+            noise = sqrt(noise_variance) * randn(N, 1); % White Gaussian noise
+            x_real_noisy = x_real_noisy + noise;
+        end
+
+        x_quantized_noisy = fi(x_real_noisy, 1, 16, 15);
+
+        % Process scenarios based on iteration mode
+        if strcmp(iteration_mode, 'bypass')
+            % Bypass mode: iterate over all bypass combinations
+            for combo_idx = 1:num_combinations
+                % Extract bypass flags for this combination
+                bypass_frac_dec = bypass_combinations(combo_idx, 1);
+                bypass_iir_24   = bypass_combinations(combo_idx, 2);
+                bypass_iir_5    = bypass_combinations(combo_idx, 3);
+                bypass_cic      = bypass_combinations(combo_idx, 4);
+
+                % Create directory name for this scenario inside test case folder
+                scenario_dir = fullfile(tc_dir, sprintf('scenario_frac%d_iir24%d_iir5%d_cic%d', ...
+                                    bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic));
+
+                % Create directory if it doesn't exist
+                if ~exist(scenario_dir, 'dir')
+                    mkdir(scenario_dir);
+                end
+
+                fprintf('  Processing scenario %d/%d: scenario_frac%d_iir24%d_iir5%d_cic%d\n', ...
+                        combo_idx, num_combinations, bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
+                fprintf('    Bypass flags - frac_dec:%d, iir_24:%d, iir_5:%d, cic:%d, decf:%d\n', ...
+                        bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic, cic_decf);
+
+                % Processing chain with current bypass options
+                current_signal = x_quantized_noisy;
+
+                % Write Stage 0: Input signal (after quantization)
+                writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'input.txt'), 16, 15);
+
+                % Stage 1: Fractional Decimator
+                if bypass_frac_dec == 0
+                    fprintf('    Applying Fractional Decimator...\n');
+                    Hd_Fractional_Decimator = Fractional_Decimator();
+                    current_signal = step(Hd_Fractional_Decimator, current_signal);
+
+                    % Write Stage 1: After fractional decimator
+                    writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'frac_decimator.txt'), 16, 15);
+                else
+                    fprintf('    Bypassing Fractional Decimator\n');
+                    copyfile(fullfile(scenario_dir, 'input.txt'), ...
+                            fullfile(scenario_dir, 'frac_decimator.txt'));
+                end
+
+                % Stage 2: IIR 2.4MHz Notch Filter
+                if bypass_iir_24 == 0
+                    fprintf('    Applying IIR 2.4MHz Notch Filter...\n');
+                    Hd_IIR_2_4 = IIR_2_4();
+                    current_signal = filter(Hd_IIR_2_4, current_signal);
+
+
+                    % Write Stage 2: After IIR 2.4MHz filter
+                    writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'iir_24mhz.txt'), 16, 15);
+                else
+                    fprintf('    Bypassing IIR 2.4MHz Notch Filter\n');
+                    copyfile(fullfile(scenario_dir, 'frac_decimator.txt'), ...
+                            fullfile(scenario_dir, 'iir_24mhz.txt'));
+                end
+
+                % Stage 3: IIR 5MHz Notch Filter (both IIR_1 and IIR_2)
+                if bypass_iir_5 == 0
+                    fprintf('    Applying IIR 5MHz Notch Filter...\n');
+                    Hd_IIR_1 = IIR_1();
+                    current_signal = filter(Hd_IIR_1, current_signal);
+
+                    % Write Stage 3.1: After first IIR 5MHz filter
+                    writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'iir_5mhz_1.txt'), 16, 15);
+                else
+                    fprintf('    Bypassing IIR 5MHz Notch Filter\n');
+                    copyfile(fullfile(scenario_dir, 'iir_24mhz.txt'), ...
+                             fullfile(scenario_dir, 'iir_5mhz_1.txt'));
+                end
+
+                % Stage 4: CIC Filter
+                if bypass_cic == 0
+                    fprintf('    Applying CIC Filter with decimation factor %d...\n', cic_decf);
+                    Hd_cic = CIC(cic_decf);
+                    current_signal = step(Hd_cic, current_signal);
+
+                    % Write Stage 4: After CIC filter
+                    writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'cic.txt'), 16, 15);
+                else
+                    fprintf('    Bypassing CIC Filter\n');
+                    copyfile(fullfile(scenario_dir, 'iir_5mhz_1.txt'), ...
+                            fullfile(scenario_dir, 'cic.txt'));
+                end
+
+                % Final output
+                output = current_signal;
+                writeFixedPointBinary(output, fullfile(scenario_dir, 'output.txt'), 16, 15);
+
+                fprintf('    Scenario complete!\n\n');
+            end
+        else
+            % Full flow mode: single folder with 4 CIC outputs
+            scenario_dir = fullfile(tc_dir, 'scenario_full_flow');
+
+            % Create directory if it doesn't exist
+            if ~exist(scenario_dir, 'dir')
+                mkdir(scenario_dir);
+            end
+
+            fprintf('  Processing full flow scenario with 4 decimation factors...\n');
+
+            % Processing chain - no bypasses
+            current_signal = x_quantized_noisy;
+
+            % Write Stage 0: Input signal (after quantization)
+            writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'input.txt'), 16, 15);
+
+            % Stage 1: Fractional Decimator
+            fprintf('    Applying Fractional Decimator...\n');
             Hd_Fractional_Decimator = Fractional_Decimator();
             current_signal = step(Hd_Fractional_Decimator, current_signal);
-
-            % Write Stage 1: After fractional decimator
             writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'frac_decimator.txt'), 16, 15);
-        else
-            fprintf('  Bypassing Fractional Decimator\n');
-            copyfile(fullfile(scenario_dir, 'input.txt'), ...
-                    fullfile(scenario_dir, 'frac_decimator.txt'));
-        end
 
-        % Stage 2: IIR 2.4MHz Notch Filter
-        if bypass_iir_24 == 0
-            fprintf('  Applying IIR 2.4MHz Notch Filter...\n');
+            % Stage 2: IIR 2.4MHz Notch Filter
+            fprintf('    Applying IIR 2.4MHz Notch Filter...\n');
             Hd_IIR_2_4 = IIR_2_4();
             current_signal = filter(Hd_IIR_2_4, current_signal);
-
-            % Write Stage 2: After IIR 2.4MHz filter
             writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'iir_24mhz.txt'), 16, 15);
-        else
-            fprintf('  Bypassing IIR 2.4MHz Notch Filter\n');
-            copyfile(fullfile(scenario_dir, 'frac_decimator.txt'), ...
-                    fullfile(scenario_dir, 'iir_24mhz.txt'));
-        end
 
-        % Stage 3: IIR 5MHz Notch Filter (both IIR_1 and IIR_2)
-        if bypass_iir_5 == 0
-            fprintf('  Applying IIR 5MHz Notch Filter...\n');
-            Hd_IIR_1 = IIR_1(); 
+            % Stage 3: IIR 5MHz Notch Filter
+            fprintf('    Applying IIR 5MHz Notch Filter...\n');
+            Hd_IIR_1 = IIR_1();
             current_signal = filter(Hd_IIR_1, current_signal);
-
-            % Write Stage 3.1: After first IIR 5MHz filter
             writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'iir_5mhz_1.txt'), 16, 15);
-        else
-            fprintf('  Bypassing IIR 5MHz Notch Filter\n');
-            copyfile(fullfile(scenario_dir, 'iir_24mhz.txt'), ...
-                     fullfile(scenario_dir, 'iir_5mhz_1.txt'));
+
+            % Stage 4: CIC Filter - generate 4 outputs for different decimation factors
+            fprintf('    Generating CIC outputs for decimation factors: ');
+            for dec_idx = 1:num_decimation_factors
+                current_decf = decimation_factors(dec_idx);
+                fprintf('%d ', current_decf);
+
+                Hd_cic = CIC(current_decf);
+                cic_output = step(Hd_cic, current_signal);
+
+                % Write CIC output for this decimation factor
+                writeFixedPointBinary(cic_output, fullfile(scenario_dir, sprintf('cic_decf%d.txt', current_decf)), 16, 15);
+
+                % Write final output for this decimation factor
+                writeFixedPointBinary(cic_output, fullfile(scenario_dir, sprintf('output_decf%d.txt', current_decf)), 16, 15);
+            end
+            fprintf('\n');
+
+            fprintf('    Full flow scenario complete!\n\n');
         end
 
-        % Stage 4: CIC Filter
-        if bypass_cic == 0
-            fprintf('  Applying CIC Filter with decimation factor %d...\n', cic_decf);
-            Hd_cic = CIC(cic_decf);
-            current_signal = step(Hd_cic, current_signal);
-
-            % Write Stage 4: After CIC filter
-            writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'cic.txt'), 16, 15);
-        else
-            fprintf('  Bypassing CIC Filter\n');
-            copyfile(fullfile(scenario_dir, 'iir_5mhz_1.txt'), ...
-                    fullfile(scenario_dir, 'cic.txt'));
-        end
-
-        % Final output
-        output = current_signal;
-        writeFixedPointBinary(output, fullfile(scenario_dir, 'output.txt'), 16, 15);
-    
-        fprintf('  Scenario %s complete!\n\n', scenario_dir);
+        fprintf('Test Case %s complete!\n\n', tc_dir);
     end
 else
-    fprintf('Generating %d bypass Floating Point scenarios...\n\n', num_combinations);
-    
-    % Process each bypass combination
-    for combo_idx = 1:num_combinations
-        % Extract bypass flags for this combination
-        bypass_frac_dec = bypass_combinations(combo_idx, 1);
-        bypass_iir_24   = bypass_combinations(combo_idx, 2);
-        bypass_iir_5    = bypass_combinations(combo_idx, 3);
-        bypass_cic      = bypass_combinations(combo_idx, 4);
-    
-        % Create directory name for this scenario
-        scenario_dir = sprintf('scenario_frac%d_iir24%d_iir5%d_cic%d', ...
-                            bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
-    
-        % Create directory if it doesn't exist
-        if ~exist(scenario_dir, 'dir')
-            mkdir(scenario_dir);
+    fprintf('Processing mode: Floating Point\n\n');
+
+    % Loop through selected test cases
+    for tc_idx = test_cases_to_process
+        % Get current test case parameters
+        tc = test_cases{tc_idx};
+        f_sig = tc.freq;
+        amplitude = tc.amp;
+        signal_shape = tc.shape;
+        add_interference = tc.inter;
+        add_tones = tc.tones;
+        add_noise = tc.noise;
+
+        % Create test case directory
+        tc_dir = sprintf('TC_%d', tc_idx);
+        if ~exist(tc_dir, 'dir')
+            mkdir(tc_dir);
         end
-    
-        fprintf('Processing scenario %d/%d: %s\n', ...
-                combo_idx, num_combinations, scenario_dir);
-        fprintf('  Bypass flags - frac_dec:%d, iir_24:%d, iir_5:%d, cic:%d\n', ...
-                bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
-    
-        % Processing chain with current bypass options
-        current_signal = x_quantized_noisy;
 
-        % Write Stage 0: Input signal (after quantization)
-        writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'input.txt'), 16, 15);
+        fprintf('========================================\n');
+        fprintf('Processing Test Case %d/%d: %s\n', tc_idx, num_test_cases, tc_dir);
+        fprintf('  Signal parameters - Freq: %.2f kHz, Amp: %.3f, Shape: %s\n', ...
+                f_sig/1000, amplitude, signal_shape);
+        fprintf('========================================\n\n');
 
-        current_signal = x_real_noisy;
+        % Generate clean signal based on test case parameters
+        switch signal_shape
+            case 'sine'
+                x_real_clean = amplitude * sin(2 * pi * f_sig * t);
+            case 'square'
+                x_real_clean = amplitude * square(2 * pi * f_sig * t);
+            case 'triangular'
+                x_real_clean = amplitude * sawtooth(2 * pi * f_sig * t, 0.5);
+        end
 
-        % Stage 1: Fractional Decimator
-        if bypass_frac_dec == 0
-            fprintf('  Applying Fractional Decimator...\n');
+        x_real_noisy = x_real_clean;
+
+        % Add interference (same for all test cases)
+        if (add_interference == 1)
+            fprintf('  Adding interference signals (2.4 MHz and 5 MHz)...\n');
+            x_real_noisy = x_real_noisy + interference;
+        end
+
+        % Add tones
+        if (add_tones == 1)
+            fprintf('  Adding tone signals (2.8 MHz, 3 MHz, 3.2 MHz, 4 MHz, 4.5 MHz)...\n');
+            x_real_noisy = x_real_noisy + tones;
+        end
+
+        % Add wide-band noise (generate unique noise for each test case)
+        if (add_noise == 1)
+            fprintf('  Adding wide-band noise (variance = %.1e)...\n', noise_variance);
+            noise = sqrt(noise_variance) * randn(N, 1); % White Gaussian noise
+            x_real_noisy = x_real_noisy + noise;
+        end
+
+        x_quantized_noisy = fi(x_real_noisy, 1, 16, 15);
+
+        % Process scenarios based on iteration mode
+        if strcmp(iteration_mode, 'bypass')
+            % Bypass mode: iterate over all bypass combinations
+            for combo_idx = 1:num_combinations
+                % Extract bypass flags for this combination
+                bypass_frac_dec = bypass_combinations(combo_idx, 1);
+                bypass_iir_24   = bypass_combinations(combo_idx, 2);
+                bypass_iir_5    = bypass_combinations(combo_idx, 3);
+                bypass_cic      = bypass_combinations(combo_idx, 4);
+
+                % Create directory name for this scenario inside test case folder
+                scenario_dir = fullfile(tc_dir, sprintf('scenario_frac%d_iir24%d_iir5%d_cic%d', ...
+                                    bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic));
+
+                % Create directory if it doesn't exist
+                if ~exist(scenario_dir, 'dir')
+                    mkdir(scenario_dir);
+                end
+
+                fprintf('  Processing scenario %d/%d: scenario_frac%d_iir24%d_iir5%d_cic%d\n', ...
+                        combo_idx, num_combinations, bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
+                fprintf('    Bypass flags - frac_dec:%d, iir_24:%d, iir_5:%d, cic:%d, decf:%d\n', ...
+                        bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic, cic_decf);
+
+                % Processing chain with current bypass options
+                current_signal = x_quantized_noisy;
+
+                % Write Stage 0: Input signal (after quantization)
+                writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'input.txt'), 16, 15);
+
+                current_signal = x_real_noisy;
+
+                % Stage 1: Fractional Decimator
+                if bypass_frac_dec == 0
+                    fprintf('    Applying Fractional Decimator...\n');
+                    Hd_Fractional_Decimator_float = Fractional_Decimator_float();
+                    current_signal = step(Hd_Fractional_Decimator_float, current_signal);
+
+                    % Write Stage 1: After fractional decimator
+                    writeFloatingDouble(current_signal, fullfile(scenario_dir, 'frac_decimator.txt'));
+                else
+                    fprintf('    Bypassing Fractional Decimator\n');
+                    copyfile(fullfile(scenario_dir, 'input.txt'), ...
+                            fullfile(scenario_dir, 'frac_decimator.txt'));
+                end
+
+                % Stage 2: IIR 2.4MHz Notch Filter
+                if bypass_iir_24 == 0
+                    fprintf('    Applying IIR 2.4MHz Notch Filter...\n');
+                    Hd_IIR_2_4_float = IIR_2_4_float();
+                    current_signal = filter(Hd_IIR_2_4_float, current_signal);
+
+
+                    % Write Stage 2: After IIR 2.4MHz filter
+                    writeFloatingDouble(current_signal, fullfile(scenario_dir, 'iir_24mhz.txt'));
+                else
+                    fprintf('    Bypassing IIR 2.4MHz Notch Filter\n');
+                    copyfile(fullfile(scenario_dir, 'frac_decimator.txt'), ...
+                            fullfile(scenario_dir, 'iir_24mhz.txt'));
+                end
+
+                % Stage 3: IIR 5MHz Notch Filter (both IIR_1 and IIR_2)
+                if bypass_iir_5 == 0
+                    fprintf('    Applying IIR 5MHz Notch Filter...\n');
+                    Hd_IIR_1_float = IIR_1_float();
+
+                    current_signal = filter(Hd_IIR_1_float, current_signal);
+
+                    % Write Stage 3.1: After first IIR 5MHz filter
+                    writeFloatingDouble(current_signal, fullfile(scenario_dir, 'iir_5mhz_1.txt'));
+                else
+                    fprintf('    Bypassing IIR 5MHz Notch Filter\n');
+                    copyfile(fullfile(scenario_dir, 'iir_24mhz.txt'), ...
+                             fullfile(scenario_dir, 'iir_5mhz_1.txt'));
+                end
+
+                % Stage 4: CIC Filter
+                if bypass_cic == 0
+                    fprintf('    Applying CIC Filter with decimation factor %d...\n', cic_decf);
+                    Hd_cic_float = CIC_float(cic_decf);
+                    current_signal = step(Hd_cic_float, current_signal);
+
+                    % Write Stage 4: After CIC filter
+                    writeFloatingDouble(current_signal, fullfile(scenario_dir, 'cic.txt'));
+                else
+                    fprintf('    Bypassing CIC Filter\n');
+                    copyfile(fullfile(scenario_dir, 'iir_5mhz_1.txt'), ...
+                            fullfile(scenario_dir, 'cic.txt'));
+                end
+
+                % Final output
+                output = current_signal;
+                writeFloatingDouble(output, fullfile(scenario_dir, 'output.txt'));
+
+                fprintf('    Scenario complete!\n\n');
+            end
+        else
+            % Full flow mode: single folder with 4 CIC outputs
+            scenario_dir = fullfile(tc_dir, 'scenario_full_flow');
+
+            % Create directory if it doesn't exist
+            if ~exist(scenario_dir, 'dir')
+                mkdir(scenario_dir);
+            end
+
+            fprintf('  Processing full flow scenario with 4 decimation factors...\n');
+
+            % Processing chain - no bypasses
+            current_signal = x_quantized_noisy;
+
+            % Write Stage 0: Input signal (after quantization)
+            writeFixedPointBinary(current_signal, fullfile(scenario_dir, 'input.txt'), 16, 15);
+
+            current_signal = x_real_noisy;
+
+            % Stage 1: Fractional Decimator
+            fprintf('    Applying Fractional Decimator...\n');
             Hd_Fractional_Decimator_float = Fractional_Decimator_float();
             current_signal = step(Hd_Fractional_Decimator_float, current_signal);
-
-            % Write Stage 1: After fractional decimator
             writeFloatingDouble(current_signal, fullfile(scenario_dir, 'frac_decimator.txt'));
-        else
-            fprintf('  Bypassing Fractional Decimator\n');
-            copyfile(fullfile(scenario_dir, 'input.txt'), ...
-                    fullfile(scenario_dir, 'frac_decimator.txt'));
-        end
 
-        % Stage 2: IIR 2.4MHz Notch Filter
-        if bypass_iir_24 == 0
-            fprintf('  Applying IIR 2.4MHz Notch Filter...\n');
+            % Stage 2: IIR 2.4MHz Notch Filter
+            fprintf('    Applying IIR 2.4MHz Notch Filter...\n');
             Hd_IIR_2_4_float = IIR_2_4_float();
             current_signal = filter(Hd_IIR_2_4_float, current_signal);
-
-            % Write Stage 2: After IIR 2.4MHz filter
             writeFloatingDouble(current_signal, fullfile(scenario_dir, 'iir_24mhz.txt'));
-        else
-            fprintf('  Bypassing IIR 2.4MHz Notch Filter\n');
-            copyfile(fullfile(scenario_dir, 'frac_decimator.txt'), ...
-                    fullfile(scenario_dir, 'iir_24mhz.txt'));
-        end
 
-        % Stage 3: IIR 5MHz Notch Filter (both IIR_1 and IIR_2)
-        if bypass_iir_5 == 0
-            fprintf('  Applying IIR 5MHz Notch Filter...\n');
-            Hd_IIR_1_float = IIR_1_float(); 
-            
+            % Stage 3: IIR 5MHz Notch Filter
+            fprintf('    Applying IIR 5MHz Notch Filter...\n');
+            Hd_IIR_1_float = IIR_1_float();
             current_signal = filter(Hd_IIR_1_float, current_signal);
-
-            % Write Stage 3.1: After first IIR 5MHz filter
             writeFloatingDouble(current_signal, fullfile(scenario_dir, 'iir_5mhz_1.txt'));
-        else
-            fprintf('  Bypassing IIR 5MHz Notch Filter\n');
-            copyfile(fullfile(scenario_dir, 'iir_24mhz.txt'), ...
-                     fullfile(scenario_dir, 'iir_5mhz_1.txt'));
+
+            % Stage 4: CIC Filter - generate 4 outputs for different decimation factors
+            fprintf('    Generating CIC outputs for decimation factors: ');
+            for dec_idx = 1:num_decimation_factors
+                current_decf = decimation_factors(dec_idx);
+                fprintf('%d ', current_decf);
+
+                Hd_cic_float = CIC_float(current_decf);
+                cic_output = step(Hd_cic_float, current_signal);
+
+                % Write CIC output for this decimation factor
+                writeFloatingDouble(cic_output, fullfile(scenario_dir, sprintf('cic_decf%d.txt', current_decf)));
+
+                % Write final output for this decimation factor
+                writeFloatingDouble(cic_output, fullfile(scenario_dir, sprintf('output_decf%d.txt', current_decf)));
+            end
+            fprintf('\n');
+
+            fprintf('    Full flow scenario complete!\n\n');
         end
 
-        % Stage 4: CIC Filter
-        if bypass_cic == 0
-            fprintf('  Applying CIC Filter with decimation factor %d...\n', cic_decf);
-            Hd_cic_float = CIC_float(cic_decf);
-            current_signal = step(Hd_cic_float, current_signal);
-
-            % Write Stage 4: After CIC filter
-            writeFloatingDouble(current_signal, fullfile(scenario_dir, 'cic.txt'));
-        else
-            fprintf('  Bypassing CIC Filter\n');
-            copyfile(fullfile(scenario_dir, 'iir_5mhz_1.txt'), ...
-                    fullfile(scenario_dir, 'cic.txt'));
-        end
-
-        % Final output
-        output = current_signal;
-        writeFloatingDouble(output, fullfile(scenario_dir, 'output.txt'));
-    
-        fprintf('  Scenario %s complete!\n\n', scenario_dir);
+        fprintf('Test Case %s complete!\n\n', tc_dir);
     end
 end
-fprintf('All %d scenarios processed successfully!\n', num_combinations);
-fprintf('Outputs saved in separate directories:\n');
 
-% List all scenario directories
-for combo_idx = 1:num_combinations
-    bypass_frac_dec = bypass_combinations(combo_idx, 1);
-    bypass_iir_24   = bypass_combinations(combo_idx, 2);
-    bypass_iir_5    = bypass_combinations(combo_idx, 3);
-    bypass_cic      = bypass_combinations(combo_idx, 4);
-    
-    scenario_dir = sprintf('scenario_frac%d_iir24%d_iir5%d_cic%d', ...
-                          bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
-    
-    fprintf('  %s/\n', scenario_dir);
-    fprintf('    input.txt\n');
-    fprintf('    frac_decimator.txt\n');
-    fprintf('    iir_24mhz.txt\n');
-    fprintf('    iir_5mhz_1.txt\n');
-    fprintf('    cic.txt\n');
-    fprintf('    output.txt\n\n');
+fprintf('========================================\n');
+if strcmp(iteration_mode, 'bypass')
+    fprintf('TC_5 with %d bypass scenario(s) processed successfully!\n', num_combinations);
+    fprintf('Total scenarios: %d\n', num_combinations);
+else
+    fprintf('All %d Test Cases with full flow (4 CIC outputs each) processed successfully!\n', length(test_cases_to_process));
+    fprintf('Total test cases: %d\n', length(test_cases_to_process));
+end
+fprintf('========================================\n\n');
+
+fprintf('Output Structure:\n');
+for tc_idx = test_cases_to_process
+    fprintf('TC_%d/\n', tc_idx);
+
+    if strcmp(iteration_mode, 'bypass')
+        for combo_idx = 1:num_combinations
+            bypass_frac_dec = bypass_combinations(combo_idx, 1);
+            bypass_iir_24   = bypass_combinations(combo_idx, 2);
+            bypass_iir_5    = bypass_combinations(combo_idx, 3);
+            bypass_cic      = bypass_combinations(combo_idx, 4);
+
+            scenario_dir = sprintf('scenario_frac%d_iir24%d_iir5%d_cic%d', ...
+                                  bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic);
+
+            fprintf('  %s/\n', scenario_dir);
+        end
+    else
+        fprintf('  scenario_full_flow/\n');
+        fprintf('    - input.txt\n');
+        fprintf('    - frac_decimator.txt\n');
+        fprintf('    - iir_24mhz.txt\n');
+        fprintf('    - iir_5mhz_1.txt\n');
+        fprintf('    - cic_decf2.txt, cic_decf4.txt, cic_decf8.txt, cic_decf16.txt\n');
+        fprintf('    - output_decf2.txt, output_decf4.txt, output_decf8.txt, output_decf16.txt\n');
+    end
+    fprintf('\n');
 end
