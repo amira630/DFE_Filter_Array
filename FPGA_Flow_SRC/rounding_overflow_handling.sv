@@ -107,9 +107,7 @@ module rounding_overflow_arith #(
 
                     // raw + increment
                     // Note: raw may be wider than OUT_WIDTH; result is declared as OUT_WIDTH signed
-                    if (dec_factor == 5'd1) begin
-                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment}));
-                    end else if (dec_factor == 5'd2) begin
+                    if (dec_factor == 5'd2) begin
                         result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 1;
                     end else if (dec_factor == 5'd4) begin
                         result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 2;
@@ -117,6 +115,8 @@ module rounding_overflow_arith #(
                         result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 3;
                     end else if (dec_factor == 5'd16) begin
                         result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 4;
+                    end else begin
+                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment}));
                     end
                     result          = raw[OUT_WIDTH - 1 : 0]                  ;
 

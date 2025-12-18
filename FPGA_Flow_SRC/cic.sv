@@ -42,6 +42,7 @@ module CIC #(
 
     logic signed [ACC_WIDTH - 1 : 0]                intg_out        [Q - 1 : 0]     ;
     logic signed [ACC_WIDTH - 1 : 0]                comb_out        [Q - 1 : 0]     ;
+    
     logic        [DEC_WIDTH : 0]                    counter                         ;
     logic                                           dec_in_enable                   ;
 
@@ -170,6 +171,7 @@ module CIC #(
     ) ARITH_HANDLER (
         .data_in   (comb_out[Q - 1])    ,
         .valid_in  (valid_comb_out)     ,
+        .dec_factor(dec_factor)         ,
         .data_out  (rounded_out)        ,
         .overflow  (overflow_reg)       ,
         .underflow (underflow_reg)      ,
