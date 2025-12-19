@@ -9,10 +9,10 @@ module DFE_tb();
     parameter T_CLK         = 1_000_000_000 / FREQ_CLK  ;
 
     parameter string CONFIG_FILE_NAME = "cfg.txt"  ;
-    parameter string MATLAB_FILE_NAME = "System_run.m";
-    parameter string PATH = "../MATLAB/";
+    parameter string PYTHON_FILE_NAME = "system_run.py";
+    parameter string PATH = "../Python_Script/";
     parameter string OUT_PATH = "";
-    parameter string BASE_PATH = "/scenario_";           // Path where MATLAB output files are located
+    parameter string BASE_PATH = "/scenario_";           // Path where Python output files are located
     parameter string VCD_FILE_NAME = "DFE.vcd";        // VCD output file name
 
     parameter DATA_WIDTH   = 16  ;
@@ -38,9 +38,9 @@ module DFE_tb();
 
     typedef enum {FIXED_POINT, FLOATING_POINT} ARITH_BASE; 
 
-    typedef enum {CIC_1, CIC_2, CIC_4, CIC_8, CIC_16} DEC_FACTOR_e;
+    typedef enum {CIC_1, CIC_2, CIC_4, CIC_8, CIC_16, NAN_DF} DEC_FACTOR_e;
 
-    typedef enum {TC_1, TC_2, TC_3, TC_4, TC_5, TC_6, TC_7, TC_8, TC_9, TC_10, TC_11, TC_12, TC_13, TC_14, TC_15, TC_16} TC_NUM_e;
+    typedef enum {TC_1, TC_2, TC_3, TC_4, TC_5, TC_6, TC_7, TC_8, TC_9, TC_10, TC_11, TC_12, TC_13, TC_14, TC_15, TC_16, NAN_TC, BYPASS_TC} TC_NUM_e;
     string tc_num [15:0] = {
         "16", "15", "14", "13", "12", "11", "10", "9",
         "8", "7", "6", "5", "4", "3", "2", "1"
@@ -52,7 +52,7 @@ module DFE_tb();
     BLOCK_SEL status_var;
     BLOCK_SEL coeff_var;
 
-    logic [1 : 0] input_shape [0 : 0];
+    logic [1 : 0] input_shape;
     INPUT_SHAPE shape_var;
 
     ARITH_BASE arith_base_var;
@@ -222,13 +222,14 @@ module DFE_tb();
         if (!rst_n_tb) begin
             frac_decimator_idx <= 0;
             frac_decimator_sig      <= 0;
-        end else if (frac_decimator_valid_out_tb && trig && frac_decimator_idx < frac_decimator_exp.size()) begin
-            if (floating_point_flag == 0) begin
+        end else if (frac_decimator_valid_out_tb && trig) begin
+            if (floating_point_flag == 0 && frac_decimator_idx < frac_decimator_exp.size()) begin
                 frac_decimator_sig      <= $itor($signed(frac_decimator_exp[frac_decimator_idx])) / 32768.0;
-            end else begin
+                frac_decimator_idx <= frac_decimator_idx + 1;
+            end else if (floating_point_flag == 1 && frac_decimator_idx < frac_decimator_float_exp.size()) begin
                 frac_decimator_sig      <= frac_decimator_float_exp[frac_decimator_idx];
+                frac_decimator_idx <= frac_decimator_idx + 1;
             end
-            frac_decimator_idx <= frac_decimator_idx + 1;
         end
     end
 
@@ -236,13 +237,14 @@ module DFE_tb();
         if (!rst_n_tb) begin
             iir_24mhz_idx <= 0;
             iir_24mhz_sig           <= 0;
-        end else if (iir_24mhz_valid_out_tb && trig && iir_24mhz_idx < iir_24mhz_exp.size()) begin
-            if (floating_point_flag == 0) begin
+        end else if (iir_24mhz_valid_out_tb && trig) begin
+            if (floating_point_flag == 0 && iir_24mhz_idx < iir_24mhz_exp.size()) begin
                 iir_24mhz_sig           <= $itor($signed(iir_24mhz_exp[iir_24mhz_idx])) / 32768.0;
-            end else begin
+                iir_24mhz_idx <= iir_24mhz_idx + 1;
+            end else if (floating_point_flag == 1 && iir_24mhz_idx < iir_24mhz_float_exp.size()) begin
                 iir_24mhz_sig           <= iir_24mhz_float_exp[iir_24mhz_idx];
+                iir_24mhz_idx <= iir_24mhz_idx + 1;
             end
-            iir_24mhz_idx <= iir_24mhz_idx + 1;
         end
     end
 
@@ -250,13 +252,14 @@ module DFE_tb();
         if (!rst_n_tb) begin
             iir_5mhz_1_idx <= 0;
             iir_5mhz_1_sig          <= 0;
-        end else if (iir_5mhz_1_valid_out_tb && trig && iir_5mhz_1_idx < iir_5mhz_1_exp.size()) begin
-            if (floating_point_flag == 0) begin
+        end else if (iir_5mhz_1_valid_out_tb && trig) begin
+            if (floating_point_flag == 0 && iir_5mhz_1_idx < iir_5mhz_1_exp.size()) begin
                 iir_5mhz_1_sig          <= $itor($signed(iir_5mhz_1_exp[iir_5mhz_1_idx])) / 32768.0;
-            end else begin
+                iir_5mhz_1_idx <= iir_5mhz_1_idx + 1;
+            end else if (floating_point_flag == 1 && iir_5mhz_1_idx < iir_5mhz_1_float_exp.size()) begin
                 iir_5mhz_1_sig          <= iir_5mhz_1_float_exp[iir_5mhz_1_idx];
+                iir_5mhz_1_idx <= iir_5mhz_1_idx + 1;
             end
-            iir_5mhz_1_idx <= iir_5mhz_1_idx + 1;
         end
     end
 
@@ -264,13 +267,14 @@ module DFE_tb();
         if (!rst_n_tb) begin
             cic_idx <= 0;
             cic_sig <= 0;
-        end else if (cic_valid_out_tb && trig && cic_idx < cic_exp.size()) begin
-            if (floating_point_flag == 0) begin
+        end else if (cic_valid_out_tb && trig) begin
+            if (floating_point_flag == 0 && cic_idx < cic_exp.size()) begin
                 cic_sig <= $itor($signed(cic_exp[cic_idx])) / 32768.0;
-            end else begin
+                cic_idx <= cic_idx + 1;
+            end else if (floating_point_flag == 1 && cic_idx < cic_float_exp.size()) begin
                 cic_sig <= cic_float_exp[cic_idx];
+                cic_idx <= cic_idx + 1;
             end
-            cic_idx <= cic_idx + 1;
         end
     end
 
@@ -278,26 +282,40 @@ module DFE_tb();
         if (!rst_n_tb) begin
             output_idx <= 0;
             output_sig               <= 0;
-        end else if (valid_out_tb && trig && output_idx < output_exp.size()) begin
-            if (floating_point_flag == 0) begin
+        end else if (valid_out_tb && trig) begin
+            if (floating_point_flag == 0 && output_idx < output_exp.size()) begin
                 output_sig               <= $itor($signed(output_exp[output_idx])) / 32768.0;
-            end else begin
-                output_sig               <= output_float_exp[output_idx];
-            end
 
-            if (!core_test_end) begin
-                if (error < 0) begin
-                    if (max_error < (-error)) begin
-                        max_error <= (-error);
-                    end 
-                end else begin
-                    if (max_error < (-error)) begin
-                        max_error <= error;
-                    end 
+                if (!core_test_end) begin
+                    if (error < 0) begin
+                        if (max_error < (-error)) begin
+                            max_error <= (-error);
+                        end 
+                    end else begin
+                        if (max_error < (-error)) begin
+                            max_error <= error;
+                        end 
+                    end
                 end
-            end
 
-            output_idx <= output_idx + 1;
+                output_idx <= output_idx + 1;
+            end else if (floating_point_flag == 1 && output_idx < output_float_exp.size()) begin
+                output_sig               <= output_float_exp[output_idx];
+
+                if (!core_test_end) begin
+                    if (error < 0) begin
+                        if (max_error < (-error)) begin
+                            max_error <= (-error);
+                        end 
+                    end else begin
+                        if (max_error < (-error)) begin
+                            max_error <= error;
+                        end 
+                    end
+                end
+
+                output_idx <= output_idx + 1;
+            end
         end
     end
 
@@ -359,15 +377,15 @@ module DFE_tb();
         end
     end
 
-    always_ff @(posedge clk_tb) begin
-        if (input_shape[0] == 2'b00) begin
-            shape_var = SINE;
-        end else if (input_shape[0] == 2'b01) begin
-            shape_var = SQUARE;
-        end else begin
-            shape_var = TRIANGULAR;
-        end
-    end
+    // always_ff @(posedge clk_tb) begin
+    //     if (input_shape == 2'b00) begin
+    //         shape_var = SINE;
+    //     end else if (input_shape == 2'b01) begin
+    //         shape_var = SQUARE;
+    //     end else begin
+    //         shape_var = TRIANGULAR;
+    //     end
+    // end
 
     always_ff @(posedge clk_tb) begin
         if (floating_point_flag == 1'b0) begin
@@ -384,32 +402,108 @@ module DFE_tb();
 
         // initialization
         init();
-        repeat (16) begin
-            tc_idx = 0;
-            repeat (16) begin
-                // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-                TC_cfg({1'b0, cic_decf_TC[2]}, bypass_TC, tc_num[tc_idx], 0, 1);
-                SET_OUTPUT($random % 4);
-                SET_COEFF($random % 5);
-                READ_STATUS(4);
+
+        // Floating-point Test Cases
+
+        TC_cfg({1'b1, 1'b0, cic_decf_TC[0]}, 4'b0000, cic_decf_TC[0], "NAN", 1, 1);
+
+        for (int i = 0 ; i < 16 ; i++) begin
+            for (int j = 0 ; j < 4 ; j++) begin
+                TC_cfg({1'b1, 1'b0, cic_decf_TC[0]}, 4'b0000, cic_decf_TC[j], tc_num [i], 0, 1);
+                SET_OUTPUT($random % 3);
+                SET_COEFF($random % 3);
+                READ_STATUS($random % 5);
                 repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-                bypass_TC = bypass_TC + 1;
             end
-            tc_idx = tc_idx + 1;
         end
-        
+
+        // Bypass Test Cases
+
+        TC_cfg({1'b0, 1'b1, cic_decf_TC[1]}, 4'b0000, cic_decf_TC[1], "NAN", 1, 1);
+
+        for (int i = 0 ; i < 16 ; i++) begin
+            TC_cfg({1'b0, 1'b1, cic_decf_TC[1]}, i, cic_decf_TC[1], "bypass", 0, 1);
+            SET_OUTPUT($random % 3);
+            SET_COEFF($random % 3);
+            READ_STATUS($random % 5);
+            repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+        end
+
+        // Fixed-point Test Cases
+
+        TC_cfg({1'b0, 1'b0, cic_decf_TC[0]}, 4'b0000, cic_decf_TC[0], "NAN", 1, 1);
+
+        for (int i = 0 ; i < 16 ; i++) begin
+            for (int j = 0 ; j < 4 ; j++) begin
+                TC_cfg({1'b0, 1'b0, cic_decf_TC[0]}, 4'b0000, cic_decf_TC[j], tc_num [i], 0, 1);
+                SET_OUTPUT($random % 3);
+                SET_COEFF($random % 3);
+                READ_STATUS($random % 5);
+                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+            end
+        end
 
         repeat (2) @(negedge clk_tb);
 
-        // // Arithmetic-based Test Cases
-        // floating_point_flag = 1'b0;
-        // Arithmetic_based_TC(floating_point_flag); // Fixed-point
+        assert_reset();
 
-        // assert_reset();
+        core_test_end = 1;
 
-        // floating_point_flag = 1'b1;
-        // Arithmetic_based_TC(floating_point_flag); // Floating-point
-        
+        // Verify coefficient readback
+        $display("========== Verifying Coefficient Readback ==========");
+        SET_COEFF(0);  // Default coefficients
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(1);  // Fractional decimator
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(2);  // 2.4 MHz IIR
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(0);  // Default coefficients
+        // Test coefficient write functionality
+        $display("========== Coefficient Write Tests ==========");
+        // Test 1: Write Fractional Decimator Coefficients
+        $display("[%0t] Writing Fractional Decimator Coefficients...", $time);
+        CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
+        $display("[%0t] Fractional Decimator coefficients written", $time);
+
+        // Test 2: Write 2.4 MHz IIR Coefficients
+        $display("[%0t] Writing 2.4 MHz IIR Coefficients...", $time);
+        CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
+        $display("[%0t] 2.4 MHz IIR coefficients written", $time);
+        // Test 3: Write 5 MHz IIR (1 MHz alias) Coefficients
+        $display("[%0t] Writing 5 MHz IIR (1 MHz alias) Coefficients...", $time);
+        CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
+        $display("[%0t] 5 MHz IIR (1 MHz alias) coefficients written", $time);
+
+        $display("========== Reading Coeff After Modification ==========");
+
+        SET_COEFF(0);  // Default coefficients
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(1);  // Fractional decimator
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(2);  // 2.4 MHz IIR
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
+        repeat (50) @(negedge clk_tb);
+        SET_COEFF(0);  // Default coefficients
+
+        $display("========== Testing After Coefficient Modification ==========");
+
+        for (int i = 0 ; i < 16 ; i++) begin
+            for (int j = 0 ; j < 4 ; j++) begin
+                TC_cfg({1'b0, 1'b0, cic_decf_TC[0]}, 4'b0000, cic_decf_TC[j], tc_num [i], 0, 1);
+
+                CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
+                CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
+                CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
+
+                SET_OUTPUT($random % 3);
+                SET_COEFF($random % 3);
+                READ_STATUS($random % 5);
+                repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
+            end
+        end        
         
         $display("===========================================");
         $display("Core Output Success Count: %0d", core_out_success);
@@ -417,164 +511,6 @@ module DFE_tb();
         $display("===========================================");
         $stop;
     end
-
-    // task Arithmetic_based_TC (
-    //     input bit fl_fi_flag
-    // );
-    //     core_test_end = 0;
-
-    //     i = 0;
-    //     repeat(2) begin
-    //         bypass_TC = 0;
-    //         TC_cfg({fl_fi_flag, cic_decf_TC[i]}, 4'b0000, 1, 1);
-    //         repeat (16) begin
-    //             // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-    //             TC_cfg({fl_fi_flag, cic_decf_TC[i]}, bypass_TC, 0, 1);
-    //             SET_OUTPUT($random % 4);
-    //             SET_COEFF($random % 5);
-    //             READ_STATUS(4);
-    //             repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-    //             bypass_TC = bypass_TC + 1;
-    //         end
-    //         i = i + 1;
-    //     end
-
-    //     // repeat (2) begin
-    //     //     bypass_TC = 0;
-    //     //     TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[0]}, 4'b0000, 1, 1);
-    //     //     repeat (16) begin
-    //     //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-    //     //         TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[0]}, bypass_TC, 0, 1);
-    //     //         SET_OUTPUT($random % 4);
-    //     //         SET_COEFF($random % 5);
-    //     //         READ_STATUS(4);
-    //     //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-    //     //         bypass_TC = bypass_TC + 1;
-    //     //     end
-    //     // end
-
-    //     // repeat (2) begin
-    //     //     bypass_TC = 0;
-    //     //     TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[1]}, 4'b0000, 1, 1);
-    //     //     repeat (16) begin
-    //     //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-    //     //         TC_cfg({fl_fi_flag, 3'b0_0_1, cic_decf_TC[1]}, bypass_TC, 0, 1);
-    //     //         SET_OUTPUT($random % 4);
-    //     //         SET_COEFF($random % 5);
-    //     //         READ_STATUS(4);
-    //     //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-    //     //         bypass_TC = bypass_TC + 1;
-    //     //     end
-    //     // end
-
-    //     // repeat (2) begin
-    //     //     bypass_TC = 0;
-    //     //     TC_cfg({fl_fi_flag, 3'b1_0_1, cic_decf_TC[2]}, 4'b0000, 1, 1);
-    //     //     repeat (16) begin
-    //     //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-    //     //         TC_cfg({fl_fi_flag, 3'b1_0_1, cic_decf_TC[2]}, bypass_TC, 0, 1);
-    //     //         SET_OUTPUT($random % 4);
-    //     //         SET_COEFF($random % 5);
-    //     //         READ_STATUS(4);
-    //     //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-    //     //         bypass_TC = bypass_TC + 1;
-    //     //     end
-    //     // end
-
-    //     // repeat (1) begin
-    //     //     bypass_TC = 0;
-    //     //     TC_cfg({fl_fi_flag, 3'b1_1_1, cic_decf_TC[3]}, 4'b0000, 1, 1);
-    //     //     repeat (16) begin
-    //     //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-    //     //         TC_cfg({fl_fi_flag, 3'b1_1_1, cic_decf_TC[3]}, bypass_TC, 0, 1);
-    //     //         SET_OUTPUT($random % 4);
-    //     //         SET_COEFF($random % 5);
-    //     //         READ_STATUS($random % 5);
-    //     //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-    //     //         bypass_TC = bypass_TC + 1;
-    //     //     end
-    //     // end
-
-    //     // repeat (2) begin
-    //     //     bypass_TC = 0;
-    //     //     TC_cfg({fl_fi_flag, 3'b0_1_1, cic_decf_TC[4]}, 4'b0000, 1, 1);
-    //     //     repeat (16) begin
-    //     //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-    //     //         TC_cfg({fl_fi_flag, 3'b0_1_1, cic_decf_TC[4]}, bypass_TC, 0, 1);
-    //     //         SET_OUTPUT($random % 4);
-    //     //         SET_COEFF($random % 5);
-    //     //         READ_STATUS($random % 5);
-    //     //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-    //     //         bypass_TC = bypass_TC + 1;
-    //     //     end
-    //     // end
-
-
-    //     core_test_end = 1;
-
-    //     // Verify coefficient readback
-    //     // $display("========== Verifying Coefficient Readback ==========");
-    //     // SET_COEFF(0);  // Default coefficients
-    //     // repeat (50) @(negedge clk_tb);
-    //     // SET_COEFF(1);  // Fractional decimator
-    //     // repeat (50) @(negedge clk_tb);
-    //     // SET_COEFF(2);  // 2.4 MHz IIR
-    //     // repeat (50) @(negedge clk_tb);
-    //     // SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
-    //     // repeat (50) @(negedge clk_tb);
-    //     // SET_COEFF(0);  // Default coefficients
-        
-    //     // // Test coefficient write functionality
-    //     // $display("========== Coefficient Write Tests ==========");
-        
-    //     // // Test 1: Write Fractional Decimator Coefficients
-    //     // $display("[%0t] Writing Fractional Decimator Coefficients...", $time);
-    //     // CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
-    //     // $display("[%0t] Fractional Decimator coefficients written", $time);
-
-    //     // // Test 2: Write 2.4 MHz IIR Coefficients
-    //     // $display("[%0t] Writing 2.4 MHz IIR Coefficients...", $time);
-    //     // CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
-    //     // $display("[%0t] 2.4 MHz IIR coefficients written", $time);
-    
-    //     // // Test 3: Write 5 MHz IIR (1 MHz alias) Coefficients
-    //     // $display("[%0t] Writing 5 MHz IIR (1 MHz alias) Coefficients...", $time);
-    //     // CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
-    //     // $display("[%0t] 5 MHz IIR (1 MHz alias) coefficients written", $time);
-
-    //     // $display("========== Reading Coeff After Modification ==========");
-
-    //     // SET_COEFF(0);  // Default coefficients
-    //     // repeat (50) @(negedge clk_tb);
-    //     // SET_COEFF(1);  // Fractional decimator
-    //     // repeat (50) @(negedge clk_tb);
-    //     // SET_COEFF(2);  // 2.4 MHz IIR
-    //     // repeat (50) @(negedge clk_tb);
-    //     // SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
-    //     // repeat (50) @(negedge clk_tb);
-    //     // SET_COEFF(0);  // Default coefficients
-
-    //     // $display("========== Testing After Coefficient Modification ==========");
-
-    //     // repeat (1) begin
-    //     //     bypass_TC = 0;
-    //     //     TC_cfg({fl_fi_flag, 3'b0_0_0, cic_decf_TC[2]}, 4'b0000, 1, 1);
-    //     //     repeat (16) begin
-    //     //         // f = 0, a = 0, s = 0, bypass_frac_dec = 0, bypass_iir_24 = 0, bypass_iir_5 = 0, bypass_cic = 0, cic_decf = 4
-    //     //         TC_cfg({fl_fi_flag, 3'b0_0_0, cic_decf_TC[2]}, bypass_TC, 0, 1);
-
-    //     //         CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
-    //     //         CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
-    //     //         CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);
-                
-    //     //         SET_OUTPUT($random % 4);
-    //     //         SET_COEFF($random % 5);
-    //     //         READ_STATUS($random % 5);
-    //     //         repeat (N_SAMPLES_I + 10) @(negedge clk_tb);
-    //     //         bypass_TC = bypass_TC + 1;
-    //     //     end
-    //     // end
-    // endtask
 
     ////////////////////////////////////////////////////
     /////////////////////// TASKS //////////////////////
@@ -590,11 +526,10 @@ module DFE_tb();
         max_error = 0.0;
 
         bypass_TC = 0;
-        cic_decf_TC[0] = 5'b00001; // 1
-        cic_decf_TC[1] = 5'b00010; // 2
-        cic_decf_TC[2] = 5'b00100; // 4
-        cic_decf_TC[3] = 5'b01000; // 8
-        cic_decf_TC[4] = 5'b10000; // 16
+        cic_decf_TC[0] = 5'b00010; // 2
+        cic_decf_TC[1] = 5'b00100; // 4
+        cic_decf_TC[2] = 5'b01000; // 8
+        cic_decf_TC[3] = 5'b10000; // 16
 
         MTRANS_tb = 1'b0;
         MWRITE_tb = 1'b0;
@@ -618,9 +553,6 @@ module DFE_tb();
             iir_5mhz_1_coeff_tb[i] = 20'sh33333;
         end
         assert_reset();
-
-        // Default Configuration - Run MATLAB once at initialization
-        //TC_cfg({1'b0, cic_decf_TC[2]}, 4'b0000, tc_num[0], 1, 1);
     endtask
 
     ///////////////////////// RESET ////////////////////
@@ -757,7 +689,7 @@ module DFE_tb();
     endtask
 
     task update_config (
-        input logic [5 : 0] config_stream 
+        input logic [6 : 0] config_stream 
     );
         // Floating Point       :   (config_stream[5])      :   Floating Point flag
         // cic_decf             :   (config_stream[4:0])    :   CIC decimation factor (5 bits)
@@ -786,17 +718,18 @@ module DFE_tb();
         end
 
         // Write signal configuration flags (bits 1-3)
-        $fwrite(file_handle, "%06b", config_stream);
+        $fwrite(file_handle, "%07b", config_stream);
 
         // Close file
         $fclose(file_handle);
 
         $display("Configuration file '%s' created successfully", filename);
-        $display("Arithmetic Data Type Floating Point = %b", config_stream[5]);
+        $display("Arithmetic Data Type Floating Point = %b", config_stream[6]);
+        $display("Bypass Test Case = %b", config_stream[5]);
         $display("CIC decf = %d (binary: %05b)", config_stream[4 : 0], config_stream[4 : 0]);
     endtask
 
-    task run_matlab (
+    task run_python (
         input bit wait_for_completion    // 1 = wait, 0 = run in background
     );
         
@@ -805,13 +738,13 @@ module DFE_tb();
         string log_file;
         string timestamp;
         string full_script_path;
-        string matlab_function_name;  // ADDED: Extract function name without .m
+        string python_function_name;  // Extract function name without .py
 
-        // ADDED: Extract function name without .m extension
-        if (MATLAB_FILE_NAME.len() > 2 && MATLAB_FILE_NAME.substr(MATLAB_FILE_NAME.len()-2, MATLAB_FILE_NAME.len()-1) == ".m") begin
-            matlab_function_name = MATLAB_FILE_NAME.substr(0, MATLAB_FILE_NAME.len()-3);
+        // Extract function name without .py extension
+        if (PYTHON_FILE_NAME.len() > 3 && PYTHON_FILE_NAME.substr(PYTHON_FILE_NAME.len()-3, PYTHON_FILE_NAME.len()-1) == ".py") begin
+            python_function_name = PYTHON_FILE_NAME.substr(0, PYTHON_FILE_NAME.len()-4);
         end else begin
-            matlab_function_name = MATLAB_FILE_NAME;
+            python_function_name = PYTHON_FILE_NAME;
         end
 
         // Create timestamp for unique log file
@@ -819,29 +752,29 @@ module DFE_tb();
 
         // Construct log file path
         if (OUT_PATH == "") begin
-            $sformat(log_file, "matlab_%s_%s.log", matlab_function_name, timestamp);
+            $sformat(log_file, "python_%s_%s.log", python_function_name, timestamp);
         end else begin
             if (OUT_PATH.substr(OUT_PATH.len()-1, OUT_PATH.len()-1) != "/") begin
-                $sformat(log_file, "%s/matlab_%s_%s.log", OUT_PATH, matlab_function_name, timestamp);
+                $sformat(log_file, "%s/python_%s_%s.log", OUT_PATH, python_function_name, timestamp);
             end else begin
-                $sformat(log_file, "%smatlab_%s_%s.log", OUT_PATH, matlab_function_name, timestamp);
+                $sformat(log_file, "%spython_%s_%s.log", OUT_PATH, python_function_name, timestamp);
             end
         end
 
-        // Build the MATLAB command - FIXED: Remove .m from function call
+        // Build the Python command - simplified for Windows PowerShell
         if (wait_for_completion) begin
-            // Synchronous execution
-            $sformat(command, "matlab -batch \"addpath('%s'); %s;\" -logfile %s", 
-                     PATH, matlab_function_name, log_file);
+            // Synchronous execution - use PowerShell command chaining with &&
+            $sformat(command, "cd %s && python %s > %s 2>&1",
+                     PATH, PYTHON_FILE_NAME, log_file);
         end else begin
             // Asynchronous execution (background)
-            $sformat(command, "start /B matlab -batch \"addpath('%s'); %s;\" -logfile %s", 
-                     PATH, matlab_function_name, log_file);
+            $sformat(command, "start /B cmd /c \"cd %s && python %s > %s 2>&1\"",
+                     PATH, PYTHON_FILE_NAME, log_file);
         end
 
-        $display("[%0t] Starting MATLAB execution:", $time);
-        $display("[%0t]   Script: %s%s", $time, PATH, MATLAB_FILE_NAME);  // CHANGED: Show actual file path
-        $display("[%0t]   Function: %s", $time, matlab_function_name);    // ADDED: Show function name being called
+        $display("[%0t] Starting Python execution:", $time);
+        $display("[%0t]   Script: %s%s", $time, PATH, PYTHON_FILE_NAME);
+        $display("[%0t]   Function: %s", $time, python_function_name);
         $display("[%0t]   Log: %s", $time, log_file);
         $display("[%0t]   Command: %s", $time, command);
 
@@ -850,29 +783,29 @@ module DFE_tb();
 
         if (wait_for_completion) begin
             if (result == 0) begin
-                $display("[%0t] MATLAB execution completed successfully", $time);
+                $display("[%0t] Python execution completed successfully", $time);
             end else begin
-                $display("[%0t] ERROR: MATLAB execution failed with code %0d", $time, result);
+                $display("[%0t] ERROR: Python execution failed with code %0d", $time, result);
                 $display("[%0t] Please check:", $time);
-                $display("[%0t]   1. MATLAB is installed and in system PATH", $time);
-                $display("[%0t]   2. File exists: %s%s", $time, PATH, MATLAB_FILE_NAME);
-                $display("[%0t]   3. MATLAB script has no syntax errors", $time);
+                $display("[%0t]   1. Python is installed and in system PATH", $time);
+                $display("[%0t]   2. File exists: %s%s", $time, PATH, PYTHON_FILE_NAME);
+                $display("[%0t]   3. Python script has no syntax errors", $time);
             end
         end else begin
-            $display("[%0t] MATLAB started in background", $time);
+            $display("[%0t] Python started in background", $time);
         end
     endtask
 
     task run_script (
-        input logic [5 : 0] config_stream, 
-        input bit wait_for_completion           // 1 = wait, 0 = run in background
+        input logic [6 : 0] config_stream           , 
+        input bit           wait_for_completion           // 1 = wait, 0 = run in background
     );
     
         // Create configuration file
         update_config(config_stream);
 
-        // Run MATLAB script
-        run_matlab(wait_for_completion);  
+        // Run Python script
+        run_python(wait_for_completion);
     endtask
 
     function automatic int calculate_depth (
@@ -936,11 +869,10 @@ module DFE_tb();
     endtask
 
     task automatic load_stage_file_float (
-        ref real memory[$]               ,    // Reference to real memory array
-        input string filename            ,    // File to load
-        input string stage_name               // Stage name for logging
+        ref   real   memory[$]   ,    // Reference to real memory array
+        input string filename    ,    // File to load
+        input string stage_name       // Stage name for logging
     );
-        
         integer file_handle;
         integer i;
         real temp_data;
@@ -965,77 +897,151 @@ module DFE_tb();
         // $display("  Stage %s: %0d samples from %s", stage_name, i, filename);
     endtask
 
+    task automatic read_shape_code (
+        input string test_number,
+        output logic [1:0] shape_code
+    );
+        integer file_handle;
+        string filename;
+        string shape_bits;
+
+        filename = {"TC_", test_number, "/shape_code.txt"};
+        file_handle = $fopen(filename, "r");
+
+        if (file_handle == 0) begin
+            $display("  Warning: Could not open %s, defaulting to SINE (00)", filename);
+            shape_code = 2'b00;
+            return;
+        end
+
+        if ($fscanf(file_handle, "%s", shape_bits) == 1) begin
+            // Convert string "00", "01", or "10" to 2-bit logic
+            if (shape_bits == "00") begin
+                shape_code = 2'b00;  // SINE
+                $display("  Shape code read: %s (SINE)", shape_bits);
+            end else if (shape_bits == "01") begin
+                shape_code = 2'b01;  // TRIANGULAR
+                $display("  Shape code read: %s (TRIANGULAR)", shape_bits);
+            end else if (shape_bits == "10") begin
+                shape_code = 2'b10;  // SQUARE
+                $display("  Shape code read: %s (SQUARE)", shape_bits);
+            end else begin
+                $display("  Warning: Invalid shape code '%s' in %s, defaulting to SINE", shape_bits, filename);
+                shape_code = 2'b00;
+            end
+        end else begin
+            $display("  Warning: Could not read shape code from %s, defaulting to SINE", filename);
+            shape_code = 2'b00;
+        end
+
+        $fclose(file_handle);
+    endtask
+
 
     task automatic load_matlab_stages (
         input bit  fi_vs_floating ,
+        input bit  bypass_gen     ,
+        input string dec_factor_str ,
         input string test_number  ,
         input string bypass_cfg                         // Stage name for logging
     );
-        if (fi_vs_floating == 1) begin
-            load_stage_file_fixed(input_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/input.txt"}, "Input");
-            load_stage_file_float(frac_decimator_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/frac_decimator.txt"}, "Fractional Decimator");
-            load_stage_file_float(iir_24mhz_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/iir_24mhz.txt"}, "IIR 2.4MHz");
-            load_stage_file_float(iir_5mhz_1_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
-            load_stage_file_float(cic_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/cic.txt"}, "CIC");
-            load_stage_file_float(output_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/output.txt"}, "Final Output");
+        if (bypass_gen == 1) begin
+            if (fi_vs_floating == 1) begin
+                load_stage_file_fixed(input_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/input.txt"}, "Input");
+                load_stage_file_float(frac_decimator_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/frac_decimator.txt"}, "Fractional Decimator");
+                load_stage_file_float(iir_24mhz_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/iir_24mhz.txt"}, "IIR 2.4MHz");
+                load_stage_file_float(iir_5mhz_1_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
+                load_stage_file_float(cic_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/cic.txt"}, "CIC");
+                load_stage_file_float(output_float_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/output.txt"}, "Final Output");
+            end else begin
+                load_stage_file_fixed(input_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/input.txt"}, "Input");
+                load_stage_file_fixed(frac_decimator_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/frac_decimator.txt"}, "Fractional Decimator");
+                load_stage_file_fixed(iir_24mhz_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/iir_24mhz.txt"}, "IIR 2.4MHz");
+                load_stage_file_fixed(iir_5mhz_1_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
+                load_stage_file_fixed(cic_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/cic.txt"}, "CIC");
+                load_stage_file_fixed(output_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/output.txt"}, "Final Output");
+            end
         end else begin
-            load_stage_file_fixed(input_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/input.txt"}, "Input");
-            load_stage_file_fixed(frac_decimator_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/frac_decimator.txt"}, "Fractional Decimator");
-            load_stage_file_fixed(iir_24mhz_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/iir_24mhz.txt"}, "IIR 2.4MHz");
-            load_stage_file_fixed(iir_5mhz_1_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
-            load_stage_file_fixed(cic_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/cic.txt"}, "CIC");
-            load_stage_file_fixed(output_exp, {"TC_", test_number, BASE_PATH, bypass_cfg, "/output.txt"}, "Final Output");
+            if (fi_vs_floating == 1) begin
+                load_stage_file_fixed(input_exp, {"TC_", test_number, "/scenario_full_flow", "/input.txt"}, "Input");
+                load_stage_file_float(frac_decimator_float_exp, {"TC_", test_number, "/scenario_full_flow", "/frac_decimator.txt"}, "Fractional Decimator");
+                load_stage_file_float(iir_24mhz_float_exp, {"TC_", test_number, "/scenario_full_flow", "/iir_24mhz.txt"}, "IIR 2.4MHz");
+                load_stage_file_float(iir_5mhz_1_float_exp, {"TC_", test_number, "/scenario_full_flow", "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
+                load_stage_file_float(cic_float_exp, {"TC_", test_number, "/scenario_full_flow", "/cic_decf", dec_factor_str, ".txt"}, "CIC");
+                load_stage_file_float(output_float_exp, {"TC_", test_number, "/scenario_full_flow", "/output_decf", dec_factor_str, ".txt"}, "Final Output");
+            end else begin
+                load_stage_file_fixed(input_exp, {"TC_", test_number, "/scenario_full_flow", "/input.txt"}, "Input");
+                load_stage_file_fixed(frac_decimator_exp, {"TC_", test_number, "/scenario_full_flow", "/frac_decimator.txt"}, "Fractional Decimator");
+                load_stage_file_fixed(iir_24mhz_exp, {"TC_", test_number, "/scenario_full_flow", "/iir_24mhz.txt"}, "IIR 2.4MHz");
+                load_stage_file_fixed(iir_5mhz_1_exp, {"TC_", test_number, "/scenario_full_flow", "/iir_5mhz_1.txt"}, "IIR 5MHz 1");
+                load_stage_file_fixed(cic_exp, {"TC_", test_number, "/scenario_full_flow", "/cic_decf", dec_factor_str, ".txt"}, "CIC");
+                load_stage_file_fixed(output_exp, {"TC_", test_number, "/scenario_full_flow", "/output_decf", dec_factor_str, ".txt"}, "Final Output");
+            end
         end
-            
     endtask
 
     task automatic load_matlab_output (
-        input bit  fi_vs_floating   ,
-        input bit bypass_frac_dec   ,
-        input bit bypass_iir_24     ,
-        input bit bypass_iir_5      , 
-        input bit bypass_cic        ,
-        input int cic_decf          ,
-        input string test_number  
+        input bit       fi_vs_floating    ,
+        input bit       bypass_gen        ,
+        input bit       bypass_frac_dec   ,
+        input bit       bypass_iir_24     ,
+        input bit       bypass_iir_5      , 
+        input bit       bypass_cic        ,
+        input int       cic_decf          ,
+        input string    test_number  
     );
 
         int expected_depth;
+
+        string dec_factor_str;
+
+        if (cic_decf == 2) begin
+            dec_factor_str = "2";
+        end else if (cic_decf == 4) begin
+            dec_factor_str = "4";
+        end else if (cic_decf == 8) begin
+            dec_factor_str = "8";
+        end else if (cic_decf == 16) begin
+            dec_factor_str = "16";
+        end else begin
+            dec_factor_str = "1";
+        end
 
         expected_depth = calculate_depth(bypass_frac_dec, bypass_cic, cic_decf);
 
         // Load each stage using the generic task
         if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0000) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac0_iir240_iir50_cic0");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac0_iir240_iir50_cic0");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0001) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac0_iir240_iir50_cic1");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac0_iir240_iir50_cic1");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0010) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac0_iir240_iir51_cic0");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac0_iir240_iir51_cic0");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0011) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac0_iir240_iir51_cic1");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac0_iir240_iir51_cic1");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0100) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac0_iir241_iir50_cic0");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac0_iir241_iir50_cic0");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0101) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac0_iir241_iir50_cic1");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac0_iir241_iir50_cic1");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0110) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac0_iir241_iir51_cic0");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac0_iir241_iir51_cic0");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b0111) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac0_iir241_iir51_cic1");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac0_iir241_iir51_cic1");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1000) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac1_iir240_iir50_cic0");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac1_iir240_iir50_cic0");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1001) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac1_iir240_iir50_cic1");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac1_iir240_iir50_cic1");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1010) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac1_iir240_iir51_cic0");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac1_iir240_iir51_cic0");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1011) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac1_iir240_iir51_cic1");  
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac1_iir240_iir51_cic1");  
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1100) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac1_iir241_iir50_cic0");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac1_iir241_iir50_cic0");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1101) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac1_iir241_iir50_cic1");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac1_iir241_iir50_cic1");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1110) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac1_iir241_iir51_cic0");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac1_iir241_iir51_cic0");
         end else if ({bypass_frac_dec, bypass_iir_24, bypass_iir_5, bypass_cic}== 4'b1111) begin
-            load_matlab_stages(fi_vs_floating, test_number, "frac1_iir241_iir51_cic1");
+            load_matlab_stages(fi_vs_floating, bypass_gen, dec_factor_str, test_number, "frac1_iir241_iir51_cic1");
         end
 
         // Verify final output depth
@@ -1049,90 +1055,155 @@ module DFE_tb();
     endtask
 
     task TC_cfg (
-        input logic [5 : 0] config_stream       ,
+        input logic [6 : 0] config_stream       ,
         input bit   [3 : 0] bypass_config       ,
-        input string test_number                ,   
+        input bit   [4 : 0] dec_factor_cfg      ,
+        input string        test_number         ,   
         input logic         run_matlab_script   , 
         input bit           wait_for_completion        // 1 = wait, 0 = run in background
     );
+
+        floating_point_flag = config_stream[6];
 
         assert_reset ();
         
         trig = 0;
         // Run the script to generate outputs
-        if (run_matlab_script) run_script(config_stream, wait_for_completion);
+        if (run_matlab_script) begin
+            TC = NAN_TC;
 
-        load_matlab_output(
-            config_stream [5]        , 
-            bypass_config [3]        , 
-            bypass_config [2]        , 
-            bypass_config [1]        , 
-            bypass_config [0]        , 
-            config_stream[4 : 0]     ,
-            test_number
-        );
+            dec_factor = NAN_DF;
 
-        if (test_number == "1") begin
-            TC = TC_1;
-        end else if (test_number == "2") begin
-            TC = TC_2;
-        end else if (test_number == "3") begin
-            TC = TC_3;
-        end else if (test_number == "4") begin
-            TC = TC_4;
-        end else if (test_number == "5") begin
-            TC = TC_5;
-        end else if (test_number == "6") begin
-            TC = TC_6;
-        end else if (test_number == "7") begin
-            TC = TC_7;
-        end else if (test_number == "8") begin
-            TC = TC_8;
-        end else if (test_number == "9") begin
-            TC = TC_9;
-        end else if (test_number == "10") begin
-            TC = TC_10;
-        end else if (test_number == "11") begin
-            TC = TC_11;
-        end else if (test_number == "12") begin
-            TC = TC_12;
-        end else if (test_number == "13") begin
-            TC = TC_13;
-        end else if (test_number == "14") begin
-            TC = TC_14;
-        end else if (test_number == "15") begin
-            TC = TC_15;
-        end else if (test_number == "16") begin
-            TC = TC_16;
-        end
+            run_script(config_stream, wait_for_completion);
 
-        $display("Bypasses: %0b, %0b, %0b, %0b", bypass_config [3], bypass_config [2], bypass_config [1], bypass_config [0]);
+            repeat (1) @(negedge clk_tb);
+    
+            reset_idx();
+        end else begin
+            if (test_number == "1") begin
+                TC = TC_1;
+            end else if (test_number == "2") begin
+                TC = TC_2;
+            end else if (test_number == "3") begin
+                TC = TC_3;
+            end else if (test_number == "4") begin
+                TC = TC_4;
+            end else if (test_number == "5") begin
+                TC = TC_5;
+            end else if (test_number == "6") begin
+                TC = TC_6;
+            end else if (test_number == "7") begin
+                TC = TC_7;
+            end else if (test_number == "8") begin
+                TC = TC_8;
+            end else if (test_number == "9") begin
+                TC = TC_9;
+            end else if (test_number == "10") begin
+                TC = TC_10;
+            end else if (test_number == "11") begin
+                TC = TC_11;
+            end else if (test_number == "12") begin
+                TC = TC_12;
+            end else if (test_number == "13") begin
+                TC = TC_13;
+            end else if (test_number == "14") begin
+                TC = TC_14;
+            end else if (test_number == "15") begin
+                TC = TC_15;
+            end else if (test_number == "16") begin
+                TC = TC_16;
+            end else if (test_number == "bypass") begin 
+                TC = BYPASS_TC;
+            end else begin
+                TC = NAN_TC;
+            end
 
-        BYPASS(2'b00, bypass_config [3]); // Fractional Decimator
-        BYPASS(2'b01, bypass_config [2]); // IIR 2.4MHz
-        BYPASS(2'b10, bypass_config [1]); // IIR 5MHz
-        BYPASS(2'b11, bypass_config [0]); // CIC
+            // Set shape_var based on the read code
+            case (input_shape)
+                2'b00: shape_var = SINE;
+                2'b01: shape_var = TRIANGULAR;
+                2'b10: shape_var = SQUARE;
+                default: shape_var = SINE;
+            endcase
 
-        CHANGE_DECIMATION(config_stream[4 : 0]);
+            if (config_stream[5] == 1) begin
+                load_matlab_output(
+                    config_stream [6]        ,
+                    config_stream [5]        , 
+                    bypass_config [3]        , 
+                    bypass_config [2]        , 
+                    bypass_config [1]        , 
+                    bypass_config [0]        , 
+                    config_stream[4 : 0]     ,
+                    "5"
+                );
 
-        if (config_stream[4 : 0] == 1) begin
-            dec_factor = CIC_1;
-        end else if (config_stream[4 : 0] == 2) begin
-            dec_factor = CIC_2;
-        end else if (config_stream[4 : 0] == 4) begin
-            dec_factor = CIC_4;
-        end else if (config_stream[4 : 0] == 8) begin
-            dec_factor = CIC_8;
-        end else if (config_stream[4 : 0] == 16) begin
-            dec_factor = CIC_16;
-        end
+                $display("Bypasses: %0b, %0b, %0b, %0b", bypass_config [3], bypass_config [2], bypass_config [1], bypass_config [0]);
+                
+                BYPASS(2'b00, bypass_config [3]); // Fractional Decimator
+                BYPASS(2'b01, bypass_config [2]); // IIR 2.4MHz
+                BYPASS(2'b10, bypass_config [1]); // IIR 5MHz
+                BYPASS(2'b11, bypass_config [0]); // CIC
 
-        $readmemb("signal_shape_code.txt", input_shape);
+                CHANGE_DECIMATION(config_stream[4 : 0]);
 
-        repeat (1) @(negedge clk_tb);
+                if (config_stream[4 : 0] == 1) begin
+                    dec_factor = CIC_1;
+                end else if (config_stream[4 : 0] == 2) begin
+                    dec_factor = CIC_2;
+                end else if (config_stream[4 : 0] == 4) begin
+                    dec_factor = CIC_4;
+                end else if (config_stream[4 : 0] == 8) begin
+                    dec_factor = CIC_8;
+                end else if (config_stream[4 : 0] == 16) begin
+                    dec_factor = CIC_16;
+                end
+
+                // Read shape code from TC directory
+                read_shape_code("5", input_shape);
+
+            end else begin
+                load_matlab_output(
+                    config_stream [6]        ,
+                    config_stream [5]        , 
+                    0                        , 
+                    0                        , 
+                    0                        , 
+                    0                        , 
+                    dec_factor_cfg           ,
+                    test_number
+                );
+                $display("Bypasses: 0, 0, 0, 0");
+
+                CHANGE_DECIMATION(dec_factor_cfg);
+
+                if (dec_factor_cfg == 1) begin
+                    dec_factor = CIC_1;
+                end else if (dec_factor_cfg == 2) begin
+                    dec_factor = CIC_2;
+                end else if (dec_factor_cfg == 4) begin
+                    dec_factor = CIC_4;
+                end else if (dec_factor_cfg == 8) begin
+                    dec_factor = CIC_8;
+                end else if (dec_factor_cfg == 16) begin
+                    dec_factor = CIC_16;
+                end
+
+                BYPASS(2'b00, 0); // Fractional Decimator
+                BYPASS(2'b01, 0); // IIR 2.4MHz
+                BYPASS(2'b10, 0); // IIR 5MHz
+                BYPASS(2'b11, 0); // CIC
+
+                // Read shape code from TC directory
+                read_shape_code(test_number, input_shape);
+            end
+
+            repeat (1) @(negedge clk_tb);
         
-        reset_idx();
-        trig = 1;
+            reset_idx();
+
+            trig = 1;
+        end
     endtask
 
 endmodule
