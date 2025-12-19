@@ -127,7 +127,7 @@ module MPRAM #(
             CIC_R_OUT     <= 5'd1;
             OUT_SEL       <= 2'b0;
             STATUS        <= 3'b0; 
-            COEFF_SEL     <= 3'b0; 
+            COEFF_SEL     <= 2'b0; 
             PREADY        <= 1'b0;
             PRDATA        <= {(DATA_WIDTH){1'b0}}; 
             

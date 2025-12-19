@@ -32,6 +32,14 @@ Designed to industry standards and verified through rigorous testing methodologi
 
 The DFE Filter Array implements a sophisticated four-stage digital signal processing chain optimized for RF/ADC front-end applications. Each stage is carefully architected to maintain signal fidelity while achieving substantial interference rejection and efficient sample rate conversion.
 
+### Bitstream Location
+
+The generated FPGA bitstream file is located at:
+
+```
+D:\Mustafa\Projects\Digital_Design\Si_Clash\DFE_Filter_Array\FPGA_Imp\core_v\core_v.runs\impl_1\write_bitstream.pb
+```
+
 ### Core Functionality
 
 This system performs the following transformations on incoming digital signals:

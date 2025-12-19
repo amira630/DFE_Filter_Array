@@ -1,0 +1,324 @@
+////////////////////////////////////////////////////////////////////////////////
+// Design Author: Mustaf EL-Sherif
+// Verified by Mustaf EL-Sherif
+// --> Linting check
+// --> Synthesis
+// --> Functional Simulation
+// Design: Fractional Decimator
+// Date: 02-11-2025
+////////////////////////////////////////////////////////////////////////////////
+
+module fractional_decimator #(
+    parameter  int DATA_WIDTH      = 32'd16                             ,
+    parameter  int DATA_FRAC       = 32'd15                             ,
+    parameter  int COEFF_WIDTH     = 32'd20                             ,
+    parameter  int COEFF_FRAC      = 32'd18                             ,
+    localparam int N_TAP           = 32'd146                            ,
+    localparam int M               = 32'd3                              ,
+    localparam int PHASE_N_TAP     = N_TAP / 2                          ,
+    localparam int PROD_WIDTH      = DATA_WIDTH + COEFF_WIDTH           ,
+    localparam int PROD_FRAC       = DATA_FRAC + COEFF_FRAC             ,
+    localparam int ACC_WIDTH       = PROD_WIDTH + $clog2(PHASE_N_TAP)   ,
+    localparam int ACC_FRAC        = PROD_FRAC                          ,
+    localparam int COUNTER_WIDTH   = $clog2(M)                          ,
+    localparam int SCALE           = 32'd1                                 
+) (
+    input  logic                                clk                             ,
+    input  logic                                valid_in                        ,
+    input  logic                                rst_n                           ,
+    input  logic                                bypass                          ,
+    input  logic signed [DATA_WIDTH - 1 : 0]    filter_in                       ,
+    output logic signed [DATA_WIDTH - 1 : 0]    filter_out                      ,
+    output logic                                overflow                        ,
+    output logic                                underflow                       ,
+    output logic                                valid_out                       
+);
+
+    // Default Coefficient Values (S20.18 format)
+    // Coefficients generated using MATLAB's firpm function
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF0   = 20'sh0000c  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF19  = 20'shffe14  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF1   = 20'shffff2  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF20  = 20'shfff76  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF2   = 20'shfff8d  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF21  = 20'sh0018d  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF3   = 20'shffec5  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF22  = 20'sh00258  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF4   = 20'shffdd4  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF23  = 20'sh000e1  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF5   = 20'shffd40  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF24  = 20'shffe59  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF6   = 20'shffd92  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF25  = 20'shffd29  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF7   = 20'shffedc  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF26  = 20'shffeb0  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF8   = 20'sh00082  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF27  = 20'sh001ba  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF9   = 20'sh00182  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF28  = 20'sh00367  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF10  = 20'sh00135  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF29  = 20'sh001da  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF11  = 20'shfffe4  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF30  = 20'shffe3e  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF12  = 20'shffeaf  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF31  = 20'shffbf8  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF13  = 20'shffeab  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF32  = 20'shffd7e  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF14  = 20'shfffec  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF33  = 20'sh001bd  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF15  = 20'sh00158  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF34  = 20'sh004bc  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF16  = 20'sh00194  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF35  = 20'sh0034d  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF17  = 20'sh00048  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF36  = 20'shffe5b  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF18  = 20'shffe90  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF37  = 20'shffa7c  ;
+
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF38  = 20'shffbbe  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF56  = 20'shfef43  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF39  = 20'sh00178  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF57  = 20'shffc5a  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF40  = 20'sh00662  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF58  = 20'sh00f67  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF41  = 20'sh00568  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF59  = 20'sh015a2  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF42  = 20'shffed2  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF60  = 20'sh0063f  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF43  = 20'shff8a5  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF61  = 20'shfed3c  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF44  = 20'shff935  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF62  = 20'shfe2f1  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF45  = 20'sh000c0  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF63  = 20'shff584  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF46  = 20'sh00873  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF64  = 20'sh0182d  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF47  = 20'sh0087b  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF65  = 20'sh02a07  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF48  = 20'shfffdd  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF66  = 20'sh01292  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF49  = 20'shff64b  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF67  = 20'shfdcfd  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF50  = 20'shff56d  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF68  = 20'shfb86f  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF51  = 20'shfff48  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF69  = 20'shfd7b9  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF52  = 20'sh00b32  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF70  = 20'sh046e9  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF53  = 20'sh00d3c  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF71  = 20'sh0d902  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF54  = 20'sh001ec  ;    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF72  = 20'sh13fec  ;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] COEFF55  = 20'shff2fa  ;    
+    
+    logic           [COUNTER_WIDTH - 1 : 0]                 cur_count                                   ;
+
+    logic signed    [ACC_WIDTH - 1 : 0]                     acc                                         ;
+
+    logic signed    [PROD_WIDTH - 1 : 0]                    prod_result         [PHASE_N_TAP - 1 : 0]   ;
+    logic signed    [ACC_WIDTH - 1 : 0]                     prod_res_ext        [PHASE_N_TAP - 1 : 0]   ;
+
+    logic signed    [DATA_WIDTH - 1 : 0]                    result                                      ;
+    logic                                                   result_valid                                ;
+    logic                                                   result_overflow                             ;
+    logic                                                   result_underflow                            ;
+
+    logic signed    [COEFF_WIDTH - 1 : 0]                   coeff_phase1        [PHASE_N_TAP - 1 : 0]   ;
+    logic signed    [COEFF_WIDTH - 1 : 0]                   coeff_phase2        [PHASE_N_TAP - 1 : 0]   ;
+    logic signed    [COEFF_WIDTH - 1 : 0]                   coeff_select        [PHASE_N_TAP - 1 : 0]   ;
+
+    
+    logic           [(PHASE_N_TAP * DATA_WIDTH) - 1 : 0]    delay_line                                  ;
+    logic signed    [DATA_WIDTH - 1 : 0]                    delay_line_sliced   [PHASE_N_TAP - 1 : 0]   ;
+
+    logic                                                   phase_enable                                ;
+
+    
+    assign phase_enable = (((cur_count == {{(COUNTER_WIDTH - 1){1'b0}}, 1'b1}) || (cur_count == (M - 1))) && valid_in) ? 1'b1 : 1'b0;
+
+    genvar slice_idx;
+    generate
+        for(slice_idx = 0 ; slice_idx < PHASE_N_TAP ; slice_idx++) begin
+            assign delay_line_sliced[slice_idx] = delay_line[(slice_idx * DATA_WIDTH) +: DATA_WIDTH];
+            
+            assign coeff_select[slice_idx] = (cur_count == {{(COUNTER_WIDTH-1){1'b0}}, 1'b1}) ? coeff_phase1[slice_idx] : coeff_phase2[slice_idx];
+
+            assign prod_result[slice_idx] = {{(PROD_WIDTH - DATA_WIDTH){delay_line_sliced[slice_idx][DATA_WIDTH - 1]}}, delay_line_sliced[slice_idx]} *
+
+                                            {{(PROD_WIDTH - COEFF_WIDTH){coeff_select[slice_idx][COEFF_WIDTH - 1]}}, coeff_select[slice_idx]};
+        end
+    endgenerate
+
+    genvar ext_idx;
+    generate
+        for (ext_idx = 0 ; ext_idx < PHASE_N_TAP ; ext_idx++) begin : sign_ext_gen
+            assign prod_res_ext[ext_idx] = {{(ACC_WIDTH - PROD_WIDTH){prod_result[ext_idx][PROD_WIDTH - 1]}}, prod_result[ext_idx]};
+        end
+    endgenerate
+
+    generate       
+        /*************** LEVEL_1 ****************/
+        // 73 inputs -> 37 outputs (36 pairs + 1 odd)
+        localparam int LEVEL1_DEPTH = (PHASE_N_TAP >> 1) + (PHASE_N_TAP & 1);
+
+        logic signed [ACC_WIDTH - 1 : 0] acc_L1 [LEVEL1_DEPTH - 1 : 0];
+
+        for (genvar node = 0 ; node < LEVEL1_DEPTH ; node++) begin
+            if ((2 * node + 1) >= PHASE_N_TAP) begin
+                assign acc_L1[node] = prod_res_ext[2 * node];
+            end else begin
+                assign acc_L1[node] = prod_res_ext[2 * node] + prod_res_ext[(2 * node) + 1];
+            end
+        end
+            
+        /*************** LEVEL_2 ****************/
+        // 37 inputs -> 19 outputs
+        localparam int LEVEL2_DEPTH = (LEVEL1_DEPTH >> 1) + (LEVEL1_DEPTH & 1);
+        
+        logic signed [ACC_WIDTH - 1 : 0] acc_L2 [LEVEL2_DEPTH - 1 : 0];
+        
+        for (genvar node = 0 ; node < LEVEL2_DEPTH ; node++) begin
+            if ((2 * node + 1) >= LEVEL1_DEPTH) begin
+                assign acc_L2[node] = acc_L1[2 * node];
+            end else begin
+                assign acc_L2[node] = acc_L1[2 * node] + acc_L1[(2 * node) + 1];
+            end
+        end
+
+        /*************** LEVEL_3 ****************/  
+        // 19 inputs -> 10 outputs
+        localparam int LEVEL3_DEPTH = (LEVEL2_DEPTH >> 1) + (LEVEL2_DEPTH & 1);
+        
+        logic signed [ACC_WIDTH - 1 : 0] acc_L3 [LEVEL3_DEPTH - 1 : 0];
+        
+        for (genvar node = 0 ; node < LEVEL3_DEPTH ; node++) begin
+            if ((2 * node + 1) >= LEVEL2_DEPTH) begin
+                assign acc_L3[node] = acc_L2[2 * node];
+            end else begin
+                assign acc_L3[node] = acc_L2[2 * node] + acc_L2[(2 * node) + 1];
+            end
+        end
+            
+        /*************** LEVEL_4 ****************/
+        // 10 inputs -> 5 outputs
+        localparam int LEVEL4_DEPTH = (LEVEL3_DEPTH >> 1) + (LEVEL3_DEPTH & 1);
+        
+        logic signed [ACC_WIDTH - 1 : 0] acc_L4 [LEVEL4_DEPTH - 1 : 0];
+        
+        for (genvar node = 0 ; node < LEVEL4_DEPTH ; node++) begin
+            if ((2 * node + 1) >= LEVEL3_DEPTH) begin
+                assign acc_L4[node] = acc_L3[2 * node];
+            end else begin
+                assign acc_L4[node] = acc_L3[2 * node] + acc_L3[(2 * node) + 1];
+            end
+        end
+
+        /*************** LEVEL_5 ****************/   
+        // 5 inputs -> 3 outputs
+        localparam int LEVEL5_DEPTH = (LEVEL4_DEPTH >> 1) + (LEVEL4_DEPTH & 1);
+        
+        logic signed [ACC_WIDTH - 1 : 0] acc_L5 [LEVEL5_DEPTH - 1 : 0];
+        
+        for (genvar node = 0 ; node < LEVEL5_DEPTH ; node++) begin
+            if ((2 * node + 1) >= LEVEL4_DEPTH) begin
+                assign acc_L5[node] = acc_L4[2 * node];
+            end else begin
+                assign acc_L5[node] = acc_L4[2 * node] + acc_L4[(2 * node) + 1];
+            end
+        end
+
+        /*************** LEVEL_6 ****************/   
+        // 3 inputs -> 2 outputs
+        localparam int LEVEL6_DEPTH = (LEVEL5_DEPTH >> 1) + (LEVEL5_DEPTH & 1);
+        
+        logic signed [ACC_WIDTH - 1 : 0] acc_L6 [LEVEL6_DEPTH - 1 : 0];
+        
+        for (genvar node = 0 ; node < LEVEL6_DEPTH ; node++) begin
+            if ((2 * node + 1) >= LEVEL5_DEPTH) begin
+                assign acc_L6[node] = acc_L5[2 * node];
+            end else begin
+                assign acc_L6[node] = acc_L5[2 * node] + acc_L5[(2 * node) + 1];
+            end
+        end
+
+        /*************** LEVEL_7 (FINAL) ****************/   
+        // 2 inputs -> 1 output
+        always_comb begin
+            acc = {ACC_WIDTH{1'sb0}};
+            if (valid_in) begin
+                acc = acc_L6[0] + acc_L6[1];
+            end
+        end
+    endgenerate
+
+    always_ff @(posedge clk or negedge rst_n) begin    : COEFF_INIT_EDIT_PROC
+        if (!rst_n) begin
+            // Initialize coefficients directly in reset
+            coeff_phase1[0]  <= COEFF0   ;  coeff_phase1[36] <= COEFF72  ;   coeff_phase2[0]  <= COEFF1   ; coeff_phase2[36] <= COEFF72  ;
+            coeff_phase1[1]  <= COEFF2   ;  coeff_phase1[37] <= COEFF71  ;   coeff_phase2[1]  <= COEFF3   ; coeff_phase2[37] <= COEFF70  ;
+            coeff_phase1[2]  <= COEFF4   ;  coeff_phase1[38] <= COEFF69  ;   coeff_phase2[2]  <= COEFF5   ; coeff_phase2[38] <= COEFF68  ;
+            coeff_phase1[3]  <= COEFF6   ;  coeff_phase1[39] <= COEFF67  ;   coeff_phase2[3]  <= COEFF7   ; coeff_phase2[39] <= COEFF66  ;
+            coeff_phase1[4]  <= COEFF8   ;  coeff_phase1[40] <= COEFF65  ;   coeff_phase2[4]  <= COEFF9   ; coeff_phase2[40] <= COEFF64  ;
+            coeff_phase1[5]  <= COEFF10  ;  coeff_phase1[41] <= COEFF63  ;   coeff_phase2[5]  <= COEFF11  ; coeff_phase2[41] <= COEFF62  ;
+            coeff_phase1[6]  <= COEFF12  ;  coeff_phase1[42] <= COEFF61  ;   coeff_phase2[6]  <= COEFF13  ; coeff_phase2[42] <= COEFF60  ;
+            coeff_phase1[7]  <= COEFF14  ;  coeff_phase1[43] <= COEFF59  ;   coeff_phase2[7]  <= COEFF15  ; coeff_phase2[43] <= COEFF58  ;
+            coeff_phase1[8]  <= COEFF16  ;  coeff_phase1[44] <= COEFF57  ;   coeff_phase2[8]  <= COEFF17  ; coeff_phase2[44] <= COEFF56  ;
+            coeff_phase1[9]  <= COEFF18  ;  coeff_phase1[45] <= COEFF55  ;   coeff_phase2[9]  <= COEFF19  ; coeff_phase2[45] <= COEFF54  ;
+            coeff_phase1[10] <= COEFF20  ;  coeff_phase1[46] <= COEFF53  ;   coeff_phase2[10] <= COEFF21  ; coeff_phase2[46] <= COEFF52  ;
+            coeff_phase1[11] <= COEFF22  ;  coeff_phase1[47] <= COEFF51  ;   coeff_phase2[11] <= COEFF23  ; coeff_phase2[47] <= COEFF50  ;
+            coeff_phase1[12] <= COEFF24  ;  coeff_phase1[48] <= COEFF49  ;   coeff_phase2[12] <= COEFF25  ; coeff_phase2[48] <= COEFF48  ;
+            coeff_phase1[13] <= COEFF26  ;  coeff_phase1[49] <= COEFF47  ;   coeff_phase2[13] <= COEFF27  ; coeff_phase2[49] <= COEFF46  ;
+            coeff_phase1[14] <= COEFF28  ;  coeff_phase1[50] <= COEFF45  ;   coeff_phase2[14] <= COEFF29  ; coeff_phase2[50] <= COEFF44  ;
+            coeff_phase1[15] <= COEFF30  ;  coeff_phase1[51] <= COEFF43  ;   coeff_phase2[15] <= COEFF31  ; coeff_phase2[51] <= COEFF42  ;
+            coeff_phase1[16] <= COEFF32  ;  coeff_phase1[52] <= COEFF41  ;   coeff_phase2[16] <= COEFF33  ; coeff_phase2[52] <= COEFF40  ;
+            coeff_phase1[17] <= COEFF34  ;  coeff_phase1[53] <= COEFF39  ;   coeff_phase2[17] <= COEFF35  ; coeff_phase2[53] <= COEFF38  ;
+            coeff_phase1[18] <= COEFF36  ;  coeff_phase1[54] <= COEFF37  ;   coeff_phase2[18] <= COEFF37  ; coeff_phase2[54] <= COEFF36  ;
+            coeff_phase1[19] <= COEFF38  ;  coeff_phase1[55] <= COEFF35  ;   coeff_phase2[19] <= COEFF39  ; coeff_phase2[55] <= COEFF34  ;
+            coeff_phase1[20] <= COEFF40  ;  coeff_phase1[56] <= COEFF33  ;   coeff_phase2[20] <= COEFF41  ; coeff_phase2[56] <= COEFF32  ;
+            coeff_phase1[21] <= COEFF42  ;  coeff_phase1[57] <= COEFF31  ;   coeff_phase2[21] <= COEFF43  ; coeff_phase2[57] <= COEFF30  ;
+            coeff_phase1[22] <= COEFF44  ;  coeff_phase1[58] <= COEFF29  ;   coeff_phase2[22] <= COEFF45  ; coeff_phase2[58] <= COEFF28  ;
+            coeff_phase1[23] <= COEFF46  ;  coeff_phase1[59] <= COEFF27  ;   coeff_phase2[23] <= COEFF47  ; coeff_phase2[59] <= COEFF26  ;
+            coeff_phase1[24] <= COEFF48  ;  coeff_phase1[60] <= COEFF25  ;   coeff_phase2[24] <= COEFF49  ; coeff_phase2[60] <= COEFF24  ;
+            coeff_phase1[25] <= COEFF50  ;  coeff_phase1[61] <= COEFF23  ;   coeff_phase2[25] <= COEFF51  ; coeff_phase2[61] <= COEFF22  ;
+            coeff_phase1[26] <= COEFF52  ;  coeff_phase1[62] <= COEFF21  ;   coeff_phase2[26] <= COEFF53  ; coeff_phase2[62] <= COEFF20  ;
+            coeff_phase1[27] <= COEFF54  ;  coeff_phase1[63] <= COEFF19  ;   coeff_phase2[27] <= COEFF55  ; coeff_phase2[63] <= COEFF18  ;
+            coeff_phase1[28] <= COEFF56  ;  coeff_phase1[64] <= COEFF17  ;   coeff_phase2[28] <= COEFF57  ; coeff_phase2[64] <= COEFF16  ;
+            coeff_phase1[29] <= COEFF58  ;  coeff_phase1[65] <= COEFF15  ;   coeff_phase2[29] <= COEFF59  ; coeff_phase2[65] <= COEFF14  ;
+            coeff_phase1[30] <= COEFF60  ;  coeff_phase1[66] <= COEFF13  ;   coeff_phase2[30] <= COEFF61  ; coeff_phase2[66] <= COEFF12  ;
+            coeff_phase1[31] <= COEFF62  ;  coeff_phase1[67] <= COEFF11  ;   coeff_phase2[31] <= COEFF63  ; coeff_phase2[67] <= COEFF10  ;
+            coeff_phase1[32] <= COEFF64  ;  coeff_phase1[68] <= COEFF9   ;   coeff_phase2[32] <= COEFF65  ; coeff_phase2[68] <= COEFF8   ;
+            coeff_phase1[33] <= COEFF66  ;  coeff_phase1[69] <= COEFF7   ;   coeff_phase2[33] <= COEFF67  ; coeff_phase2[69] <= COEFF6   ;
+            coeff_phase1[34] <= COEFF68  ;  coeff_phase1[70] <= COEFF5   ;   coeff_phase2[34] <= COEFF69  ; coeff_phase2[70] <= COEFF4   ;
+            coeff_phase1[35] <= COEFF70  ;  coeff_phase1[71] <= COEFF3   ;   coeff_phase2[35] <= COEFF71  ; coeff_phase2[71] <= COEFF2   ;
+                                            coeff_phase1[72] <= COEFF1   ;                                  coeff_phase2[72] <= COEFF0   ;
+        end
+    end
+    
+    always_ff @(posedge clk or negedge rst_n) begin  : COUNTER_PROC
+        if (!rst_n) begin
+            cur_count <= {COUNTER_WIDTH{1'b0}};
+        end else if (valid_in) begin
+            if (cur_count == (M - 1)) begin
+                cur_count <= {COUNTER_WIDTH{1'b0}};
+            end else begin
+                cur_count <= cur_count + 1'b1;
+            end
+        end
+    end
+
+    always_ff @(posedge clk or negedge rst_n) begin    : DELAYLINE_PROC
+        if (!rst_n) begin
+            delay_line <= {(PHASE_N_TAP * DATA_WIDTH){1'b0}};
+        end else if (valid_in) begin
+
+            delay_line <= {delay_line[0 +: ((PHASE_N_TAP - 1) * DATA_WIDTH)], filter_in};
+            
+        end
+    end
+
+    always_ff @(posedge clk or negedge rst_n) begin    : OUTPUT_AND_STATUS_PROC 
+        if (!rst_n) begin
+            filter_out  <= {DATA_WIDTH{1'sb0}}  ;
+            overflow    <= 1'b0                 ;
+            underflow   <= 1'b0                 ;
+            valid_out   <= 1'b0                 ;
+        end else if (valid_in) begin
+            if (bypass) begin
+                filter_out  <= filter_in            ;
+                overflow    <= 1'b0                 ;
+                underflow   <= 1'b0                 ;
+                valid_out   <= valid_in             ;
+            end else if (phase_enable) begin
+                filter_out  <= result               ;
+                overflow    <= result_overflow      ;
+                underflow   <= result_underflow     ;
+                valid_out   <= result_valid         ;
+            end else begin
+                valid_out   <= 1'b0;
+            end
+        end else begin
+            valid_out   <= 1'b0;
+        end
+    end
+
+    rounding_overflow_arith #(
+        .ACC_WIDTH  (ACC_WIDTH) ,
+        .ACC_FRAC   (ACC_FRAC)  ,
+        .OUT_WIDTH  (DATA_WIDTH),
+        .OUT_FRAC   (DATA_FRAC) ,
+        .SCALE      (SCALE)
+    ) ARITHMETIC_HANDLER (
+        .data_in    (acc)               ,
+        .valid_in   (valid_in)          ,
+        .data_out   (result)            ,
+        .overflow   (result_overflow)   ,
+        .underflow  (result_underflow)  , 
+        .valid_out  (result_valid)
+    );
+
+endmodule
+

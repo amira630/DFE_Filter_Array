@@ -1,0 +1,135 @@
+////////////////////////////////////////////////////////////////////////////////
+// Design Author: Mustaf EL-Sherif
+// Verified by Mustaf EL-Sherif
+// --> Linting check
+// --> Synthesis
+// --> Functional Simulation
+// Design: DFE core
+// Date: 02-11-2025
+////////////////////////////////////////////////////////////////////////////////
+
+module CORE #(
+    //********************** General Parameters ********************//
+    parameter int  DATA_WIDTH       = 32'd16                            ,
+    parameter int  DATA_FRAC        = 32'd15                            ,
+    parameter int  COEFF_WIDTH      = 32'd20                            ,
+    parameter int  COEFF_FRAC       = 32'd18                            ,
+
+    //********************** Fractional Decimator ********************//
+    localparam int N_TAP            = 32'd146                            ,
+    
+    //********************** IIR Chain Parameters ********************//
+    localparam int NUM_COEFF_DEPTH  = 32'd3                             ,
+    localparam int DEN_COEFF_DEPTH  = 32'd2                             ,
+    localparam int COEFF_DEPTH      = NUM_COEFF_DEPTH + DEN_COEFF_DEPTH ,
+
+    //********************** CIC Parameters ********************//
+    parameter int Q                 = 32'd1                             , 
+    parameter int N                 = 32'd1                             ,
+    localparam int MAX_DEC_FACTOR   = 32'd16                            ,
+    localparam int DEC_WIDTH        = $clog2(MAX_DEC_FACTOR)
+) (
+    //********************** General I/O ************************//
+    input  logic                                clk                                             ,
+    input  logic                                valid_in                                        ,
+    input  logic                                rst_n                                           ,
+    input  logic signed [DATA_WIDTH - 1 : 0]    core_in                                         ,
+         
+    output logic                                valid_out                                       ,
+    output logic signed [DATA_WIDTH - 1 : 0]    core_out                                        ,
+
+    output logic                                overflow                                        ,
+    output logic                                underflow                                       ,
+
+    //********************** Fractional Decimator I/O ************************//
+    input  logic                                frac_dec_bypass                                 ,
+    
+    output logic                                frac_dec_overflow                               ,
+    output logic                                frac_dec_underflow                              ,
+    output logic signed [DATA_WIDTH - 1 : 0]    frac_dec_out                                    ,
+    output logic                                frac_dec_valid_out                              ,
+
+    //********************** IIR Chain I/O ************************//
+    /********************** 1 MHz Notch Filter I/O ************************/
+    input  logic                                iir_bypass_5MHz                                 ,
+    output logic                                iir_overflow_1MHz                               ,
+    output logic                                iir_underflow_1MHz                              ,
+    
+    /********************** 2.4 MHz Notch Filter I/O ************************/
+    input  logic                                iir_bypass_2_4MHz                               , 
+    output logic                                iir_overflow_2_4MHz                             ,
+    output logic                                iir_underflow_2_4MHz                            ,
+
+    output logic signed [DATA_WIDTH - 1 : 0]    iir_out                                         ,
+    output logic                                iir_valid_out                                   ,
+
+    //********************** CIC I/O ************************//
+    input  logic                                cic_bypass                                      ,
+    input  logic        [DEC_WIDTH : 0]         cic_dec_factor                                  ,  // Decimation factor
+
+    output logic                                cic_overflow                                    ,
+    output logic                                cic_underflow   
+    
+);
+
+    assign overflow     = frac_dec_overflow     |   iir_overflow_1MHz   |   iir_overflow_2_4MHz     |   cic_overflow    ;
+    
+    assign underflow    = frac_dec_underflow    |   iir_underflow_1MHz  |   iir_underflow_2_4MHz    |   cic_underflow   ;
+
+
+    fractional_decimator #(
+        .DATA_WIDTH    (DATA_WIDTH)      ,
+        .DATA_FRAC     (DATA_FRAC)       ,
+        .COEFF_WIDTH   (COEFF_WIDTH)     ,
+        .COEFF_FRAC    (COEFF_FRAC)      
+    ) FRACTIONAL_DECIMATOR (
+        .clk            (clk)                       ,
+        .valid_in       (valid_in)                  ,
+        .rst_n          (rst_n)                     ,
+        .bypass         (frac_dec_bypass)           ,
+        .filter_in      (core_in)                   ,
+        .filter_out     (frac_dec_out)              ,
+        .overflow       (frac_dec_overflow)         ,
+        .underflow      (frac_dec_underflow)        ,
+        .valid_out      (frac_dec_valid_out)
+    );
+
+    IIR_chain #(
+        .DATA_WIDTH      (DATA_WIDTH)  ,
+        .DATA_FRAC       (DATA_FRAC)   ,
+        .COEFF_WIDTH     (COEFF_WIDTH) ,
+        .COEFF_FRAC      (COEFF_FRAC)     
+    ) IIR (
+        .clk                 (clk)                     ,
+        .rst_n               (rst_n)                   ,
+        .valid_in            (frac_dec_valid_out)      ,
+        .iir_in              (frac_dec_out)            ,
+        .iir_out             (iir_out)                 ,
+        .valid_out           (iir_valid_out)           ,
+        .bypass_1MHz         (iir_bypass_5MHz)         ,
+        .overflow_1MHz       (iir_overflow_1MHz)       ,
+        .underflow_1MHz      (iir_underflow_1MHz)      ,
+        .bypass_2_4MHz       (iir_bypass_2_4MHz)       ,
+        .overflow_2_4MHz     (iir_overflow_2_4MHz)     ,
+        .underflow_2_4MHz    (iir_underflow_2_4MHz)
+    );
+
+    CIC #(
+        .DATA_WIDTH (DATA_WIDTH), 
+        .DATA_FRAC  (DATA_FRAC),
+        .Q (Q), 
+        .N (N)
+    ) CIC (
+        .clk         (clk)              ,
+        .rst_n       (rst_n)            ,
+        .valid_in    (iir_valid_out)    ,
+        .bypass      (cic_bypass)       ,
+        .dec_factor  (cic_dec_factor)   ,  // Decimation factor
+        .cic_in      (iir_out)          ,
+        .cic_out     (core_out)         ,
+        .valid_out   (valid_out)        ,
+        .overflow    (cic_overflow)     ,
+        .underflow   (cic_underflow)
+    );
+    
+endmodule
