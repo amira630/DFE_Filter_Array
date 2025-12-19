@@ -252,6 +252,13 @@ def main():
     if fi_vs_float_var == 0:
         print('Processing mode: Fixed Point\n')
 
+        # Determine if we should write to both paths (only for fixed point with no bypass)
+        write_to_both = (bypass_gen == 0)
+        if write_to_both:
+            print('Output mode: Dual-path (Testbench + MATLAB)\n')
+        else:
+            print('Output mode: Single-path (Testbench only)\n')
+
         # Loop through selected test cases
         for tc_idx in test_cases_to_process:
             # Get current test case parameters
@@ -267,8 +274,11 @@ def main():
             tc_dir = os.path.join(output_base_path, f'TC_{tc_idx + 1}')
             os.makedirs(tc_dir, exist_ok=True)
 
-            # Write signal shape code in test case directory (to both paths)
-            write_shape_code_to_both(signal_shape, f'TC_{tc_idx + 1}/shape_code.txt', output_base_path, output_base_path_matlab)
+            # Write signal shape code in test case directory
+            if write_to_both:
+                write_shape_code_to_both(signal_shape, f'TC_{tc_idx + 1}/shape_code.txt', output_base_path, output_base_path_matlab)
+            else:
+                write_shape_code(signal_shape, os.path.join(output_base_path, f'TC_{tc_idx + 1}/shape_code.txt'))
 
             print('========================================')
             print(f'Processing Test Case {tc_idx + 1}/{num_test_cases}: {tc_dir}')
@@ -300,7 +310,7 @@ def main():
 
             # Process scenarios based on iteration mode
             if iteration_mode == 'bypass':
-                # Bypass mode: iterate over all bypass combinations
+                # Bypass mode: iterate over all bypass combinations - single path output only
                 for combo_idx in range(num_combinations):
                     # Extract bypass flags for this combination
                     bypass_frac_dec = (combo_idx >> 3) & 1
@@ -321,11 +331,8 @@ def main():
                     # Processing chain with current bypass options
                     current_signal = x_quantized_noisy.copy()
 
-                    # Calculate relative path for this scenario
-                    scenario_rel_path = f'TC_{tc_idx + 1}/scenario_frac{bypass_frac_dec}_iir24{bypass_iir_24}_iir5{bypass_iir_5}_cic{bypass_cic}'
-
                     # Write Stage 0: Input signal (after quantization)
-                    write_to_both_paths(current_signal, f'{scenario_rel_path}/input.txt', output_base_path, output_base_path_matlab, is_fixed_point=True)
+                    write_fixed_point_binary(current_signal, os.path.join(scenario_dir, 'input.txt'), 16, 15)
 
                     # Stage 1: Fractional Decimator
                     if bypass_frac_dec == 0:
@@ -333,10 +340,11 @@ def main():
                         current_signal = fractional_decimator(current_signal, use_fixed_point=True)
 
                         # Write Stage 1: After fractional decimator
-                        write_to_both_paths(current_signal, f'{scenario_rel_path}/frac_decimator.txt', output_base_path, output_base_path_matlab, is_fixed_point=True)
+                        write_fixed_point_binary(current_signal, os.path.join(scenario_dir, 'frac_decimator.txt'), 16, 15)
                     else:
                         print('    Bypassing Fractional Decimator')
-                        copy_to_both_paths(f'{scenario_rel_path}/input.txt', f'{scenario_rel_path}/frac_decimator.txt', output_base_path, output_base_path_matlab)
+                        shutil.copyfile(os.path.join(scenario_dir, 'input.txt'),
+                                      os.path.join(scenario_dir, 'frac_decimator.txt'))
 
                     # Stage 2: IIR 2.4MHz Notch Filter
                     if bypass_iir_24 == 0:
@@ -344,10 +352,11 @@ def main():
                         current_signal = iir_24mhz_filter(current_signal, use_fixed_point=True)
 
                         # Write Stage 2: After IIR 2.4MHz filter
-                        write_to_both_paths(current_signal, f'{scenario_rel_path}/iir_24mhz.txt', output_base_path, output_base_path_matlab, is_fixed_point=True)
+                        write_fixed_point_binary(current_signal, os.path.join(scenario_dir, 'iir_24mhz.txt'), 16, 15)
                     else:
                         print('    Bypassing IIR 2.4MHz Notch Filter')
-                        copy_to_both_paths(f'{scenario_rel_path}/frac_decimator.txt', f'{scenario_rel_path}/iir_24mhz.txt', output_base_path, output_base_path_matlab)
+                        shutil.copyfile(os.path.join(scenario_dir, 'frac_decimator.txt'),
+                                      os.path.join(scenario_dir, 'iir_24mhz.txt'))
 
                     # Stage 3: IIR 5MHz Notch Filter (only IIR_1)
                     if bypass_iir_5 == 0:
@@ -355,10 +364,11 @@ def main():
                         current_signal = iir_5mhz_filter(current_signal, use_fixed_point=True)
 
                         # Write Stage 3.1: After first IIR 5MHz filter
-                        write_to_both_paths(current_signal, f'{scenario_rel_path}/iir_5mhz_1.txt', output_base_path, output_base_path_matlab, is_fixed_point=True)
+                        write_fixed_point_binary(current_signal, os.path.join(scenario_dir, 'iir_5mhz_1.txt'), 16, 15)
                     else:
                         print('    Bypassing IIR 5MHz Notch Filter')
-                        copy_to_both_paths(f'{scenario_rel_path}/iir_24mhz.txt', f'{scenario_rel_path}/iir_5mhz_1.txt', output_base_path, output_base_path_matlab)
+                        shutil.copyfile(os.path.join(scenario_dir, 'iir_24mhz.txt'),
+                                      os.path.join(scenario_dir, 'iir_5mhz_1.txt'))
 
                     # Stage 4: CIC Filter
                     if bypass_cic == 0:
@@ -366,14 +376,15 @@ def main():
                         current_signal = cic_decimator(current_signal, dec_factor=cic_decf, use_fixed_point=True)
 
                         # Write Stage 4: After CIC filter
-                        write_to_both_paths(current_signal, f'{scenario_rel_path}/cic.txt', output_base_path, output_base_path_matlab, is_fixed_point=True)
+                        write_fixed_point_binary(current_signal, os.path.join(scenario_dir, 'cic.txt'), 16, 15)
                     else:
                         print('    Bypassing CIC Filter')
-                        copy_to_both_paths(f'{scenario_rel_path}/iir_5mhz_1.txt', f'{scenario_rel_path}/cic.txt', output_base_path, output_base_path_matlab)
+                        shutil.copyfile(os.path.join(scenario_dir, 'iir_5mhz_1.txt'),
+                                      os.path.join(scenario_dir, 'cic.txt'))
 
                     # Final output
                     output = current_signal
-                    write_to_both_paths(output, f'{scenario_rel_path}/output.txt', output_base_path, output_base_path_matlab, is_fixed_point=True)
+                    write_fixed_point_binary(output, os.path.join(scenario_dir, 'output.txt'), 16, 15)
 
                     print('    Scenario complete!\n')
             else:
@@ -429,6 +440,7 @@ def main():
 
     else:
         print('Processing mode: Floating Point\n')
+        print('Output mode: Single-path (Testbench only)\n')
 
         # Loop through selected test cases
         for tc_idx in test_cases_to_process:
@@ -445,8 +457,8 @@ def main():
             tc_dir = os.path.join(output_base_path, f'TC_{tc_idx + 1}')
             os.makedirs(tc_dir, exist_ok=True)
 
-            # Write signal shape code in test case directory (to both paths)
-            write_shape_code_to_both(signal_shape, f'TC_{tc_idx + 1}/shape_code.txt', output_base_path, output_base_path_matlab)
+            # Write signal shape code in test case directory (single path only)
+            write_shape_code(signal_shape, os.path.join(output_base_path, f'TC_{tc_idx + 1}/shape_code.txt'))
 
             print('========================================')
             print(f'Processing Test Case {tc_idx + 1}/{num_test_cases}: {tc_dir}')
