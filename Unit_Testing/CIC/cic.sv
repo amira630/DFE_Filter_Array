@@ -171,6 +171,7 @@ module CIC #(
     ) ARITH_HANDLER (
         .data_in   (comb_out[Q - 1])    ,
         .valid_in  (valid_comb_out)     ,
+        .dec_factor(dec_factor)         ,
         .data_out  (rounded_out)        ,
         .overflow  (overflow_reg)       ,
         .underflow (underflow_reg)      ,

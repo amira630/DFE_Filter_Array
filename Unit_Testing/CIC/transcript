@@ -1,0 +1,252 @@
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 21:33:49 on Dec 18,2025
+# vlog -reportprogress 300 -f src_files.list "+cover" -covercells 
+# -- Compiling module rounding_overflow_arith
+# ** Warning: rounding_overflow_handling.sv(98): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(99): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(100): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(103): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(106): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(111): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(113): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(115): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(117): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(119): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(121): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(125): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(126): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(127): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(129): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(130): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(131): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(133): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(134): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(135): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(138): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(139): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(140): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(141): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(142): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(143): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(144): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(151): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(152): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(153): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(156): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(159): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(163): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(164): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(168): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(169): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(170): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(172): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(173): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(174): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(176): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(177): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(178): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(181): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(182): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(183): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(184): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(185): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(186): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(187): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# -- Compiling module MPRAM
+# -- Compiling module INTEG
+# -- Compiling module IIR
+# ** Warning: iir.sv(34): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(36): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(47): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(31): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module APB_Bridge
+# -- Compiling module APB
+# -- Compiling module CORE
+# ** Warning: CORE.sv(47): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: CORE.sv(59): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: CORE.sv(67): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module DFE_TOP
+# -- Compiling module DFE_tb
+# ** Error: DFE_tb.sv(37): Enum literal name 'NAN' already exists.
+# ** Error: DFE_tb.sv(39): Enum literal name 'NAN' already exists.
+# ** Error: DFE_tb.sv(41): Enum literal name 'NAN' already exists.
+# ** Error: DFE_tb.sv(43): Enum literal name 'NAN' already exists.
+# End time: 21:33:49 on Dec 18,2025, Elapsed time: 0:00:00
+# Errors: 4, Warnings: 57
+# ** Error: C:/questasim64_2021.1/win64/vlog failed.
+# Error in macro ./run.do line 3
+# C:/questasim64_2021.1/win64/vlog failed.
+#     while executing
+# "vlog -f src_files.list +cover -covercells"
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 21:35:17 on Dec 18,2025
+# vlog -reportprogress 300 -f src_files.list "+cover" -covercells 
+# -- Compiling module rounding_overflow_arith
+# ** Warning: rounding_overflow_handling.sv(98): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(99): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(100): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(103): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(106): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(111): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(113): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(115): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(117): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(119): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(121): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(125): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(126): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(127): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(129): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(130): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(131): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(133): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(134): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(135): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(138): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(139): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(140): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(141): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(142): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(143): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(144): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(151): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(152): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(153): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(156): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(159): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(163): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(164): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(168): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(169): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(170): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(172): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(173): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(174): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(176): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(177): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(178): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(181): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(182): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(183): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(184): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(185): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(186): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(187): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# -- Compiling module MPRAM
+# -- Compiling module INTEG
+# -- Compiling module IIR
+# ** Warning: iir.sv(34): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(36): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(47): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(31): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module APB_Bridge
+# -- Compiling module APB
+# -- Compiling module CORE
+# ** Warning: CORE.sv(47): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: CORE.sv(59): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: CORE.sv(67): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module DFE_TOP
+# -- Compiling module DFE_tb
+# ** Error: DFE_tb.sv(37): Enum literal name 'NAN' already exists.
+# End time: 21:35:17 on Dec 18,2025, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 57
+# ** Error: C:/questasim64_2021.1/win64/vlog failed.
+# Error in macro ./run.do line 3
+# C:/questasim64_2021.1/win64/vlog failed.
+#     while executing
+# "vlog -f src_files.list +cover -covercells"
+do run.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# QuestaSim-64 vlog 2021.1 Compiler 2021.01 Jan 19 2021
+# Start time: 21:35:34 on Dec 18,2025
+# vlog -reportprogress 300 -f src_files.list "+cover" -covercells 
+# -- Compiling module rounding_overflow_arith
+# ** Warning: rounding_overflow_handling.sv(98): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(99): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(100): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(103): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(106): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(111): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(113): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(115): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(117): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(119): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(121): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(125): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(126): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(127): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(129): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(130): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(131): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(133): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(134): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(135): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(138): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(139): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(140): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(141): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(142): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(143): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(144): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(151): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(152): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(153): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(156): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(159): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(163): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(164): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(168): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(169): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(170): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(172): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(173): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(174): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(176): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(177): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(178): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(181): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(182): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(183): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(184): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(185): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(186): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# ** Warning: rounding_overflow_handling.sv(187): (vlog-2583) [SVCHK] - Extra checking for conflicts with always_comb and always_latch variables is done at vopt time.
+# -- Compiling module MPRAM
+# -- Compiling module INTEG
+# -- Compiling module IIR
+# ** Warning: iir.sv(34): (vlog-13314) Defaulting port 'coeff_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module IIR_chain
+# ** Warning: iir_chain.sv(36): (vlog-13314) Defaulting port 'coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: iir_chain.sv(47): (vlog-13314) Defaulting port 'coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module fractional_decimator
+# ** Warning: fractional_decimator.sv(31): (vlog-13314) Defaulting port 'coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module COMB
+# -- Compiling module CIC
+# -- Compiling module APB_Bridge
+# -- Compiling module APB
+# -- Compiling module CORE
+# ** Warning: CORE.sv(47): (vlog-13314) Defaulting port 'frac_dec_coeff_data_in' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: CORE.sv(59): (vlog-13314) Defaulting port 'iir_coeff_in_1MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# ** Warning: CORE.sv(67): (vlog-13314) Defaulting port 'iir_coeff_in_2_4MHz' kind to 'var' rather than 'wire' due to default compile option setting of -svinputport=relaxed.
+# -- Compiling module DFE_TOP
+# -- Compiling module DFE_tb
+# 
+# Top level modules:
+# 	DFE_tb
+# End time: 21:35:34 on Dec 18,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 57

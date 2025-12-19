@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Fri Dec 19 21:07:19 2025
+# Process ID: 15076
+# Current directory: D:/Mustafa/Projects/Digital_Design/Si_Clash/DFE_Filter_Array/FPGA_Imp/core_v/core_v.runs/synth_1
+# Command line: vivado.exe -log CORE.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source CORE.tcl
+# Log file: D:/Mustafa/Projects/Digital_Design/Si_Clash/DFE_Filter_Array/FPGA_Imp/core_v/core_v.runs/synth_1/CORE.vds
+# Journal file: D:/Mustafa/Projects/Digital_Design/Si_Clash/DFE_Filter_Array/FPGA_Imp/core_v/core_v.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source CORE.tcl -notrace

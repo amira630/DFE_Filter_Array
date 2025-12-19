@@ -12,12 +12,30 @@ def convergent_round(x):
     rounded = np.where(halfway & is_odd, rounded - np.sign(x), rounded)
     return rounded
 
+def wrap_integer(int_value, word_length=16):
+    """
+    Wrap integer value to fit within specified word length using modulo arithmetic.
+
+    Args:
+        int_value: Input integer value or array
+        word_length: Total bits (e.g., 16 for s16.15)
+
+    Returns:
+        Wrapped integer value or array
+    """
+    num_values = 2 ** word_length
+    min_int = -(2 ** (word_length - 1))
+
+    wrapped_int = ((int_value - min_int) % num_values) + min_int
+    return wrapped_int
+
+
 def int_to_binary(int_value, word_length=16):
     """Convert integer to binary string with configurable bit width"""
     mask = (1 << word_length) - 1
     return f'{int_value & mask:0{word_length}b}'
 
-def quantize_with_convergent_rounding(data, word_length, frac_length):
+def quantize_with_convergent_rounding(data, word_length, frac_length, scale_fac = 1):
     """
     Quantize with convergent rounding and saturation to match MATLAB behavior.
     """
@@ -32,6 +50,7 @@ def quantize_with_convergent_rounding(data, word_length, frac_length):
     scaled = data_clipped * scale
     rounded_int = convergent_round(scaled).astype(np.int64)
 
+    rounded_int = rounded_int / scale_fac
     # Apply integer saturation
     max_int = 2 ** (word_length - 1) - 1
     min_int = -(2 ** (word_length - 1))
@@ -40,6 +59,53 @@ def quantize_with_convergent_rounding(data, word_length, frac_length):
     # Convert back to floating-point
     return rounded_int / scale
 
+
+def quantize_with_floor_rounding_wrap(data, word_length, frac_length, use_saturation = False):
+    """
+    Quantize with floor rounding and wrapping (instead of saturation).
+    This matches MATLAB's CIC output behavior when OverflowAction='Wrap'.
+
+    Fixed to prevent spurious zeros during zero-crossings by ensuring that
+    non-zero input values that are smaller than LSB remain non-zero.
+
+    Args:
+        data: Input floating-point array or scalar
+        word_length: Total bits (e.g., 16 for s16.15)
+        frac_length: Fractional bits (e.g., 15 for s16.15)
+
+    Returns:
+        Quantized data with wrapping applied
+    """
+    data = np.asarray(data)
+    scale = 2 ** frac_length
+
+    # Define minimum representable non-zero value (LSB)
+    min_lsb = 1.0 / scale
+
+    # Scale to integer
+    scaled = data * scale
+
+    # Apply floor rounding
+    rounded_int = np.floor(scaled).astype(np.int64)
+
+    # Fix spurious zeros: if input was non-zero but floor rounded to zero
+    # (i.e., value is between 0 and min_lsb for positive, or between -min_lsb and 0 for negative)
+    # preserve the sign by using ±1 (minimum representable integer)
+    mask_spurious_zero = (rounded_int == 0) & (np.abs(data) >= min_lsb / 2)
+    rounded_int = np.where(mask_spurious_zero,
+                           np.where(data > 0, 1, -1),  # Use ±1 based on sign
+                           rounded_int)
+
+    if use_saturation:
+        # Apply integer saturation
+        max_int = 2 ** (word_length - 1) - 1
+        min_int = -(2 ** (word_length - 1))
+        res_int = np.clip(rounded_int, min_int, max_int)
+    else :
+        res_int = wrap_integer(rounded_int, word_length = word_length)
+
+    # Convert back to floating-point
+    return res_int / scale
 
 def quantize_fixed_point(data, word_length = 16, frac_length = 15, return_FP = True):
     """

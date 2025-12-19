@@ -107,16 +107,16 @@ module top_tb ();
         total_tests = 0;
         passed_tests = 0;
 
-        // Test 1: Decimation Factor = 1 (checking disabled)
-        dec_factor = 1;
-        $display("\nStarting test with Decimation Factor = %0d [CHECKING DISABLED]", dec_factor);
-        $display("--------------------------------------------------------------------------------");
-        init();
-        start_CIC();
-        assert_reset();
+        // // Test 1: Decimation Factor = 1 (checking disabled)
+        // dec_factor = 1;
+        // $display("\nStarting test with Decimation Factor = %0d [CHECKING DISABLED]", dec_factor);
+        // $display("--------------------------------------------------------------------------------");
+        // init();
+        // start_CIC();
+        // assert_reset();
 
         // Test 2: Decimation Factor = 2
-        dec_factor = 8;
+        dec_factor = 2;
         $display("\nStarting test with Decimation Factor = %0d", dec_factor);
         $display("--------------------------------------------------------------------------------");
         init();

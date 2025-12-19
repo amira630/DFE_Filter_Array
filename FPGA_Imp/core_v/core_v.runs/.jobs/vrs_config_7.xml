@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="0">
+	<Run Id="synth_1" LaunchDir="D:/Mustafa/Projects/Digital_Design/Si_Clash/DFE_Filter_Array/FPGA_Imp/core_v/core_v.runs/synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="impl_1" LaunchDir="D:/Mustafa/Projects/Digital_Design/Si_Clash/DFE_Filter_Array/FPGA_Imp/core_v/core_v.runs/impl_1" FlowId="Vivado_Implementation" FromStepId="init_design" ToStepId="write_bitstream">
+		<Parent Id="synth_1"/>
+	</Run>
+</Runs>
+
