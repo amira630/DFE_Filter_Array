@@ -112,7 +112,7 @@ def main():
 
     # Set output paths: testbench location and MATLAB directory
     output_base_path = '../FPGA_Flow_SRC'
-    output_base_path_matlab = r'D:\Mustafa\Projects\Digital_Design\Si_Clash\DFE_Filter_Array\MATLAB'
+    output_base_path_matlab = r'../MATLAB'
 
     # Create both output directories if they don't exist
     os.makedirs(output_base_path, exist_ok=True)
