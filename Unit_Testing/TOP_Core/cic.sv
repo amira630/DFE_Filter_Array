@@ -42,7 +42,7 @@ module CIC #(
 
     logic signed [ACC_WIDTH - 1 : 0]                intg_out        [Q - 1 : 0]     ;
     logic signed [ACC_WIDTH - 1 : 0]                comb_out        [Q - 1 : 0]     ;
-    logic signed [ACC_WIDTH - 1 : 0]                decimator_out                   ;
+    
     logic        [DEC_WIDTH : 0]                    counter                         ;
     logic                                           dec_in_enable                   ;
 

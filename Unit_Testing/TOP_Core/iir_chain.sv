@@ -40,17 +40,6 @@ module IIR_chain #(
     output  logic                               overflow_1MHz                                   ,
     output  logic                               underflow_1MHz                                  ,
     
-    /********************** 2 MHz Notch Filter I/O ************************/
-    input   logic                               bypass_2MHz                                     ,
-
-    input   logic         			            coeff_wr_en_2MHz                                ,
-    input   logic signed [COEFF_WIDTH - 1 : 0]  coeff_in_2MHz            [COEFF_DEPTH - 1 : 0]  ,
-    
-    output  logic signed [COEFF_WIDTH - 1 : 0]  coeff_out_2MHz           [COEFF_DEPTH - 1 : 0]  ,
-    
-    output  logic                               overflow_2MHz                                   ,
-    output  logic                               underflow_2MHz                                  ,
-    
     /********************** 2.4 MHz Notch Filter I/O ************************/
     input   logic                               bypass_2_4MHz                                   , 
 
@@ -62,9 +51,8 @@ module IIR_chain #(
     output  logic                               overflow_2_4MHz                                 ,
     output  logic                               underflow_2_4MHz                                
 );
-    localparam logic [1 : 0] NOTCH_1MHZ   = 2'b00;
-    localparam logic [1 : 0] NOTCH_2MHZ   = 2'b01;
-    localparam logic [1 : 0] NOTCH_2_4MHZ = 2'b10;
+    localparam logic NOTCH_1MHZ   = 1'b0;
+    localparam logic NOTCH_2_4MHZ = 1'b1;
 
     logic signed [DATA_WIDTH - 1 : 0]   iir_out_1MHz    ;
     logic signed [DATA_WIDTH - 1 : 0]   iir_out_2_4MHz  ;
@@ -77,7 +65,7 @@ module IIR_chain #(
         .DATA_FRAC       (DATA_FRAC)   ,
         .COEFF_WIDTH     (COEFF_WIDTH) ,
         .COEFF_FRAC      (COEFF_FRAC)  ,
-        .IIR_NOTCH_FREQ  (NOTCH_2_4MHZ)                // 0: 1MHz, 1: 2MHz, 2:2.4MHz
+        .IIR_NOTCH_FREQ  (NOTCH_2_4MHZ)                // 0: 1MHz, 1:2.4MHz
 
     ) IIR_2_4MHZ_NOTCH (
         .clk          (clk)                  ,
@@ -116,25 +104,6 @@ module IIR_chain #(
         .valid_out     (valid_1MHz_out)
     );
 
-    IIR #(
-        .DATA_WIDTH      (DATA_WIDTH)  ,
-        .DATA_FRAC       (DATA_FRAC)   ,
-        .COEFF_WIDTH     (COEFF_WIDTH) ,
-        .COEFF_FRAC      (COEFF_FRAC)  ,
-        .IIR_NOTCH_FREQ  (NOTCH_2MHZ)                // 0: 1MHz, 1: 2MHz, 2:2.4MHz
-
-    ) IIR_2MHZ_NOTCH (
-        .clk            (clk)                ,
-        .rst_n          (rst_n)              ,
-        .valid_in       (valid_1MHz_out)     ,
-        .bypass         (bypass_2MHz)        ,   
-        .coeff_wr_en    (coeff_wr_en_2MHz)   ,
-        .coeff_in       (coeff_in_2MHz)      ,
-        .iir_in         (iir_out_1MHz)       ,
-        .iir_out        (iir_out)            ,   
-        .coeff_out      (coeff_out_2MHz)     ,
-        .overflow       (overflow_2MHz)      ,
-        .underflow      (underflow_2MHz)     ,
-        .valid_out      (valid_out)
-    );
+    assign valid_out = valid_1MHz_out;
+    assign iir_out = iir_out_1MHz;
 endmodule

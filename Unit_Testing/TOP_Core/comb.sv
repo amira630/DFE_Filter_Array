@@ -1,8 +1,16 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Author: Amira Atef
-// Design: A comb module.
+// Design Author: Amira Atef
+// Verified by Mustaf EL-Sherif
+// --> Linting check
+// --> Synthesis
+// --> Functional Simulation
+// Design: Cascaded Integrator-Comb (CIC) Filter Decimator
 // Date: 02-11-2025
-// Description: A comb stage for CIC filter
+// Description: A CIC module using an integrator-comb structure to decimate
+// a signal's Fs from 6 MHz to (6 / dec_factor) MHz. 
+// This design is for a CIC where D is the Delay, 
+// Q is the order, N is the differential delay (D / dec_factor).
+// dec_factor can take inputs of {1, 2, 4, 8, 16}.
 ////////////////////////////////////////////////////////////////////////////////
 
 module COMB #(

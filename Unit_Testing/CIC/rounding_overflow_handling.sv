@@ -17,8 +17,7 @@ module rounding_overflow_arith #(
 ) (
     input  logic signed [ACC_WIDTH - 1 : 0]     data_in     ,
     input  logic                                valid_in    ,
-    input  logic        [4 : 0]                 dec_factor  ,
-
+    
     output logic signed [OUT_WIDTH - 1 : 0]     data_out    ,
     output logic                                overflow    ,
     output logic                                underflow   ,
@@ -105,19 +104,7 @@ module rounding_overflow_arith #(
                     // rounding: sticky/round/guard logic exactly as original
                     increment   = guard_bit && (round_bit || sticky_bit || raw[0]);
 
-                    // raw + increment
-                    // Note: raw may be wider than OUT_WIDTH; result is declared as OUT_WIDTH signed
-                    if (dec_factor == 5'd2) begin
-                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 1;
-                    end else if (dec_factor == 5'd4) begin
-                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 2;
-                    end else if (dec_factor == 5'd8) begin
-                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 3;
-                    end else if (dec_factor == 5'd16) begin
-                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment})) >>> 4;
-                    end else begin
-                        result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment}));
-                    end
+                    result_interm   = (raw + $signed({{(RAW_WIDTH - 1){1'b0}},increment}));
                     result          = raw[OUT_WIDTH - 1 : 0]                  ;
 
                     // saturation / clipping

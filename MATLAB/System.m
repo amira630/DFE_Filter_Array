@@ -10,7 +10,7 @@ N  = 48000;            % Number of samples
 % === 1. Generate sine-wave input (ADC-like signal) ===
 f_sig = 1e5;                               % Signal frequency (100 kHz tone)
 t = (0 : N - 1)' / Fs;                     % Time vector
-input_sig_real_clean = 0.25 * sin(2 * pi * f_sig * t);    % Amplitude < 1 to avoid clipping in fixed-point
+input_sig_real_clean = 0.125 * sin(2 * pi * f_sig * t);    % Amplitude < 1 to avoid clipping in fixed-point
 
 %% ======================= SECTION 2: INTERFERENCE GENERATION =======================
 
@@ -51,11 +51,11 @@ tones = tone_3 + tone_4 + tone_5;
 noise_variance = 1e-5; % Adjust based on desired SNR
 noise = sqrt(noise_variance) * randn(N, 1); % White Gaussian noise
 
-input_sig_real_noisy = input_sig_real_clean + interference + tones; % Combine desired signal with interference
+input_sig_real_noisy = input_sig_real_clean + interference; % Combine desired signal with interference
 
 impurities = input_sig_real_noisy - input_sig_real_clean;
 
-input_sig_real_noisy = input_sig_real_noisy + noise; % Combine desired signal with interference
+input_sig_real_noisy = input_sig_real_noisy; % Combine desired signal with interference
 
 %% ======================= SECTION 3: FIXED-POINT COMPATIBILITY CHECK =======================
 
@@ -97,11 +97,14 @@ input_sig_quant_noisy = fi(input_sig_real_noisy, 1, 16, 15);
 
 %% ======================= SECTION 4: Filters Handles =======================
 
-Hd_Fractional_Decimator = Fractional_Decimator();%Fractional_Decimator();
+Hd_Fractional_Decimator = Fractional_Decimator();
 
 % Filter Information
 intr_factor = Hd_Fractional_Decimator.InterpolationFactor;
 dec_factor = Hd_Fractional_Decimator.DecimationFactor;
+
+coeff = Hd_Fractional_Decimator.Numerator;
+SUMM = sum(coeff);
 
 Fs_frac = Fs * intr_factor / dec_factor;
 

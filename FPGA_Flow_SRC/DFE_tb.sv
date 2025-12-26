@@ -377,17 +377,7 @@ module DFE_tb();
         end
     end
 
-    // always_ff @(posedge clk_tb) begin
-    //     if (input_shape == 2'b00) begin
-    //         shape_var = SINE;
-    //     end else if (input_shape == 2'b01) begin
-    //         shape_var = SQUARE;
-    //     end else begin
-    //         shape_var = TRIANGULAR;
-    //     end
-    // end
-
-    always_ff @(posedge clk_tb) begin
+   always_ff @(posedge clk_tb) begin
         if (floating_point_flag == 1'b0) begin
             arith_base_var = FIXED_POINT;
         end else begin
@@ -460,8 +450,10 @@ module DFE_tb();
         SET_COEFF(3);  // 5 MHz IIR (1 MHz alias)
         repeat (50) @(negedge clk_tb);
         SET_COEFF(0);  // Default coefficients
+
         // Test coefficient write functionality
         $display("========== Coefficient Write Tests ==========");
+        
         // Test 1: Write Fractional Decimator Coefficients
         $display("[%0t] Writing Fractional Decimator Coefficients...", $time);
         CHANGE_FAC_DECI_COEFF(frac_dec_coeff_tb);
@@ -471,6 +463,7 @@ module DFE_tb();
         $display("[%0t] Writing 2.4 MHz IIR Coefficients...", $time);
         CHANGE_IIR24_COEFF(iir_24mhz_coeff_tb);
         $display("[%0t] 2.4 MHz IIR coefficients written", $time);
+        
         // Test 3: Write 5 MHz IIR (1 MHz alias) Coefficients
         $display("[%0t] Writing 5 MHz IIR (1 MHz alias) Coefficients...", $time);
         CHANGE_IIR51_COEFF(iir_5mhz_1_coeff_tb);

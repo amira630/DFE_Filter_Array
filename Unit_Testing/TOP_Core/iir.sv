@@ -13,7 +13,7 @@ module IIR #(
     parameter   int  DATA_FRAC          = 32'd15                                ,
     parameter   int  COEFF_WIDTH        = 32'd20                                ,
     parameter   int  COEFF_FRAC         = 32'd18                                ,
-    parameter   int  IIR_NOTCH_FREQ     = 32'd2                                 , // 0: 1MHz, 1: 2MHz, 2:2.4MHz
+    parameter   int  IIR_NOTCH_FREQ     = 32'd2                                 , // 0: 1MHz, 1:2.4MHz
     // Coefficient depths
     localparam  int NUM_COEFF_DEPTH     = 32'd3                                 ,
     localparam  int DEN_COEFF_DEPTH     = 32'd2                                 ,
@@ -52,14 +52,6 @@ module IIR #(
     localparam logic signed [COEFF_WIDTH - 1 : 0] A1_1 = 20'shc8f9f     ;
     localparam logic signed [COEFF_WIDTH - 1 : 0] A2_1 = 20'sh2e0c3     ;
 
-    // Coefficients 2 MHz Notch Filter
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B0_2 = 20'sh37061     ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B1_2 = 20'sh37061     ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B2_2 = 20'sh37061     ;
-
-    localparam logic signed [COEFF_WIDTH - 1 : 0] A1_2 = 20'sh37061     ;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] A2_2 = 20'sh2e0c3     ;
-
     // Coefficients 2.4 MHz Notch Filter
     localparam logic signed [COEFF_WIDTH - 1 : 0] B0_2_4 = 20'sh37061   ;
     localparam logic signed [COEFF_WIDTH - 1 : 0] B1_2_4 = 20'sh5907c   ;
@@ -69,11 +61,11 @@ module IIR #(
     localparam logic signed [COEFF_WIDTH - 1 : 0] A2_2_4 = 20'sh2e0c3   ;
     
     // Select coefficients based on IIR_NOTCH_FREQ parameter
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B0_INIT = (IIR_NOTCH_FREQ == 0) ? B0_1 : (IIR_NOTCH_FREQ == 1) ? B0_2 : B0_2_4;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B1_INIT = (IIR_NOTCH_FREQ == 0) ? B1_1 : (IIR_NOTCH_FREQ == 1) ? B1_2 : B1_2_4;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] B2_INIT = (IIR_NOTCH_FREQ == 0) ? B2_1 : (IIR_NOTCH_FREQ == 1) ? B2_2 : B2_2_4;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] A1_INIT = (IIR_NOTCH_FREQ == 0) ? A1_1 : (IIR_NOTCH_FREQ == 1) ? A1_2 : A1_2_4;
-    localparam logic signed [COEFF_WIDTH - 1 : 0] A2_INIT = (IIR_NOTCH_FREQ == 0) ? A2_1 : (IIR_NOTCH_FREQ == 1) ? A2_2 : A2_2_4;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B0_INIT = (IIR_NOTCH_FREQ == 0) ? B0_1 : B0_2_4;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B1_INIT = (IIR_NOTCH_FREQ == 0) ? B1_1 : B1_2_4;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] B2_INIT = (IIR_NOTCH_FREQ == 0) ? B2_1 : B2_2_4;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] A1_INIT = (IIR_NOTCH_FREQ == 0) ? A1_1 : A1_2_4;
+    localparam logic signed [COEFF_WIDTH - 1 : 0] A2_INIT = (IIR_NOTCH_FREQ == 0) ? A2_1 : A2_2_4;
     
     logic signed [COEFF_WIDTH - 1 : 0]      num_coeff       [NUM_COEFF_DEPTH - 1 : 0]   ;
     logic signed [COEFF_WIDTH - 1 : 0]      den_coeff       [DEN_COEFF_DEPTH - 1 : 0]   ;

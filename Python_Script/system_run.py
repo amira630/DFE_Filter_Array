@@ -140,20 +140,20 @@ def main():
 
     test_cases = [
         # TC_1 to TC_16: Different combinations of parameters
-        {'freq': 1e5, 'amp': 0.25         , 'shape': 'sine', 'inter': 0, 'tones': 0, 'noise': 0},  # TC_1
-        {'freq': 1e5, 'amp': 0.25         , 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 0},  # TC_2
-        {'freq': 1e5, 'amp': 0.25         , 'shape': 'sine', 'inter': 1, 'tones': 1, 'noise': 0},  # TC_3
-        {'freq': 1e5, 'amp': 0.25         , 'shape': 'sine', 'inter': 0, 'tones': 0, 'noise': 1},  # TC_4
-        {'freq': 1e5, 'amp': 0.25         , 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 1},  # TC_5
-        {'freq': 1e5, 'amp': 0.25         , 'shape': 'sine', 'inter': 1, 'tones': 1, 'noise': 1},  # TC_6
+        {'freq': 1e5, 'amp': 0.125        , 'shape': 'sine', 'inter': 0, 'tones': 0, 'noise': 0},  # TC_1
+        {'freq': 1e5, 'amp': 0.125        , 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 0},  # TC_2
+        {'freq': 1e5, 'amp': 0.125        , 'shape': 'sine', 'inter': 1, 'tones': 1, 'noise': 0},  # TC_3
+        {'freq': 1e5, 'amp': 0.125        , 'shape': 'sine', 'inter': 0, 'tones': 0, 'noise': 1},  # TC_4
+        {'freq': 1e5, 'amp': 0.125        , 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 1},  # TC_5
+        {'freq': 1e5, 'amp': 0.125        , 'shape': 'sine', 'inter': 1, 'tones': 1, 'noise': 1},  # TC_6
         {'freq': 1e5, 'amp': max_amplitude, 'shape': 'sine', 'inter': 0, 'tones': 0, 'noise': 0},  # TC_7
         {'freq': 1e5, 'amp': max_amplitude, 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 0},  # TC_8
         {'freq': 1e5, 'amp': max_amplitude, 'shape': 'sine', 'inter': 1, 'tones': 1, 'noise': 0},  # TC_9
         {'freq': 1e5, 'amp': max_amplitude, 'shape': 'sine', 'inter': 0, 'tones': 0, 'noise': 1},  # TC_10
         {'freq': 1e5, 'amp': max_amplitude, 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 1},  # TC_11
         {'freq': 1e5, 'amp': max_amplitude, 'shape': 'sine', 'inter': 1, 'tones': 1, 'noise': 1},  # TC_12
-        {'freq': 5e4, 'amp': 0.25         , 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 1},  # TC_13
-        {'freq': 2e5, 'amp': 0.25         , 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 1},  # TC_14
+        {'freq': 5e4, 'amp': 0.125        , 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 1},  # TC_13
+        {'freq': 2e5, 'amp': 0.125        , 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 1},  # TC_14
         {'freq': 5e4, 'amp': max_amplitude, 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 0},  # TC_15
         {'freq': 2e5, 'amp': max_amplitude, 'shape': 'sine', 'inter': 1, 'tones': 0, 'noise': 0},  # TC_16
     ]
@@ -433,6 +433,104 @@ def main():
                     # Write final output for this decimation factor
                     write_to_both_paths(cic_output, f'{scenario_rel_path}/output_decf{current_decf}.txt', output_base_path, output_base_path_matlab, is_fixed_point=True)
                 print()
+
+                # Process individual signal components for MATLAB analysis (only when writing to both paths)
+                if write_to_both:
+                    print('    Processing individual signal components for MATLAB analysis...')
+
+                    # 1. Clean signal only
+                    print('      - Processing clean signal...')
+                    clean_component = x_real_clean.copy()
+                    clean_component = quantize_fixed_point(clean_component, word_length=16, frac_length=15)
+
+                    # Process through chain
+                    clean_component = fractional_decimator(clean_component, use_fixed_point=True)
+                    write_to_both_paths(clean_component, f'{scenario_rel_path}/clean_frac_decimator.txt',
+                                       output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                    clean_component = iir_24mhz_filter(clean_component, use_fixed_point=True)
+                    write_to_both_paths(clean_component, f'{scenario_rel_path}/clean_iir_24mhz.txt',
+                                       output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                    clean_component = iir_5mhz_filter(clean_component, use_fixed_point=True)
+                    write_to_both_paths(clean_component, f'{scenario_rel_path}/clean_iir_5mhz_1.txt',
+                                       output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                    for current_decf in decimation_factors:
+                        clean_cic = cic_decimator(clean_component, dec_factor=current_decf, use_fixed_point=True)
+                        write_to_both_paths(clean_cic, f'{scenario_rel_path}/clean_cic_decf{current_decf}.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                    # 2. Interference only (if present)
+                    if add_interference == 1:
+                        print('      - Processing interference...')
+                        interference_component = interference.copy()
+                        interference_component = quantize_fixed_point(interference_component, word_length=16, frac_length=15)
+
+                        interference_component = fractional_decimator(interference_component, use_fixed_point=True)
+                        write_to_both_paths(interference_component, f'{scenario_rel_path}/interference_frac_decimator.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        interference_component = iir_24mhz_filter(interference_component, use_fixed_point=True)
+                        write_to_both_paths(interference_component, f'{scenario_rel_path}/interference_iir_24mhz.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        interference_component = iir_5mhz_filter(interference_component, use_fixed_point=True)
+                        write_to_both_paths(interference_component, f'{scenario_rel_path}/interference_iir_5mhz_1.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        for current_decf in decimation_factors:
+                            interference_cic = cic_decimator(interference_component, dec_factor=current_decf, use_fixed_point=True)
+                            write_to_both_paths(interference_cic, f'{scenario_rel_path}/interference_cic_decf{current_decf}.txt',
+                                               output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                    # 3. Tones only (if present)
+                    if add_tones == 1:
+                        print('      - Processing tones...')
+                        tones_component = tones.copy()
+                        tones_component = quantize_fixed_point(tones_component, word_length=16, frac_length=15)
+
+                        tones_component = fractional_decimator(tones_component, use_fixed_point=True)
+                        write_to_both_paths(tones_component, f'{scenario_rel_path}/tones_frac_decimator.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        tones_component = iir_24mhz_filter(tones_component, use_fixed_point=True)
+                        write_to_both_paths(tones_component, f'{scenario_rel_path}/tones_iir_24mhz.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        tones_component = iir_5mhz_filter(tones_component, use_fixed_point=True)
+                        write_to_both_paths(tones_component, f'{scenario_rel_path}/tones_iir_5mhz_1.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        for current_decf in decimation_factors:
+                            tones_cic = cic_decimator(tones_component, dec_factor=current_decf, use_fixed_point=True)
+                            write_to_both_paths(tones_cic, f'{scenario_rel_path}/tones_cic_decf{current_decf}.txt',
+                                               output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                    # 4. Noise only (if present)
+                    if add_noise == 1:
+                        print('      - Processing noise...')
+                        noise_component = noise.copy()
+                        noise_component = quantize_fixed_point(noise_component, word_length=16, frac_length=15)
+
+                        noise_component = fractional_decimator(noise_component, use_fixed_point=True)
+                        write_to_both_paths(noise_component, f'{scenario_rel_path}/noise_frac_decimator.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        noise_component = iir_24mhz_filter(noise_component, use_fixed_point=True)
+                        write_to_both_paths(noise_component, f'{scenario_rel_path}/noise_iir_24mhz.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        noise_component = iir_5mhz_filter(noise_component, use_fixed_point=True)
+                        write_to_both_paths(noise_component, f'{scenario_rel_path}/noise_iir_5mhz_1.txt',
+                                           output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                        for current_decf in decimation_factors:
+                            noise_cic = cic_decimator(noise_component, dec_factor=current_decf, use_fixed_point=True)
+                            write_to_both_paths(noise_cic, f'{scenario_rel_path}/noise_cic_decf{current_decf}.txt',
+                                               output_base_path, output_base_path_matlab, is_fixed_point=True)
+
+                    print('      Component processing complete!')
 
                 print('    Full flow scenario complete!\n')
 

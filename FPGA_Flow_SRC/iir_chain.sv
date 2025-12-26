@@ -65,7 +65,7 @@ module IIR_chain #(
         .DATA_FRAC       (DATA_FRAC)   ,
         .COEFF_WIDTH     (COEFF_WIDTH) ,
         .COEFF_FRAC      (COEFF_FRAC)  ,
-        .IIR_NOTCH_FREQ  (NOTCH_2_4MHZ)                // 0: 1MHz, 1: 2MHz, 2:2.4MHz
+        .IIR_NOTCH_FREQ  (NOTCH_2_4MHZ)                // 0: 1MHz, 1:2.4MHz
 
     ) IIR_2_4MHZ_NOTCH (
         .clk          (clk)                  ,
