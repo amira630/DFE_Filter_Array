@@ -227,7 +227,7 @@ The complete memory-mapped register interface provides comprehensive control and
 | `0x004D-0x0051` | `IIR_1_COEFF[0:4]`            | 20-bit   | RW     | 1.0 MHz notch filter coefficients (s20.18)           |
 | `0x0052-0x0056` | `IIR_2_COEFF[0:4]`            | 20-bit   | RW     | 2.0 MHz notch filter coefficients (s20.18)           |
 | `0x0057`        | `CIC_DEC_FACTOR`              | 5-bit    | RW     | CIC decimation factor (1, 2, 4, 8, 16)               |
-| `0x0058-0x005C` | `STAGE_ENABLE[0:4]`           | 1-bit ea | RW     | Per-stage enable control (5 stages)                  |
+| `0x0058-0x005C` | `STAGE_ENABLE[0:4]`           | 1-bit    | RW     | Per-stage enable control (5 stages)                  |
 | `0x005D`        | `OUTPUT_MUX_SEL`              | 2-bit    | RW     | Output stage selection (00=bypass, 01=frac, 10=iir, 11=cic) |
 | `0x005E`        | `COEFF_MUX_SEL`               | 3-bit    | RW     | Coefficient readback multiplexer control             |
 | `0x005F`        | `SYSTEM_STATUS`               | 8-bit    | RO     | System health and operational status flags           |
